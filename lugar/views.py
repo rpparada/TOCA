@@ -28,7 +28,7 @@ def agregar(request):
             messages.success(request, 'Lugar agregado exitosamente')
             return redirect('cuenta')
         else:
-            print(form.errors.as_data())
+            # print(form.errors.as_data())
             messages.error(request,'Error en form')
             return redirect('agregar')
 
