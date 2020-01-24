@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %} | BUSQUEDA{% endblock %}
+
+{% block content %}
+<!-- Page title -->
+<section id="page-title">
+    <div class="container">
+        <div class="page-title">
+            <h1>Shop</h1>
+            <span>Shop 2 columns version</span>
+        </div>
+        <div class="breadcrumb">
+  <ul>
+                <li><a href="#">Home</a>
+                </li>
+                <li><a href="#">Shop</a>
+                </li>
+                <li class="active"><a href="#">2 columns version</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- end: Page title -->
+
+<!-- Shop products -->
+<section>
+    <div class="container">
+        <div class="row m-b-20">
+            <div class="col-lg-6 p-t-10 m-b-20">
+                <h3 class="m-b-20">Tocatas</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sit, exercitationem, consequuntur, assumenda iusto eos commodi alias.</p>
+            </div>
+            <div class="col-lg-3">
+                <div class="order-select">
+                    <h6>Sort by</h6>
+                    <p>Showing 1&ndash;12 of 25 results</p>
+                    <form method="get">
+                                <select class="form-control">
+                            <option value="order" selected="selected">Default sorting</option>
+                            <option value="popularity">Sort by popularity</option>
+                            <option value="rating">Sort by average rating</option>
+                            <option value="date">Sort by newness</option>
+                            <option value="price">Sort by price: low to high</option>
+                            <option value="price-desc">Sort by price: high to low</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="order-select">
+                    <h6>Sort by Price</h6>
+                    <p>From 0 - 190$</p>
+                    <form method="get">
+                                <select class="form-control">
+                            <option value="" selected="selected">0$ - 50$</option>
+                            <option value="">51$ - 90$</option>
+                            <option value="">91$ - 120$</option>
+                            <option value="">121$ - 200$</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!--Product list-->
+        <div class="shop">
+            <div class="grid-layout grid-2-columns" data-item="grid-item">
+                {% if tocatas %}
+                  {% for tocata in tocatas %}
+                    <div class="grid-item">
+                        <div class="product">
+                          {% if tocata.flayer.url %}
+                            <div class="product-image">
+                                <a href="{% url 'tocata' tocata.id %}"><img alt="Shop product image!" src="{{ tocata.flayer.url }}">
+                                </a>
+                                <a href="{% url 'tocata' tocata.id %}"><img alt="Shop product image!" src="{{ tocata.flayer.url }}">
+                                </a>
+                                <span class="product-hot">HOT</span>
+                                <span class="product-wishlist">
+    <a href="#"><i class="fa fa-heart"></i></a>
+    </span>
+                                <div class="product-overlay">
+                                    <a href="shop-product-ajax-page.html" data-lightbox="ajax">Quick View</a>
+                                </div>
+                            </div>
+                          {% endif %}
+
+                            <div class="product-description">
+                                <div class="product-category">{{ tocata.artista }}</div>
+                                <div class="product-title">
+                                    <h3><a href="{% url 'tocata' tocata.id %}">{{ tocata.nombre }}</a></h3>
+                                </div>
+                                <div class="product-price"><ins>{{ tocata.costo | intcomma }}</ins>
+                                </div>
+                                <div class="product-rate">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-half-o"></i>
+                                </div>
+                                <div class="product-reviews"><a href="#">3 customer reviews</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                  {% endfor %}
+                {% else %}
+                <!-- 500 PAGE -->
+                <section class="m-t-80 p-b-150">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="page-error-404 text-center">Error</div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="text-left">
+                          <h1 class="text-medium">Error en el servidor</h1>
+                          <p class="lead">Lo lamentamos, algo esta malo en nuestro servidor.</p><div class="seperator m-t-20 m-b-20"></div><button onclick="window.location.reload()" class="btn" type="button">Reload Page</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <!-- end:  500 PAGE -->
+                {% endif %}
+            </div>
+
+            <hr>
+        </div>
+
+        {% if artistas %}
+        <!-- SHOP WISHLIST -->
+        <section id="shop-wishlist">
+          <div class="container">
+
+            <div class="row m-b-20">
+                <div class="col-lg-6 p-t-10 m-b-20">
+                    <h3 class="m-b-20">Artistas</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sit, exercitationem, consequuntur, assumenda iusto eos commodi alias.</p>
+                </div>
+            </div>
+
+
+            <div class="shop-cart">
+              <div class="table table-sm table-striped table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="cart-product-thumbnail">Artista</th>
+                      <th class="cart-product-name">Descripción</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for artista in artistas %}
+                    <tr>
+                      <td class="cart-product-thumbnail">
+                        {% if artista.foto1.url %}
+                        <a href="{% url 'artista' artista.id %}">
+                          <img src="{{ artista.foto1.url }}" alt="Bolt Sweatshirt">
+                        </a>
+                        {% else %}
+                        <a href="#">
+                          <img src="{% static 'images/shop/products/1.jpg' %}" alt="Bolt Sweatshirt">
+                        </a>
+                        {% endif %}
+                        <div class="cart-product-thumbnail-name">{{ artista.nombre }}</div>
+                      </td>
+                      <td class="cart-product-description">
+                        <p>{{ artista.descripción }}
+                        </p>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- end: SHOP WISHLIST -->
+        {% else %}
+        <!-- SHOP WISHLIST -->
+        <section id="shop-cart">
+        	<div class="container">
+        		<div class="p-t-10 m-b-20 text-center">
+        			<div class="heading-text heading-line text-center">
+        				<h4>Your Wishlist is currently empty.</h4>
+        			</div>
+        			<a class="btn icon-left" href="#"><span>Return To Shop</span></a>
+        		</div>
+        	</div>
+        </section>
+        <!-- end: SHOP WISHLIST -->
+        {% endif %}
+
+    </div>
+</section>
+<!-- end: Shop products -->
+
+{% endblock %}

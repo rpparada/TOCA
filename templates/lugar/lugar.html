@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %} | AGREGAR LUGAR{% endblock %}
+{% block content %}
+
+<!-- Page title -->
+{% if lugar.foto1 %}
+<section id="page-title" class="background-image" style="background-image:url({{ lugar.foto1.url }});">
+{% else %}
+<section id="page-title" class="background-image" style="background-image:url({% static 'images/portfolio/project/35.jpg' %});">
+{% endif %}
+
+    <div class="container">
+
+        <div class="page-title">
+            <div data-animate="fadeIn" class="text-light">
+                <h1>{{ lugar.nombre }}</h1></div>
+
+            <div class="portfolio-attributes style1 text-light">
+                <div class="attribute" data-animate="fadeInUp" data-animate-delay="1000"><strong>Capacidad:</strong> {{ lugar.capacidad }}</div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end: Page title -->
+
+<!-- Content -->
+<section id="page-content" class="p-b-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="portfolio-attributes style2">
+                    <div class="attribute"><strong>Capacidad:</strong> {{ lugar.capacidad }}</div>
+                    <div class="attribute"><strong>Region:</strong> {{ lugar.get_region_display }}</div>
+                    <div class="attribute"><strong>Comuna:</strong> {{ lugar.get_comuna_display }}</div>
+                    <div class="attribute"><strong>Fecha de Creación:</strong> {{ lugar.fecha_crea }}</div>
+                </div>
+                <a href="{% url 'editarlugar' lugar.id %}" class="logo">
+                  <button class="btn">Editar</button>
+                </a>
+            </div>
+            <div class="col-lg-8">
+                <div class="project-description">
+                    <h3>{{ lugar.descripción }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <hr class="space">
+        <div class="col-lg-10 center">
+            <div class="carousel carousel-promotion m-b-40" data-items="1" data-margin="40" data-loop="true" data-autoplay="true">
+
+                {% if lugar.foto1 %}
+                <div class="portfolio-item img-zoom">
+                    <div class="portfolio-item-wrap">
+                        <div class="portfolio-image">
+                            <a href="#"><img src="{{ lugar.foto1.url }}" alt=""></a>
+                        </div>
+                        <div class="portfolio-description">
+                            <a title="Foto 1" data-lightbox="image" href="{{ lugar.foto1.url }}" class="btn btn-light btn-rounded">Zoom</a>
+
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if lugar.foto2 %}
+                <div class="portfolio-item img-zoom">
+                    <div class="portfolio-item-wrap">
+                        <div class="portfolio-image">
+                            <a href="#"><img src="{{ lugar.foto2.url }}" alt=""></a>
+                        </div>
+                        <div class="portfolio-description">
+                            <a title="Foto 2" data-lightbox="image" href="{{ lugar.foto2.url }}" class="btn btn-light btn-rounded">Zoom</a>
+
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if lugar.foto3 %}
+                <div class="portfolio-item img-zoom">
+                    <div class="portfolio-item-wrap">
+                        <div class="portfolio-image">
+                            <a href="#"><img src="{{ lugar.foto3.url }}" alt=""></a>
+                        </div>
+                        <div class="portfolio-description">
+                            <a title="Foto 3" data-lightbox="image" href="{{ lugar.foto3.url }}" class="btn btn-light btn-rounded">Zoom</a>
+
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if lugar.foto4 %}
+                <div class="portfolio-item img-zoom">
+                    <div class="portfolio-item-wrap">
+                        <div class="portfolio-image">
+                            <a href="#"><img src="{{ lugar.foto4.url }}" alt=""></a>
+                        </div>
+                        <div class="portfolio-description">
+                            <a title="Foto 4" data-lightbox="image" href="{{ lugar.foto4.url }}" class="btn btn-light btn-rounded">Zoom</a>
+
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- end: Content -->
+
+
+{% endblock %}

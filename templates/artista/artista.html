@@ -1,0 +1,233 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} | {{ artista.nombre }}{% endblock %}
+{% block content %}
+<!-- Inspiro Slider -->
+<div id="slider" class="inspiro-slider slider-fullscreen" data-height-xs="360">
+    <!-- Slide 1 -->
+    <div class="slide background-overlay-dark" style="background-image:url({% static 'images/portfolio/project/60.jpg' %});">
+
+        <div class="container">
+            <div class="slide-captions text-center">
+                <!-- Captions -->
+                <div class="text-light" data-animate="fadeInUp">
+                  <h1>{{ artista.nombre }}</h1>
+                    <!-- <h1>Perfect Lighthouse</h1> -->
+                    <p class="lead">With passion and a lot of expertise we create a unique Lighthouse</p>
+                </div>
+
+                <div class="portfolio-attributes style1 text-light">
+                    <div class="attribute" data-animate="fadeInUp" data-animate-delay="1000"><strong>Client:</strong> Lighthouse</div>
+                    <div class="attribute" data-animate="fadeInUp" data-animate-delay="1200"><strong>Date:</strong> 2017-07-10</div>
+                    <div class="attribute" data-animate="fadeInUp" data-animate-delay="1400"><strong>Services:</strong> Web Design </div>
+                </div>
+
+                <div class="portfolio-share" data-animate="fadeIn" data-animate-delay="1600">
+                <h4 class="text-light">Share this project</h4>
+                <div class="align-center">
+
+                    <a class="btn btn-xs btn-slide btn-light" href="#">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Facebook</span>
+                    </a>
+                    <a class="btn btn-xs btn-slide btn-light" href="#" data-width="100">
+                        <i class="fab fa-twitter"></i>
+                        <span>Twitter</span>
+                    </a>
+                    <a class="btn btn-xs btn-slide btn-light" href="#" data-width="118">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
+                    </a>
+                    <a class="btn btn-xs btn-slide btn-light" href="mailto:#" data-width="80">
+                        <i class="far fa-envelope"></i>
+                        <span>Mail</span>
+                    </a>
+                </div>
+            </div>
+
+                <!-- end: Captions -->
+            </div>
+
+        </div>
+
+    </div>
+    <!-- end: Slide 1 -->
+</div>
+<!--end: Inspiro Slider -->
+
+<!-- Content -->
+<section id="page-content" class="p-b-0 p-t-60">
+    <div class="container">
+        <div class="row m-b-40">
+            <div class="col-lg-6">
+                <div class="project-description">
+                    <h2>Work Requirment</h2>
+                    <h3>Lighthouse has the guts to design and develop the impossible. With passion and a lot of expertise we create a surprisingly timeless collection of beautiful functional furniture, made with innovative and sustainable materials. Our brand represents connection.</h3>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="project-description">
+                    <h2>Our Solution</h2>
+                    <h3>Lighthouse has the guts to design and develop the impossible. With passion and a lot of expertise we create a surprisingly timeless collection of beautiful functional furniture, made with innovative and sustainable materials. Our brand represents connection.</h3>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Icon Boxes -->
+        <div class="row">
+            <!--Box 1-->
+            <div class="col-lg-4">
+                <div class="text-box text-box-light">
+                    <a href="#">
+                        <i class="far fa-paper-plane"></i>
+                        <h3>User Experience </h3>
+                        <p>Ispendisse consectetur fringilla luctus usce id mi diam, non ornare.</p>
+                    </a>
+                </div>
+            </div>
+            <!--End: Box 1-->
+            <!--Box 2-->
+            <div class="col-lg-4">
+                <div class="text-box text-box-light">
+                    <a href="#">
+                        <i class="fas fa-chart-pie"></i>
+                        <h3>Our charts </h3>
+                        <p>Ispendisse consectetur fringilla luctus usce id mi diam, non ornare.</p>
+                    </a>
+                </div>
+            </div>
+            <!--End: Box 2-->
+            <!--Box 3-->
+            <div class="col-lg-4">
+                <div class="text-box text-box-light">
+                    <a href="#">
+                        <i class="far fa-lightbulb"></i>
+                        <h3>Light & Dark</h3>
+                        <p>Ispendisse consectetur fringilla luctus usce id mi diam, non ornare.</p>
+                    </a>
+                </div>
+            </div>
+            <!--End: Box 3-->
+        </div>
+        <!-- end: Icon Boxes -->
+
+
+        <hr class="space">
+        <div class="col-lg-10 center">
+            <div class="carousel carousel-promotion m-b-40" data-items="1" data-margin="40" data-loop="true" data-autoplay="true">
+                <div class="portfolio-item img-zoom">
+                    <div class="portfolio-item-wrap">
+                        <div class="portfolio-image">
+                            <a href="#"><img src="{% static 'images/portfolio/project/31.jpg' %}" alt=""></a>
+                        </div>
+                        <div class="portfolio-description">
+                            <a title="Paper Pouch!" data-lightbox="image" href="{% static 'images/portfolio/project/31.jpg' %}" class="btn btn-light btn-rounded">Zoom</a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item img-zoom">
+                    <div class="portfolio-item-wrap">
+                        <div class="portfolio-image">
+                            <a href="#"><img src="{% static 'images/portfolio/project/32.jpg' %}" alt=""></a>
+                        </div>
+                        <div class="portfolio-description">
+                            <a title="Paper Pouch!" data-lightbox="image" href="{% static 'images/portfolio/project/32.jpg' %}" class="btn btn-light btn-rounded">Zoom</a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item img-zoom">
+                    <div class="portfolio-item-wrap">
+                        <div class="portfolio-image">
+                            <a href="#"><img src="{% static 'images/portfolio/project/33.jpg' %}" alt=""></a>
+                        </div>
+                        <div class="portfolio-description">
+                            <a title="Paper Pouch!" data-lightbox="image" href="{% static 'images/portfolio/project/33.jpg' %}" class="btn btn-light btn-rounded">Zoom</a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item img-zoom">
+                    <div class="portfolio-item-wrap">
+                        <div class="portfolio-image">
+                            <a href="#"><img src="{% static 'images/portfolio/project/34.jpg' %}" alt=""></a>
+                        </div>
+                        <div class="portfolio-description">
+                            <a title="Paper Pouch!" data-lightbox="image" href="{% static 'images/portfolio/project/34.jpg' %}" class="btn btn-light btn-rounded">Zoom</a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--   <a title="Saiba Chair" data-lightbox="gallery-image" href="{% static 'images/portfolio/project/50.jpg' %}">
+                    <img src="{% static 'images/portfolio/project/50.jpg' %}">
+                </a>
+
+         <a title="Saiba Chair" data-lightbox="gallery-image" href="{% static 'images/portfolio/project/51.jpg' %}">
+                    <img src="{% static 'images/portfolio/project/51.jpg' %}">
+                </a>
+
+         <a title="Saiba Chair" data-lightbox="gallery-image" href="{% static 'images/portfolio/project/52.jpg' %}">
+                    <img src="{% static 'images/portfolio/project/52.jpg' %}">
+                </a>
+         <a title="Saiba Chair" data-lightbox="gallery-image" href="{% static 'images/portfolio/project/53.jpg' %}">
+                    <img src="{% static 'images/portfolio/project/53.jpg' %}">
+                </a>-->
+
+            </div>
+        </div>
+
+
+        <div class="row m-b-40">
+            <div class="col-lg-8 center">
+                <div class="project-description text-center">
+                    <h2>Project Info</h2>
+                    <p>Guide to the World has the guts to design and develop the impossible. With passion and a lot of expertise we create a surprisingly timeless collection of beautiful functional furniture, made with innovative and sustainable materials. Our brand represents connection.</p>
+
+                    <div class="portfolio-share" data-animate="fadeIn">
+                        <h4>Share this project</h4>
+                        <div class="align-center">
+
+                            <a class="btn btn-slide btn-light" href="#">
+                                <i class="fab fa-facebook-f"></i>
+                                <span>Facebook</span>
+                            </a>
+                            <a class="btn btn-slide btn-light" href="#" data-width="120">
+                                <i class="fab fa-twitter"></i>
+                                <span>Twitter</span>
+                            </a>
+                            <a class="btn btn-slide btn-light" href="#" data-width="140">
+                                <i class="fab fa-instagram"></i>
+                                <span>Instagram</span>
+                            </a>
+                            <a class="btn btn-slide btn-light" href="mailto:#" data-width="96">
+                                <i class="far fa-envelope"></i>
+                                <span>Mail</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="post-navigation">
+        <a href="portfolio-page-background-video.html" class="post-prev">
+            <div class="post-prev-title"><span>Previous Post</span>Woody Chair vel accumsan</div>
+        </a>
+        <a href="portfolio-masonry-3.html" class="post-all">
+            <i class="icon-grid">                </i>
+        </a>
+        <a href="portfolio-page-particles.html" class="post-next">
+            <div class="post-next-title"><span>Next Post</span>Guide To The World</div>
+        </a>
+    </div>
+</section>
+<!-- end: Content -->
+{% endblock %}

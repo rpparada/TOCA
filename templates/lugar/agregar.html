@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %} | AGREGAR LUGAR{% endblock %}
+{% block content %}
+
+<!-- Page title -->
+<section id="page-title" class="page-title-right text-light" data-parallax-image="{% static 'images/parallax/5.jpg' %}">
+    <div class="container">
+              <div class="breadcrumb">
+            <ul>
+                <li><a href="#">Home</a> </li>
+                <li><a href="#">Page title</a> </li>
+                <li class="active"><a href="#">Right aligned</a> </li>
+            </ul>
+        </div>
+        <div class="page-title">
+            <h1>Page title - Right aligned</h1>
+            <span>Simple page title right aligned</span>
+        </div>
+    </div>
+</section>
+<!-- end: Page title -->
+
+<!-- Page Content -->
+<section id="page-content">
+
+    <div class="container">
+      {% include 'partials/_alerts.html' %}
+
+      <h3>Textual inputs</h3>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+          <div class="form-row">
+            <div class="form-group col-md-8">
+                <label for="{{ form.nombre.id_for_label }}">{{ form.nombre.label_tag }}</label>
+                <input name="{{ form.nombre.html_name }}" class="form-control" type="text" value="" id="example-text-input">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="example-number-input">{{ form.capacidad.label_tag }}</label>
+                <input name="{{ form.capacidad.html_name }}" class="form-control" type="number" value="0" id="example-number-input">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-8">
+                <label for="{{ form.nombre_calle.id_for_label }}">{{ form.nombre_calle.label_tag }}</label>
+                <input name="{{ form.nombre_calle.html_name }}" class="form-control" type="text" value="" id="example-text-input">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="example-number-input">{{ form.numero.label_tag }}</label>
+                <input name="{{ form.numero.html_name }}" class="form-control" type="number" value="0" id="example-number-input">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.region.id_for_label }}">{{ form.region.label_tag }}</label>
+                <select class="form-control" name="{{ form.region.html_name }}">>
+                  {% for region in form.region.field.choices %}
+                    <option value="{{ region.0 }}">{{ region.1 }}</option>
+                  {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.comuna.id_for_label }}">{{ form.comuna.label_tag }}</label>
+                <select class="form-control" name="{{ form.comuna.html_name }}">
+                  {% for comuna in form.comuna.field.choices %}
+                    <option value="{{ comuna.0 }}">{{ comuna.1 }}</option>
+                  {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.ciudad.id_for_label }}">{{ form.ciudad.label_tag }}</label>
+                <input name="{{ form.ciudad.html_name }}" class="form-control" type="text" value="" id="example-text-input">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.pais.id_for_label }}">{{ form.pais.label_tag }}</label>
+                <input name="{{ form.pais.html_name }}" class="form-control" type="text" value="Chile" id="example-text-input" readonly>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.codigo_postal.id_for_label }}">{{ form.codigo_postal.label_tag }}</label>
+                <input name="{{ form.codigo_postal.html_name }}" class="form-control" type="number" value="0" id="example-number-input">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-group">
+                <label for="{{ form.descripción.id_for_label }}">{{ form.descripción.label_tag }}</label>
+                <textarea name="{{ form.descripción.html_name }}" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-group">
+                <label for="{{ form.foto1.id_for_label }}">{{ form.foto1.label_tag }}</label>
+                <input name="{{ form.foto1.html_name }}" type="file" accept="image/*" class="form-control-file" id="exampleFormControlFile1">
+            </div>
+            <div class="form-group">
+                <label for="{{ form.foto2.id_for_label }}">{{ form.foto2.label_tag }}</label>
+                <input name="{{ form.foto2.html_name }}" type="file" accept="image/*" class="form-control-file" id="exampleFormControlFile1">
+            </div>
+            <div class="form-group">
+                <label for="{{ form.foto3.id_for_label }}">{{ form.foto3.label_tag }}</label>
+                <input name="{{ form.foto3.html_name }}" type="file" accept="image/*" class="form-control-file" id="exampleFormControlFile1">
+            </div>
+            <div class="form-group">
+                <label for="{{ form.foto4.id_for_label }}">{{ form.foto4.label_tag }}</label>
+                <input name="{{ form.foto4.html_name }}" type="file" accept="image/*" class="form-control-file" id="exampleFormControlFile1">
+            </div>
+          </div>
+          <button type="submit" class="btn m-t-30 mt-3">Agregar</button>
+      </form>
+
+
+    </div>
+</section>
+{% endblock %}
