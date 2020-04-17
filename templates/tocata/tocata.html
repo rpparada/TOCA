@@ -3,214 +3,557 @@
 {% load humanize %}
 {% block title %} | {{ tocata.nombre }} {% endblock %}
 {% block content %}
-<!-- SHOP PRODUCT PAGE -->
-<section id="product-page" class="product-page p-b-0">
+
+<!-- SECTION IMAGE FULLSCREEN -->
+{% if tocata.flayer_1920_1280.url %}
+<section class="text-center fullscreen p-t-200 p-b-100 text-light" data-bg-image="{{ tocata.flayer_1920_1280.url }}">
+{% else %}
+<section class="text-center fullscreen p-t-200 p-b-100 text-light" data-bg-image="{% static 'homepages/event/images/1.jpg' %}">
+{% endif %}
+    <div class="bg-overlay"></div>
     <div class="container">
-      {% include 'partials/_alerts.html' %}
-        <div class="product">
+        <div data-animate="fadeInUp" class="text-center">
+            <div class="text-lg">MWC EVENT</div>
+            <div class="text-medium">WILL BE OPEN IN:</div>
+        </div>
+        <div class="countdown medium rectangle countdown-light m-b-40" data-countdown="{{ tocata.fecha|date:"Y/m/d"}} {{ tocata.hora|date:"H:i:s" }}" data-animate="fadeInUp"></div>
+        <div data-animate-delay="600" data-animate="fadeInUp">
 
-            <div class="row m-b-40">
-              {% if tocata.flayer.url %}
-                <div class="col-lg-5">
-                    <div class="product-image">
-                      <a href="{{ tocata.flayer.url }}" data-lightbox="image" title="Shop product image!"><img alt="Shop product image!" src="{{ tocata.flayer.url }}">
-                      </a>
-                    </div>
+            <p class="lead">Mobile World Congress (MWC) is the world’s largest annual gathering for the mobile industry, organised by the GSMA, and held in the Mobile World Capital: Barcelona, Spain.
+
+            </p>
+            <a class="btn">APPLY NOW</a>
+        </div>
+    </div>
+
+</section>
+<!-- end: SECTION IMAGE FULLSCREEN -->
+
+<!-- EVENT INFO BOX -->
+<div class="event-info-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="event-info-icon"><i class="fa fa-calendar fa-2x"></i></div>
+                <div class="event-info-content">
+                    <div class="info-title">DATE</div>
+                    <div class="info-description">28-31 OCT 2015</div>
                 </div>
-              {% endif %}
+            </div>
+            <!-- Item 01 -->
 
-                <div class="col-lg-7">
-                    <div class="product-description">
-                        <div class="product-category">{{ tocata.artista }}</div>
-                        <div class="product-title">
-                            <h3><a href="#">{{ tocata.nombre }}</a></h3>
-                        </div>
-                        <div class="product-price"><ins>{{ tocata.costo | intcomma }}</ins>
-                        </div>
-                        <div class="product-rate">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-half-o"></i>
-                        </div>
-                        <div class="product-reviews"><a href="#">3 customer reviews</a>
-                        </div>
+            <div class="col-lg-3">
+                <div class="event-info-icon"><i class="fa fa-map-marker-alt fa-2x"></i></div>
+                <div class="event-info-content">
+                    <div class="info-title">LOCATION</div>
+                    <div class="info-description">Avda. Reina Maria Cristina, s/n 08004 Barcelona</div>
+                </div>
+            </div>
+            <!-- Item 02 -->
 
-                        <div class="seperator m-b-10"></div>
-                        <p>{{ tocata.descripción }}</p>
-                        <div class="product-meta">
-
-
-
-                            <p>Tags: <a href="#" rel="tag">Clothing</a>, <a rel="tag" href="#">T-shirts</a>
-                            </p>
-
-
-                        </div>
-                        <div class="seperator m-t-20 m-b-10"></div>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <h6>Select quantity</h6>
-                        <div class="cart-product-quantity">
-                            <div class="quantity m-l-5">
-                                <input type="button" class="minus" value="-">
-                                <input type="text" class="qty" value="1">
-                                <input type="button" class="plus" value="+">
-                            </div>
-                        </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <h6>Add to Cart</h6>
-                             <a class="btn" href="#"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                        </div>
-
-                        <form class="" action="{% url 'pago' %}" method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="tocata_id" value="{{ tocata.id }}">
-                        <div class="col-lg-6">
-                            <h6>Comprar</h6>
-                            <button type="submit" class="btn" name="button"><i class="fa fa-shopping-cart"></i> Pagar</button>
-                        </div>
-                        </form>
-                    </div>
-
+            <div class="col-lg-3">
+                <div class="event-info-icon"><i class="fa fa-group fa-2x media-object"></i></div>
+                <div class="event-info-content">
+                    <div class="info-title">TICKETS</div>
+                    <div class="info-description">1800 Tickets</div>
 
                 </div>
             </div>
+            <!-- Item 03 -->
 
-            <!-- Product additional tabs -->
-            <div class="tabs tabs-folder">
-                    <ul class="nav nav-tabs" id="myTab3" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active show" id="home-tab" data-toggle="tab" href="#home3" role="tab" aria-controls="home" aria-selected="false"><i class="fa fa-align-justify"></i>Description</a></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile3" role="tab" aria-controls="profile" aria-selected="true"><i class="fa fa-info"></i>Additional Info</a></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact3" role="tab" aria-controls="contact" aria-selected="false"><i class="fa fa-star"></i>Reviews</a></a>
-                        </li>
+            <div class="col-lg-3">
+                <div class="event-info-icon"><i class="fa fa-microphone fa-2x"></i></div>
+                <div class="event-info-content">
+                    <div class="info-title">SPEAKERS</div>
+                    <div class="info-description">120 Speakers</div>
+                </div>
+            </div>
+            <!-- Item 04 -->
+        </div>
+    </div>
+</div>
+<!-- end: EVENT INFO BOX -->
 
-                    </ul>
-                    <div class="tab-content" id="myTabContent3">
-                        <div class="tab-pane fade" id="home3" role="tabpanel" aria-labelledby="home-tab">
-                            <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. </p>
-                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>
+<!-- APPLY / REGISTER FORM -->
+<section id="section2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="heading m-b-40">
+                    <h2>MWC EVENT</h2>
+                    <span class="lead">Create amam ipsum dolor sit amet, Beautiful nature, and rare feathers!.</span>
+                </div>
+                <p> The most happiest time of the day!. Morbi sagittis, sem quis lacinia faucibus, orci ipsum gravida tortor, vel interdum mi sapien ut justo. Nulla varius consequat magna, id molestie ipsum volutpat quis. A true story, that never been told!. Fusce id mi diam, non ornare orci. Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel dolor.
+                </p>
+                <p> Ipsum gravida tortor, vel interdum mi sapien ut justo. Nulla varius consequat magna, id molestie ipsum volutpat quis. A true story, that never been told!. Fusce id mi diam, non ornare orci. Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel dolor. Morbi sagittis, sem quis lacinia faucibus.
+                </p>
+                <div class="seperator">EVENT INFO NUMBERS</div>
+                <div class="row">
+                    <div class="col-lg-3">
+
+                        <div class="text-center">
+                            <div class="counter small"> <span data-speed="3000" data-refresh-interval="50" data-to="12416" data-from="600" data-seperator="true"></span> </div>
+                            <p>LINES OF CODE</p>
                         </div>
-                        <div class="tab-pane fade active show" id="profile3" role="tabpanel" aria-labelledby="profile-tab">
-                                <table class="table table-striped table-bordered">
-                                        <tbody>
-                                            <tr>
-                                                <td>Size</td>
-                                                <td>Small, Medium &amp; Large</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Color</td>
-                                                <td>Pink &amp; White</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Waist</td>
-                                                <td>26 cm</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Length</td>
-                                                <td>40 cm</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Chest</td>
-                                                <td>33 inches</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Fabric</td>
-                                                <td>Cotton, Silk &amp; Synthetic</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Warranty</td>
-                                                <td>3 Months</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <div class="text-center">
+                            <div class="counter small"> <span data-speed="4500" data-refresh-interval="23" data-to="365" data-from="100" data-seperator="true"></span> </div>
+                            <p>CUPS OF COFFEE</p>
                         </div>
-                        <div class="tab-pane fade" id="contact3" role="tabpanel" aria-labelledby="contact-tab">
-                                <div class="comments" id="comments">
-                                        <div class="comment_number">
-                                            Reviews <span>(3)</span>
-                                        </div>
+                    </div>
 
-                                        <div class="comment-list">
-                                            <!-- Comment -->
-                                            <div class="comment" id="comment-1">
-                                                <div class="image"><img alt="" src="{% static 'images/blog/author.jpg' %}" class="avatar"></div>
-                                                <div class="text">
-                                                    <div class="product-rate">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-o"></i>
-                                                    </div>
-                                                    <h5 class="name">John Doe</h5>
-                                                    <span class="comment_date">Posted at 15:32h, 06 December</span>
-                                                    <a class="comment-reply-link" href="#">Reply</a>
-                                                    <div class="text_holder">
-                                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- end: Comment -->
-                                            <!-- Comment -->
-                                            <div class="comment" id="comment-1-1">
-                                                <div class="image"><img alt="" src="{% static 'images/blog/author2.jpg' %}" class="avatar"></div>
-                                                <div class="text">
-                                                    <div class="product-rate">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-o"></i>
-                                                    </div>
-                                                    <h5 class="name">John Doe</h5>
-                                                    <span class="comment_date">Posted at 15:32h, 06 December</span>
-                                                    <a class="comment-reply-link" href="#">Reply</a>
-                                                    <div class="text_holder">
-                                                        <p>It is a long established fact that a reader will be distracted by the readable content.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- end: Comment -->
-                                            <!-- Comment -->
-                                            <div class="comment" id="comment-1-2">
-                                                <div class="image"><img alt="" src="{% static 'images/blog/author3.jpg' %}" class="avatar"></div>
-                                                <div class="text">
-                                                    <div class="product-rate">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-o"></i>
-                                                    </div>
-                                                    <h5 class="name">John Doe</h5>
-                                                    <span class="comment_date">Posted at 15:32h, 06 December</span>
-                                                    <a class="comment-reply-link" href="#">Reply</a>
-                                                    <div class="text_holder">
-                                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- end: Comment -->
+                    <div class="col-lg-3">
 
-                                        </div>
-                                    </div>
+                        <div class="text-center">
+                            <div class="counter small"> <span data-speed="3000" data-refresh-interval="12" data-to="114" data-from="50" data-seperator="true"></span> </div>
+                            <p>FINISHED PROJECTS</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <div class="text-center">
+                            <div class="counter small"> <span data-speed="4550" data-refresh-interval="50" data-to="14825" data-from="48" data-seperator="true"></span> </div>
+                            <p>SATISFIED CLIENTS</p>
                         </div>
                     </div>
                 </div>
-                <!-- end: Product additional tabs -->
+            </div>
+            <div class="col-lg-4 col-md-12 text-light p-50 rounded" style="background-color:#111;">
+                <div class="heading p-20 m-b-0">
+                    <h2 class="text-colored">EVENT REGISTER</h2>
+                    <span class="text-light">Create amam ipsum dolor sit amet, Beautiful nature, and rare feathers!.
+                    </span>
+                </div>
+                <form class="widget-contact-form text-center" action="include/event-register-form.php" role="form" method="post">
+                    <div class="form-group m-b-5">
+                        <input type="text" aria-required="true" name="widget-contact-form-name" class="form-control form-control-sm required name" placeholder="Your Name*">
+                    </div>
+                    <div class="form-group m-b-5">
+                        <input type="text" aria-required="true" name="widget-contact-form-phone" class="form-control form-control-sm required phone" placeholder="Your Phone Number*">
+                    </div>
+                    <div class="form-group m-b-5">
+                        <input type="email" aria-required="true" name="widget-contact-form-email" class="form-control form-control-sm required email" placeholder="Your Email">
+                    </div>
+                    <div class="form-group m-b-5">
+                        <select aria-required="true" name="widget-contact-form-ticket-type" class="form-control form-control-sm required ticket-type">
+                            <option selected>Ticket Type</option>
+                            <option>Vip</option>
+                            <option>Elite</option>
+                            <option>Standard</option>
+                        </select>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <select aria-required="true" name="widget-contact-form-day-pass" class="form-control form-control-sm required day-pass">
+                            <option selected>Day Pass</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-block" type="submit" id="form-submit"><i class="fa fa-paper-plane"></i>&nbsp;APPLY NOW</button>
+                </form>
+                <p class="p-20 m-b-0"><b>Note:</b> Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p>
+
+            </div>
+
         </div>
     </div>
 </section>
-<!-- end: SHOP PRODUCT PAGE -->
+<!-- end: APPLY / REGISTER FORM -->
+
+<!-- SCHEDULE -->
+<section>
+    <div class="container">
+
+        <div class="heading m-b-40">
+            <h2>Event Schedule</h2>
+            <span class="lead">Create amam ipsum dolor sit amet, Beautiful nature, and rare feathers!.</span>
+        </div>
+        <div class="tabs p-r-20">
+            <ul class="nav nav-tabs nav-justified text-left" id="myTab">
+                <li class="nav-item"><a href="#day1" class="nav-link active" data-toggle="tab" aria-selected="true"><strong>Day 01</strong> <br>17.10.2015</a></li>
+                <li class="nav-item"><a href="#day2" class="nav-link" data-toggle="tab"><strong>Day 02</strong> <br>18.10.2015</a></li>
+                <li class="nav-item"><a href="#day3" class="nav-link" data-toggle="tab"><strong>Day 03</strong> <br>19.10.2015</a></li>
+                <li class="nav-item"><a href="#day4" class="nav-link" data-toggle="tab"><strong>Day 04</strong> <br>20.10.2015</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="day1" class="tab-pane fade show active">
+
+                    <div class="p-10 border-bottom">
+                        <span><i class="far fa-clock"></i> 09:00 - 10:45</span>
+                        <h5>Juna Doe</h5>
+                        <p class="m-b-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+                    </div>
+                    <div class="p-10 border-bottom">
+                        <span><i class="far fa-clock"></i> 11:00 - 11:45</span>
+                        <h5>Alea Grande</h5>
+                        <p class="m-b-0">Et harum quidem rerum facilis est et expedita distinctio. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                    </div>
+                    <div class="p-10 border-bottom">
+                        <span><i class="far fa-clock"></i> 08:00 - 08:45</span>
+                        <h5>John Smith</h5>
+                        <p class="m-b-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                    </div>
+                </div>
+                <div id="day2" class="tab-pane fade">
+                    <div class="p-10 border-bottom">
+                        <span><i class="far fa-clock"></i> 11:00 - 11:45</span>
+                        <h5>Alea Grande</h5>
+                        <p class="m-b-0">Et harum quidem rerum facilis est et expedita distinctio. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                    </div>
+                    <div class="p-10 border-bottom">
+                        <span><i class="far fa-clock"></i> 08:00 - 08:45</span>
+                        <h5>John Smith</h5>
+                        <p class="m-b-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                    </div>
+
+                    <div class="p-10 border-bottom">
+                        <span><i class="far fa-clock"></i> 09:00 - 10:45</span>
+                        <h5>Juna Doe</h5>
+                        <p class="m-b-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+                    </div>
+                </div>
+                <div id="day3" class="tab-pane fade">
+                    <div class="p-10 border-bottom">
+                        <span><i class="far fa-clock"></i> 08:00 - 08:45</span>
+                        <h5>John Smith</h5>
+                        <p class="m-b-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                    </div>
+                    <div class="p-10 border-bottom">
+                        <span><i class="far fa-clock"></i> 11:00 - 11:45</span>
+                        <h5>Alea Grande</h5>
+                        <p class="m-b-0">Et harum quidem rerum facilis est et expedita distinctio. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                    </div>
+                    <div class="p-10 border-bottom">
+                        <span><i class="far fa-clock"></i> 08:00 - 08:45</span>
+                        <h5>John Smith</h5>
+                        <p class="m-b-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                    </div>
+
+                    <div class="p-10 border-bottom">
+                        <span><i class="far fa-clock"></i> 09:00 - 10:45</span>
+                        <h5>Juna Doe</h5>
+                        <p class="m-b-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+                    </div>
+                </div>
+                <div id="day4" class="tab-pane fade">
+                    <div class="p-10 border-bottom">
+                        <span><i class="far fa-clock"></i> 11:00 - 11:45</span>
+                        <h5>Alea Grande</h5>
+                        <p class="m-b-0">Et harum quidem rerum facilis est et expedita distinctio. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                    </div>
+                    <div class="p-10 border-bottom">
+                        <span><i class="far fa-clock"></i> 08:00 - 08:45</span>
+                        <h5>John Smith</h5>
+                        <p class="m-b-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                    </div>
+
+                    <div class="p-10 border-bottom">
+                        <span><i class="far fa-clock"></i> 09:00 - 10:45</span>
+                        <h5>Juna Doe</h5>
+                        <p class="m-b-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end: SCHEDULE -->
+
+
+<!-- end: CALL TO ACTION -->
+<div class="call-to-action call-to-action-colored background-colored p-t-60 p-b-60 m-b-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10">
+                <h3>Ready to buy POLO Template?</h3>
+                <p>This is a simple hero unit, a simple call-to-action-style component for calling extra attention to featured content.</p>
+            </div>
+            <div class="col-lg-2"> <a href="https://themeforest.net/item/polo-responsive-multipurpose-html5-template/13708923" class="btn btn-light btn-outline">Buy POLO</a> </div>
+        </div>
+    </div>
+</div>
+<!-- end: CALL TO ACTION -->
+
+<!-- SPEAKERS -->
+<section id="section4" class="background-grey">
+
+    <div class="container">
+        <div class="heading">
+            <h2>SPEAKERS</h2>
+            <span class="lead">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</span>
+        </div>
+
+        <div class="row team-members">
+            <div class="col-lg-3">
+                <div class="team-member">
+                    <div class="team-image">
+                        <img src="{% static 'images/team/6.jpg' %}">
+                    </div>
+                    <div class="team-desc">
+                        <h3>Alea Smith</h3>
+                        <span>Software Developer</span>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing tristique hendrerit laoreet. </p>
+                        <div class="align-center">
+                            <a class="btn btn-xs btn-slide btn-light" href="#">
+                                <i class="fab fa-facebook-f"></i>
+                                <span>Facebook</span>
+                            </a>
+                            <a class="btn btn-xs btn-slide btn-light" href="#" data-width="100">
+                                <i class="fab fa-twitter"></i>
+                                <span>Twitter</span>
+                            </a>
+                            <a class="btn btn-xs btn-slide btn-light" href="#" data-width="118">
+                                <i class="fab fa-instagram"></i>
+                                <span>Instagram</span>
+                            </a>
+                            <a class="btn btn-xs btn-slide btn-light" href="mailto:#" data-width="80">
+                                <i class="far fa-envelope"></i>
+                                <span>Mail</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="team-member">
+                    <div class="team-image">
+                        <img src="{% static 'images/team/7.jpg' %}">
+                    </div>
+                    <div class="team-desc">
+                        <h3>Ariol Doe</h3>
+                        <span>Software Developer</span>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing tristique hendrerit laoreet. </p>
+                        <div class="align-center">
+                            <a class="btn btn-xs btn-slide btn-light" href="#">
+                                <i class="fab fa-facebook-f"></i>
+                                <span>Facebook</span>
+                            </a>
+                            <a class="btn btn-xs btn-slide btn-light" href="#" data-width="100">
+                                <i class="fab fa-twitter"></i>
+                                <span>Twitter</span>
+                            </a>
+                            <a class="btn btn-xs btn-slide btn-light" href="#" data-width="118">
+                                <i class="fab fa-instagram"></i>
+                                <span>Instagram</span>
+                            </a>
+                            <a class="btn btn-xs btn-slide btn-light" href="mailto:#" data-width="80">
+                                <i class="far fa-envelope"></i>
+                                <span>Mail</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="team-member">
+                    <div class="team-image">
+                        <img src="{% static 'images/team/8.jpg' %}">
+                    </div>
+                    <div class="team-desc">
+                        <h3>Emma Ross</h3>
+                        <span>Software Developer</span>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing tristique hendrerit laoreet. </p>
+                        <div class="align-center">
+                            <a class="btn btn-xs btn-slide btn-light" href="#">
+                                <i class="fab fa-facebook-f"></i>
+                                <span>Facebook</span>
+                            </a>
+                            <a class="btn btn-xs btn-slide btn-light" href="#" data-width="100">
+                                <i class="fab fa-twitter"></i>
+                                <span>Twitter</span>
+                            </a>
+                            <a class="btn btn-xs btn-slide btn-light" href="#" data-width="118">
+                                <i class="fab fa-instagram"></i>
+                                <span>Instagram</span>
+                            </a>
+                            <a class="btn btn-xs btn-slide btn-light" href="mailto:#" data-width="80">
+                                <i class="far fa-envelope"></i>
+                                <span>Mail</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="team-member">
+                    <div class="team-image">
+                        <img src="{% static 'images/team/9.jpg' %}">
+                    </div>
+                    <div class="team-desc">
+                        <h3>Victor Loda</h3>
+                        <span>Software Developer</span>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing tristique hendrerit laoreet. </p>
+                        <div class="align-center">
+                            <a class="btn btn-xs btn-slide btn-light" href="#">
+                                <i class="fab fa-facebook-f"></i>
+                                <span>Facebook</span>
+                            </a>
+                            <a class="btn btn-xs btn-slide btn-light" href="#" data-width="100">
+                                <i class="fab fa-twitter"></i>
+                                <span>Twitter</span>
+                            </a>
+                            <a class="btn btn-xs btn-slide btn-light" href="#" data-width="118">
+                                <i class="fab fa-instagram"></i>
+                                <span>Instagram</span>
+                            </a>
+                            <a class="btn btn-xs btn-slide btn-light" href="mailto:#" data-width="80">
+                                <i class="far fa-envelope"></i>
+                                <span>Mail</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- end: SPEAKERS -->
+
+<!-- SUBSCRIBE -->
+<section class="text-center text-light p-t-150 p-b-150" data-bg-image="{% static 'homepages/event/images/parallax/1.jpg' %}">
+    <div class="bg-overlay"></div>
+    <div class="container">
+        <div class="col-lg-6 center">
+            <div data-animate="fadeInUp" class="text-center">
+                <div class="text-medium">SUBSCRIBE</div>
+            </div>
+
+            <form class="widget-subscribe-form" novalidate action="include/subscribe-form.php" role="form" method="post">
+
+                <div class="input-group input-group-lg">
+                    <input type="email" required name="widget-subscribe-form-email" class="form-control required email" placeholder="Enter your Email">
+                    <span class="input-group-btn">
+                        <button type="submit" id="widget-subscribe-submit-button" class="btn"><i class="fa fa-paper-plane"></i></button>
+                    </span> </div>
+            </form>
+
+            <small>Stay informed on our latest news!</small>
+
+        </div>
+    </div>
+</section>
+<!-- end: SUBSCRIBE -->
+
+<!-- BLOG -->
+<section class="background-grey">
+    <div id="blog">
+        <div class="container">
+
+
+            <div class="heading">
+                <h2>LATEST NEWS</h2>
+                <span class="lead">Our awesome clients we've had the pleasure to work with! </span>
+            </div>
+
+            <!-- Blog post-->
+            <div id="blog">
+                <div class="container">
+                    <!-- Blog -->
+                    <div id="blog" class="grid-layout post-3-columns m-b-30" data-item="post-item">
+
+                        <!-- Post item-->
+                        <div class="post-item border">
+                            <div class="post-item-wrap">
+                                <div class="post-image">
+                                    <a href="#">
+                                        <img alt="" src="{% static 'images/blog/12.jpg' %}">
+                                    </a>
+                                    <span class="post-meta-category"><a href="">Lifestyle</a></span>
+                                </div>
+                                <div class="post-item-description">
+                                    <span class="post-meta-date"><i class="fa fa-calendar-o"></i>Jan 21, 2017</span>
+                                    <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Comments</a></span>
+                                    <h2><a href="#">Standard post with a single image
+                                        </a></h2>
+                                    <p>Curabitur pulvinar euismod ante, ac sagittis ante posuere ac. Vivamus luctus commodo dolor porta feugiat. Fusce at velit id ligula pharetra laoreet.</p>
+
+                                    <a href="#" class="item-link">Read More <i class="fa fa-arrow-right"></i></a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end: Post item-->
+
+                        <!-- Post item-->
+                        <div class="post-item border">
+                            <div class="post-item-wrap">
+                                <div class="post-image">
+                                    <a href="#">
+                                        <img alt="" src="{% static 'images/blog/17.jpg' %}">
+                                    </a>
+                                    <span class="post-meta-category"><a href="">Science</a></span>
+                                </div>
+                                <div class="post-item-description">
+                                    <span class="post-meta-date"><i class="fa fa-calendar-o"></i>Jan 21, 2017</span>
+                                    <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Comments</a></span>
+
+                                    <h2><a href="#">Standard post with a single image
+                                        </a></h2>
+                                    <p>Curabitur pulvinar euismod ante, ac sagittis ante posuere ac. Vivamus luctus commodo dolor porta feugiat. Fusce at velit id ligula pharetra laoreet.</p>
+
+                                    <a href="#" class="item-link">Read More <i class="fa fa-arrow-right"></i></a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end: Post item-->
+
+
+                        <!-- Post item-->
+                        <div class="post-item border">
+                            <div class="post-item-wrap">
+                                <div class="post-image">
+                                    <a href="#">
+                                        <img alt="" src="{% static 'images/blog/18.jpg' %}">
+                                    </a>
+                                    <span class="post-meta-category"><a href="">Science</a></span>
+                                </div>
+                                <div class="post-item-description">
+                                    <span class="post-meta-date"><i class="fa fa-calendar-o"></i>Jan 21, 2017</span>
+                                    <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Comments</a></span>
+
+                                    <h2><a href="#">Standard post with a single image
+                                        </a></h2>
+                                    <p>Curabitur pulvinar euismod ante, ac sagittis ante posuere ac. Vivamus luctus commodo dolor porta feugiat. Fusce at velit id ligula pharetra laoreet.</p>
+
+                                    <a href="#" class="item-link">Read More <i class="fa fa-arrow-right"></i></a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end: Post item-->
+                    </div>
+                </div>
+            </div>
+            <!-- end: Blog post-->
+        </div>
+
+
+
+    </div>
+</section>
+<!-- end: BLOG -->
+
+
+
+
+<!-- MAP -->
+<section id="section6" class="no-padding">
+    <!-- Google Map -->
+    <div class="map" data-latitude="-37.817240" data-longitude="144.955826" data-style="light" data-info="Hello from &lt;br&gt; Inspiro Themes"></div>
+    <!-- end: Google Map -->
+</section>
+<!-- end: MAP -->
+
 {% endblock %}

@@ -1,40 +1,34 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="author" content="INSPIRO" />
-    <meta name="description" content="Themeforest Template Polo">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />    <meta name="author" content="INSPIRO" />
+	<meta name="description" content="Themeforest Template Polo, html template">
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Document title -->
-    <title>POLO | The Multi-Purpose HTML5 Template</title>
+    <title>TOCA {% block title %}{% endblock %}</title>
     <!-- Stylesheets & Fonts -->
     <link href="{% static 'css/plugins.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
-    <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
 </head>
-
 <body>
-<!-- Body Inner -->
-<div class="body-inner">
+    <!-- Body Inner -->
+    <div class="body-inner">
 {% block content %}
 
 {% endblock %}
-</div>
-<!-- end: Body Inner -->
+    </div>
+    <!-- end: Body Inner -->
 
-<!-- Scroll top -->
-<a id="scrollTop"><i class="icon-chevron-up1"></i><i class="icon-chevron-up1"></i></a>
+    <!-- Scroll top -->
+    <a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
+    <!--Plugins-->
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/plugins.js' %}"></script>
 
-<!--Plugins-->
-<script src="{% static 'js/jquery.js' %}"></script>
-<script src="{% static 'js/plugins.js' %}"></script>
-
-<!--Template functions-->
-<script src="{% static 'js/functions.js' %}"></script>
-<script src="{% static 'js/custom.js' %}"></script>
-
+    <!--Template functions-->
+    <script src="{% static 'js/functions.js' %}"></script>
 </body>
-
 </html>

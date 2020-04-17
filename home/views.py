@@ -5,17 +5,38 @@ from tocata.models import Tocata
 from artista.models import Artista
 
 from django.db.models import Q
+from datetime import datetime
+
+from toca.parametros import parToca
 
 # Create your views here.
 def index(request):
 
     # tocatas = Tocata.objects.order_by('-fecha', '-hora').filter(estado='PU')[:3]
-    tocatas = Tocata.objects.all()[:3]
-    artistas = Artista.objects.all()[:3]
+    hoy = datetime.today()
+    tocatas = Tocata.objects.all()[:parToca['muestraTocatas']]
+    for tocata in tocatas:
+        diff = hoy - tocata.fecha_crea.replace(tzinfo=None)
+        if diff.days <= parToca['diasNuevoTocata']:
+            tocata.nuevo = 'SI'
+        else:
+            tocata.nuevo = 'NO'
+        tocata.evaluacionRange = range(tocata.evaluacion)
+        tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
+
+    artistas = Artista.objects.all()[:parToca['muestraArtistas']]
+    for artista in artistas:
+        diff = hoy - artista.fecha_crea.replace(tzinfo=None)
+        if diff.days <= parToca['diasNuevoArtista']:
+            artista.nuevo = 'SI'
+        else:
+            artista.nuevo = 'NO'
+
     context = {
         'tocatas': tocatas,
         'artistas': artistas,
     }
+
     return render(request, 'home/index.html', context)
 
 def about(request):

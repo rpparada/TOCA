@@ -4,45 +4,31 @@ from artista.models import Artista
 from lugar.models import Lugar
 from django.contrib.auth.models import User
 
+from django_resized import ResizedImageField
+
+from toca.parametros import parToca, parTocatas
+
 # Create your models here.
 class Tocata(models.Model):
-    cerrada = 'CE'
-    abierta = 'AB'
-    lugar_def_tipos = [
-        (cerrada,'Cerrada'),
-        (abierta,'Abierta'),
-    ]
-
-    inicial = 'IN'
-    publicado = 'PU'
-    suspendido = 'SU'
-    aplazado = 'AP'
-    confirmado = 'CN'
-    completado = 'CM'
-    estado_tipos = [
-        (inicial, 'Inicial'),
-        (publicado, 'Publicado'),
-        (suspendido, 'Suspendido'),
-        (aplazado, 'Aplazado'),
-        (confirmado, 'Confirmado'),
-        (completado, 'Completado'),
-    ]
 
     artista = models.ForeignKey(Artista, on_delete=models.DO_NOTHING)
     nombre = models.CharField(max_length=200)
     lugar = models.ForeignKey(Lugar, on_delete=models.DO_NOTHING)
     descripción = models.TextField(blank=True)
-    costo = models.IntegerField()
-    fecha = models.DateField()
-    hora = models.TimeField()
-    fecha_actu = models.DateTimeField(blank=True)
+    costo = models.IntegerField(default=0)
+    fecha = models.DateField(default=datetime.now)
+    hora = models.TimeField(default=datetime.now)
+    fecha_actu = models.DateTimeField(default=datetime.now, blank=True)
     fecha_crea = models.DateTimeField(default=datetime.now, blank=True)
-    lugar_def = models.CharField(max_length=2, choices=lugar_def_tipos,default=cerrada)
-    asistentes_total = models.IntegerField()
-    asistentes_min = models.IntegerField()
-    asistentes_max = models.IntegerField()
-    flayer = models.ImageField(upload_to='fotos/flayers/%Y/%m/%d/', blank=True)
-    estado = models.CharField(max_length=2, choices=estado_tipos,default=inicial)
+    lugar_def = models.CharField(max_length=2, choices=parTocatas['lugar_def_tipos'],default=parToca['cerrada'])
+    asistentes_total = models.IntegerField(default=0)
+    asistentes_min = models.IntegerField(default=0)
+    asistentes_max = models.IntegerField(default=0)
+    #flayer = models.ImageField(upload_to='fotos/flayers/%Y/%m/%d/', blank=True)
+    flayer_1920_1280 = ResizedImageField(size=[1920, 1280],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'])
+    flayer_380_507 = ResizedImageField(size=[380, 507],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'])
+    evaluacion = models.IntegerField(choices=parToca['valoresEvaluacion'],default=parToca['defaultEvaluacion'])
+    estado = models.CharField(max_length=2, choices=parTocatas['estado_tipos'],default=parToca['inicial'])
 
     def __str__(self):
         return self.nombre
