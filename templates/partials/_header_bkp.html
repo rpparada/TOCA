@@ -1,0 +1,77 @@
+{% load static %}
+
+<!-- Header -->
+<header id="header" data-transparent="true" class="dark">
+    <div class="header-inner">
+        <div class="container">
+
+            <!--Logo-->
+            <div id="logo">
+                <a href="{% url 'index' %}" class="logo" data-src-dark="{% static 'images/logo-dark.png' %}">
+                    <img src="{% static 'images/logo.png' %}" alt="Polo Logo">
+                </a>
+            </div>
+            <!--End: Logo-->
+
+            {% include 'partials/_busqueda.html' %}
+
+            <!--Header Extras-->
+            <div class="header-extras">
+                <ul>
+                    <li>
+                        <!--search icon-->
+                        <a id="btn-search" href="#"> <i class="icon-search1"></i></a>
+                        <!--end: search icon-->
+                    </li>
+                </ul>
+            </div>
+            <!--end: Header Extras-->
+
+            <!--Navigation Resposnive Trigger-->
+            <div id="mainMenu-trigger">
+                <button class="lines-button x"> <span class="lines"></span> </button>
+            </div>
+            <!--end: Navigation Resposnive Trigger-->
+
+            <!--Navigation-->
+            <div id="mainMenu" class="light">
+                <div class="container">
+                    <nav>
+                        <ul>
+
+                          <li><a href="{% url 'index' %}">Home</a></li>
+
+                          {% if tocatas %}
+                          <li class="dropdown"><a href="{% url 'tocatas' %}">Tocatas</a>
+                            <ul class="dropdown-menu">
+                               {% for tocata in tocatas %}
+                                <li><a href="{% url 'tocata' tocata.id %}">{{ tocata.nombre }}</a></li>
+                               {% endfor %}
+                               <li><a href="{% url 'tocatas' %}">Mas ...</a></li>
+                            </ul>
+                          </li>
+                          {% endif %}
+
+                          {% if artistas %}
+                          <li><a href="{% url 'artistas' %}">Artistas</a>
+                            <ul class="dropdown-menu">
+                               {% for artista in artistas %}
+                                <li><a href="{% url 'artista' artista.id %}">{{ artista.nombre }}</a></li>
+                               {% endfor %}
+                              <li><a href="{% url 'artistas' %}">Mas ...</a></li>
+                            </ul>
+                          </li>
+                          {% endif %}
+
+                          <li><a href="{% url 'about' %}">Equipo Toca</a></li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!--end: Navigation-->
+
+        </div>
+    </div>
+</header>
+<!-- end: Header -->

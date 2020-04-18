@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %} | HOME{% endblock %}
+{% block content %}
+
+<!-- Inspiro Slider -->
+<div id="slider" class="inspiro-slider slider-fullscreen arrows-large arrows-creative dots-creative">
+
+    <!-- Slide 1 -->
+    <div class="slide background-overlay-gradient kenburns background-image" style="background-image:url('{% static 'images/jefferson-santos-fCEJGBzAkrU-unsplash.jpg' %}');">
+        <div class="container">
+            <div class="slide-captions text-center text-light">
+                <!-- Captions -->
+                <h1>TOCA</h1>
+                <p>Comparte y disfruta de la musica de tus artistas favoritos en un ambiente intimo </p>
+                <a href="#welcome" class="btn scroll-to" >Explore more</a>
+                <!-- end: Captions -->
+            </div>
+        </div>
+    </div>
+    <!-- end: Slide 1 -->
+
+    <!-- Slide 2 -->
+    <div class="slide background-overlay-gradient kenburns background-image" style="background-image:url('{% static 'images/revolt-DGtNhVkNiyE-unsplash.jpg' %}');">
+        <div class="container">
+            <div class="slide-captions text-left text-light">
+                <!-- Captions -->
+                <h1>200+ Laytout Demos</h1>
+                <p class="text-small">POLO is packed with 200+ pre-made layouts that allow you to quickly jumpstart your project. Completely customizable for creating your own designs.</p>
+                <a href="#welcome" class="btn scroll-to" >Explore more</a>
+                <!-- end: Captions -->
+            </div>
+        </div>
+    </div>
+    <!-- end: Slide 2 -->
+
+</div>
+<!--end: Inspiro Slider -->
+
+<!-- Alertas -->
+{% include 'partials/_alerts.html' %}
+
+<!-- Shop products -->
+<section>
+    <div class="container">
+        <div class="row m-b-20">
+            <div class="col-lg-6 p-t-10 m-b-20">
+                <h3 class="m-b-20">A Monochromatic Spring ’15</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sit, exercitationem, consequuntur, assumenda iusto eos commodi alias.</p>
+            </div>
+        </div>
+
+        <!--Product list-->
+        <div class="shop">
+            <div class="grid-layout grid-3-columns" data-item="grid-item">
+              {% if tocatas %}
+               {% for tocata in tocatas %}
+               <div class="grid-item">
+                   <div class="product">
+                       <div class="product-image">
+                           <a href="{% url 'tocata' tocata.id %}"><img alt="Shop product image!" src="{{ tocata.flayer.url }}">
+                           </a>
+                           <a href="{% url 'tocata' tocata.id %}"><img alt="Shop product image!" src="{{ tocata.flayer.url }}">
+                           </a>
+                           <span class="product-new">NEW</span>
+                           <span class="product-wishlist">
+<a href="#"><i class="fa fa-heart"></i></a>
+</span>
+                           <div class="product-overlay">
+                               <a href="shop-product-ajax-page.html" data-lightbox="ajax">Quick View</a>
+                           </div>
+                       </div>
+
+                       <div class="product-description">
+                           <div class="product-category">{{ tocata.artista }}</div>
+                           <div class="product-title">
+                               <h3><a href="{% url 'tocata' tocata.id %}">{{ tocata.nombre }}</a></h3>
+                           </div>
+                           <div class="product-price"><ins>{{ tocata.costo | intcomma }}</ins>
+                           </div>
+                           <div class="product-rate">
+                               <i class="fa fa-star"></i>
+                               <i class="fa fa-star"></i>
+                               <i class="fa fa-star"></i>
+                               <i class="fa fa-star"></i>
+                               <i class="fa fa-star-half-o"></i>
+                           </div>
+                           <div class="product-reviews"><a href="#">6 customer reviews</a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               {% endfor %}
+              {% else %}
+              <!-- 500 PAGE -->
+              <section class="m-t-80 p-b-150">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="page-error-404 text-center">Error</div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="text-left">
+                        <h1 class="text-medium">Error en el servidor</h1>
+                        <p class="lead">Lo lamentamos, algo esta malo en nuestro servidor.</p><div class="seperator m-t-20 m-b-20"></div><button onclick="window.location.reload()" class="btn" type="button">Reload Page</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <!-- end:  500 PAGE -->
+              {% endif %}
+            </div>
+            <hr>
+        </div>
+        <!--End: Product list-->
+
+    </div>
+</section>
+
+<!-- end: Shop products -->
+
+{% endblock %}
