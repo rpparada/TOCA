@@ -17,6 +17,8 @@ class Artista(models.Model):
     foto_525_350 = ResizedImageField(size=[525, 350],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'])
 
     descripción = models.TextField(blank=True)
+    habilidades = models.TextField(blank=True)
+    
     email = models.EmailField(max_length=254, blank=True)
     telefono_contacto = models.CharField(max_length=200, blank=True)
 

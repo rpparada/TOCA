@@ -12,26 +12,7 @@ from toca.parametros import parToca
 # Create your views here.
 def index(request):
 
-    # tocatas = Tocata.objects.order_by('-fecha', '-hora').filter(estado='PU')[:3]
-    hoy = datetime.today()
-    tocatas = Tocata.objects.all()[:parToca['muestraTocatas']]
-    for tocata in tocatas:
-        diff = hoy - tocata.fecha_crea.replace(tzinfo=None)
-        if diff.days <= parToca['diasNuevoTocata']:
-            tocata.nuevo = 'SI'
-        else:
-            tocata.nuevo = 'NO'
-        tocata.evaluacionRange = range(tocata.evaluacion)
-        tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
-
-    artistas = Artista.objects.all()[:parToca['muestraArtistas']]
-    for artista in artistas:
-        diff = hoy - artista.fecha_crea.replace(tzinfo=None)
-        if diff.days <= parToca['diasNuevoArtista']:
-            artista.nuevo = 'SI'
-        else:
-            artista.nuevo = 'NO'
-
+    tocatas, artistas = getTocatasArtistasHeadIndex();
     context = {
         'tocatas': tocatas,
         'artistas': artistas,
@@ -66,3 +47,26 @@ def busqueda(request):
     }
 
     return render(request, 'home/busqueda.html', context)
+
+def getTocatasArtistasHeadIndex():
+
+        hoy = datetime.today()
+        tocatas = Tocata.objects.all()[:parToca['muestraTocatas']]
+        for tocata in tocatas:
+            diff = hoy - tocata.fecha_crea.replace(tzinfo=None)
+            if diff.days <= parToca['diasNuevoTocata']:
+                tocata.nuevo = 'SI'
+            else:
+                tocata.nuevo = 'NO'
+            tocata.evaluacionRange = range(tocata.evaluacion)
+            tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
+
+        artistas = Artista.objects.all()[:parToca['muestraArtistas']]
+        for artista in artistas:
+            diff = hoy - artista.fecha_crea.replace(tzinfo=None)
+            if diff.days <= parToca['diasNuevoArtista']:
+                artista.nuevo = 'SI'
+            else:
+                artista.nuevo = 'NO'
+
+        return tocatas, artistas

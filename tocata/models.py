@@ -24,7 +24,6 @@ class Tocata(models.Model):
     asistentes_total = models.IntegerField(default=0)
     asistentes_min = models.IntegerField(default=0)
     asistentes_max = models.IntegerField(default=0)
-    #flayer = models.ImageField(upload_to='fotos/flayers/%Y/%m/%d/', blank=True)
     flayer_1920_1280 = ResizedImageField(size=[1920, 1280],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'])
     flayer_380_507 = ResizedImageField(size=[380, 507],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'])
     evaluacion = models.IntegerField(choices=parToca['valoresEvaluacion'],default=parToca['defaultEvaluacion'])
