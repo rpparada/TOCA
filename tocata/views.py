@@ -1,28 +1,47 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
+from django.core.mail import send_mail
+from django.contrib import messages
+
+from datetime import datetime
+import operator
+
 from .models import Tocata, CompraTocata
 from artista.models import Artista
 from lugar.models import Lugar
-from django.db.models import Q
-
-from django.core.mail import send_mail
-
-from django.contrib import messages
-
 from home.views import getTocatasArtistasHeadIndex
+from toca.parametros import parToca
 
 # Create your views here.
 def tocatas(request):
 
-    tocatas = Tocata.objects.order_by('-fecha', '-hora')
+    toc_head, art_head = getTocatasArtistasHeadIndex()
 
-    paginador = Paginator(tocatas, 6)
+    hoy = datetime.today()
+    tocatas = Tocata.objects.all()
+    for tocata in tocatas:
+        diff = hoy - tocata.fecha_crea.replace(tzinfo=None)
+        if diff.days <= parToca['diasNuevoTocata']:
+            tocata.nuevo = 'SI'
+        else:
+            tocata.nuevo = 'NO'
+        tocata.evaluacionRange = range(tocata.evaluacion)
+        tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
+
+    paginador = Paginator(tocatas, parToca['tocatas_pag'])
     pagina = request.GET.get('page')
     pagina_tocatas = paginador.get_page(pagina)
 
+    tocatas_evaluacion = sorted(tocatas, key=operator.attrgetter('evaluacion'), reverse=True)
+
     context = {
-        'tocatas': pagina_tocatas
+        'tocatas_vista': pagina_tocatas,
+        'tocatas': toc_head,
+        'artistas': art_head,
+        'tocatas_evaluacion': tocatas_evaluacion[:3],
     }
+
     return render(request, 'tocata/tocatas.html', context)
 
 def tocata(request, tocata_id):
@@ -42,6 +61,8 @@ def tocata(request, tocata_id):
     }
     return render(request, 'tocata/tocata.html', context)
 
+
+# Cambiar a aplicacion de pago
 def mediopago(request):
 
     if request.user.is_authenticated:

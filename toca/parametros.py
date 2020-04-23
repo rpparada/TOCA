@@ -28,6 +28,8 @@ parToca = {
     'aplazado': 'AP',
     'confirmado': 'CN',
     'completado': 'CM',
+    # Paginacion tocatas_vista
+    'tocatas_pag': 4,
 }
 
 parArtistas = {

@@ -32,6 +32,7 @@ class Tocata(models.Model):
     def __str__(self):
         return self.nombre
 
+# Mover estos a una nueva aplicacione para pagos
 class MediosDePago(models.Model):
 
     nombre_proveedor = models.CharField(max_length=200)
