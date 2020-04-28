@@ -16,7 +16,7 @@ from toca.parametros import parToca
 # Create your views here.
 def tocatas(request):
 
-    toc_head, art_head = getTocatasArtistasHeadIndex()
+    toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
 
     hoy = datetime.today()
     tocatas = Tocata.objects.all()
@@ -37,9 +37,10 @@ def tocatas(request):
 
     context = {
         'tocatas_vista': pagina_tocatas,
-        'tocatas': toc_head,
-        'artistas': art_head,
+        'tocatas_h': toc_head[:3],
+        'artistas_h': art_head[:3],
         'tocatas_evaluacion': tocatas_evaluacion[:3],
+        'usuario': usuario,
     }
 
     return render(request, 'tocata/tocatas.html', context)
@@ -56,8 +57,8 @@ def tocata(request, tocata_id):
 
     context = {
         'tocata_vista': tocata,
-        'tocatas': toc_head,
-        'artistas': art_head,
+        'tocatas_h': toc_head[:3],
+        'artistas_h': art_head[:3],
     }
     return render(request, 'tocata/tocata.html', context)
 

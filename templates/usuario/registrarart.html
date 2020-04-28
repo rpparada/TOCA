@@ -1,7 +1,7 @@
 {% extends "base-without-header.html" %}
 {% load static %}
 {% load humanize %}
-{% block title %} | REGISTRAR{% endblock %}
+{% block title %} | REGISTRAR ARTISTAS{% endblock %}
 {% block content %}
 
 <!-- Section -->
@@ -17,13 +17,13 @@
             </div>
             <div class="row">
                 <div class="col-lg-6 center p-40 background-white b-r-6">
-                    <form class="form-transparent-grey" action="{% url 'registrar' %}" method="POST">
+                    <form class="form-transparent-grey" action="{% url 'registrarart' %}" method="POST">
                       {% csrf_token %}
                       {{ form.non_field_errors }}
                       {{ usuario_form.non_field_errors }}
                         <div class="row">
                             <div class="col-lg-12">
-                                <h3>Registrate</h3>
+                                <h3>Registrate - Artistas</h3>
                                 <p>Por favor, completa la información requerida</p>
                             </div>
                             <div class="col-lg-6 form-group">

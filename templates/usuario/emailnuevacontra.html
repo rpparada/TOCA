@@ -1,0 +1,40 @@
+{% extends "base-without-header.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} | NUEVA CONTRASEÑA {% endblock %}
+{% block content %}
+
+
+<!-- Section -->
+{% include 'partials/_alerts.html' %}
+
+<section class="fullscreen" data-bg-parallax="{% static 'images/pages/1.jpg' %}">
+    <div class="container">
+      <div>
+        <div class="text-center m-b-30">
+            <a href="{% url 'index' %}" class="logo">
+                <img src="{% static 'images/logo-dark.png' %}" alt="Polo Logo">
+            </a>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 offset-3">
+                <h2 class="text-center">¿Olvidate tu Contraseña?</h2>
+                <form class="form-validation">
+                    <div class="form-group">
+                        <p class="center">Para recibir una nueva contraseña, ingresa tu email.</p>
+                        <input type="email" name="email" class="form-control form-white placeholder" placeholder="Ingresa tu email..." required>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn">Recuperar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+      </div>
+    </div>
+</section>
+<!-- end: Section -->
+
+{% endblock %}

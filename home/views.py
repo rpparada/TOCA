@@ -3,6 +3,7 @@ from django.http import HttpResponse
 
 from tocata.models import Tocata
 from artista.models import Artista
+from usuario.models import Usuario
 
 from django.db.models import Q
 from datetime import datetime
@@ -12,10 +13,14 @@ from toca.parametros import parToca
 # Create your views here.
 def index(request):
 
-    tocatas, artistas = getTocatasArtistasHeadIndex();
+    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+
     context = {
         'tocatas': tocatas,
         'artistas': artistas,
+        'tocatas_h': tocatas[:3],
+        'artistas_h': artistas[:3],
+        'usuario': usuario,
     }
 
     return render(request, 'home/index.html', context)
@@ -48,7 +53,7 @@ def busqueda(request):
 
     return render(request, 'home/busqueda.html', context)
 
-def getTocatasArtistasHeadIndex():
+def getTocatasArtistasHeadIndex(request):
 
         hoy = datetime.today()
         tocatas = Tocata.objects.all()[:parToca['muestraTocatas']]
@@ -69,4 +74,9 @@ def getTocatasArtistasHeadIndex():
             else:
                 artista.nuevo = 'NO'
 
-        return tocatas, artistas
+        if request.user.is_authenticated:
+            usuario = Usuario.objects.filter(user=request.user)[0]
+        else:
+            usuario = None
+
+        return tocatas, artistas, usuario

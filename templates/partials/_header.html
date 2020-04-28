@@ -36,11 +36,11 @@
                         <ul>
                             <li><a href="{% url 'index' %}">Home</a></li>
 
-                            {% if tocatas %}
+                            {% if tocatas_h %}
                             <li class="dropdown"><a href="{% url 'tocatas' %}">Tocatas</a>
                                 <ul class="dropdown-menu">
-                                  {% for tocata in tocatas %}
-                                    <li><a href="{% url 'tocata' tocata.id %}">{{ tocata.nombre }}
+                                  {% for tocata_h in tocatas_h %}
+                                    <li><a href="{% url 'tocata' tocata_h.id %}">{{ tocata_h.nombre }}
                                       {% if tocata.nuevo == 'SI' %}
                                       <span class="badge badge-danger">NEW</span></a></li>
                                       {% endif %}
@@ -50,11 +50,11 @@
                             </li>
                             {% endif %}
 
-                            {% if artistas %}
+                            {% if artistas_h %}
                             <li class="dropdown"><a href="{% url 'artistas' %}">Artistas</a>
                                 <ul class="dropdown-menu">
-                                  {% for artista in artistas %}
-                                    <li><a href="{% url 'artista' artista.id %}">{{ artista.nombre }}
+                                  {% for artista_h in artistas_h %}
+                                    <li><a href="{% url 'artista' artista_h.id %}">{{ artista_h.nombre }}
                                       {% if artista.nuevo == 'SI' %}
                                       <span class="badge badge-danger">NEW</span></a></li>
                                       {% endif %}
@@ -65,17 +65,26 @@
                             {% endif %}
 
                             {% if user.is_authenticated %}
-                            <li class="dropdown"><a href="{% url 'cuenta' %}">{{ user.username }}</a>
-                                <ul class="dropdown-menu">
-                                  <li><a href="{% url 'cuenta' %}">Editar</a></li>
-                                  <li><a href="javascript:{document.getElementById('salir').submit()}">Salir</a>
-                                    <form class="" id="salir" action="{% url 'salir' %}" method="POST">
-                                      {% csrf_token %}
-                                      <input type="hidden">
-                                    </form>
-                                  </li>
-                                </ul>
-                            </li>
+                              {% if usuario.es_artista %}
+                              <li class="dropdown"><a href="{% url 'cuentaart' %}">{{ user.username }}</a>
+                              {% else %}
+                              <li class="dropdown"><a href="{% url 'cuenta' %}">{{ user.username }}</a>
+                              {% endif %}
+                                  <ul class="dropdown-menu">
+                                    {% if usuario.es_artista %}
+                                    <li><a href="{% url 'cuentaart' %}">Editar</a></li>
+                                    {% else %}
+                                    <li><a href="{% url 'cuenta' %}">Editar</a></li>
+                                    {% endif %}
+                                    <li><a href="{% url 'cambiocontra' %}">Cambiar contraseña</a></li>
+                                    <li><a href="javascript:{document.getElementById('salir').submit()}">Salir</a>
+                                      <form class="" id="salir" action="{% url 'salir' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden">
+                                      </form>
+                                    </li>
+                                  </ul>
+                              </li>
                             {% else %}
                             <li class="dropdown"><a>Usuario</a>
                                 <ul class="dropdown-menu">
@@ -84,7 +93,7 @@
                                 </ul>
                             </li>
                             {% endif %}
-                            
+
                         </ul>
                     </nav>
                 </div>

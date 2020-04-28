@@ -5,38 +5,33 @@
 {% block content %}
 
 <!-- Inspiro Slider -->
-<div id="slider" class="inspiro-slider slider-fullscreen  dots-creative" data-height-xs="360">
+<div id="slider" class="inspiro-slider slider-fullscreen dots-creative" data-height-xs="360">
     <!-- Slide 1 -->
-    <div class="slide" data-bg-image="{% static 'video/create/create.jpg' %}">
+    <div class="slide kenburns" style="background-image:url('{% static 'images/slider/100.jpg' %}');">
         <div class="bg-overlay"></div>
         <div class="container">
-            <div class="slide-captions">
+            <div class="slide-captions text-center text-light">
                 <!-- Captions -->
-                <h2>Pixel Perfection</h2>
-                <h4 class="m-b-40">Set your goals high, and don't stop till you get there.</h4>
-                <!--
-                <button type="button" class="btn btn-light"><span class="btn-label"><i class="fa fa-check"></i></span>Explore more</button> -->
+                <span class="strong">W
+                    ITH POLO TEMPLATE</span>
+                <h2 class="text-dark">Create Your <br>Awesome Website With Ease</h2>
+                <a class="btn" href="#">Purchase Now</a>
+                <a class="btn btn-light">Purchase</a>
                 <!-- end: Captions -->
             </div>
-
-        </div>
-        <div id="scroll-down" class="scrolldown-animation scrolldown-bottom">
-            <a href="#about" class="scroll-to"><img alt="" src="{% static 'images/scrolldown.png' %}">
-            </a>
         </div>
     </div>
     <!-- end: Slide 1 -->
-
     <!-- Slide 2 -->
-    <div class="slide" data-bg-video="{% static 'video/create/create.mp4' %}">
+    <div class="slide kenburns" style="background-image:url('{% static 'images/slider/103.jpg' %}');">
         <div class="bg-overlay"></div>
         <div class="container">
-            <div class="slide-captions">
+            <div class="slide-captions text-center text-light">
                 <!-- Captions -->
-                <h2>Crafted Carefully</h2>
-                <h4 class="m-b-40">Set your goals high, and don't stop till you get there.</h4>
-                <!--
-                <button type="button" class="btn btn-light btn-outline"><span class="btn-label"><i class="fa fa-check"></i></span>Explore more</button> -->
+                <span class="strong">WITH POLO TEMPLATE</span>
+                <h2 class="text-dark">Explore The <br>New World of Creativity</h2>
+                <a class="btn" href="#">Purchase Now</a>
+                <a class="btn btn-light">Purchase</a>
                 <!-- end: Captions -->
             </div>
         </div>
@@ -45,43 +40,8 @@
 </div>
 <!--end: Inspiro Slider -->
 
-<!-- DELIVERY INFO -->
-<section class="background-grey p-t-40 p-b-0">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="icon-box effect small clean">
-                    <div class="icon">
-                        <a href="#"><i class="fa fa-gift"></i></a>
-                    </div>
-                    <h3>Free shipping on orders $60+</h3>
-                    <p>Order more than 60$ and you will get free shippining Worldwide. More info.</p>
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="icon-box effect small clean">
-                    <div class="icon">
-                        <a href="#"><i class="fa fa-plane"></i></a>
-                    </div>
-                    <h3>Worldwide delivery</h3>
-                    <p>We deliver to the following countries: USA, Canada, Europe, Australia</p>
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="icon-box effect small clean">
-                    <div class="icon">
-                        <a href="#"><i class="fa fa-history"></i></a>
-                    </div>
-                    <h3>60 days money back guranty!</h3>
-                    <p>Not happy with our product, feel free to return it, we will refund 100% your money!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- end: DELIVERY INFO -->
+<!-- Alertas -->
+{% include 'partials/_alerts.html' %}
 
 <!-- Proximas Tocatas CAROUSEL -->
 {% if tocatas %}
@@ -91,7 +51,6 @@
             <h4>Proximas Tocatas </h4>
         </div>
         <div class="carousel shop-products" data-margin="20" data-dots="false">
-
             {% for tocata in tocatas %}
             <div class="product">
                 <div class="product-image">
@@ -144,10 +103,10 @@
 
 <!-- Nuestros Artistas -->
 {% if artistas %}
-<section id="section5" class="background-grey">
+<section class="background-grey">
     <div class="container">
         <div class="heading-text heading-section text-center">
-            <h2>Alguno de Nuestros Artistas</h2>
+            <h2>Nuestros Artistas</h2>
             <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.</p>
         </div>
         <div class="row team-members">
