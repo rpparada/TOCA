@@ -76,6 +76,7 @@
                                     {% else %}
                                     <li><a href="{% url 'cuenta' %}">Editar</a></li>
                                     {% endif %}
+                                    <li><a href="{% url 'mislugares' %}">Mis Lugares</a></li>
                                     <li><a href="{% url 'cambiocontra' %}">Cambiar contraseña</a></li>
                                     <li><a href="javascript:{document.getElementById('salir').submit()}">Salir</a>
                                       <form class="" id="salir" action="{% url 'salir' %}" method="POST">

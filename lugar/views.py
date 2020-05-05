@@ -1,74 +1,121 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Lugar
-from .forms import AgregarForm, EditarForm
+from .models import Lugar, Region, Provincia, Comuna
+from .forms import LugarForm, RegionForm, ComunaForm
 from django.contrib import messages
 
 from django.utils import timezone
 
-# Create your views here.
-def agregar(request):
+from home.views import getTocatasArtistasHeadIndex
+from toca.parametros import parToca
 
-    form = AgregarForm()
+# Create your views here.
+def agregarLugar(request):
 
     if request.method == 'POST':
-        form = AgregarForm(request.POST)
+        form = LugarForm(request.POST)
+
         if form.is_valid():
             nuevoLugar = form.save(commit=False)
-            if 'foto1' in request.FILES:
-                nuevoLugar.foto1 = request.FILES['foto1']
-            if 'foto2' in request.FILES:
-                nuevoLugar.foto2 = request.FILES['foto2']
-            if 'foto3' in request.FILES:
-                nuevoLugar.foto3 = request.FILES['foto3']
-            if 'foto4' in request.FILES:
-                nuevoLugar.foto4 = request.FILES['foto4']
+            nuevoLugar.provincia = Comuna.objects.get(id=request.POST.get('comuna')).provincia
             nuevoLugar.usuario = request.user
             nuevoLugar.fecha_crea = timezone.now()
             nuevoLugar.save()
             messages.success(request, 'Lugar agregado exitosamente')
-            return redirect('cuenta')
-        else:
-            # print(form.errors.as_data())
-            messages.error(request,'Error en form')
-            return redirect('agregar')
-
-    return render(request, 'lugar/agregar.html', {'form':form})
-
-def borrarlugar(request, lugar_id):
-    lugar = get_object_or_404(Lugar, pk=lugar_id)
-    lugar.estado = lugar.noDisponible
-    lugar.save()
-    return redirect('cuenta')
-
-def editarlugar(request, lugar_id):
-    lugar = get_object_or_404(Lugar, pk=lugar_id)
-    form = EditarForm(instance=lugar)
-    if request.method == 'POST':
-        form = EditarForm(request.POST, instance=lugar)
-        if form.is_valid():
-            editarLugar = form.save(commit=False)
-            if 'foto1' in request.FILES:
-                editarLugar.foto1 = request.FILES['foto1']
-            if 'foto2' in request.FILES:
-                editarlugar.foto2 = request.FILES['foto2']
-            if 'foto3' in request.FILES:
-                editarLugar.foto3 = request.FILES['foto3']
-            if 'foto4' in request.FILES:
-                editarlugar.foto4 = request.FILES['foto4']
-            editarlugar.fecha_actua = timezone.now()
-            editarLugar.save()
-            messages.success(request, 'Lugar editado exitosamente')
-            return redirect('cuenta')
+            return redirect('mislugares')
         else:
             print(form.errors.as_data())
             messages.error(request,'Error en form')
-            return redirect('cuenta')
 
-    return render(request,'lugar/editar.html', {'form':form})
+    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    lugar_form = LugarForm();
+
+    context = {
+        'tocatas_h': tocatas[:3],
+        'artistas_h': artistas[:3],
+        'usuario': usuario,
+        'lugar_form': lugar_form,
+    }
+
+    return render(request, 'lugar/agregarlugar.html', context)
+
+
+def atualizarLugar(request, lugar_id):
+
+    if request.method == 'POST':
+        lugar = get_object_or_404(Lugar, pk=lugar_id)
+        form = LugarForm(request.POST, instance=lugar)
+        if form.is_valid():
+            lugarActualizado = form.save(commit=False)
+            lugarActualizado.provincia = Comuna.objects.get(id=request.POST.get('comuna')).provincia
+            lugarActualizado.fecha_actua = timezone.now()
+            lugarActualizado.save()
+            messages.success(request, 'Lugar editado exitosamente')
+            return redirect('mislugares')
+        else:
+            print(form.errors.as_data())
+            messages.error(request,'Error en form')
+
+    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    lugar = get_object_or_404(Lugar, pk=lugar_id)
+    lugar_form = LugarForm(instance=lugar);
+    regcom_form = LugarForm();
+
+    context = {
+        'tocatas_h': tocatas[:3],
+        'artistas_h': artistas[:3],
+        'usuario': usuario,
+        'lugar': lugar,
+        'regcom_form': regcom_form
+    }
+
+    return render(request,'lugar/detalleslugar.html', context)
 
 def detalleslugar(request, lugar_id):
+
+    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
     lugar = get_object_or_404(Lugar, pk=lugar_id)
+    lugar_form = LugarForm(instance=lugar);
+
+    regcom_form = LugarForm();
+
     context = {
+        'tocatas_h': tocatas[:3],
+        'artistas_h': artistas[:3],
+        'usuario': usuario,
         'lugar': lugar,
+        'regcom_form': regcom_form
     }
-    return render(request,'lugar/lugar.html', context)
+
+    return render(request,'lugar/detalleslugar.html', context)
+
+
+def misLugares(request):
+
+    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    mislugares = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
+
+    context = {
+        'tocatas_h': tocatas[:3],
+        'artistas_h': artistas[:3],
+        'usuario': usuario,
+        'mislugares': mislugares,
+    }
+
+    return render(request,'lugar/mislugares.html', context)
+
+def borrarlugar(request, lugar_id):
+
+    lugar = get_object_or_404(Lugar, pk=lugar_id)
+    lugar.estado = parToca['noDisponible']
+    lugar.save()
+    return redirect('mislugares')
+
+
+def carga_comunas(request):
+
+    region_id = request.GET.get('region')
+    comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
+    context = {
+        'comunas_reg': comunas,
+    }
+    return render(request, 'lugar/comuna_dropdown_list_options.html', context)

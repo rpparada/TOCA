@@ -4,8 +4,13 @@ from django.contrib import messages, auth
 
 from django.contrib.auth.models import User
 from lugar.models import Lugar
+from usuario.models import UsuarioArtista
 
-from .forms import AgregaCamposUsuarioForm, UsuarioForm
+from .forms import AgregaCamposUsuarioForm, UsuarioForm, UsuarioArtistaForm
+
+from home.views import getTocatasArtistasHeadIndex
+
+from toca.parametros import parToca
 
 # Create your views here.
 def registrarArt(request):
@@ -13,14 +18,20 @@ def registrarArt(request):
     if request.method == 'POST':
         form = AgregaCamposUsuarioForm(request.POST)
         usuario_form = UsuarioForm(request.POST)
+        usuario_art_form = UsuarioArtistaForm(request.POST)
 
-        if form.is_valid() and usuario_form.is_valid():
+        if form.is_valid() and usuario_form.is_valid() and usuario_art_form.is_valid():
             user = form.save()
 
             usuario = usuario_form.save(commit=False)
             usuario.user = user
             usuario.es_artista = True
             usuario.save()
+
+            usuario_art = usuario_art_form.save(commit=False)
+            usuario_art.user = user
+            usuario_art.num_celular = parToca['prefijoCelChile']+str(usuario_art.num_celular)
+            usuario_art.save()
 
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
@@ -32,15 +43,19 @@ def registrarArt(request):
             return redirect('index')
         else:
             messages.error(request,form.errors)
+            messages.error(request,usuario_form.errors)
+            messages.error(request,usuario_art_form.errors)
             return redirect('registrarart')
 
     else:
-        form = AgregaCamposUsuarioForm();
-        usuario_form = UsuarioForm();
+        form = AgregaCamposUsuarioForm()
+        usuario_form = UsuarioForm()
+        usuario_art_form = UsuarioArtistaForm()
 
     context = {
         'form': form,
         'usuario_form': usuario_form,
+        'usuario_art_form': usuario_art_form,
     }
     return render(request, 'usuario/registrarart.html', context)
 
@@ -82,6 +97,7 @@ def registrar(request):
 
 
 def ingresar(request):
+
     if request.method == 'POST':
         nombreusuario = request.POST['nombreusuario']
         contra = request.POST['contra']
@@ -111,62 +127,96 @@ def salir(request):
         return redirect('index')
 
 def cuenta(request):
-    usuario = request.user
-    lugares = Lugar.objects.filter(usuario=usuario).filter(estado='DI').order_by('-fecha_actua')
+
+    toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
     context = {
-        'lugares': lugares,
+        'tocatas_h': toc_head[:3],
+        'artistas_h': art_head[:3],
+        'usuario': usuario,
     }
     return render(request, 'usuario/cuenta.html', context)
 
 def actualizar(request):
 
+    toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
+
+    context = {
+        'tocatas_h': toc_head[:3],
+        'artistas_h': art_head[:3],
+        'usuario': usuario,
+    }
+
     if request.method == 'POST':
         nombre = request.POST['nombre']
         apellido = request.POST['apellido']
-        email = request.POST['email']
-        contra = request.POST['contra']
-        contra2 = request.POST['contra2']
 
         usuario = request.user
-        lugares = Lugar.objects.filter(usuario=usuario)
-        context = {
-            'lugares': lugares,
-        }
 
-        if contra:
-            if contra == contra2:
-                usuario.set_password(contra)
-                usuario.first_name = nombre
-                usuario.last_name = apellido
-                usuario.email = email
-            else:
-                messages.error(request,'Contraseñas diferentes')
-                usuario.first_name = nombre
-                usuario.last_name = apellido
-                usuario.email = email
-        else:
-            usuario.first_name = nombre
-            usuario.last_name = apellido
-            usuario.email = email
-
+        usuario.first_name = nombre
+        usuario.last_name = apellido
         usuario.save()
         messages.success(request,'Actualizacion Existosa')
-        return render(request, 'usuario/cuenta.html', context)
 
-def cambioContra(request):
-    return render(request, 'usuario/cambiocontra.html')
+    return render(request, 'usuario/cuenta.html', context)
 
+def actualizarArt(request):
 
-def cuentaArt(request):
-    usuario = request.user
-    lugares = Lugar.objects.filter(usuario=usuario).filter(estado='DI').order_by('-fecha_actua')
+    if request.method == 'POST':
+
+        nombre = request.POST['nombre']
+        apellido = request.POST['apellido']
+        rut = request.POST['rut']
+        digitoVerificador = request.POST['digitoVerificador']
+        num_celular = request.POST['num_celular']
+        banco = request.POST['banco']
+        num_cuenta = request.POST['num_cuenta']
+        tipo_cuenta = request.POST['tipo_cuenta']
+
+        usuario = request.user
+        usuario_art = UsuarioArtista.objects.filter(user=request.user)[0]
+
+        usuario.first_name = nombre
+        usuario.last_name = apellido
+        usuario_art.rut = rut
+        usuario_art.digitoVerificador = digitoVerificador
+        usuario_art.num_celular = parToca['prefijoCelChile']+str(num_celular)
+        usuario_art.banco = banco
+        usuario_art.num_cuenta = num_cuenta
+        usuario_art.tipo_cuenta = tipo_cuenta
+
+        usuario.save()
+        usuario_art.save()
+
+        messages.success(request,'Actualizacion Existosa')
+
+    toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
+    usuario_art = UsuarioArtista.objects.filter(user=request.user)[0]
+    usuario_art_form = UsuarioArtistaForm(request)
+
     context = {
-        'lugares': lugares,
+        'tocatas_h': toc_head[:3],
+        'artistas_h': art_head[:3],
+        'usuario': usuario,
+        'usuario_art': usuario_art,
+        'usuario_art_form': usuario_art_form,
     }
+
     return render(request, 'usuario/cuentaart.html', context)
 
-def emailNuevaContra(request):
-    return render(request, 'usuario/emailnuevacontra.html')
+def cuentaArt(request):
+
+    toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
+    usuario_art = UsuarioArtista.objects.filter(user=request.user)[0]
+    usuario_art_form = UsuarioArtistaForm()
+
+    context = {
+        'tocatas_h': toc_head[:3],
+        'artistas_h': art_head[:3],
+        'usuario': usuario,
+        'usuario_art': usuario_art,
+        'usuario_art_form': usuario_art_form,
+    }
+    return render(request, 'usuario/cuentaart.html', context)
 
 def cambioContra(request):
 

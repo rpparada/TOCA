@@ -21,6 +21,7 @@
                       {% csrf_token %}
                       {{ form.non_field_errors }}
                       {{ usuario_form.non_field_errors }}
+                      {{ usuario_art_form.non_field_errors }}
                         <div class="row">
                             <div class="col-lg-12">
                                 <h3>Registrate - Artistas</h3>
@@ -33,6 +34,47 @@
                             <div class="col-lg-6 form-group">
                                 <label class="sr-only">Email</label>
                                 <input type="text" value="" placeholder="Email" class="form-control" name="email">
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <label class="sr-only">RUT</label>
+                                <input type="text" value="" placeholder="RUT" class="form-control" name="rut">
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <label class="sr-only">Digito Verificador</label>
+                                <input type="text" value="" placeholder="Digito Verificador" class="form-control" name="digitoVerificador">
+                            </div>
+                            <div class="input-group col-lg-12">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">( +56 ) 9</span>
+                                </div>
+                                <input type="text" value="" class="form-control" placeholder="Número Celular" name="num_celular">
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label for="{{ usuario_art_form.banco.id_for_label }}">{{ usuario_art_form.banco.label_tag }}</label>
+                                <select class="form-control" name="{{ usuario_art_form.banco.html_name }}">
+                                  {% for banco in usuario_art_form.banco.field.choices %}
+                                    <option value="{{ banco.0 }}">{{ banco.1 }}</option>
+                                  {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <label class="sr-only">Número Cuenta</label>
+                                <input type="text" value="" placeholder="Número Cuenta" class="form-control" name="num_cuenta">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <select class="form-control" name="{{ usuario_art_form.tipo_cuenta.html_name }}">
+                                  {% for tipo in usuario_art_form.tipo_cuenta.field.choices %}
+                                    <option value="{{ tipo.0 }}">{{ tipo.1 }}</option>
+                                  {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label for="{{ usuario_art_form.artista.id_for_label }}">{{ usuario_art_form.artista.label_tag }}</label>
+                                <select class="form-control" name="{{ usuario_art_form.artista.html_name }}">
+                                  {% for artista in usuario_art_form.artista.field.choices %}
+                                    <option value="{{ artista.0 }}">{{ artista.1 }}</option>
+                                  {% endfor %}
+                                </select>
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label class="sr-only">Contraseña</label>

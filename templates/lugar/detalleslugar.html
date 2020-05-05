@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load thumbnail %}
+{% block title %} | CUENTA{% endblock %}
+{% block content %}
+
+{% include 'partials/_alerts.html' %}
+
+<!-- Page title -->
+<section id="page-title">
+    <div class="container">
+        <div class="page-title">
+            <h1>Form Layouts</h1>
+            <span>Inspiration comes of working every day.</span>
+        </div>
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="#">Home</a> </li>
+                <li><a href="#">Shortcodes</a> </li>
+                <li class="active"><a href="#">Form Layouts</a> </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- end: Page title -->
+
+{% if user.is_authenticated %}
+<section id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="content col-lg-12">
+              <div class="card">
+                  <div class="card-header">
+                      <h5 class="card-title">Horizontal form</h5>
+                      <h6 class="card-subtitle text-muted">Horizontal Bootstrap layout.</h6>
+                      <div class="rateit" data-rateit-mode="font" data-rateit-value="{{ lugar.evaluacion }}" data-rateit-ispreset="true" data-rateit-readonly="true">  </div>
+                  </div>
+                  <div class="card-body">
+                      <form action="{% url 'atualizarlugar' lugar.id %}" method="POST" id="lugarForm" data-ciudad-url="{% url 'ajax_load_comunas' %}">
+                        {% csrf_token %}
+                          <input type="hidden" class="form-control" value="{{ lugar.evaluacion }}" name="evaluacion">
+                          <input type="hidden" class="form-control" value="{{ lugar.pais }}" name="pais">
+                          <input type="hidden" class="form-control" value="{{ lugar.provincia }}" name="provincia">
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Nombre</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control" placeholder="Nombre" value="{{ lugar.nombre }}" name="nombre">
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Calle</label>
+                              <div class="col-sm-7">
+                                  <input type="text" class="form-control" placeholder="Nombre Calle" value="{{ lugar.nombre_calle }}" name="nombre_calle">
+                              </div>
+                              <label class="col-form-label col-sm-1">Número</label>
+                              <div class="col-sm-2">
+                                  <input type="text" class="form-control" placeholder="Email" value="{{ lugar.numero }}" name="numero">
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ regcom_form.region.id_for_label }}">{{ regcom_form.region.label_tag }}</label>
+                              <div class="col-sm-10">
+                                <select class="form-control" name="{{ regcom_form.region.html_name }}" id="id_region">
+                                  {% for region in regcom_form.region.field.choices %}
+                                    <option value="{{ region.0 }}" {% if region.0 == lugar.region.id %} selected {% endif %}>{{ region.1 }}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ regcom_form.comuna.id_for_label }}">{{ regcom_form.comuna.label_tag }}</label>
+                              <div class="col-sm-10">
+                                <select class="form-control" name="{{ regcom_form.comuna.html_name }}" id="id_comuna">
+                                  {% for comuna in regcom_form.comuna.field.choices %}
+                                    <option value="{{ comuna.0 }}" {% if comuna.0 == lugar.comuna.id %} selected {% endif %}>{{ comuna.1 }}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Ciudad</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control" placeholder="Ciudad" value="{{ lugar.ciudad }}" name="ciudad">
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Descripción</label>
+                              <div class="col-sm-10">
+                                  <textarea class="form-control" placeholder="Descripción" rows="3" name="descripción">{{ lugar.descripción }}</textarea>
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Capacidad</label>
+                              <div class="col-sm-10">
+                                  <input type="number" class="form-control" placeholder="Ciudad" value="{{ lugar.capacidad }}" name="capacidad">
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <div class="col-sm-10 ml-sm-auto">
+                                  <button type="submit" class="btn btn-primary">Actualizar</button>
+                              </div>
+                          </div>
+
+
+                      </form>
+                  </div>
+              </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  $("#id_region").change(function () {
+    var url = $("#lugarForm").attr("data-ciudad-url");  // get the url of the `load_cities` view
+    var regionId = $(this).val();  // get the selected country ID from the HTML input
+
+    $.ajax({                       // initialize an AJAX request
+      url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+      data: {
+        'region': regionId   // add the country id to the GET parameters
+      },
+      success: function (data) {   // `data` is the return of the `load_cities` view function
+        $("#id_comuna").html(data);  // replace the contents of the city input with the data that came from the server
+      }
+    });
+
+  });
+
+</script>
+
+{% endblock %}

@@ -47,7 +47,7 @@ def tocatas(request):
 
 def tocata(request, tocata_id):
 
-    toc_head, art_head = getTocatasArtistasHeadIndex()
+    toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
 
     tocata = get_object_or_404(Tocata, pk=tocata_id)
     tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
@@ -59,6 +59,7 @@ def tocata(request, tocata_id):
         'tocata_vista': tocata,
         'tocatas_h': toc_head[:3],
         'artistas_h': art_head[:3],
+        'usuario': usuario,
     }
     return render(request, 'tocata/tocata.html', context)
 

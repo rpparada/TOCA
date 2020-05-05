@@ -5,162 +5,78 @@
 {% block title %} | CUENTA{% endblock %}
 {% block content %}
 
+{% include 'partials/_alerts.html' %}
+
 <!-- Page title -->
-<section id="page-title" class="page-title-right text-light" data-parallax-image="{% static 'images/parallax/5.jpg' %}">
+<section id="page-title">
     <div class="container">
-              <div class="breadcrumb">
+        <div class="page-title">
+            <h1>Form Layouts</h1>
+            <span>Inspiration comes of working every day.</span>
+        </div>
+        <div class="breadcrumb">
             <ul>
                 <li><a href="#">Home</a> </li>
-                <li><a href="#">Page title</a> </li>
-                <li class="active"><a href="#">Right aligned</a> </li>
+                <li><a href="#">Shortcodes</a> </li>
+                <li class="active"><a href="#">Form Layouts</a> </li>
             </ul>
-        </div>
-        <div class="page-title">
-            <h1>Page title - Right aligned</h1>
-            <span>Simple page title right aligned</span>
         </div>
     </div>
 </section>
 <!-- end: Page title -->
 
-<!-- Page Content -->
+{% if user.is_authenticated %}
+
 <section id="page-content">
-
     <div class="container">
-      {% include 'partials/_alerts.html' %}
-
-      <h3>Textual inputs</h3>
-
-      {% if user.is_authenticated %}
-      <form action="{% url 'actualizar' %}" method="POST">
-          {% csrf_token %}
-          <div class="form-group row">
-              <label for="example-text-input" class="col-2 col-form-label">Nombre de Usuario</label>
-              <div class="col-10">
-                  <input class="form-control" type="text" value="{{ user.username }}"
-                      id="example-text-input" readonly>
+        <div class="row">
+            <div class="content col-lg-12">
+              <div class="card">
+                  <div class="card-header">
+                      <h5 class="card-title">Horizontal form</h5>
+                      <h6 class="card-subtitle text-muted">Horizontal Bootstrap layout.</h6>
+                  </div>
+                  <div class="card-body">
+                      <form action="{% url 'actualizar' %}" method="POST">
+                        {% csrf_token %}
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Email</label>
+                              <div class="col-sm-10">
+                                  <input type="email" class="form-control" placeholder="Email" value="{{ user.email }}" readonly>
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Nombre Usuario</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control" placeholder="Email" value="{{ user.username }}" readonly>
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Nombre</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control" placeholder="Email" value="{{ user.first_name }}" name="nombre">
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Apellido</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control" placeholder="Email" value="{{ user.last_name }}" name="apellido">
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <div class="col-sm-10 ml-sm-auto">
+                                  <button type="submit" class="btn btn-primary">Actualizar</button>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
               </div>
-          </div>
-          <div class="form-group row">
-              <label for="example-text-input" class="col-2 col-form-label">Nombre</label>
-              <div class="col-10">
-                  <input class="form-control" name="nombre" type="text" value="{{ user.first_name }}"
-                      id="example-search-input">
-              </div>
-          </div>
-          <div class="form-group row">
-              <label for="example-text-input" class="col-2 col-form-label">Apellido</label>
-              <div class="col-10">
-                  <input class="form-control" name="apellido" type="text" value="{{ user.last_name }}"
-                      id="example-email-input">
-              </div>
-          </div>
-          <div class="form-group row">
-              <label for="example-email-input" class="col-2 col-form-label">Email</label>
-              <div class="col-10">
-                  <input class="form-control" name="email" type="email" value="{{ user.email }}"
-                      id="example-url-input">
-              </div>
-          </div>
-          <div class="form-group row">
-              <label for="example-url-input" class="col-2 col-form-label">Nueva Contraseña</label>
-              <div class="col-10">
-                  <input class="form-control" name="contra" type="password" value=""
-                      id="example-url-input">
-              </div>
-          </div>
-          <div class="form-group row">
-              <label for="example-url-input" class="col-2 col-form-label">Repetir Nueva Contraseña</label>
-              <div class="col-10">
-                  <input class="form-control" name="contra2" type="password" value=""
-                      id="example-url-input">
-              </div>
-          </div>
-          <button class="btn" type="submit">Actualizar</button>
-      </form>
-      {% endif %}
 
-      <div class="line"></div>
-
-      {% if lugares %}
-
-      <h2 id="how-it-works">Tus lugares</h2>
-      <p>Bootstrap has a powerful mobile-first flexbox grid to build layouts of all shapes and sizes thanks to a twelve column system, five default responsive tiers, Sass variables and mixins, and dozens of predefined classes.</p>
-
-      <h3>Listados de lugares</h3>
-      <p>See how aspects of the Bootstrap grid system work across multiple devices with a handy table.</p>
-
-      <div class="shop-cart">
-        <div class="table table-sm table-striped table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th class="cart-product-remove"></th>
-                        <th class="cart-product-thumbnail">Nombre</th>
-                        <th class="cart-product-name">Descripción</th>
-                        <th class="cart-product-price">Cuidad</th>
-                        <th class="cart-product-quantity">Comuna</th>
-                        <th class="cart-product-subtotal">Capacidad</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for lugar in lugares %}
-                    <tr>
-                        <td class="cart-product-remove">
-                            <a href="{% url 'borrarlugar' lugar.id %}"><i class="fa fa-times"></i></a>
-                        </td>
-
-                        <td class="cart-product-thumbnail">
-                            {% thumbnail lugar.foto1 "80x115" crop="center" as im %}
-                            <a href="{% url 'detalleslugar' lugar.id %}">
-                                <img src="{{ im.url }}" alt="{{ lugar.nombre }}">
-                            </a>
-                            {% empty %}
-                            <a href="{% url 'detalleslugar' lugar.id %}">
-                                <img src="{% static 'images/markers/marker1.png' %}">
-                            </a>
-                            {% endthumbnail %}
-                            <a href="{% url 'detalleslugar' lugar.id %}">
-                                <div class="cart-product-thumbnail-name">{{ lugar.nombre }}</div>
-                            </a>
-                        </td>
-
-                        <td class="cart-product-description">
-                            <p><span>{{ lugar.descripción|truncatewords:20 }}</span>
-                            </p>
-                        </td>
-
-                        <td class="cart-product-description">
-                            <span>{{ lugar.ciudad }}</span>
-                        </td>
-
-                        <td class="cart-product-description">
-                            <span>{{ lugar.get_comuna_display }}</span>
-                        </td>
-
-                        <td class="cart-product-subtotal">
-                            <span class="amount">{{ lugar.capacidad }}</span>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-
-            </table>
-            <a href="{% url 'agregar' %}" class="logo">
-              <button class="btn">Agregar</button>
-            </a>
+            </div>
         </div>
-        {% else %}
-        <div class="p-t-10 m-b-20 text-center">
-    			<div class="heading-text heading-line text-center">
-    				<h4>Actualmente no tienes lugares registrados</h4>
-    			</div>
-    			<a class="btn icon-left" href="{% url 'agregar' %}"><span>Agregar un Lugar</span></a>
-    		</div>
-      </div>
-      {% endif %}
-
     </div>
 </section>
-<!-- end: Page Content -->
+{% else %}
+{% endif %}
+
 {% endblock %}
