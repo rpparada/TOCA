@@ -74,7 +74,6 @@ def detalleslugar(request, lugar_id):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
     lugar = get_object_or_404(Lugar, pk=lugar_id)
-    lugar_form = LugarForm(instance=lugar);
 
     regcom_form = LugarForm();
 
@@ -111,11 +110,22 @@ def borrarlugar(request, lugar_id):
     return redirect('mislugares')
 
 
-def carga_comunas(request):
+def carga_comunas_agregar(request):
 
     region_id = request.GET.get('region')
     comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
     context = {
         'comunas_reg': comunas,
     }
-    return render(request, 'lugar/comuna_dropdown_list_options.html', context)
+    return render(request, 'lugar/comuna_dropdown_list_options_agregar.html', context)
+
+def carga_comunas_actualizar(request):
+
+    region_id = request.GET.get('region')
+    comuna_id = request.GET.get('comuna')
+    comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
+    context = {
+        'comunas_reg': comunas,
+        'comuna_id': int(comuna_id),
+    }
+    return render(request, 'lugar/comuna_dropdown_list_options_actualizar.html', context)

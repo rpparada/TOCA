@@ -36,7 +36,7 @@
                       <h6 class="card-subtitle text-muted">Horizontal Bootstrap layout.</h6>
                   </div>
                   <div class="card-body">
-                      <form action="{% url 'agregarlugar' %}" method="POST" id="lugarForm" data-ciudad-url="{% url 'ajax_load_comunas' %}">
+                      <form action="{% url 'agregarlugar' %}" method="POST" id="lugarForm" data-ciudad-url-agregar="{% url 'ajax_load_comunas_agregar' %}">
                         {% csrf_token %}
                           <input type="hidden" class="form-control" value="3" name="evaluacion">
                           <input type="hidden" class="form-control" value="Chile" name="pais">
@@ -125,7 +125,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
   $("#id_region").change(function () {
-    var url = $("#lugarForm").attr("data-ciudad-url");  // get the url of the `load_cities` view
+    var url = $("#lugarForm").attr("data-ciudad-url-agregar");  // get the url of the `load_cities` view
     var regionId = $(this).val();  // get the selected country ID from the HTML input
 
     $.ajax({                       // initialize an AJAX request

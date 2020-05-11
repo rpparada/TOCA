@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load thumbnail %}
+{% block title %} | CREAR TOCATAS{% endblock %}
+{% block content %}
+
+{% include 'partials/_alerts.html' %}
+
+<!-- Page title -->
+<section id="page-title">
+    <div class="container">
+        <div class="page-title">
+            <h1>Form Layouts</h1>
+            <span>Inspiration comes of working every day.</span>
+        </div>
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="#">Home</a> </li>
+                <li><a href="#">Shortcodes</a> </li>
+                <li class="active"><a href="#">Form Layouts</a> </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- end: Page title -->
+
+{% if user.is_authenticated %}
+<section id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="content col-lg-12">
+              <div class="card">
+                  <div class="card-header">
+                      <h5 class="card-title">Horizontal form</h5>
+                      <h6 class="card-subtitle text-muted">Horizontal Bootstrap layout.</h6>
+                  </div>
+                  <div class="card-body">
+                      <form action="{% url 'creartocata' %}" method="POST" id="lugarForm" data-ciudad-url-agregar="{% url 'ajax_load_comunas_agregar' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                          <input type="hidden" class="form-control" value="{{ user.id }}" name="usuario">
+                          <input type="hidden" class="form-control" value="{{ artista.id }}" name="artista">
+                          <input type="hidden" class="form-control" value="3" name="evaluacion">
+                          <input type="hidden" class="form-control" value="IN" name="estado">
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Nombre</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control" placeholder="Nombre" value="" name="nombre">
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ tocata_form.lugar_def.id_for_label }}">Tipo Tocata</label>
+                              <div class="col-sm-10">
+                                <select class="form-control" name="{{ tocata_form.lugar_def.html_name }}" id="tipotocata">
+                                  {% for lugar_def in tocata_form.lugar_def.field.choices %}
+                                    <option value="{{ lugar_def.0 }}">{{ lugar_def.1 }}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                          </div>
+                          {% if mislugares %}
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ tocata_form.lugar.id_for_label }}">{{ tocata_form.lugar.label_tag }}</label>
+                              <div class="col-sm-10">
+                                <select class="form-control" name="{{ tocata_form.lugar.html_name }}" id="opcionestipo">
+                                  {% for lugar in mislugares %}
+                                    <option value="{{ lugar.id }}">{{ lugar.nombre }}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                          </div>
+                          {% else %}
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Lugar</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control" placeholder="No tienes lugares registrados" value="" name="lugar" readonly>
+                              </div>
+                          </div>
+                          {% endif %}
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Costo</label>
+                              <div class="col-sm-10">
+                                  <input type="number" class="form-control" placeholder="Costo" value="" name="costo">
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Fecha</label>
+                              <div class="col-sm-10 input-group date" id="datetimepicker2" data-target-input="nearest">
+                                  <input type="text" value="" name="fecha" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="Selecciona Fecha" />
+                                  <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                                      <div class="input-group-text"><i class="icon-calendar"></i></div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Hora</label>
+                              <div class="col-sm-10 input-group date" id="datetimepicker3" data-target-input="nearest">
+                                  <input type="text" value="" name="hora" class="form-control datetimepicker-input" data-target="#datetimepicker3" placeholder="Selecciona Hora" />
+                                  <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
+                                      <div class="input-group-text"><i class="icon-clock"></i></div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <input type="hidden" class="form-control" value="0" name="asistentes_total">
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Asistentes Minimos</label>
+                              <div class="col-sm-10">
+                                  <input type="number" class="form-control" placeholder="Asistentes Minimos" value="" name="asistentes_min">
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Asistentes Maximo</label>
+                              <div class="col-sm-10">
+                                  <input type="number" class="form-control" placeholder="Asistentes Maximo" value="" name="asistentes_max">
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Descripción</label>
+                              <div class="col-sm-10">
+                                  <textarea class="form-control" placeholder="Descripción" rows="3" name="descripción"></textarea>
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-form-label col-sm-2 text-sm-right" for="exampleFormControlFile1">Subir Flayer</label>
+                            <div class="col-sm-10">
+                              <input type="file" class="form-control-file" accept="image/*" name="{{ tocata_form.flayer_original.html_name }}">
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                              <div class="col-sm-10 ml-sm-auto">
+                                  <button type="submit" class="btn btn-primary">Crear</button>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

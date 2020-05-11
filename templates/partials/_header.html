@@ -66,16 +66,14 @@
 
                             {% if user.is_authenticated %}
                               {% if usuario.es_artista %}
-                              <li class="dropdown"><a href="{% url 'cuentaart' %}">{{ user.username }}</a>
-                              {% else %}
-                              <li class="dropdown"><a href="{% url 'cuenta' %}">{{ user.username }}</a>
-                              {% endif %}
+                                <li class="dropdown"><a href="{% url 'mistocatas' %}">Mis Tocatas</a>
                                   <ul class="dropdown-menu">
-                                    {% if usuario.es_artista %}
+                                    <li><a href="{% url 'creartocata' %}">Crear Tocata</a></li>
+                                  </ul>
+                                </li>
+                                <li class="dropdown"><a href="{% url 'cuentaart' %}">{{ user.username }}</a>
+                                  <ul class="dropdown-menu">
                                     <li><a href="{% url 'cuentaart' %}">Editar</a></li>
-                                    {% else %}
-                                    <li><a href="{% url 'cuenta' %}">Editar</a></li>
-                                    {% endif %}
                                     <li><a href="{% url 'mislugares' %}">Mis Lugares</a></li>
                                     <li><a href="{% url 'cambiocontra' %}">Cambiar contraseña</a></li>
                                     <li><a href="javascript:{document.getElementById('salir').submit()}">Salir</a>
@@ -86,6 +84,21 @@
                                     </li>
                                   </ul>
                               </li>
+                              {% else %}
+                                <li class="dropdown"><a href="{% url 'cuenta' %}">{{ user.username }}</a>
+                                  <ul class="dropdown-menu">
+                                    <li><a href="{% url 'cuenta' %}">Editar</a></li>
+                                    <li><a href="{% url 'mislugares' %}">Mis Lugares</a></li>
+                                    <li><a href="{% url 'cambiocontra' %}">Cambiar contraseña</a></li>
+                                    <li><a href="javascript:{document.getElementById('salir').submit()}">Salir</a>
+                                      <form class="" id="salir" action="{% url 'salir' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden">
+                                      </form>
+                                    </li>
+                                  </ul>
+                              </li>
+                              {% endif %}
                             {% else %}
                             <li class="dropdown"><a>Usuario</a>
                                 <ul class="dropdown-menu">

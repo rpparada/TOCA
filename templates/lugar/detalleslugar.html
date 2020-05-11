@@ -37,11 +37,13 @@
                       <div class="rateit" data-rateit-mode="font" data-rateit-value="{{ lugar.evaluacion }}" data-rateit-ispreset="true" data-rateit-readonly="true">  </div>
                   </div>
                   <div class="card-body">
-                      <form action="{% url 'atualizarlugar' lugar.id %}" method="POST" id="lugarForm" data-ciudad-url="{% url 'ajax_load_comunas' %}">
+                      <form action="{% url 'atualizarlugar' lugar.id %}" method="POST" id="lugarForm" data-ciudad-url-agregar="{% url 'ajax_load_comunas_agregar' %}" data-ciudad-url-actualizar="{% url 'ajax_load_comunas_actualizar' %}">
                         {% csrf_token %}
                           <input type="hidden" class="form-control" value="{{ lugar.evaluacion }}" name="evaluacion">
                           <input type="hidden" class="form-control" value="{{ lugar.pais }}" name="pais">
-                          <input type="hidden" class="form-control" value="{{ lugar.provincia }}" name="provincia">
+                          <input type="hidden" class="form-control" value="{{ lugar.provincia.id }}" name="provincia">
+                          <input type="hidden" class="form-control" value="{{ lugar.comuna.id }}" id="id_comuna_ajax">
+                          <input type="hidden" class="form-control" value="{{ lugar.region.id }}" id="id_region_ajax">
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Nombre</label>
                               <div class="col-sm-10">
@@ -117,13 +119,31 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
   $("#id_region").change(function () {
-    var url = $("#lugarForm").attr("data-ciudad-url");  // get the url of the `load_cities` view
+    var url = $("#lugarForm").attr("data-ciudad-url-agregar");  // get the url of the `load_cities` view
     var regionId = $(this).val();  // get the selected country ID from the HTML input
 
     $.ajax({                       // initialize an AJAX request
       url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
       data: {
         'region': regionId   // add the country id to the GET parameters
+      },
+      success: function (data) {   // `data` is the return of the `load_cities` view function
+        $("#id_comuna").html(data);  // replace the contents of the city input with the data that came from the server
+      }
+    });
+
+  });
+
+  $(document).ready(function(){
+    var url = $("#lugarForm").attr("data-ciudad-url-actualizar");
+    var regionId = $("#id_region_ajax").val();
+    var comunaId = $("#id_comuna_ajax").val();
+
+    $.ajax({                       // initialize an AJAX request
+      url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+      data: {
+        'region': regionId,        // add the country id to the GET parameters
+        'comuna': comunaId,
       },
       success: function (data) {   // `data` is the return of the `load_cities` view function
         $("#id_comuna").html(data);  // replace the contents of the city input with the data that came from the server

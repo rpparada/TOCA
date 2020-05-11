@@ -21,7 +21,7 @@
             <!--
             <p class="lead">{{ tocata_vista.descripción|truncatechars:200 }}</p> -->
             {% if tocata_vista.lugar_def == 'CE' %}
-            <a class="btn">PRESTA TU CASA</a>
+            <a href="{% url 'proponerlugar' tocata_vista.id %}" class="btn">PRESTA TU CASA</a>
             {% else %}
             <a class="btn">COMPRAR</a>
             {% endif %}

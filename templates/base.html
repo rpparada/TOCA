@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Document title -->
     <title>TOCA {% block title %}{% endblock %}</title>
+
     <!-- Stylesheets & Fonts -->
     <link href="{% static 'css/plugins.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
@@ -40,8 +41,17 @@
     <!--Template functions-->
     <script src="{% static 'js/functions.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
+
     <!--Rating  plugin files-->
     <script src="{% static 'plugins/rateit/jquery.rateit.min.js' %}"></script>
     <link rel="stylesheet" href="{% static 'plugins/rateit/rateit.css' %}">
+
+    <!--
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    -->
+
+    <!--Bootstrap Datetimepicker component-->
+    <script src="{% static 'plugins/moment/moment.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-datetimepicker/tempusdominus-bootstrap-4.js' %}"></script>
 </body>
 </html>
