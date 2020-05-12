@@ -31,8 +31,6 @@ $("#tipotocata").change(function () {
 
 $(document).ready(function () {
 
-  console.log("hola");
-
     $('#datetimepicker1').datetimepicker();
 
     $('#datetimepicker2').datetimepicker({
