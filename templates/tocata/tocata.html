@@ -3,7 +3,7 @@
 {% load humanize %}
 {% block title %} | {{ tocata_vista.nombre }} {% endblock %}
 {% block content %}
-
+{% include 'partials/_alerts.html' %}
 <!-- SECTION IMAGE FULLSCREEN -->
 {% if tocata_vista.flayer_1920_1280.url %}
 <section class="text-center fullscreen p-t-200 p-b-100 text-light" data-bg-image="{{ tocata_vista.flayer_1920_1280.url }}">
@@ -20,7 +20,7 @@
         <div data-animate-delay="600" data-animate="fadeInUp">
             <!--
             <p class="lead">{{ tocata_vista.descripción|truncatechars:200 }}</p> -->
-            {% if tocata_vista.lugar_def == 'CE' %}
+            {% if tocata_vista.lugar_def == 'AB' %}
             <a href="{% url 'proponerlugar' tocata_vista.id %}" class="btn">PRESTA TU CASA</a>
             {% else %}
             <a class="btn">COMPRAR</a>

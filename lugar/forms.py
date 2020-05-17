@@ -7,9 +7,13 @@ class LugarForm(forms.ModelForm):
     Referencia implementacion:
     https://simpleisbetterthancomplex.com/tutorial/2018/01/29/how-to-implement-dependent-or-chained-dropdown-list-with-django.html
     '''
+
+    region = forms.ModelChoiceField(queryset=Region.objects, empty_label=None)
+    comuna = forms.ModelChoiceField(queryset=Comuna.objects, empty_label=None)
+
     class Meta:
         model = Lugar
-        exclude = ['usuario','fecha_crea','fecha_actua','estado']
+        exclude = ['usuario','fecha_crea','fecha_actua','estado','codigo_postal','evaluacion',]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

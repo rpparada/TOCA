@@ -1,30 +1,32 @@
 from django.db import models
 from datetime import datetime
 from artista.models import Artista
-from lugar.models import Lugar
+from lugar.models import Lugar, Region, Comuna
 from django.contrib.auth.models import User
 
 from django_resized import ResizedImageField
 
-from toca.parametros import parToca, parTocatas
+from toca.parametros import parToca, parTocatas, parLugaresToc
 
 # Create your models here.
 class Tocata(models.Model):
 
     artista = models.ForeignKey(Artista, on_delete=models.DO_NOTHING)
-    usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
+    usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     nombre = models.CharField(max_length=200)
     lugar = models.ForeignKey(Lugar, on_delete=models.DO_NOTHING, null=True, blank=True)
+    region = models.ForeignKey(Region, on_delete=models.DO_NOTHING, null=True, blank=True)
+    comuna = models.ForeignKey(Comuna, on_delete=models.DO_NOTHING, null=True, blank=True)
     descripción = models.TextField(blank=True)
-    costo = models.IntegerField(default=0)
-    fecha = models.DateField(default=datetime.now)
-    hora = models.TimeField(default=datetime.now)
-    fecha_actu = models.DateTimeField(default=datetime.now, blank=True)
-    fecha_crea = models.DateTimeField(default=datetime.now, blank=True)
+    costo = models.IntegerField()
+    fecha = models.DateField()
+    hora = models.TimeField()
+    fecha_actu = models.DateTimeField(auto_now=True)
+    fecha_crea = models.DateTimeField(auto_now_add=True)
     lugar_def = models.CharField(max_length=2, choices=parTocatas['lugar_def_tipos'],default=parToca['cerrada'])
     asistentes_total = models.IntegerField(default=0)
-    asistentes_min = models.IntegerField(default=0)
-    asistentes_max = models.IntegerField(default=0)
+    asistentes_min = models.IntegerField()
+    asistentes_max = models.IntegerField()
     flayer_original = models.ImageField(upload_to='fotos/tocatas/%Y/%m/%d/', blank=True, default='fotos/defecto/imagen_original.jpg')
     flayer_1920_1280 = ResizedImageField(size=[1920, 1280],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_1920_1280.jpg')
     flayer_380_507 = ResizedImageField(size=[380, 507],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_380_507.jpg')
@@ -38,9 +40,13 @@ class LugaresTocata(models.Model):
 
     tocata = models.ForeignKey(Tocata, on_delete=models.DO_NOTHING)
     lugar = models.ForeignKey(Lugar, on_delete=models.DO_NOTHING)
+    usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
+    fecha_actu = models.DateTimeField(auto_now=True)
+    fecha_crea = models.DateTimeField(auto_now_add=True)
+    estado = models.CharField(max_length=2, choices=parLugaresToc['estado_lugartocata'],default=parToca['noelegido'])
 
     def __str__(self):
-        return tocata.nombre+' - '+lugar.nombre
+        return self.tocata.nombre+' - '+self.lugar.nombre
 
 # Mover estos a una nueva aplicacione para pagos
 class MediosDePago(models.Model):

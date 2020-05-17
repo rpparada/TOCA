@@ -18,7 +18,6 @@ def agregarLugar(request):
             nuevoLugar = form.save(commit=False)
             nuevoLugar.provincia = Comuna.objects.get(id=request.POST.get('comuna')).provincia
             nuevoLugar.usuario = request.user
-            nuevoLugar.fecha_crea = timezone.now()
             nuevoLugar.save()
             messages.success(request, 'Lugar agregado exitosamente')
             return redirect('mislugares')
@@ -47,7 +46,6 @@ def atualizarLugar(request, lugar_id):
         if form.is_valid():
             lugarActualizado = form.save(commit=False)
             lugarActualizado.provincia = Comuna.objects.get(id=request.POST.get('comuna')).provincia
-            lugarActualizado.fecha_actua = timezone.now()
             lugarActualizado.save()
             messages.success(request, 'Lugar editado exitosamente')
             return redirect('mislugares')

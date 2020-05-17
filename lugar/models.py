@@ -42,25 +42,24 @@ class Comuna(models.Model):
 class Lugar(models.Model):
 
     nombre = models.CharField(max_length=200)
-    usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
+    usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING)
 
     nombre_calle = models.CharField(max_length=200)
-    numero = models.IntegerField(default=0)
-    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
-    provincia = models.ForeignKey(Provincia, on_delete=models.SET_NULL, null=True)
-    comuna = models.ForeignKey(Comuna, on_delete=models.SET_NULL, null=True)
+    numero = models.IntegerField()
+    region = models.ForeignKey(Region, on_delete=models.DO_NOTHING)
+    provincia = models.ForeignKey(Provincia, on_delete=models.DO_NOTHING)
+    comuna = models.ForeignKey(Comuna, on_delete=models.DO_NOTHING)
     ciudad = models.CharField(max_length=200, default=parToca['cuidadDefecto'])
-    pais = models.CharField(max_length=100)
+    pais = models.CharField(max_length=100, default=parToca['paisDefecto'])
     codigo_postal = models.CharField(max_length=20, blank=True)
 
     descripción = models.TextField(blank=True)
-    capacidad = models.IntegerField(default=0)
+    capacidad = models.IntegerField()
     evaluacion = models.IntegerField(choices=parToca['valoresEvaluacion'],default=parToca['defaultEvaluacion'])
 
     estado = models.CharField(max_length=2, choices=parLugares['estado_tipos'],default=parToca['disponible'])
-
-    fecha_crea = models.DateTimeField(default=datetime.now)
-    fecha_actua = models.DateTimeField(default=datetime.now, null=True)
+    fecha_crea = models.DateTimeField(auto_now_add=True)
+    fecha_actu = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.nombre

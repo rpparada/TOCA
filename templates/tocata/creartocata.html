@@ -36,12 +36,13 @@
                       <h6 class="card-subtitle text-muted">Horizontal Bootstrap layout.</h6>
                   </div>
                   <div class="card-body">
-                      <form action="{% url 'creartocata' %}" method="POST" id="lugarForm" data-ciudad-url-agregar="{% url 'ajax_load_comunas_agregar' %}" enctype="multipart/form-data">
+                      <form action="{% url 'creartocata' %}" method="POST" id="tocataForm" data-ciudad-url-agregar="{% url 'ajax_load_comunas_tocata' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                           <input type="hidden" class="form-control" value="{{ user.id }}" name="usuario">
                           <input type="hidden" class="form-control" value="{{ artista.id }}" name="artista">
-                          <input type="hidden" class="form-control" value="3" name="evaluacion">
                           <input type="hidden" class="form-control" value="IN" name="estado">
+                          <input type="hidden" class="form-control" value="1" name="region">
+                          <input type="hidden" class="form-control" value="1" name="comuna">
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Nombre</label>
                               <div class="col-sm-10">
@@ -77,6 +78,28 @@
                               </div>
                           </div>
                           {% endif %}
+
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ tocata_form.region.id_for_label }}">Region</label>
+                              <div class="col-sm-10">
+                                <select class="form-control" name="region" id="opcionesregion">
+                                  {% for region in tocata_form.region.field.choices %}
+                                    <option value="{{ region.0 }}">{{ region.1 }}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ tocata_form.comuna.id_for_label }}">Comuna</label>
+                              <div class="col-sm-10">
+                                <select class="form-control" name="comuna" id="opcionescomuna">
+                                  {% for comuna in tocata_form.comuna.field.choices %}
+                                    <option value="{{ comuna.0 }}">{{ comuna.1 }}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                          </div>
+
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Costo</label>
                               <div class="col-sm-10">
@@ -84,25 +107,17 @@
                               </div>
                           </div>
                           <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">Fecha</label>
-                              <div class="col-sm-10 input-group date" id="datetimepicker2" data-target-input="nearest">
-                                  <input type="text" value="" name="fecha" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="Selecciona Fecha" />
-                                  <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
-                                      <div class="input-group-text"><i class="icon-calendar"></i></div>
-                                  </div>
+                              <label for="example-date-input" class="col-2 col-form-label">Fecha</label>
+                              <div class="col-10">
+                                  <input class="form-control" type="date" value="" name="fecha">
                               </div>
                           </div>
-
                           <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">Hora</label>
-                              <div class="col-sm-10 input-group date" id="datetimepicker3" data-target-input="nearest">
-                                  <input type="text" value="" name="hora" class="form-control datetimepicker-input" data-target="#datetimepicker3" placeholder="Selecciona Hora" />
-                                  <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
-                                      <div class="input-group-text"><i class="icon-clock"></i></div>
-                                  </div>
+                              <label for="example-date-input" class="col-2 col-form-label">Hora</label>
+                              <div class="col-10">
+                                  <input class="form-control" type="time" value="" name="hora">
                               </div>
                           </div>
-
                           <input type="hidden" class="form-control" value="0" name="asistentes_total">
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Asistentes Minimos</label>

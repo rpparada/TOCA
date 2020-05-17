@@ -25,9 +25,6 @@ def index(request):
 
     return render(request, 'home/index.html', context)
 
-def about(request):
-    return render(request, 'home/about.html')
-
 def busqueda(request):
 
     queryset_list_tocatas = Tocata.objects.all()
@@ -55,28 +52,28 @@ def busqueda(request):
 
 def getTocatasArtistasHeadIndex(request):
 
-        hoy = datetime.today()
-        tocatas = Tocata.objects.all()[:parToca['muestraTocatas']]
-        for tocata in tocatas:
-            diff = hoy - tocata.fecha_crea.replace(tzinfo=None)
-            if diff.days <= parToca['diasNuevoTocata']:
-                tocata.nuevo = 'SI'
-            else:
-                tocata.nuevo = 'NO'
-            tocata.evaluacionRange = range(tocata.evaluacion)
-            tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
-
-        artistas = Artista.objects.all()[:parToca['muestraArtistas']]
-        for artista in artistas:
-            diff = hoy - artista.fecha_crea.replace(tzinfo=None)
-            if diff.days <= parToca['diasNuevoArtista']:
-                artista.nuevo = 'SI'
-            else:
-                artista.nuevo = 'NO'
-
-        if request.user.is_authenticated:
-            usuario = Usuario.objects.filter(user=request.user)[0]
+    hoy = datetime.today()
+    tocatas = Tocata.objects.all().order_by('-fecha_crea')[:parToca['muestraTocatas']]
+    for tocata in tocatas:
+        diff = hoy - tocata.fecha_crea.replace(tzinfo=None)
+        if diff.days <= parToca['diasNuevoTocata']:
+            tocata.nuevo = 'SI'
         else:
-            usuario = None
+            tocata.nuevo = 'NO'
+        tocata.evaluacionRange = range(tocata.evaluacion)
+        tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
 
-        return tocatas, artistas, usuario
+    artistas = Artista.objects.all().order_by('-fecha_crea')[:parToca['muestraArtistas']]
+    for artista in artistas:
+        diff = hoy - artista.fecha_crea.replace(tzinfo=None)
+        if diff.days <= parToca['diasNuevoArtista']:
+            artista.nuevo = 'SI'
+        else:
+            artista.nuevo = 'NO'
+
+    if request.user.is_authenticated:
+        usuario = Usuario.objects.filter(user=request.user)[0]
+    else:
+        usuario = None
+
+    return tocatas, artistas, usuario

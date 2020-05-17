@@ -3,7 +3,7 @@
 {% load humanize %}
 {% block title %} | TOCATAS{% endblock %}
 {% block content %}
-
+{% include 'partials/_alerts.html' %}
 <!-- Inspiro Slider -->
 <div id="slider" class="inspiro-slider dots-creative" data-height-xs="360" data-autoplay="2600" data-animate-in="fadeIn" data-animate-out="fadeOut" data-items="1" data-loop="true" data-autoplay="true">
     <!-- Slide 1 -->
@@ -77,7 +77,7 @@
                             {% if tocata_vista.nuevo == 'SI' %}
                             <span class="product-new">NUEVA</span>
                             {% endif %}
-                            {% if tocata_vista.lugar_def == 'CE' %}
+                            {% if tocata_vista.lugar_def == 'AB' %}
                             <span class="product-sale-off">ABIERTA</span>
                             {% endif %}
                             <!--

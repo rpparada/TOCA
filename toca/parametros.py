@@ -3,16 +3,17 @@
 parToca = {
     'diasNuevoTocata': 7,
     'diasNuevoArtista': 30,
-    'muestraTocatas': 10,
-    'muestraArtistas': 4,
+    'muestraTocatas': 3,
+    'muestraArtistas': 3,
     'valoresEvaluacion': [
+        (0,'No Evaluada'),
         (1,'Muy Mala'),
         (2,'Mala'),
         (3,'Regular'),
         (4,'Buena'),
         (5,'Muy Buena')
     ],
-    'defaultEvaluacion': 3,
+    'defaultEvaluacion': 0,
     # Parametros Artistas
     # Estado artista
     'disponible': 'DI',
@@ -28,6 +29,7 @@ parToca = {
     'aplazado': 'AP',
     'confirmado': 'CN',
     'completado': 'CM',
+    'borrado': 'BO',
     # Paginacion tocatas_vista
     'tocatas_pag': 4,
     'bancoDefecto': '012',
@@ -35,6 +37,17 @@ parToca = {
     'prefijoCelChile': '(+56) 9 ',
     # Ciudad por defecto
     'cuidadDefecto': 'Santiago',
+    'paisDefecto': 'Chile',
+    # Lugares Tocatas
+    'elegido': 'EL',
+    'noelegido': 'NE',
+}
+
+parLugaresToc = {
+    'estado_lugartocata': [
+        (parToca['elegido'], 'Elegido'),
+        (parToca['noelegido'], 'No Elegido')
+    ]
 }
 
 parArtistas = {
@@ -56,7 +69,17 @@ parTocatas = {
         (parToca['aplazado'], 'Aplazado'),
         (parToca['confirmado'], 'Confirmado'),
         (parToca['completado'], 'Completado'),
-    ]
+        (parToca['borrado'], 'Borrado'),
+    ],
+    'estado_tipos_vista': [
+        parToca['inicial'],
+        parToca['publicado'],
+        parToca['suspendido'],
+        parToca['aplazado'],
+        parToca['confirmado'],
+        parToca['completado'],
+    ],
+
 }
 
 parUsuarioArtistas = {
