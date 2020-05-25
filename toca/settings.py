@@ -155,3 +155,8 @@ DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
