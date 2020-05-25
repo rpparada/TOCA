@@ -4,7 +4,7 @@ parToca = {
     'diasNuevoTocata': 7,
     'diasNuevoArtista': 30,
     'muestraTocatas': 3,
-    'muestraArtistas': 3,
+    'muestraArtistas': 4,
     'valoresEvaluacion': [
         (0,'No Evaluada'),
         (1,'Muy Mala'),
