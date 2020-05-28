@@ -4,6 +4,7 @@ from django.contrib import messages, auth
 
 from django.contrib.auth.models import User
 from lugar.models import Lugar
+from artista.models import Artista
 from usuario.models import UsuarioArtista
 
 from .forms import AgregaCamposUsuarioForm, UsuarioForm, UsuarioArtistaForm
@@ -32,6 +33,10 @@ def registrarArt(request):
             usuario_art.user = user
             usuario_art.num_celular = parToca['prefijoCelChile']+str(usuario_art.num_celular)
             usuario_art.save()
+
+            art = Artista.objects.get(id=usuario_art.artista.id)
+            art.usuario = user
+            art.save()
 
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')

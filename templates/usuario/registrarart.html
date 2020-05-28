@@ -33,7 +33,7 @@
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label class="sr-only">Email</label>
-                                <input type="text" value="" placeholder="Email" class="form-control" name="email">
+                                <input type="email" value="" placeholder="Email" class="form-control" name="email">
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label class="sr-only">RUT</label>
@@ -70,7 +70,7 @@
                             </div>
                             <div class="form-group col-lg-12">
                                 <label for="{{ usuario_art_form.artista.id_for_label }}">{{ usuario_art_form.artista.label_tag }}</label>
-                                <select class="form-control" name="{{ usuario_art_form.artista.html_name }}">
+                                <select class="form-control" name="artista">
                                   {% for artista in usuario_art_form.artista.field.choices %}
                                     <option value="{{ artista.0 }}">{{ artista.1 }}</option>
                                   {% endfor %}
