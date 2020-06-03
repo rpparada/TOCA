@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %} | HOME{% endblock %}
+{% block content %}
+
+{% include 'partials/_alerts.html' %}
+
+{% if tocatas %}
+<!-- Shop products -->
+<section>
+    <div class="container">
+        <div class="row m-b-20">
+            <div class="col-lg-6 p-t-10 m-b-20">
+                <h3 class="m-b-20">A Monochromatic Spring ’15</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sit, exercitationem, consequuntur, assumenda iusto eos commodi alias.</p>
+            </div>
+            <div class="col-lg-3">
+                <div class="order-select">
+                    <h6>Sort by</h6>
+                    <p>Showing 1&ndash;12 of 25 results</p>
+                    <form method="get">
+                        <select class="form-control">
+                            <option value="order" selected="selected">Default sorting</option>
+                            <option value="popularity">Sort by popularity</option>
+                            <option value="rating">Sort by average rating</option>
+                            <option value="date">Sort by newness</option>
+                            <option value="price">Sort by price: low to high</option>
+                            <option value="price-desc">Sort by price: high to low</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="order-select">
+                    <h6>Sort by Price</h6>
+                    <p>From 0 - 190$</p>
+                    <form method="get">
+                        <select class="form-control">
+                            <option value="" selected="selected">0$ - 50$</option>
+                            <option value="">51$ - 90$</option>
+                            <option value="">91$ - 120$</option>
+                            <option value="">121$ - 200$</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--Product list-->
+        <div class="shop">
+            <div class="grid-layout grid-3-columns" data-item="grid-item">
+              {% for tocata in tocatas %}
+                <div class="grid-item">
+                    <div class="product">
+                        <div class="product-image">
+                            <a href="{% url 'tocata' tocata.id %}"><img alt="Shop product image!" src="{{ tocata.flayer_380_507.url }}">
+                            </a>
+                            {% if tocata.nuevo == 'SI' %}
+                            <span class="product-new">NUEVA</span>
+                            {% endif %}
+                            {% if tocata.lugar_def == 'AB' %}
+                            <span class="product-sale-off">BUSCANDO</span>
+                            {% endif %}
+                        </div>
+                        <div class="product-description">
+                            <div class="product-category">{{ tocata.artista.nombre }}, {{ tocata.lugar.region }}, {{ tocata.lugar.comuna }}</div>
+                            <div class="product-title">
+                                <h3><a href="{% url 'tocata' tocata.id %}">{{ tocata.nombre|truncatechars:20 }}</a></h3>
+                            </div>
+                            <div class="product-price"><ins>$ {{ tocata.costo|intcomma }}</ins>
+                            </div>
+                            <div class="product-reviews"><a href="#">Aun quedan {{ tocata.asistentes_diff|intcomma }} entradas a la venta</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if tocatas.has_other_pages %}
+            <ul class="pagination">
+              {% if tocatas.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ tocatas.previous_page_number }}">Previous</a></li>
+              {% else %}
+                <li class="page-item disabled"><a class="page-link">Previous</a></li>
+              {% endif %}
+
+              {% for i in tocatas.paginator.page_range %}
+                {% if tocatas.number == i %}
+                  <li class="page-item active"><a class="page-link">{{i}}</a></li>
+                {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
+                {% endif %}
+              {% endfor %}
+
+              {% if tocatas.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ tocatas.next_page_number }}">Next</a></li>
+              {% else %}
+                <li class="page-item disabled"><a class="page-link">Next</a></li>
+              {% endif %}
+            </ul>
+            {% endif %}
+            <!-- end: Pagination -->
+        </div>
+        <!--End: Product list-->
+    </div>
+</section>
+<!-- end: Shop products -->
+{% endif %}
+
+{% if artistas %}
+<!-- Content -->
+<section id="page-content">
+    <div class="container">
+        <!-- Portfolio Filter -->
+        <!--
+        <nav class="grid-filter gf-outline" data-layout="#portfolio">
+            <ul>
+                <li class="active"><a href="#" data-category="*">Show All</a></li>
+                <li><a href="#" data-category=".ct-branding">Branding</a></li>
+                <li><a href="#" data-category=".ct-photography">Photography</a></li>
+                <li><a href="#" data-category=".ct-marketing">Marketing</a></li>
+                <li><a href="#" data-category=".ct-media">Media</a></li>
+                <li><a href="#" data-category=".ct-webdesign">Web design</a></li>
+            </ul>
+            <div class="grid-active-title">Show All</div>
+        </nav>-->
+        <!-- end: Portfolio Filter -->
+
+        <!-- Portfolio -->
+        <div id="portfolio" class="grid-layout portfolio-2-columns" data-margin="0">
+            <!-- portfolio item -->
+            {% for artista in artistas %}
+            <div class="portfolio-item img-zoom ct-photography ct-media ct-branding ct-Media">
+                <div class="portfolio-item-wrap">
+                    <div class="portfolio-image">
+                        <a href="{% url 'artista' artista.id %}"><img src="{{ artista.foto1.url }}" alt=""></a>
+                    </div>
+                    <div class="portfolio-description">
+                        <a href="{% url 'artista' artista.id %}">
+                            <h3>{{ artista.nombre }}</h3>
+                            <span>{{ artista.habilidades }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- end: portfolio item -->
+        </div>
+        <!-- end: Portfolio -->
+    </div>
+</section>
+{% endif %}
+<!-- end: Content -->
+
+
+{% endblock %}

@@ -29,8 +29,11 @@ def index(request):
 
 def busqueda(request):
 
-    queryset_list_tocatas = Tocata.objects.all()
-    queryset_list_artistas = Artista.objects.all()
+    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+
+    queryset_list_tocatas = Tocata.objects.filter(estado__in=[parToca['inicial'],parToca['publicado'],parToca['confirmado'],])
+    queryset_list_artistas = Artista.objects.filter(estado=parToca['disponible'])
+
     if 'q' in request.GET:
         busqueda = request.GET['q']
         if busqueda:
@@ -38,13 +41,32 @@ def busqueda(request):
                 Q(nombre__icontains=busqueda) |
                 Q(descripción__icontains=busqueda)
             )
+            
+            hoy = datetime.today()
+            for tocata in queryset_list_tocatas:
+                diff = hoy - tocata.fecha_crea.replace(tzinfo=None)
+                if diff.days <= parToca['diasNuevoTocata']:
+                    tocata.nuevo = 'SI'
+                else:
+                    tocata.nuevo = 'NO'
+                tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
 
             queryset_list_artistas = Artista.objects.filter(
                 Q(nombre__icontains=busqueda) |
                 Q(descripción__icontains=busqueda)
             )
 
+            for artista in queryset_list_artistas:
+                diff = hoy - artista.fecha_crea.replace(tzinfo=None)
+                if diff.days <= parToca['diasNuevoArtista']:
+                    artista.nuevo = 'SI'
+                else:
+                    artista.nuevo = 'NO'
+
     context = {
+        'tocatas_h': tocatas,
+        'artistas_h': artistas,
+        'usuario': usuario,
         'tocatas': queryset_list_tocatas,
         'artistas': queryset_list_artistas,
         'valores': request.GET,

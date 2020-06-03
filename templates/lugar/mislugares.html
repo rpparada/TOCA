@@ -6,42 +6,33 @@
 {% block content %}
 {% include 'partials/_alerts.html' %}
 
-<!-- Page title -->
-<section id="page-title">
-    <div class="container">
-        <div class="page-title">
-            <h1>Data Tables</h1>
-            <span>Inspiration comes of working every day.</span>
-        </div>
-        <div class="breadcrumb">
-            <ul>
-                <li><a href="#">Home</a> </li>
-                <li><a href="#">Components</a> </li>
-                <li class="active"><a href="#">Data Tables</a> </li>
-            </ul>
-        </div>
-    </div>
-</section>
-<!-- end: Page title -->
-
 <!-- Page Content -->
 <section id="page-content" class="no-sidebar">
     <div class="container">
         <!-- DataTable -->
-        <form action="{% url 'agregarlugar' %}">
-        <div class="row mb-3">
-            <div class="col-lg-6">
-                <h4>DataTables</h4>
-                <p>Add advanced interaction controls to your HTML tables</p>
-            </div>
-            <div class="col-lg-6 text-right">
-
-                <button type="submit" class="btn btn-light"><i class="icon-plus"></i> Add Record</button>
-
+        {% if mislugares %}
+          <div class="row mb-3">
+              <div class="col-lg-6">
+                  <h4>Mis Lugares</h4>
+                  <p>Esta es la lista de tus lugares registrados.</p>
+              </div>
+              <div class="col-lg-6 text-right">
+                <a href="{% url 'agregarlugar' %}" class="btn btn-light"><i class="icon-plus"></i> Crear Lugar</a>
                 <div id="export_buttons" class="mt-2"></div>
-            </div>
-        </div>
-        </form>
+              </div>
+          </div>
+        {% else %}
+          <div class="row mb-3">
+              <div class="col-lg-6">
+                  <h4>Mis Lugares</h4>
+                  <p>Actualmente no tienes ningun lugar registrado donde puedas invitar a tus artistas favoritos.</p>
+              </div>
+              <div class="col-lg-6 text-right">
+                <a href="{% url 'agregarlugar' %}" class="btn btn-light"><i class="icon-plus"></i> Crea Tu Primer Lugar</a>
+                <div id="export_buttons" class="mt-2"></div>
+              </div>
+          </div>
+        {% endif %}
 
         {% if mislugares %}
         <div class="row">

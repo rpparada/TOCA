@@ -7,12 +7,12 @@
 <!-- Section -->
 {% include 'partials/_alerts.html' %}
 
-<section class="fullscreen" style="background-image: url({% static 'images/pages/1.jpg' %})">
-    <div class="container container-fullscreen">
-        <div class="text-middle">
+<section class="fullscreen" data-bg-parallax="{% static 'images/fondos/audience-concert-lights-men-1150836.jpg' %}">
+    <div class="container">
+        <div>
             <div class="text-center m-b-30">
                 <a href="{% url 'index' %}" class="logo">
-                    <img src="{% static 'images/logo-dark.png' %}" alt="Polo Logo">
+                    <img src="{% static 'images/iconos/logo_rojo_negro.png' %}" alt="Polo Logo">
                 </a>
             </div>
             <div class="row">
@@ -37,17 +37,17 @@
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label class="sr-only">RUT</label>
-                                <input type="text" value="" placeholder="RUT" class="form-control" name="rut">
+                                <input type="number" value="" placeholder="RUT" class="form-control" name="rut">
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label class="sr-only">Digito Verificador</label>
-                                <input type="text" value="" placeholder="Digito Verificador" class="form-control" name="digitoVerificador">
+                                <input type="number" value="" placeholder="Digito Verificador" class="form-control" name="digitoVerificador">
                             </div>
                             <div class="input-group col-lg-12">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">( +56 ) 9</span>
                                 </div>
-                                <input type="text" value="" class="form-control" placeholder="Número Celular" name="num_celular">
+                                <input type="number" value="" class="form-control" placeholder="Número Celular" name="num_celular">
                             </div>
                             <div class="form-group col-lg-12">
                                 <label for="{{ usuario_art_form.banco.id_for_label }}">{{ usuario_art_form.banco.label_tag }}</label>
@@ -86,7 +86,7 @@
                             </div>
                             <div class="col-lg-12 form-group">
                                 <button class="btn" type="submit">Registrar Nueva Cuenta </button>
-                                <button type="button" class="btn btn-danger m-l-10">Anular</button>
+                                <a href="{% url 'index' %}" class="btn btn-danger m-l-10">Anular</a>
                             </div>
                         </div>
                     </form>

@@ -3,7 +3,7 @@ Forms
 -------------------------------------------------------------------------*/
 .form-control {
     border: $form-border-width solid $form-border-color;
-    border-radius: $form-border-radius; 
+    border-radius: $form-border-radius;
 }
 form {
     .btn {
@@ -150,7 +150,7 @@ select {
     background-repeat: no-repeat !important;
     background-position: right center !important;
      border: $form-border-width solid $form-border-color;
-    border-radius: $form-border-radius; 
+    border-radius: $form-border-radius;
 }
 
 select[multiple] {
@@ -283,4 +283,3 @@ Forms - Dark
     margin-top: 6px;
     z-index: 3;
 }
-

@@ -23,7 +23,7 @@
 </section>
 <!-- end: Page title -->
 
-{% if mistocatas %}
+
 <!-- Page Content -->
 <section id="page-content" class="no-sidebar">
     <div class="container">
@@ -40,7 +40,7 @@
             </div>
         </div>
         </form>
-
+        {% if mistocatas %}
         <div class="row">
             <div class="col-lg-12">
                 <table id="datatable" class="table table-bordered table-hover" style="width:100%">
@@ -118,10 +118,11 @@
                 </table>
             </div>
         </div>
+        {% endif %}
         <!-- end: DataTable -->
     </div>
 </section>
 <!-- end: Page Content -->
-{% endif %}
+
 
 {% endblock %}

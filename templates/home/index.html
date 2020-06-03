@@ -100,7 +100,7 @@
 <!-- end: Shop products -->
 
 <!-- Shop products -->
-{% if tocatas %}
+{% if tocatas_ini %}
 <section>
     <div class="container">
 
@@ -222,6 +222,7 @@
 <!-- end: SERVICES & TESTOMONIALS -->
 
 <!--Team members -->
+{% if artistas %}
 <section class="background-grey">
     <div class="container">
         <div class="col-lg-8 m-b-100 center">
@@ -267,10 +268,13 @@
 
         </div>
 </section>
+{% else %}
+{% endif %}
 <!-- end:Team members -->
 
 
 <!-- Subscribe form -->
+<!--
 <section class="background-colored text-center p-t-80  p-b-30">
     <div class="container">
         <div class="row justify-content-center">
@@ -294,7 +298,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 <!-- end: Subscribe form -->
 
 {% endblock %}

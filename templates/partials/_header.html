@@ -1,24 +1,24 @@
 {% load static %}
 
 <!-- Header -->
-<header id="header" data-transparent="true" data-fullwidth="true" class="dark submenu-light">
+<header id="header" data-transparent="false" data-fullwidth="true" class="dark submenu-light">
     <div class="header-inner">
         <div class="container">
 
             <!--Logo-->
             <div id="logo">
-              <a href="{% url 'index' %}">
-                <span class="logo-default">TOCA</span>
-                <span class="logo-dark">TOCA</span>
-              </a>
+                <a href="{% url 'index' %}">
+                  <img src="{% static 'images/iconos/logo_rojo_negro_indexrojo.png' %}" class="logo-default">
+                  <img src="{% static 'images/iconos/logo_rojo_negro_indexblanco.png' %}" class="logo-dark">
+                </a>
             </div>
             <!--End: Logo-->
 
             <!-- Search -->
             <div id="search"><a id="btn-search-close" class="btn-search-close" aria-label="Close search form"><i class="icon-x"></i></a>
-                <form class="search-form" action="" method="get">
-                    <input class="form-control" name="q" type="text" placeholder="Escribe y busca..." value="{{ valores.q }}"/>
-                    <span class="text-muted">Comienza a escribir y presiona "Enter" o "ESC" para cerrar</span>
+                <form class="search-form" action="{% url 'busqueda' %}" method="get">
+                    <input id="busquedacolortext" class="form-control" name="q" type="text" value="{{ valores.q }}" placeholder="Type & Search..." />
+                    <span class="text-muted">Start typing & press "Enter" or "ESC" to close</span>
                 </form>
             </div>
             <!-- end: search -->
@@ -111,7 +111,7 @@
                               </li>
                               {% endif %}
                             {% else %}
-                            <li class="dropdown"><a>Usuario</a>
+                            <li class="dropdown"><a href="{% url 'ingresar' %}">Usuario</a>
                                 <ul class="dropdown-menu">
                                   <li><a href="{% url 'ingresar' %}">Ingresdar</a></li>
                                   <li><a href="{% url 'registrar' %}">Registrar</a></li>

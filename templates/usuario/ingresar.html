@@ -3,15 +3,15 @@
 {% load humanize %}
 {% block title %} | INGRESAR{% endblock %}
 {% block content %}
-<!-- Section -->
 {% include 'partials/_alerts.html' %}
 
-<section class="fullscreen" data-bg-parallax="{% static 'images/pages/1.jpg' %}">
+<!-- Section -->
+<section class="fullscreen" data-bg-parallax="{% static 'images/fondos/guitar-3492302.jpg' %}">
     <div class="container">
         <div>
             <div class="text-center m-b-30">
                 <a href="{% url 'index' %}" class="logo">
-                    <img src="{% static 'images/logo-dark.png' %}" alt="Polo Logo">
+                    <img src="{% static 'images/iconos/logo_rojo_negro.png' %}" alt="Polo Logo">
                 </a>
             </div>
             <div class="row">
@@ -27,26 +27,20 @@
                             <label class="sr-only">Contraseña</label>
                             <input type="password" class="form-control" placeholder="Contraseña" name="contra">
                         </div>
-                        <div class="form-group form-inline text-left">
-                            <div class="form-check">
-                                <label>
-                                    <input type="checkbox"><small class="m-l-10"> Remember me</small>
-                                </label>
-                            </div>
-                        </div>
+                        <br>
                         <div class="text-left form-group">
                             <button type="submit" class="btn">Ingresar</button>
+                            <a href="{% url 'index' %}" class="btn btn-danger m-l-10">Anular</a>
                         </div>
                         <input type="hidden" name="tocata_id" value="{{ valores.tocata_id }}">
                     </form>
-                    <p class="small">¿Olvidates tu contraseña?<a href="{% url 'password_reset' %}"> Recuperar</a>
-                    </p>
-                    <p class="small">¿Quieres crear una cuenta?<a href="{% url 'registrar' %}"> Registrate</a>
-                    </p>
+                    <p class="small">¿Olvidates tu contraseña?<a href="{% url 'password_reset' %}"> Recuperar Contraseña</a></p>
+                    <p class="small">¿Quieres crear una cuenta?<a href="{% url 'registrar' %}"> Registrate</a></p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 <!-- end: Section -->
+
 {% endblock %}
