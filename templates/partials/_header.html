@@ -107,16 +107,18 @@
                                     <li><a href="javascript:{document.getElementById('salir').submit()}">Salir</a>
                                       <form class="" id="salir" action="{% url 'salir' %}" method="POST">
                                         {% csrf_token %}
-                                        <input type="hidden">
+                                        <input type="hidden" name="next" value="{{request.path|urlencode}}">
+                                        <!--
+                                        <input type="hidden">-->
                                       </form>
                                     </li>
                                   </ul>
                                 </li>
                               {% endif %}
                             {% else %}
-                            <li class="dropdown"><a href="{% url 'ingresar' %}">Usuario</a>
+                            <li class="dropdown"><a href="{% url 'ingresar' %}?next={{request.path|urlencode}}">Usuario</a>
                                 <ul class="dropdown-menu">
-                                  <li><a href="{% url 'ingresar' %}">Ingresdar</a></li>
+                                  <li><a href="{% url 'ingresar' %}?next={{request.path|urlencode}}">Ingresdar</a></li>
                                   <li><a href="{% url 'registrar' %}">Registrar</a></li>
                                 </ul>
                             </li>

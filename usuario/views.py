@@ -117,7 +117,6 @@ def ingresar(request):
                 return HttpResponseRedirect(next)
             else:
                 return redirect('index')
-
         else:
             messages.error(request,'Usuario no encontrado')
             return redirect('ingresar')
@@ -126,9 +125,13 @@ def ingresar(request):
 
 def salir(request):
     if request.method == 'POST':
+        next = request.POST.get('next', '/')
         auth.logout(request)
         messages.success(request,'Salida Existosa')
-        return redirect('index')
+        if next:
+            return HttpResponseRedirect(next)
+        else:
+            return redirect('index')
 
 def cuenta(request):
 
