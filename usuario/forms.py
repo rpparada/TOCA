@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 from .models import Usuario, UsuarioArtista
+from artista.models import Artista
 
 from toca.parametros import parUsuarioArtistas
 

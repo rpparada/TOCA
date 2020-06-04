@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib import messages, auth
 
 
@@ -106,19 +106,18 @@ def ingresar(request):
     if request.method == 'POST':
         nombreusuario = request.POST['nombreusuario']
         contra = request.POST['contra']
+        next = request.POST.get('next', '/')
 
         usuario = auth.authenticate(username=nombreusuario, password=contra)
         if usuario is not None:
             auth.login(request, usuario)
             messages.success(request,'Ingreso Existos')
 
-            tocata_id = request.POST['tocata_id']
-
-            if tocata_id:
-                # return redirect('tocata', tocata_id=tocata_id)
-                return redirect('/tocatas/'+tocata_id)
+            if next:
+                return HttpResponseRedirect(next)
             else:
                 return redirect('index')
+
         else:
             messages.error(request,'Usuario no encontrado')
             return redirect('ingresar')
@@ -252,3 +251,13 @@ def cambioContra(request):
             return render(request, 'usuario/cambiocontra.html')
 
     return render(request, 'usuario/cambiocontra.html')
+
+def enviaform(request):
+
+    artistas = Artista.objects.filter(usuario__isnull=True)
+
+    context = {
+        'artistas': artistas,
+    }
+
+    return render(request,'usuario/enviaformnuevoart.html', context)

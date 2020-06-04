@@ -101,6 +101,9 @@
                                     <li><a href="{% url 'mislugares' %}">Mis Lugares</a></li>
                                     <li><a href="{% url 'cuenta' %}">Editar</a></li>
                                     <li><a href="{% url 'cambiocontra' %}">Cambiar Contraseña</a></li>
+                                    {% if request.user.is_staff %}
+                                    <li><a href="#">* Nuevo Artista</a></li>
+                                    {% endif %}
                                     <li><a href="javascript:{document.getElementById('salir').submit()}">Salir</a>
                                       <form class="" id="salir" action="{% url 'salir' %}" method="POST">
                                         {% csrf_token %}
@@ -108,7 +111,7 @@
                                       </form>
                                     </li>
                                   </ul>
-                              </li>
+                                </li>
                               {% endif %}
                             {% else %}
                             <li class="dropdown"><a href="{% url 'ingresar' %}">Usuario</a>

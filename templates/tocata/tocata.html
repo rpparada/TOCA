@@ -28,9 +28,9 @@
               {% endif %}
             {% else %}
               {% if tocata_vista.estado == 'PU' %}
-              <a href="{% url 'ingresar' %}" class="btn">INGRESA PARA COMPRAR</a>
+              <a href="{% url 'ingresar' %}?next={{request.path|urlencode}}" class="btn">INGRESA PARA COMPRAR</a>
               {% else %}
-              <a href="{% url 'ingresar' %}" class="btn">INGRESA PRESTA TU CASA</a>
+              <a href="{% url 'ingresar' %}?next={{request.path|urlencode}}" class="btn">INGRESA PARA PRESTAR TU CASA</a>
               {% endif %}
             {% endif %}
         </div>

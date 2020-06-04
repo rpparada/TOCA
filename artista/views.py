@@ -12,13 +12,21 @@ from toca.parametros import parToca, parTocatas
 # Create your views here.
 def artistas(request):
 
-    artistas = Artista.objects.all()
+    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+
+    artistas_vista = Artista.objects.filter(estado=parToca['disponible'])
+
     context = {
-        'artistas': artistas
+        'tocatas_h': tocatas,
+        'artistas_h': artistas,
+        'usuario': usuario,
+        'artistas': artistas_vista
     }
+
     return render(request, 'artista/artistas.html', context)
 
 def artista(request, artista_id):
+
     artista = get_object_or_404(Artista, pk=artista_id)
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
 
