@@ -7,6 +7,7 @@
 <!-- Section -->
 {% include 'partials/_alerts.html' %}
 
+{% if user.is_authenticated %}
 <section class="fullscreen" data-bg-parallax="{% static 'images/fondos/guitar-3492302.jpg' %}">
     <div class="container">
         <div>
@@ -50,6 +51,7 @@
         </div>
     </div>
 </section>
+{% endif %}
 <!-- end: Section -->
 
 {% endblock %}

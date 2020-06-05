@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from tocata.models import Tocata
 from artista.models import Artista
@@ -32,16 +33,16 @@ def busqueda(request):
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
 
     queryset_list_tocatas = Tocata.objects.filter(estado__in=[parToca['inicial'],parToca['publicado'],parToca['confirmado'],])
-    queryset_list_artistas = Artista.objects.filter(estado=parToca['disponible'])
 
     if 'q' in request.GET:
         busqueda = request.GET['q']
         if busqueda:
             queryset_list_tocatas = Tocata.objects.filter(
                 Q(nombre__icontains=busqueda) |
-                Q(descripción__icontains=busqueda)
+                Q(descripción__icontains=busqueda) |
+                Q(artista__nombre__icontains=busqueda) 
             )
-            
+
             hoy = datetime.today()
             for tocata in queryset_list_tocatas:
                 diff = hoy - tocata.fecha_crea.replace(tzinfo=None)
@@ -51,24 +52,22 @@ def busqueda(request):
                     tocata.nuevo = 'NO'
                 tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
 
-            queryset_list_artistas = Artista.objects.filter(
-                Q(nombre__icontains=busqueda) |
-                Q(descripción__icontains=busqueda)
-            )
+    paginador = Paginator(queryset_list_tocatas, parToca['tocatas_pag'])
+    pagina = request.GET.get('page')
 
-            for artista in queryset_list_artistas:
-                diff = hoy - artista.fecha_crea.replace(tzinfo=None)
-                if diff.days <= parToca['diasNuevoArtista']:
-                    artista.nuevo = 'SI'
-                else:
-                    artista.nuevo = 'NO'
+    try:
+        pagina_search = paginador.page(pagina)
+    except PageNotAnInteger:
+        pagina_search = paginador.page(1)
+    except EmptyPage:
+        pagina_search = paginador.page(paginador.num_pages)
 
+    print(pagina_search)
     context = {
         'tocatas_h': tocatas,
         'artistas_h': artistas,
         'usuario': usuario,
-        'tocatas': queryset_list_tocatas,
-        'artistas': queryset_list_artistas,
+        'resultado': pagina_search,
         'valores': request.GET,
     }
 
