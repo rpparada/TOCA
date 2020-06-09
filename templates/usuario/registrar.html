@@ -30,9 +30,9 @@
                             <div class="col-lg-12 form-group">
                                 <label class="sr-only">Email</label>
                                 {% if form.email.value %}
-                                <input type="email" value="{{ form.email.value }}" placeholder="Email" class="form-control" name="email">
+                                <input id="primercampo" type="email" value="{{ form.email.value }}" placeholder="Email" class="form-control" name="email">
                                 {% else %}
-                                <input type="email" value="" placeholder="Email" class="form-control" name="email">
+                                <input id="primercampo" type="email" value="" placeholder="Email" class="form-control" name="email">
                                 {% endif %}
                             </div>
                             <div class="col-lg-6 form-group">

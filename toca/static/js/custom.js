@@ -6,6 +6,7 @@
 */
 
 /* Notificaciones */
+// Fadeout sobre notificacion popup
 setTimeout(function(){
   $('.bootstrap-notify').fadeOut('slow');
 }, 2000);
@@ -15,6 +16,8 @@ $('.close').click(function () {
 });
 
 /* Creacion de Tocatas */
+// Define posibles comunas de acuerdo a region seleccionada
+// Habilita campos de acuerdo con el tipo de tocata
 $("#tipotocata").change(function () {
 
   var tipotocata = $(this).val();
@@ -57,6 +60,8 @@ $("#tipotocata").change(function () {
   }
 });
 
+// Define posibles comunas de acuerdo a region seleccionada
+// Habilita campos de acuerdo con el tipo de tocata
 $(document).ready(function (){
 
   $('#opcionestipo').prop('disabled', false);
@@ -85,6 +90,7 @@ $(document).ready(function (){
 
 });
 
+// Define posibles comunas de acuerdo a region seleccionada
 $(document).on('change','#opcionesregion', function () {
 
   var url = $("#tocataForm").attr("data-ciudad-url-agregar");  // get the url of the `load_cities` view
@@ -101,6 +107,7 @@ $(document).on('change','#opcionesregion', function () {
   });
 });
 
+// Define posibles comunas de acuerdo a region seleccionada
 $("#id_region").change(function () {
 
   var url = $("#lugarForm").attr("data-ciudad-url-agregar");  // get the url of the `load_cities` view
@@ -118,6 +125,7 @@ $("#id_region").change(function () {
 
 });
 
+// Define posibles comunas de acuerdo a region seleccionada
 $(document).ready(function(){
   var url = $("#lugarForm").attr("data-ciudad-url-actualizar");
   var regionId = $("#id_region_ajax").val();
@@ -135,3 +143,8 @@ $(document).ready(function(){
   });
 
 });
+
+// Al cargar la pagina deja el foco en el primer campo del formulario
+$(document).ready(function(){
+  $( "#primercampo" ).focus();
+})
