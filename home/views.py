@@ -41,7 +41,7 @@ def busqueda(request):
                 Q(nombre__icontains=busqueda) |
                 Q(descripción__icontains=busqueda)
             )
-            
+
             hoy = datetime.today()
             for tocata in queryset_list_tocatas:
                 diff = hoy - tocata.fecha_crea.replace(tzinfo=None)
@@ -94,7 +94,6 @@ def getTocatasArtistasHeadIndex(request):
             artista.nuevo = 'SI'
         else:
             artista.nuevo = 'NO'
-
     if request.user.is_authenticated:
         usuario = Usuario.objects.filter(user=request.user)[0]
     else:

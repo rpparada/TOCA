@@ -36,6 +36,7 @@ def registrarArt(request):
 
             art = Artista.objects.get(id=usuario_art.artista.id)
             art.usuario = user
+            art.estado = parToca['disponible']
             art.save()
 
             username = form.cleaned_data.get('username')
