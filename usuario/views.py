@@ -73,23 +73,38 @@ def registrar(request):
         usuario_form = UsuarioForm(request.POST)
 
         if form.is_valid() and usuario_form.is_valid():
-            user = form.save()
+
+            user = form.save(commit=False)
+            user.username = user.email
+            user.save()
 
             usuario = usuario_form.save(commit=False)
             usuario.user = user
             usuario.save()
 
-            username = form.cleaned_data.get('username')
+            username = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password1')
 
             user = auth.authenticate(username=username, password=password)
             auth.login(request, user)
 
-            messages.success(request, 'Usuario registrado exitosamente. Ahora puedes ingresar')
+            messages.success(request, 'Usuario registrado exitosamente.')
             return redirect('index')
         else:
-            messages.error(request,form.errors)
-            return redirect('registrar')
+
+            context = {
+                'form': form,
+            }
+
+            mensaje = ''
+            for campo, errores in form.errors.as_data().items():
+                for error in errores:
+                    mensaje = mensaje+' '+str(error.message)[:-1]+' and'
+
+            mensaje = mensaje.rsplit(' ', 1)[0]
+
+            messages.error(request,mensaje)
+            return render(request, 'usuario/registrar.html', context)
 
     else:
         form = AgregaCamposUsuarioForm();
@@ -122,7 +137,7 @@ def ingresar(request):
             context = {
                 'nombreusuario': nombreusuario,
             }
-            messages.error(request,'Error en Usuario y/o Contraseñá ')
+            messages.error(request,'Error en Usuario y/o Contraseña')
             return render(request, 'usuario/ingresar.html', context)
     else:
         return render(request, 'usuario/ingresar.html')
