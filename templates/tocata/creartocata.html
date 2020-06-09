@@ -7,24 +7,6 @@
 
 {% include 'partials/_alerts.html' %}
 
-<!-- Page title -->
-<section id="page-title">
-    <div class="container">
-        <div class="page-title">
-            <h1>Form Layouts</h1>
-            <span>Inspiration comes of working every day.</span>
-        </div>
-        <div class="breadcrumb">
-            <ul>
-                <li><a href="#">Home</a> </li>
-                <li><a href="#">Shortcodes</a> </li>
-                <li class="active"><a href="#">Form Layouts</a> </li>
-            </ul>
-        </div>
-    </div>
-</section>
-<!-- end: Page title -->
-
 {% if user.is_authenticated %}
 <section id="page-content">
     <div class="container">
@@ -155,6 +137,14 @@
 
             </div>
         </div>
+    </div>
+</section>
+{% else %}
+<section id="page-content">
+    <div class="container">
+      <div data-animate="fadeInUp" class="text-center">
+          <a href="{% url 'ingresar' %}?next={{request.path|urlencode}}" class="btn">INGRESA A TU CUENTA</a>
+      </div>
     </div>
 </section>
 {% endif %}

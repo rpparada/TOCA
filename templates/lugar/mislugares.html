@@ -7,6 +7,7 @@
 {% include 'partials/_alerts.html' %}
 
 <!-- Page Content -->
+{% if user.is_authenticated %}
 <section id="page-content" class="no-sidebar">
     <div class="container">
         <!-- DataTable -->
@@ -81,6 +82,15 @@
         <!-- end: DataTable -->
     </div>
 </section>
+{% else %}
+<section id="page-content">
+    <div class="container">
+      <div data-animate="fadeInUp" class="text-center">
+          <a href="{% url 'ingresar' %}?next={{request.path|urlencode}}" class="btn">INGRESA A TU CUENTA</a>
+      </div>
+    </div>
+</section>
+{% endif %}
 <!-- end: Page Content -->
 
 
