@@ -4,9 +4,8 @@
 {% block title %} | CAMBIA CONTRASEÑA{% endblock %}
 {% block content %}
 
-{% include 'partials/_alerts.html' %}
-
 <!-- Section -->
+{% include 'partials/_alerts.html' %}
 <section class="fullscreen" data-bg-parallax="{% static 'images/fondos/guitar-3492302.jpg' %}">
     <div class="container">
         <div>
@@ -18,12 +17,7 @@
             <div class="row">
               <div class="col-lg-6 center p-40 background-white b-r-6">
                 <p>
-                  Te hemos enviando un correo electronico con las instrucciones para cambiar tu contraseńa.
-                  Deberías recibirlo en unos minutos.
-                </p>
-                <p>
-                  Si no has recibido ningun correo electrónico, por favor asegurate de haber ingresado el correo electronico registrado en Tocatas Intimas,
-                  y tambien puedes revisar la carpeta de spam en tu casilla de correos.
+                  Tu cuenta ya ha sido activada. Ya puedes puedes comenzar a disfrutar de tus <a href="{% url 'index' %}">Tocata Intimas</a>.
                 </p>
               </div>
             </div>
@@ -31,5 +25,4 @@
     </div>
 </section>
 <!-- end: Section -->
-
 {% endblock %}

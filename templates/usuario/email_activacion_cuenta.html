@@ -1,0 +1,11 @@
+{% autoescape off %}
+
+Para activar tu cuenta {{ user.get_username }}, por favor click en el link de abajo:
+
+{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+Si el link no funciona, por favor copialo y pegalo en un nueva ventada del navegador.ß
+
+Atte.
+Equipo Tocatas Intimas
+{% endautoescape %}
