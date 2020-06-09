@@ -76,6 +76,9 @@
                             {% if tocata.nuevo == 'SI' %}
                               <span class="product-new">NUEVA</span>
                             {% endif %}
+                            {% if tocata.lugar_def == 'AB' %}
+                              <span class="product-sale-off">Abierta</span>
+                            {% endif %}
                         </div>
                         <div class="product-description">
                             <div class="product-category">{{ tocata.artista.nombre|upper }}, {{ tocata.lugar.region }}, {{ tocata.lugar.comuna }}</div>
@@ -121,6 +124,12 @@
                         <div class="product-image">
                             <a href="{% url 'tocata' tocata_ini.id %}"><img alt="Shop product image!" src="{{ tocata_ini.flayer_380_507.url }}">
                             </a>
+                            {% if tocata_ini.nuevo == 'SI' %}
+                              <span class="product-new">NUEVA</span>
+                            {% endif %}
+                            {% if tocata_ini.lugar_def == 'AB' %}
+                              <span class="product-sale-off">Abierta</span>
+                            {% endif %}
                         </div>
                         <div class="product-description">
                             <div class="product-category">{{ tocata_ini.artista.nombre|upper }}, {{ tocata_ini.region }}, {{ tocata_ini.comuna }}</div>

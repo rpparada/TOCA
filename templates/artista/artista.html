@@ -48,23 +48,34 @@
 
 <!-- Shop products -->
 {% if tocatas_art %}
-<section>
+<section class="background-grey">
     <div class="container">
+
+      <div class="col-lg-8 m-b-100 center">
+          <div class="heading-text heading-section text-center">
+              <h2>TOCATAS INTIMAS VIGENTES</h2>
+              <p>Listado de las tocatas vigentes.</p>
+          </div>
+      </div>
+
         <!--Product list-->
-        {% for tocata_art in tocatas_art %}
         <div class="shop">
             <div class="grid-layout grid-3-columns" data-item="grid-item">
+              {% for tocata_art in tocatas_art %}
                 <div class="grid-item">
                     <div class="product">
                         <div class="product-image">
                             <a href="{% url 'tocata' tocata_art.id %}"><img alt="Shop product image!" src="{{ tocata_art.flayer_380_507.url }}">
                             </a>
                             {% if tocata_art.nuevo == 'SI' %}
-                            <span class="product-new">NUEVA</span>
+                              <span class="product-new">NUEVA</span>
+                            {% endif %}
+                            {% if tocata_art.lugar_def == 'AB' %}
+                              <span class="product-sale-off">Abierta</span>
                             {% endif %}
                         </div>
                         <div class="product-description">
-                            <div class="product-category">{{ tocata_art.artista.nombre }}</div>
+                            <div class="product-category">{{ tocata_art.artista.nombre|upper }}, {{ tocata_art.lugar.region }}, {{ tocata_art.lugar.comuna }}</div>
                             <div class="product-title">
                                 <h3><a href="{% url 'tocata' tocata_art.id %}">{{ tocata_art.nombre|truncatechars:20 }}</a></h3>
                             </div>
@@ -75,13 +86,23 @@
                         </div>
                     </div>
                 </div>
+              {% endfor %}
             </div>
         </div>
-        {% endfor %}
         <!--End: Product list-->
     </div>
 </section>
 {% else %}
+<section class="background-grey">
+    <div class="container">
+
+      <div class="col-lg-8 m-b-100 center">
+          <div class="heading-text heading-section text-center">
+              <h2>Actualmente {{artista.nombre}} no tiene Tocatas Intimas vigentes.</h2>
+          </div>
+      </div>
+    </div>
+</section>
 {% endif %}
 <!-- end: Shop products -->
 

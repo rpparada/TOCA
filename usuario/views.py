@@ -119,8 +119,11 @@ def ingresar(request):
             else:
                 return redirect('index')
         else:
-            messages.error(request,'Usuario no encontrado')
-            return redirect('ingresar')
+            context = {
+                'nombreusuario': nombreusuario,
+            }
+            messages.error(request,'Error en Usuario y/o Contraseñá ')
+            return render(request, 'usuario/ingresar.html', context)
     else:
         return render(request, 'usuario/ingresar.html')
 

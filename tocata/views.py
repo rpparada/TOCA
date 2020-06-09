@@ -55,7 +55,7 @@ def tocata(request, tocata_id):
 
     tocata = get_object_or_404(Tocata, pk=tocata_id)
     tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
-    
+
     #desc = str(tocata.artista.descripción)
     #tocata.des_part1,tocata.des_part2 = desc[:round(len(desc)/2)], desc[round(len(desc)/2):]
 
@@ -199,6 +199,10 @@ def seleccionarPropuestas(request, tocata_id):
             tocata = get_object_or_404(Tocata, pk=tocata_id)
             print(tocata)
             tocata.lugar = lugartocata.lugar
+            tocata.comuna = lugartocata.lugar.comuna
+            tocata.region = lugartocata.lugar.region
+            tocata.provincia = lugartocata.lugar.provincia
+
             print(tocata.lugar)
             tocata.estado = parToca['publicado']
             print(tocata.estado)
