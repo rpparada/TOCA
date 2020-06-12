@@ -1,8 +1,10 @@
 {% autoescape off %}
 
-Para activar tu cuenta {{ user.get_username }}, por favor click en el link de abajo:
+Bienvenido a Tocatas Intimas.
 
-{{ domain }}{% url 'activate' uidb64=uid token=token %}
+Completa el formularion haciendo click en el link de abajo:
+
+{{ domain }}{% url 'activateart' uidb64=uid token=token %}
 
 Si el link no funciona, por favor copialo y pegalo en un nueva ventada del navegador.
 

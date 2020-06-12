@@ -17,11 +17,36 @@ from usuario.models import UsuarioArtista
 from .forms import AgregaCamposUsuarioForm, UsuarioForm, UsuarioArtistaForm
 
 from home.views import getTocatasArtistasHeadIndex
-from .tokens import account_activation_token
+from .tokens import account_activation_token, art_activation_token
 
 from toca.parametros import parToca
 
 # Create your views here.
+
+def activateArt(request, uidb64, token):
+
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        artista = Artista.objects.get(pk=uid)
+
+    except(TypeError, ValueError, OverflowError, Artista.DoesNotExist):
+        artista = None
+
+    if artista is not None and art_activation_token.check_token(artista, token):
+        form = AgregaCamposUsuarioForm()
+        usuario_form = UsuarioForm()
+        usuario_art_form = UsuarioArtistaForm()
+
+        context = {
+            'form': form,
+            'usuario_form': usuario_form,
+            'usuario_art_form': usuario_art_form,
+            'artista': artista,
+        }
+        return render(request, 'usuario/registrarart.html', context)
+    else:
+        return render(request, 'usuario/link_invalido.html')
+
 def registrarArt(request):
 
     if request.method == 'POST':
@@ -59,20 +84,9 @@ def registrarArt(request):
             messages.error(request,form.errors)
             messages.error(request,usuario_form.errors)
             messages.error(request,usuario_art_form.errors)
-            return redirect('registrarart')
+            return redirect(request.META['HTTP_REFERER'])
 
-    else:
-        form = AgregaCamposUsuarioForm()
-        usuario_form = UsuarioForm()
-        usuario_art_form = UsuarioArtistaForm()
-
-    context = {
-        'form': form,
-        'usuario_form': usuario_form,
-        'usuario_art_form': usuario_art_form,
-    }
-    return render(request, 'usuario/registrarart.html', context)
-
+    return redirect(request.META['HTTP_REFERER'])
 
 def registrar(request):
 
@@ -122,9 +136,8 @@ def registrar(request):
             messages.error(request,mensaje)
             return render(request, 'usuario/registrar.html', context)
 
-    else:
-        form = AgregaCamposUsuarioForm();
-        usuario_form = UsuarioForm();
+    form = AgregaCamposUsuarioForm();
+    usuario_form = UsuarioForm();
 
     context = {
         'form': form,
@@ -149,8 +162,7 @@ def activate(request, uidb64, token):
 
         return render(request, 'usuario/activacion_cuenta_completa.html')
     else:
-
-        return HttpResponse('Activation link is invalid!')
+        return render(request, 'usuario/link_invalido.html')
 
 def ingresar(request):
 
@@ -310,6 +322,32 @@ def cambioContra(request):
     return render(request, 'usuario/cambiocontra.html')
 
 def enviaform(request):
+
+    if request.method == 'POST':
+        artista_id = request.POST['artista']
+        artista = Artista.objects.get(id=artista_id)
+
+        if artista:
+            if artista.email:
+                current_site = get_current_site(request)
+                mail_subject = 'Formulario de Ingreso de Artistas a Tocatas Intimas.'
+                message = render_to_string('usuario/email_nuevo_artista_cuenta.html', {
+                    'user': artista,
+                    'domain': current_site.domain,
+                    'uid':urlsafe_base64_encode(force_bytes(artista.pk)),
+                    'token':art_activation_token.make_token(artista),
+                })
+                to_email = artista.email
+                email = EmailMessage(
+                            mail_subject, message, to=[to_email]
+                )
+                email.send()
+                return render(request, 'usuario/nuevo_artista_done.html')
+
+            else:
+                messages.error(request,'Artista no tiene correo registrado')
+        else:
+            messages.error(request,'Artista no encontrado')
 
     artistas = Artista.objects.filter(usuario__isnull=True)
 

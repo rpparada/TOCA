@@ -102,7 +102,7 @@
                                     <li><a href="{% url 'cuenta' %}">Editar</a></li>
                                     <li><a href="{% url 'cambiocontra' %}">Cambiar Contraseña</a></li>
                                     {% if request.user.is_staff %}
-                                    <li><a href="#">* Nuevo Artista</a></li>
+                                    <li><a href="{% url 'enviaform' %}">Nuevo Artista</a></li>
                                     {% endif %}
                                     <li><a href="javascript:{document.getElementById('salir').submit()}">Salir</a>
                                       <form class="" id="salir" action="{% url 'salir' %}" method="POST">
