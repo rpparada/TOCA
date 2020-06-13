@@ -28,3 +28,15 @@ class UsuarioArtistaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(UsuarioArtistaForm, self).__init__(*args, **kwargs)
         self.fields['artista'].empty_label = None
+
+class AgregaCamposUsuarioArtForm(UserCreationForm):
+
+    class Meta:
+        model = User
+        fields = ('username','email','password1','password2','first_name','last_name')
+
+class ArtistaForm(forms.ModelForm):
+
+    class Meta:
+        model = Artista
+        fields = ('id','email')

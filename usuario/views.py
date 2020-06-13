@@ -14,7 +14,7 @@ from lugar.models import Lugar
 from artista.models import Artista
 from usuario.models import UsuarioArtista
 
-from .forms import AgregaCamposUsuarioForm, UsuarioForm, UsuarioArtistaForm
+from .forms import AgregaCamposUsuarioForm, UsuarioForm, UsuarioArtistaForm, AgregaCamposUsuarioArtForm, ArtistaForm
 
 from home.views import getTocatasArtistasHeadIndex
 from .tokens import account_activation_token, art_activation_token
@@ -33,15 +33,15 @@ def activateArt(request, uidb64, token):
         artista = None
 
     if artista is not None and art_activation_token.check_token(artista, token):
-        form = AgregaCamposUsuarioForm()
-        usuario_form = UsuarioForm()
+        form = AgregaCamposUsuarioArtForm()
         usuario_art_form = UsuarioArtistaForm()
+        #artista_form = ArtistaForm(instance=artista)
 
         context = {
             'form': form,
-            'usuario_form': usuario_form,
             'usuario_art_form': usuario_art_form,
-            'artista': artista,
+            #'artista_form': artista_form,
+            'artistaini': artista,
         }
         return render(request, 'usuario/registrarart.html', context)
     else:
@@ -50,13 +50,14 @@ def activateArt(request, uidb64, token):
 def registrarArt(request):
 
     if request.method == 'POST':
-        form = AgregaCamposUsuarioForm(request.POST)
-        usuario_form = UsuarioForm(request.POST)
+        form = AgregaCamposUsuarioArtForm(request.POST)
         usuario_art_form = UsuarioArtistaForm(request.POST)
+        #artista_form = ArtistaForm(request.POST)
 
-        if form.is_valid() and usuario_form.is_valid() and usuario_art_form.is_valid():
+        if form.is_valid() and usuario_art_form.is_valid():
             user = form.save()
 
+            usuario_form = UsuarioForm()
             usuario = usuario_form.save(commit=False)
             usuario.user = user
             usuario.es_artista = True
@@ -65,6 +66,7 @@ def registrarArt(request):
             usuario_art = usuario_art_form.save(commit=False)
             usuario_art.user = user
             usuario_art.num_celular = parToca['prefijoCelChile']+str(usuario_art.num_celular)
+
             usuario_art.save()
 
             art = Artista.objects.get(id=usuario_art.artista.id)
@@ -81,12 +83,28 @@ def registrarArt(request):
             messages.success(request, 'Usuario registrado exitosamente. Ahora puedes ingresar')
             return redirect('index')
         else:
-            messages.error(request,form.errors)
-            messages.error(request,usuario_form.errors)
+            #messages.error(request,form.errors)
             messages.error(request,usuario_art_form.errors)
-            return redirect(request.META['HTTP_REFERER'])
 
-    return redirect(request.META['HTTP_REFERER'])
+            context = {
+                'form': form,
+                'usuario_art_form': usuario_art_form,
+                #'artista_form': artista_form,
+            }
+            return render(request, 'usuario/registrarart.html', context)
+
+
+    form = AgregaCamposUsuarioArtForm()
+    usuario_art_form = UsuarioArtistaForm()
+    #artista_form = ArtistaForm()
+
+    context = {
+        'form': form,
+        'usuario_art_form': usuario_art_form,
+        #'artista_form': artista_form,
+    }
+
+    return render(request, 'usuario/registrarart.html', context)
 
 def registrar(request):
 
