@@ -15,8 +15,8 @@ class Usuario(models.Model):
         return self.user.username
 
 class UsuarioArtista(models.Model):
+    
     user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
-
     rut = models.IntegerField(default=0)
     num_celular = models.CharField(max_length=50, default=0)
     digitoVerificador = models.CharField(max_length=1,default='0')

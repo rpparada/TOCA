@@ -24,34 +24,13 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <h3>Registrate.</h3>
-                                <p>Por favor, completa la información requerida. {{ usuario_art_form.artista.value }}</p>
+                                <p>Por favor, completa la información requerida.{{ artistaini }}</p>
                             </div>
-                            {% if artistaini %}
+                            <input hidden type="text" value="{{ artistaini.id }}" class="form-control" name="artistaid">
                             <input hidden type="text" value="{{ artistaini.email }}" class="form-control" name="username">
-                            {% else %}
-                            <input hidden type="text" value="{{ form.username.value }}" class="form-control" name="username">
-                            {% endif %}
-                            <div class="form-group col-lg-12">
-                                <label for="{{ usuario_art_form.artista.id_for_label }}">{{ usuario_art_form.arista.label_tag }}</label>
-                                <select class="form-control" name="{{ usuario_art_form.artista.html_name }}">
-                                  {% if artistaini %}
-                                    {% for art in usuario_art_form.artista.field.choices %}
-                                      <option value="{{ art.0 }}" {% if art.0 == artistaini.id %}selected="selected"{% endif %}>hola {{ art.1 }}</option>
-                                    {% endfor %}
-                                  {% else %}
-                                    {% for art in usuario_art_form.artista.field.choices %}
-                                      <option value="{{ art.0 }}" {% if art.0 == usuario_art_form.artista.value %}selected="selected"{% endif %}>chao {{ art.1 }}</option>
-                                    {% endfor %}
-                                  {% endif %}
-                                </select>
-                            </div>
                             <div class="col-lg-12 form-group">
                                 <label class="sr-only">Email</label>
-                                {% if artistaini %}
                                 <input type="email" value="{{ artistaini.email }}" placeholder="Email" class="form-control" name="email" readonly>
-                                {% else %}
-                                <input type="email" value="{{ form.username.value }}" placeholder="Email" class="form-control" name="email" readonly>
-                                {% endif %}
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label class="sr-only">Nombre</label>

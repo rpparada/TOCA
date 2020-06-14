@@ -40,7 +40,6 @@ def activateArt(request, uidb64, token):
         context = {
             'form': form,
             'usuario_art_form': usuario_art_form,
-            #'artista_form': artista_form,
             'artistaini': artista,
         }
         return render(request, 'usuario/registrarart.html', context)
@@ -52,9 +51,12 @@ def registrarArt(request):
     if request.method == 'POST':
         form = AgregaCamposUsuarioArtForm(request.POST)
         usuario_art_form = UsuarioArtistaForm(request.POST)
-        #artista_form = ArtistaForm(request.POST)
+        artista_id = request.POST['artistaid']
+
+        art = Artista.objects.get(id=artista_id)
 
         if form.is_valid() and usuario_art_form.is_valid():
+
             user = form.save()
 
             usuario_form = UsuarioForm()
@@ -66,10 +68,9 @@ def registrarArt(request):
             usuario_art = usuario_art_form.save(commit=False)
             usuario_art.user = user
             usuario_art.num_celular = parToca['prefijoCelChile']+str(usuario_art.num_celular)
-
+            usuario_art.artista = art
             usuario_art.save()
 
-            art = Artista.objects.get(id=usuario_art.artista.id)
             art.usuario = user
             art.estado = parToca['disponible']
             art.save()
@@ -80,28 +81,26 @@ def registrarArt(request):
             user = auth.authenticate(username=username, password=password)
             auth.login(request, user)
 
-            messages.success(request, 'Usuario registrado exitosamente. Ahora puedes ingresar')
+            messages.success(request, 'Artista registrado exitosamente')
             return redirect('index')
         else:
-            #messages.error(request,form.errors)
+            messages.error(request,form.errors)
             messages.error(request,usuario_art_form.errors)
 
             context = {
                 'form': form,
                 'usuario_art_form': usuario_art_form,
-                #'artista_form': artista_form,
+                'artistaini': art,
             }
             return render(request, 'usuario/registrarart.html', context)
 
 
     form = AgregaCamposUsuarioArtForm()
     usuario_art_form = UsuarioArtistaForm()
-    #artista_form = ArtistaForm()
 
     context = {
         'form': form,
         'usuario_art_form': usuario_art_form,
-        #'artista_form': artista_form,
     }
 
     return render(request, 'usuario/registrarart.html', context)
