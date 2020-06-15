@@ -16,7 +16,7 @@
                 </a>
             </div>
             <div class="row">
-                <div class="col-lg-6 center p-40 background-white b-r-6">
+                <div id="formulario" class="col-lg-6 center p-40 background-white b-r-6">
                     <form class="form-transparent-grey" action="{% url 'registrarart' %}" method="POST">
                       {% csrf_token %}
                       {{ form.non_field_errors }}
@@ -24,7 +24,8 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <h3>Registrate.</h3>
-                                <p>Por favor, completa la información requerida.{{ artistaini }}</p>
+                                <p>Por favor, completa la información requerida</p>
+                                <p hidden id="mensajerror">test</p>
                             </div>
                             <input hidden type="text" value="{{ artistaini.id }}" class="form-control" name="artistaid">
                             <input hidden type="text" value="{{ artistaini.email }}" class="form-control" name="username">
@@ -59,9 +60,9 @@
                             <div class="col-lg-4 form-group">
                                 <label class="sr-only">Digito Verificador</label>
                                 {% if usuario_art_form.digitoVerificador.value %}
-                                <input id="digitover" type="number" value="{{ usuario_art_form.digitoVerificador.value }}" placeholder="Digito Ver." class="form-control" name="digitoVerificador">
+                                <input id="digitover" type="text" value="{{ usuario_art_form.digitoVerificador.value }}" placeholder="Digito Ver." class="form-control" name="digitoVerificador">
                                 {% else %}
-                                <input id="digitover" type="number" value="" placeholder="Digito Ver." class="form-control" name="digitoVerificador">
+                                <input id="digitover" type="text" value="" placeholder="Digito Ver." class="form-control" name="digitoVerificador">
                                 {% endif %}
                             </div>
                             <div class="input-group col-lg-12">

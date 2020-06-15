@@ -149,8 +149,26 @@ $(document).ready(function(){
   $( "#primercampo" ).focus();
 })
 
-$("#digitover").change(function () {
-  var digver = $(this).val();
-  var rut = $("#rut").val();
+$("#formulario").submit(function(){
+  var digver, rut, M, S, final;
 
-  })
+  digver = $("#digitover").val();
+  rut = $("#rut").val();
+  M=0,S=1;
+
+  for (;rut;rut=Math.floor(rut/10)) {
+    S=(S+rut%10*(9-M++%6))%11;
+  }
+  final = S?S-1:'K';
+
+  if (final!=digver){
+    $("#digitover").css("border-color", "red" );
+    $("#mensajerror").text("Error en digito verificador");
+    $("#mensajerror").removeAttr('hidden');
+    return false
+  } else {
+    $("#mensajerror").empty();
+    $("#mensajerror").attr('hidden');
+  }
+
+})

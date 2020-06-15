@@ -82,7 +82,11 @@
                                     <li><a href="{% url 'creartocata' %}">Crear Tocata</a></li>
                                   </ul>
                                 </li>
-                                <li class="dropdown"><a href="{% url 'cuentaart' %}">{{ user.username }}</a>
+                                {% if user.first_name %}
+                                <li class="dropdown"><a href="{% url 'cuentaart' %}">Hola, {{ user.first_name }}</a>
+                                {% else %}
+                                <li class="dropdown"><a href="{% url 'cuentaart' %}">Hola, {{ user.username }}</a>
+                                {% endif %}
                                   <ul class="dropdown-menu">
                                     <li><a href="{% url 'mislugares' %}">Mis Lugares</a></li>
                                     <li><a href="{% url 'cuentaart' %}">Editar Cuenta</a></li>
@@ -96,7 +100,11 @@
                                   </ul>
                               </li>
                               {% else %}
-                                <li class="dropdown"><a href="{% url 'cuenta' %}">{{ user.username }}</a>
+                                {% if user.first_name %}
+                                <li class="dropdown"><a href="{% url 'cuenta' %}">Hola, {{ user.first_name }}</a>
+                                {% else %}
+                                <li class="dropdown"><a href="{% url 'cuenta' %}">Hola, {{ user.username }}</a>
+                                {% endif %}
                                   <ul class="dropdown-menu">
                                     <li><a href="{% url 'mislugares' %}">Mis Lugares</a></li>
                                     <li><a href="{% url 'cuenta' %}">Editar</a></li>
