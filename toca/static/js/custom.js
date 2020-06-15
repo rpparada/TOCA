@@ -148,3 +148,9 @@ $(document).ready(function(){
 $(document).ready(function(){
   $( "#primercampo" ).focus();
 })
+
+$("#digitover").change(function () {
+  var digver = $(this).val();
+  var rut = $("#rut").val();
+
+  })
