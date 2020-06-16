@@ -16,7 +16,7 @@
                 </a>
             </div>
             <div class="row">
-                <div id="formulario" class="col-lg-6 center p-40 background-white b-r-6">
+                <div id="formtocheck" class="col-lg-6 center p-40 background-white b-r-6">
                     <form class="form-transparent-grey" action="{% url 'registrarart' %}" method="POST">
                       {% csrf_token %}
                       {{ form.non_field_errors }}
@@ -25,7 +25,7 @@
                             <div class="col-lg-12">
                                 <h3>Registrate.</h3>
                                 <p>Por favor, completa la información requerida</p>
-                                <p hidden id="mensajerror">test</p>
+                                <p hidden id="mensajerror"></p>
                             </div>
                             <input hidden type="text" value="{{ artistaini.id }}" class="form-control" name="artistaid">
                             <input hidden type="text" value="{{ artistaini.email }}" class="form-control" name="username">
@@ -36,33 +36,33 @@
                             <div class="col-lg-6 form-group">
                                 <label class="sr-only">Nombre</label>
                                 {% if form.first_name.value %}
-                                <input id="primercampo" type="text" value="{{ form.first_name.value }}" placeholder="Nombre" class="form-control" name="first_name">
+                                <input id="primercampo" type="text" value="{{ form.first_name.value }}" placeholder="Nombre" class="requerido form-control" name="first_name">
                                 {% else %}
-                                <input id="primercampo" type="text" value="" placeholder="Nombre" class="form-control" name="first_name">
+                                <input id="primercampo" type="text" value="" placeholder="Nombre" class="requerido form-control" name="first_name">
                                 {% endif %}
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label class="sr-only">Apellido</label>
                                 {% if form.last_name.value %}
-                                <input type="text" value="{{ form.last_name.value }}" placeholder="Apellido" class="form-control" name="last_name">
+                                <input type="text" value="{{ form.last_name.value }}" placeholder="Apellido" class="requerido form-control" name="last_name">
                                 {% else %}
-                                <input type="text" value="" placeholder="Apellido" class="form-control" name="last_name">
+                                <input type="text" value="" placeholder="Apellido" class="requerido form-control" name="last_name">
                                 {% endif %}
                             </div>
                             <div class="col-lg-8 form-group">
                                 <label class="sr-only">RUT</label>
                                 {% if usuario_art_form.rut.value %}
-                                <input id="rut" type="number" value="{{ usuario_art_form.rut.value }}" placeholder="RUT" class="form-control" name="rut">
+                                <input id="rut" type="number" value="{{ usuario_art_form.rut.value }}" placeholder="RUT" class="requerido form-control" name="rut">
                                 {% else %}
-                                <input id="rut" type="number" value="" placeholder="RUT" class="form-control" name="rut">
+                                <input id="rut" type="number" value="" placeholder="RUT" class="requerido form-control" name="rut">
                                 {% endif %}
                             </div>
                             <div class="col-lg-4 form-group">
                                 <label class="sr-only">Digito Verificador</label>
                                 {% if usuario_art_form.digitoVerificador.value %}
-                                <input id="digitover" type="text" value="{{ usuario_art_form.digitoVerificador.value }}" placeholder="Digito Ver." class="form-control" name="digitoVerificador">
+                                <input id="digitover" type="text" value="{{ usuario_art_form.digitoVerificador.value }}" placeholder="Digito Ver." class="requerido form-control" name="digitoVerificador">
                                 {% else %}
-                                <input id="digitover" type="text" value="" placeholder="Digito Ver." class="form-control" name="digitoVerificador">
+                                <input id="digitover" type="text" value="" placeholder="Digito Ver." class="requerido form-control" name="digitoVerificador">
                                 {% endif %}
                             </div>
                             <div class="input-group col-lg-12">
@@ -70,9 +70,9 @@
                                     <span class="input-group-text" id="basic-addon1">( +56 ) 9</span>
                                 </div>
                                 {% if usuario_art_form.num_celular.value %}
-                                <input type="number" value="{{ usuario_art_form.num_celular.value }}" class="form-control" placeholder="Número Celular" name="num_celular">
+                                <input type="number" value="{{ usuario_art_form.num_celular.value }}" class="requerido form-control" placeholder="Número Celular" name="num_celular">
                                 {% else %}
-                                <input type="number" value="" class="form-control" placeholder="Número Celular" name="num_celular">
+                                <input type="number" value="" class="requerido form-control" placeholder="Número Celular" name="num_celular">
                                 {% endif %}
                             </div>
                             <div class="form-group col-lg-12">
@@ -86,9 +86,9 @@
                             <div class="col-lg-6 form-group">
                                 <label class="sr-only">Número Cuenta</label>
                                 {% if usuario_art_form.num_cuenta.value %}
-                                <input type="text" value="{{ usuario_art_form.num_cuenta.value }}" placeholder="Número Cuenta" class="form-control" name="num_cuenta">
+                                <input type="text" value="{{ usuario_art_form.num_cuenta.value }}" placeholder="Número Cuenta" class="requerido form-control" name="num_cuenta">
                                 {% else %}
-                                <input type="text" value="" placeholder="Número Cuenta" class="form-control" name="num_cuenta">
+                                <input type="text" value="" placeholder="Número Cuenta" class="requerido form-control" name="num_cuenta">
                                 {% endif %}
                             </div>
                             <div class="form-group col-lg-6">
@@ -100,11 +100,11 @@
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label class="sr-only">Contraseña</label>
-                                <input type="password" value="" placeholder="Contraseña" class="form-control" name="password1">
+                                <input type="password" value="" placeholder="Contraseña" class="requerido form-control" name="password1">
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label class="sr-only">Repite Contraseña</label>
-                                <input type="password" value="" placeholder="Repite Contraseña" class="form-control" name="password2">
+                                <input type="password" value="" placeholder="Repite Contraseña" class="requerido form-control" name="password2">
                             </div>
 
                             <div class="col-lg-12 form-group">

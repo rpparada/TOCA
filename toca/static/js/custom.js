@@ -149,26 +149,81 @@ $(document).ready(function(){
   $( "#primercampo" ).focus();
 })
 
-$("#formulario").submit(function(){
-  var digver, rut, M, S, final;
+// Valida campos formulario antes de enviarlo a servidor
+$("#formtocheck").submit(function(){
 
-  digver = $("#digitover").val();
-  rut = $("#rut").val();
-  M=0,S=1;
+  // verifica campos requeridos vacios
+  var isFormValid = true;
+  var setfocus = true
+  $(".requerido").each(function(){
+      if ($.trim($(this).val()).length == 0){
+          $(this).addClass("destacaerrorform");
+          isFormValid = false;
+          if (setfocus) {
+            $(this).focus();
+            setfocus = false;
+          }
+      }
+      else{
+          $(this).removeClass("destacaerrorform");
+      }
+  });
 
-  for (;rut;rut=Math.floor(rut/10)) {
-    S=(S+rut%10*(9-M++%6))%11;
-  }
-  final = S?S-1:'K';
-
-  if (final!=digver){
-    $("#digitover").css("border-color", "red" );
-    $("#mensajerror").text("Error en digito verificador");
+  if (!isFormValid) {
+    $("#mensajerror").text("Completa los campos detacados");
     $("#mensajerror").removeAttr('hidden');
-    return false
-  } else {
-    $("#mensajerror").empty();
-    $("#mensajerror").attr('hidden');
+  };
+
+  // Valida que ambas contraseñas sen iguales
+  if (isFormValid){
+    var pass = $('input[name=password1]');
+    var repass = $('input[name=password2]');
+
+    console.log(pass.val());
+    console.log(repass.val());
+
+    if (pass.val() != repass.val()) {
+      pass.val('');
+      repass.val('');
+      pass.focus();
+
+      $("#mensajerror").text("Ambas contraseñas deben ser iguales");
+      $("#mensajerror").removeAttr('hidden');
+
+      isFormValid = false;
+    } else {
+      $("#mensajerror").empty();
+      $("#mensajerror").attr('hidden');
+    }
   }
 
-})
+
+  // verifica rut con digito verificador
+  if (isFormValid){
+    digver = $("#digitover").val();
+    rut = $("#rut").val();
+    if (digver && rut) {
+      var digver, rut, M, S, final;
+      M=0,S=1;
+
+      for (;rut;rut=Math.floor(rut/10)) {
+        S=(S+rut%10*(9-M++%6))%11;
+      }
+      final = S?S-1:'K';
+
+      if (final!=digver){
+        $("#digitover").addClass("destacaerrorform");
+        $("#rut").focus();
+        $("#mensajerror").text("Error en digito verificador");
+        $("#mensajerror").removeAttr('hidden');
+        isFormValid = false;
+      } else {
+        $("#mensajerror").empty();
+        $("#mensajerror").attr('hidden');
+      }
+    }
+  }
+
+  return isFormValid;
+
+});

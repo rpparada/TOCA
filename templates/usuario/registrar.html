@@ -17,7 +17,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-6 center p-40 background-white b-r-6">
-                    <form class="form-transparent-grey" action="{% url 'registrar' %}" method="POST">
+                    <form id="formtocheck" class="form-transparent-grey" action="{% url 'registrar' %}" method="POST">
                       {% csrf_token %}
                       {{ form.non_field_errors }}
                       {{ usuario_form.non_field_errors }}
@@ -25,23 +25,24 @@
                             <div class="col-lg-12">
                                 <h3>Registrate</h3>
                                 <p>Por favor, completa la información requerida</p>
+                                <p hidden id="mensajerror"></p>
                             </div>
                             <input hidden type="text" value="generico" placeholder="Nombre Usuario" class="form-control" name="username">
                             <div class="col-lg-12 form-group">
                                 <label class="sr-only">Email</label>
                                 {% if form.email.value %}
-                                <input id="primercampo" type="email" value="{{ form.email.value }}" placeholder="Email" class="form-control" name="email">
+                                <input id="primercampo" type="email" value="{{ form.email.value }}" placeholder="Email" class="requerido form-control" name="email">
                                 {% else %}
-                                <input id="primercampo" type="email" value="" placeholder="Email" class="form-control" name="email">
+                                <input id="primercampo" type="email" value="" placeholder="Email" class="requerido form-control" name="email">
                                 {% endif %}
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label class="sr-only">Contraseña</label>
-                                <input type="password" value="" placeholder="Contraseña" class="form-control" name="password1">
+                                <input type="password" value="" placeholder="Contraseña" class="requerido form-control" name="password1">
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label class="sr-only">Repite Contraseña</label>
-                                <input type="password" value="" placeholder="Repite Contraseña" class="form-control" name="password2">
+                                <input type="password" value="" placeholder="Repite Contraseña" class="requerido form-control" name="password2">
                             </div>
                             <div class="col-lg-12 form-group">
                                 <button class="btn" type="submit">Registrar Nueva Cuenta </button>
