@@ -15,7 +15,8 @@ from toca.parametros import parToca
 def index(request):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
-    tocatas_ini = Tocata.objects.filter(estado=parToca['inicial']).order_by('-fecha_crea')[:parToca['muestraTocatas']]
+    tocatas_ini = Tocata.objects.filter(estado=parToca['inicial'])
+    tocatas_ini = tocatas_ini.filter(fecha__gte=datetime.today()).order_by('-fecha_crea')[:parToca['muestraTocatas']]
 
     context = {
         'tocatas_h': tocatas,
@@ -40,12 +41,11 @@ def busqueda(request):
             queryset_list_tocatas = Tocata.objects.filter(
                 Q(nombre__icontains=busqueda) |
                 Q(descripción__icontains=busqueda) |
-                Q(artista__nombre__icontains=busqueda) 
+                Q(artista__nombre__icontains=busqueda)
             )
 
-            hoy = datetime.today()
             for tocata in queryset_list_tocatas:
-                diff = hoy - tocata.fecha_crea.replace(tzinfo=None)
+                diff = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)
                 if diff.days <= parToca['diasNuevoTocata']:
                     tocata.nuevo = 'SI'
                 else:
@@ -75,10 +75,11 @@ def busqueda(request):
 
 def getTocatasArtistasHeadIndex(request):
 
-    hoy = datetime.today()
-    tocatas = Tocata.objects.filter(estado=parToca['publicado']).order_by('-fecha_crea')[:parToca['muestraTocatas']]
+
+    tocatas = Tocata.objects.filter(estado=parToca['publicado'])
+    tocatas = tocatas.filter(fecha__gte=datetime.today()).order_by('-fecha_crea')[:parToca['muestraTocatas']]
     for tocata in tocatas:
-        diff = hoy - tocata.fecha_crea.replace(tzinfo=None)
+        diff = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)
         if diff.days <= parToca['diasNuevoTocata']:
             tocata.nuevo = 'SI'
         else:
@@ -88,7 +89,7 @@ def getTocatasArtistasHeadIndex(request):
     artistas = Artista.objects.filter(estado=parToca['disponible'])
     artistas = artistas.exclude(usuario__isnull=True).order_by('-fecha_crea')[:parToca['muestraArtistas']]
     for artista in artistas:
-        diff = hoy - artista.fecha_crea.replace(tzinfo=None)
+        diff = datetime.today() - artista.fecha_crea.replace(tzinfo=None)
         if diff.days <= parToca['diasNuevoArtista']:
             artista.nuevo = 'SI'
         else:
