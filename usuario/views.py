@@ -313,8 +313,10 @@ def cambioContra(request):
     if request.method == 'POST':
 
         contraact = request.POST['contraact']
-        contranueva = request.POST['contranueva']
-        contranuevarep = request.POST['contranuevarep']
+        #contranueva = request.POST['password1']
+        contranueva = request.POST.get('password1')
+        #contranuevarep = request.POST['password2']
+        contranuevarep = request.POST.get('password2')
 
         usuario = auth.authenticate(username=request.user.username, password=contraact)
 

@@ -14,22 +14,17 @@
             <div class="content col-lg-12">
               <div class="card">
                   <div class="card-header">
-                      <h5 class="card-title">Horizontal form</h5>
+                      <h5 class="card-title">Editar Cuenta</h5>
                       <h6 class="card-subtitle text-muted">Horizontal Bootstrap layout.</h6>
+                      <p hidden id="mensajerror"></p>
                   </div>
                   <div class="card-body">
-                      <form action="{% url 'actualizarart' %}" method="POST">
+                      <form id="formtocheck" action="{% url 'actualizarart' %}" method="POST">
                         {% csrf_token %}
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Email</label>
                               <div class="col-sm-10">
                                   <input type="email" class="form-control" placeholder="Email" value="{{ user.email }}" readonly>
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">Nombre Usuario</label>
-                              <div class="col-sm-10">
-                                  <input type="text" class="form-control" placeholder="Email" value="{{ user.username }}" readonly>
                               </div>
                           </div>
                           <div class="form-group row">
@@ -41,22 +36,22 @@
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Nombre</label>
                               <div class="col-sm-10">
-                                  <input type="text" class="form-control" placeholder="Nombre" value="{{ user.first_name }}" name="nombre">
+                                  <input type="text" class="requerido form-control" placeholder="Nombre" value="{{ user.first_name }}" name="nombre">
                               </div>
                           </div>
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Apellido</label>
                               <div class="col-sm-10">
-                                  <input type="text" class="form-control" placeholder="Apellido" value="{{ user.last_name }}" name="apellido">
+                                  <input type="text" class="requerido form-control" placeholder="Apellido" value="{{ user.last_name }}" name="apellido">
                               </div>
                           </div>
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">RUT</label>
                               <div class="col-sm-5">
-                                  <input type="text" class="form-control" placeholder="Email" value="{{ usuario_art.rut }}" name="rut">
+                                  <input id="rut" type="number" class="requerido form-control" placeholder="Rut" value="{{ usuario_art.rut }}" name="rut">
                               </div>
                               <div class="col-sm-1">
-                                  <input type="text" class="form-control" placeholder="Email" value="{{ usuario_art.digitoVerificador }}" name="digitoVerificador">
+                                  <input id="digitover" type="text" class="requerido form-control" placeholder="Digito Ver." value="{{ usuario_art.digitoVerificador }}" name="digitoVerificador">
                               </div>
                           </div>
                           <div class="form-group row">
@@ -65,13 +60,8 @@
                                 <span class="input-group-text" id="basic-addon1">( +56 ) 9</span>
                             </div>
                             <div class="col-sm-5">
-                              <input type="text" class="form-control" placeholder="Número Celular" name="num_celular" value="{{ usuario_art.num_celular|slice:"8:" }}">
+                              <input type="text" class="requerido form-control" placeholder="Número Celular" name="num_celular" value="{{ usuario_art.num_celular|slice:"8:" }}">
                             </div>
-                              <!--
-                              <label class="col-form-label col-sm-2 text-sm-right">Número Celular</label>
-                              <div class="col-sm-10">
-                                  <input type="text" class="form-control" placeholder="Número Celular" value="{{ usuario_art.num_celular }}" name="num_celular">
-                              </div>-->
                           </div>
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right" for="{{ usuario_art_form.banco.id_for_label }}">{{ usuario_art_form.banco.label_tag }}</label>
@@ -86,7 +76,7 @@
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Número Cuenta</label>
                               <div class="col-sm-10">
-                                  <input type="text" class="form-control" placeholder="Número Cuenta" value="{{ usuario_art.num_cuenta }}" name="num_cuenta">
+                                  <input type="text" class="requerido form-control" placeholder="Número Cuenta" value="{{ usuario_art.num_cuenta }}" name="num_cuenta">
                               </div>
                           </div>
                           <div class="form-group row">

@@ -19,24 +19,25 @@
 
             <div class="row">
                 <div class="col-lg-6 center p-40 background-white b-r-6">
-                    <form class="form-transparent-grey" action="{% url 'cambiocontra' %}" method="POST">
+                    <form id="formtocheck" class="form-transparent-grey" action="{% url 'cambiocontra' %}" method="POST">
                       {% csrf_token %}
                         <div class="row">
                             <div class="col-lg-12">
                                 <h3>Cambio Contraseña</h3>
                                 <p>Por favor, completa la información requerida</p>
+                                <p hidden id="mensajerror"></p>
                             </div>
                             <div class="col-lg-12 form-group">
                                 <label class="sr-only">Contraseña Actual</label>
-                                <input id="primercampo" type="password" value="" placeholder="Contraseña Actual" class="form-control" name="contraact">
+                                <input id="primercampo" type="password" value="" placeholder="Contraseña Actual" class="requerido form-control" name="contraact">
                             </div>
                             <div class="col-lg-12 form-group">
                                 <label class="sr-only">Nueva Contraseña</label>
-                                <input type="password" value="" placeholder="Nueva Contraseña" class="form-control" name="contranueva">
+                                <input type="password" value="" placeholder="Nueva Contraseña" class="requerido form-control" name="password1">
                             </div>
                             <div class="col-lg-12 form-group">
                                 <label class="sr-only">Repite Nueva Contraseña</label>
-                                <input type="password" value="" placeholder="Repite Nueva Contraseña" class="form-control" name="contranuevarep">
+                                <input type="password" value="" placeholder="Repite Nueva Contraseña" class="requerido form-control" name="password2">
                             </div>
                             <div class="col-lg-12 form-group">
                                 <button class="btn" type="submit">Actualizar Contraseña</button>
