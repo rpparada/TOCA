@@ -7,7 +7,6 @@
 
 {% include 'partials/_alerts.html' %}
 
-
 {% if user.is_authenticated %}
 <section id="page-content">
     <div class="container">
@@ -15,33 +14,29 @@
             <div class="content col-lg-12">
               <div class="card">
                   <div class="card-header">
-                      <h5 class="card-title">{{ lugar.nombre }}</h5>
+                      <h5 class="card-title">{{ lugar_form.nombre }}</h5>
                       <h6 class="card-subtitle text-muted">Modifica la informacion de tu lugar.</h6>
                       <p hidden id="mensajerror"></p>
-                      <div class="rateit" data-rateit-mode="font" data-rateit-value="{{ lugar.evaluacion }}" data-rateit-ispreset="true" data-rateit-readonly="true">  </div>
                   </div>
                   <div class="card-body">
-                      <form id="formtocheck" action="{% url 'atualizarlugar' lugar.id %}" method="POST" data-ciudad-url-actualizar="{% url 'ajax_load_comunas_actualizar' %}" data-ciudad-url-actualizar="{% url 'ajax_load_comunas_actualizar' %}">
+                      <form id="formtocheck" action="{% url 'lugar' lugar_form.id %}" method="POST" data-ciudad-url-actualizar="{% url 'ajax_load_comunas_actualizar' %}" data-ciudad-url-actualizar="{% url 'ajax_load_comunas_actualizar' %}">
                         {% csrf_token %}
-                          <input type="hidden" class="form-control" value="{{ lugar.evaluacion }}" name="evaluacion">
-                          <input type="hidden" class="form-control" value="{{ lugar.pais }}" name="pais">
-                          <input type="hidden" class="form-control" value="{{ lugar.provincia.id }}" name="provincia">
-                          <input type="hidden" class="form-control" value="{{ lugar.comuna.id }}" id="id_comuna_ajax">
-                          <input type="hidden" class="form-control" value="{{ lugar.region.id }}" id="id_region_ajax">
+                          <input type="hidden" class="form-control" value="{{ lugar_form.comuna.id }}" id="id_comuna_ajax">
+                          <input type="hidden" class="form-control" value="{{ lugar_form.region.id }}" id="id_region_ajax">
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Nombre</label>
                               <div class="col-sm-10">
-                                  <input type="text" class="requerido form-control" placeholder="Nombre" value="{{ lugar.nombre }}" name="nombre">
+                                  <input type="text" class="requerido form-control" placeholder="Nombre" value="{{ lugar_form.nombre }}" name="nombre">
                               </div>
                           </div>
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Calle</label>
                               <div class="col-sm-7">
-                                  <input type="text" class="requerido form-control" placeholder="Nombre Calle" value="{{ lugar.nombre_calle }}" name="nombre_calle">
+                                  <input type="text" class="requerido form-control" placeholder="Nombre Calle" value="{{ lugar_form.nombre_calle }}" name="nombre_calle">
                               </div>
                               <label class="col-form-label col-sm-1">Número</label>
                               <div class="col-sm-2">
-                                  <input type="text" class="requerido form-control" placeholder="Número" value="{{ lugar.numero }}" name="numero">
+                                  <input type="text" class="requerido form-control" placeholder="Número" value="{{ lugar_form.numero }}" name="numero">
                               </div>
                           </div>
                           <div class="form-group row">
@@ -49,7 +44,7 @@
                               <div class="col-sm-10">
                                 <select class="form-control" name="{{ regcom_form.region.html_name }}" id="id_region">
                                   {% for region in regcom_form.region.field.choices %}
-                                    <option value="{{ region.0 }}" {% if region.0 == lugar.region.id %} selected {% endif %}>{{ region.1 }}</option>
+                                    <option value="{{ region.0 }}" {% if region.0 == lugar_form.region.id %} selected {% endif %}>{{ region.1 }}</option>
                                   {% endfor %}
                                 </select>
                               </div>
@@ -59,7 +54,7 @@
                               <div class="col-sm-10">
                                 <select class="form-control" name="{{ regcom_form.comuna.html_name }}" id="id_comuna">
                                   {% for comuna in regcom_form.comuna.field.choices %}
-                                    <option value="{{ comuna.0 }}" {% if comuna.0 == lugar.comuna.id %} selected {% endif %}>{{ comuna.1 }}</option>
+                                    <option value="{{ comuna.0 }}" {% if comuna.0 == lugar_form.comuna.id %} selected {% endif %}>{{ comuna.1 }}</option>
                                   {% endfor %}
                                 </select>
                               </div>
@@ -67,19 +62,19 @@
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Ciudad</label>
                               <div class="col-sm-10">
-                                  <input type="text" class="requerido form-control" placeholder="Ciudad" value="{{ lugar.ciudad }}" name="ciudad">
+                                  <input type="text" class="requerido form-control" placeholder="Ciudad" value="{{ lugar_form.ciudad }}" name="ciudad">
                               </div>
                           </div>
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Descripción</label>
                               <div class="col-sm-10">
-                                  <textarea class="form-control" placeholder="Descripción" rows="3" name="descripción">{{ lugar.descripción }}</textarea>
+                                  <textarea class="form-control" placeholder="Descripción" rows="3" name="descripción">{{ lugar_form.descripción }}</textarea>
                               </div>
                           </div>
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Capacidad</label>
                               <div class="col-sm-10">
-                                  <input type="number" class="requerido form-control" placeholder="Ciudad" value="{{ lugar.capacidad }}" name="capacidad">
+                                  <input type="number" class="requerido form-control" placeholder="Ciudad" value="{{ lugar_form.capacidad }}" name="capacidad">
                               </div>
                           </div>
                           <div class="form-group row">

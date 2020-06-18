@@ -11,11 +11,14 @@ from toca.parametros import parToca
 # Create your views here.
 def agregarLugar(request):
 
-    if request.method == 'POST':
-        form = LugarForm(request.POST)
+    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    lugar_form = LugarForm();
 
-        if form.is_valid():
-            nuevoLugar = form.save(commit=False)
+    if request.method == 'POST':
+        lugar_form = LugarForm(request.POST)
+
+        if lugar_form.is_valid():
+            nuevoLugar = lugar_form.save(commit=False)
             nuevoLugar.provincia = Comuna.objects.get(id=request.POST.get('comuna')).provincia
             nuevoLugar.usuario = request.user
             nuevoLugar.save()
@@ -25,26 +28,25 @@ def agregarLugar(request):
             print(form.errors.as_data())
             messages.error(request,'Error en form')
 
-    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
-    lugar_form = LugarForm();
-
     context = {
         'tocatas_h': tocatas[:3],
         'artistas_h': artistas[:3],
         'usuario': usuario,
         'lugar_form': lugar_form,
     }
-
     return render(request, 'lugar/agregarlugar.html', context)
 
+def actualizarLugar(request, lugar_id):
 
-def atualizarLugar(request, lugar_id):
+    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    lugar = get_object_or_404(Lugar, pk=lugar_id)
+    lugar_form = LugarForm(instance=lugar);
 
     if request.method == 'POST':
-        lugar = get_object_or_404(Lugar, pk=lugar_id)
-        form = LugarForm(request.POST, instance=lugar)
-        if form.is_valid():
-            lugarActualizado = form.save(commit=False)
+        #lugar = get_object_or_404(Lugar, pk=lugar_id)
+        #lugar_form = LugarForm(request.POST, instance=lugar)
+        if lugar_form.is_valid():
+            lugarActualizado = lugar_form.save(commit=False)
             lugarActualizado.provincia = Comuna.objects.get(id=request.POST.get('comuna')).provincia
             lugarActualizado.save()
             messages.success(request, 'Lugar editado exitosamente')
@@ -53,17 +55,11 @@ def atualizarLugar(request, lugar_id):
             print(form.errors.as_data())
             messages.error(request,'Error en form')
 
-    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
-    lugar = get_object_or_404(Lugar, pk=lugar_id)
-    lugar_form = LugarForm(instance=lugar);
-    regcom_form = LugarForm();
-
     context = {
         'tocatas_h': tocatas[:3],
         'artistas_h': artistas[:3],
         'usuario': usuario,
-        'lugar': lugar,
-        'regcom_form': regcom_form
+        'lugar_form': lugar_form,
     }
 
     return render(request,'lugar/detalleslugar.html', context)

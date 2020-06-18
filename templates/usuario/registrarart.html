@@ -16,8 +16,8 @@
                 </a>
             </div>
             <div class="row">
-                <div id="formtocheck" class="col-lg-6 center p-40 background-white b-r-6">
-                    <form class="form-transparent-grey" action="{% url 'registrarart' %}" method="POST">
+                <div class="col-lg-6 center p-40 background-white b-r-6">
+                    <form id="formtocheck" class="form-transparent-grey" action="{% url 'registrarart' %}" method="POST">
                       {% csrf_token %}
                       {{ form.non_field_errors }}
                       {{ usuario_art_form.non_field_errors }}

@@ -21,23 +21,32 @@
                   <div class="card-body">
                       <form id="formtocheck" action="{% url 'agregarlugar' %}" method="POST" data-ciudad-url-agregar="{% url 'ajax_load_comunas_agregar' %}">
                         {% csrf_token %}
-                          <input type="hidden" class="form-control" value="3" name="evaluacion">
-                          <input type="hidden" class="form-control" value="Chile" name="pais">
-                          <input type="hidden" class="form-control" value="1" name="provincia">
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Nombre</label>
                               <div class="col-sm-10">
-                                  <input type="text" class="requerido form-control" placeholder="Nombre" value="" name="nombre">
+                                {% if lugar_form.Nombre.value %}
+                                  <input id="primercampo" type="text" class="requerido form-control" placeholder="Nombre" value="{{ lugar_form.nombre.value }}" name="nombre">
+                                {% else %}
+                                  <input id="primercampo" type="text" class="requerido form-control" placeholder="Nombre" value="" name="nombre">
+                                {% endif %}
                               </div>
                           </div>
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Calle</label>
                               <div class="col-sm-7">
+                                {% if lugar_form.nombre_calle.value %}
+                                  <input type="text" class="requerido form-control" placeholder="Nombre Calle" value="{{ lugar_form.nombre_calle.value }}" name="nombre_calle">
+                                {% else %}
                                   <input type="text" class="requerido form-control" placeholder="Nombre Calle" value="" name="nombre_calle">
+                                {% endif %}
                               </div>
                               <label class="col-form-label col-sm-1">Número</label>
                               <div class="col-sm-2">
+                                {% if lugar_form.numero.value %}
+                                  <input type="number" class="requerido form-control" placeholder="Número Calle" value="{{ lugar_form.numero.value }}" name="numero">
+                                {% else %}
                                   <input type="number" class="requerido form-control" placeholder="Número Calle" value="" name="numero">
+                                {% endif %}
                               </div>
                           </div>
                           <div class="form-group row">
@@ -69,13 +78,21 @@
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Descripción</label>
                               <div class="col-sm-10">
+                                {% if lugar_form.descripción.value %}
+                                  <textarea class="form-control" placeholder="Descripción" rows="3" name="descripción">{{ lugar_form.descripción.value }}</textarea>
+                                {% else %}
                                   <textarea class="form-control" placeholder="Descripción" rows="3" name="descripción"></textarea>
+                                {% endif %}
                               </div>
                           </div>
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Capacidad Aprox.</label>
                               <div class="col-sm-10">
+                                {% if lugar_form.capacidad.value %}
+                                  <input type="number" class="requerido form-control" placeholder="Capacidad" value="{{ lugar_form.capacidad.value }}" name="capacidad">
+                                {% else %}
                                   <input type="number" class="requerido form-control" placeholder="Capacidad" value="" name="capacidad">
+                                {% endif %}
                               </div>
                           </div>
                           <div class="form-group row">
