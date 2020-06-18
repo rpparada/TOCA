@@ -122,8 +122,18 @@ def carga_comunas_actualizar(request):
     region_id = request.GET.get('region')
     comuna_id = request.GET.get('comuna')
     comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
-    context = {
-        'comunas_reg': comunas,
-        'comuna_id': int(comuna_id),
-    }
+
+    if comuna_id.isdigit():
+        print('hola')
+        context = {
+            'comunas_reg': comunas,
+            'comuna_id': int(comuna_id),
+        }
+    else:
+        print('chao')
+        context = {
+            'comunas_reg': comunas,
+            'comuna_id': comunas.first(),
+        }
+
     return render(request, 'lugar/comuna_dropdown_list_options_actualizar.html', context)

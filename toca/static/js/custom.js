@@ -103,12 +103,16 @@ $(document).ready(function (){
       }
     });
   } else if (!window.location.pathname.search("/lugares/lugar_")){
+    console.log("aqui1");
     // Actualizacion lugar
     // Define posibles comunas de acuerdo a region seleccionada
     // Habilita campos de acuerdo con el tipo de tocata
     var url = $("#formtocheck").attr("data-ciudad-url-actualizar");
     var regionId = $("#id_region_ajax").val();
     var comunaId = $("#id_comuna_ajax").val();
+
+    console.log(regionId);
+    console.log(comunaId);
 
     $.ajax({
       url: url,
@@ -125,9 +129,7 @@ $(document).ready(function (){
 
 // Define posibles comunas de acuerdo a region seleccionada
 $("#id_region").change(function () {
-  console.log("Aqui1");
   if (window.location.pathname === "/lugares/agregarlugar"){
-    console.log("Aqui2");
     var url = $("#formtocheck").attr("data-ciudad-url-agregar");
     var regionId = $(this).val();
     $.ajax({
@@ -140,10 +142,10 @@ $("#id_region").change(function () {
       }
     });
   } else if (!window.location.pathname.search("/lugares/lugar_")){
-    console.log("Aqui3");
+    console.log("aqui2");
     var url = $("#formtocheck").attr("data-ciudad-url-actualizar");
     var regionId = $("#id_region_ajax").val();
-    var comunaId = $("#id_comuna_ajax").val();
+    var comunaId = ' ';
 
     $.ajax({
       url: url,
