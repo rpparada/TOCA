@@ -11,18 +11,30 @@
 <section id="page-content" class="no-sidebar">
     <div class="container">
         <!-- DataTable -->
-        <form action="{% url 'creartocata' %}">
+        {% if mistocatas %}
         <div class="row mb-3">
             <div class="col-lg-6">
-                <h4>DataTables</h4>
-                <p>Add advanced interaction controls to your HTML tables</p>
+                <h4>Mis Tocatas</h4>
+                <p>Esta la lista de tus tocatas registradas.</p>
             </div>
             <div class="col-lg-6 text-right">
-                <button type="submit" class="btn btn-light"><i class="icon-plus"></i> Crear Tocata</button>
+                <a href="{% url 'creartocata' %}" class="btn btn-light"><i class="icon-plus"></i> Crear Tocata</a>
                 <div id="export_buttons" class="mt-2"></div>
             </div>
         </div>
-        </form>
+        {% else %}
+        <div class="row mb-3">
+            <div class="col-lg-6">
+                <h4>Mis Tocatas</h4>
+                <p>Actualmente no tienes ninguna Tocata Intima registrada.</p>
+            </div>
+            <div class="col-lg-6 text-right">
+                <a href="{% url 'creartocata' %}" class="btn btn-light"><i class="icon-plus"></i> Crear Tocata</a>
+                <div id="export_buttons" class="mt-2"></div>
+            </div>
+        </div>
+        {% endif %}
+
         {% if mistocatas %}
         <div class="row">
             <div class="col-lg-12">

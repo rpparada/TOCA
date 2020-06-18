@@ -25,7 +25,7 @@ def agregarLugar(request):
             messages.success(request, 'Lugar agregado exitosamente')
             return redirect('mislugares')
         else:
-            print(form.errors.as_data())
+            print(lugar_form.errors.as_data())
             messages.error(request,'Error en form')
 
     context = {
@@ -40,11 +40,10 @@ def actualizarLugar(request, lugar_id):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
     lugar = get_object_or_404(Lugar, pk=lugar_id)
-    lugar_form = LugarForm(instance=lugar);
+    lugar_form = LugarForm();
 
     if request.method == 'POST':
-        #lugar = get_object_or_404(Lugar, pk=lugar_id)
-        #lugar_form = LugarForm(request.POST, instance=lugar)
+        lugar_form = LugarForm(request.POST or None, instance=lugar);
         if lugar_form.is_valid():
             lugarActualizado = lugar_form.save(commit=False)
             lugarActualizado.provincia = Comuna.objects.get(id=request.POST.get('comuna')).provincia
@@ -52,7 +51,7 @@ def actualizarLugar(request, lugar_id):
             messages.success(request, 'Lugar editado exitosamente')
             return redirect('mislugares')
         else:
-            print(form.errors.as_data())
+            print(lugar_form.errors.as_data())
             messages.error(request,'Error en form')
 
     context = {
@@ -60,27 +59,10 @@ def actualizarLugar(request, lugar_id):
         'artistas_h': artistas[:3],
         'usuario': usuario,
         'lugar_form': lugar_form,
-    }
-
-    return render(request,'lugar/detalleslugar.html', context)
-
-def detalleslugar(request, lugar_id):
-
-    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
-    lugar = get_object_or_404(Lugar, pk=lugar_id)
-
-    regcom_form = LugarForm();
-
-    context = {
-        'tocatas_h': tocatas[:3],
-        'artistas_h': artistas[:3],
-        'usuario': usuario,
         'lugar': lugar,
-        'regcom_form': regcom_form
     }
 
     return render(request,'lugar/detalleslugar.html', context)
-
 
 def misLugares(request):
 
@@ -120,13 +102,11 @@ def carga_comunas_actualizar(request):
     comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
 
     if comuna_id.isdigit():
-        print('hola')
         context = {
             'comunas_reg': comunas,
             'comuna_id': int(comuna_id),
         }
     else:
-        print('chao')
         context = {
             'comunas_reg': comunas,
             'comuna_id': comunas.first(),

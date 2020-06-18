@@ -14,47 +14,60 @@
             <div class="content col-lg-12">
               <div class="card">
                   <div class="card-header">
-                      <h5 class="card-title">{{ lugar_form.nombre }}</h5>
+                      <h5 class="card-title">{{ lugar.nombre }}</h5>
                       <h6 class="card-subtitle text-muted">Modifica la informacion de tu lugar.</h6>
                       <p hidden id="mensajerror"></p>
                   </div>
                   <div class="card-body">
-                      <form id="formtocheck" action="{% url 'lugar' lugar_form.id %}" method="POST" data-ciudad-url-actualizar="{% url 'ajax_load_comunas_actualizar' %}" data-ciudad-url-actualizar="{% url 'ajax_load_comunas_actualizar' %}">
+                      <form id="formtocheck" action="{% url 'milugar' lugar.id %}" method="POST" data-ciudad-url-actualizar="{% url 'ajax_load_comunas_actualizar' %}">
                         {% csrf_token %}
-                          <input type="hidden" class="form-control" value="{{ lugar_form.comuna.id }}" id="id_comuna_ajax">
-                          <input type="hidden" class="form-control" value="{{ lugar_form.region.id }}" id="id_region_ajax">
+                          <input type="hidden" class="form-control" value="{{ lugar.comuna.id }}" id="id_comuna_ajax">
+                          <input type="hidden" class="form-control" value="{{ lugar.region.id }}" id="id_region_ajax">
+                          <input type="hidden" class="form-control" value="{{ lugar.region.id }}" name="usuario">
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Nombre</label>
                               <div class="col-sm-10">
-                                  <input type="text" class="requerido form-control" placeholder="Nombre" value="{{ lugar_form.nombre }}" name="nombre">
+                                {% if lugar.nombre %}
+                                  <input type="text" class="requerido form-control" placeholder="Nombre" value="{{ lugar.nombre }}" name="nombre">
+                                {% else %}
+                                  <input type="text" class="requerido form-control" placeholder="Nombre" value="" name="nombre">
+                                {% endif %}
                               </div>
                           </div>
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Calle</label>
                               <div class="col-sm-7">
-                                  <input type="text" class="requerido form-control" placeholder="Nombre Calle" value="{{ lugar_form.nombre_calle }}" name="nombre_calle">
+                                {% if lugar.nombre_calle %}
+                                  <input type="text" class="requerido form-control" placeholder="Nombre Calle" value="{{ lugar.nombre_calle }}" name="nombre_calle">
+                                {% else %}
+                                  <input type="text" class="requerido form-control" placeholder="Nombre Calle" value="" name="nombre_calle">
+                                {% endif %}
                               </div>
                               <label class="col-form-label col-sm-1">Número</label>
                               <div class="col-sm-2">
-                                  <input type="text" class="requerido form-control" placeholder="Número" value="{{ lugar_form.numero }}" name="numero">
+                                {% if lugar.numero %}
+                                  <input type="text" class="requerido form-control" placeholder="Número" value="{{ lugar.numero }}" name="numero">
+                                {% else %}
+                                  <input type="text" class="requerido form-control" placeholder="Número" value="" name="numero">
+                                {% endif %}
                               </div>
                           </div>
                           <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ regcom_form.region.id_for_label }}">{{ regcom_form.region.label_tag }}</label>
+                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ lugar_form.region.id_for_label }}">{{ lugar_form.region.label_tag }}</label>
                               <div class="col-sm-10">
-                                <select class="form-control" name="{{ regcom_form.region.html_name }}" id="id_region">
-                                  {% for region in regcom_form.region.field.choices %}
-                                    <option value="{{ region.0 }}" {% if region.0 == lugar_form.region.id %} selected {% endif %}>{{ region.1 }}</option>
+                                <select class="form-control" name="{{ lugar_form.region.html_name }}" id="id_region">
+                                  {% for region in lugar_form.region.field.choices %}
+                                    <option value="{{ region.0 }}" {% if region.0 == lugar.region.id %} selected {% endif %}>{{ region.1 }}</option>
                                   {% endfor %}
                                 </select>
                               </div>
                           </div>
                           <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ regcom_form.comuna.id_for_label }}">{{ regcom_form.comuna.label_tag }}</label>
+                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ lugar_form.comuna.id_for_label }}">{{ lugar_form.comuna.label_tag }}</label>
                               <div class="col-sm-10">
-                                <select class="form-control" name="{{ regcom_form.comuna.html_name }}" id="id_comuna">
-                                  {% for comuna in regcom_form.comuna.field.choices %}
-                                    <option value="{{ comuna.0 }}" {% if comuna.0 == lugar_form.comuna.id %} selected {% endif %}>{{ comuna.1 }}</option>
+                                <select class="form-control" name="{{ lugar_form.comuna.html_name }}" id="id_comuna">
+                                  {% for comuna in lugar_form.comuna.field.choices %}
+                                    <option value="{{ comuna.0 }}" {% if comuna.0 == lugar.comuna.id %} selected {% endif %}>{{ comuna.1 }}</option>
                                   {% endfor %}
                                 </select>
                               </div>
@@ -62,19 +75,31 @@
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Ciudad</label>
                               <div class="col-sm-10">
-                                  <input type="text" class="requerido form-control" placeholder="Ciudad" value="{{ lugar_form.ciudad }}" name="ciudad">
+                                {% if lugar.ciudad %}
+                                  <input type="text" class="requerido form-control" placeholder="Ciudad" value="{{ lugar.ciudad }}" name="ciudad">
+                                {% else %}
+                                  <input type="text" class="requerido form-control" placeholder="Ciudad" value="" name="ciudad">
+                                {% endif %}
                               </div>
                           </div>
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Descripción</label>
                               <div class="col-sm-10">
-                                  <textarea class="form-control" placeholder="Descripción" rows="3" name="descripción">{{ lugar_form.descripción }}</textarea>
+                                {% if lugar.descripción %}
+                                  <textarea class="form-control" placeholder="Descripción" rows="3" name="descripción">{{ lugar.descripción }}</textarea>
+                                {% else %}
+                                  <textarea class="form-control" placeholder="Descripción" rows="3" name="descripción"></textarea>
+                                {% endif %}
                               </div>
                           </div>
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Capacidad</label>
                               <div class="col-sm-10">
-                                  <input type="number" class="requerido form-control" placeholder="Ciudad" value="{{ lugar_form.capacidad }}" name="capacidad">
+                                {% if lugar.capacidad %}
+                                  <input type="number" class="requerido form-control" placeholder="Ciudad" value="{{ lugar.capacidad }}" name="capacidad">
+                                {% else %}
+                                  <input type="number" class="requerido form-control" placeholder="Ciudad" value="" name="capacidad">
+                                {% endif %}
                               </div>
                           </div>
                           <div class="form-group row">

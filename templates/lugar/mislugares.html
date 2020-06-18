@@ -43,7 +43,7 @@
                         <tr>
                             <th>Nombre</th>
                             <th>Calle</th>
-                            <th>Comuna</th>
+                            <th>Regio/Comuna</th>
                             <th>Cuidad</th>
                             <th>Capacidad</th>
                             <th class="noExport">Acciones</th>
@@ -54,12 +54,17 @@
                         <tr>
                             <td>{{ lugar.nombre }}</td>
                             <td>{{ lugar.nombre_calle }}, {{ lugar.numero }}</td>
-                            <td>{{ lugar.comuna }}</td>
+                            <td>{{ lugar.region }}/{{ lugar.comuna }}</td>
                             <td>{{ lugar.ciudad }}</td>
                             <td>{{ lugar.capacidad }}</td>
                             <td>
-                                <a class="ml-2" href="{% url 'lugar' lugar.id %}" data-toggle="tooltip" data-original-title="Edit"><i class="icon-edit"></i></a>
-                                <a class="ml-2" href="{% url 'borrarlugar' lugar.id %}" data-toggle="tooltip" data-original-title="Delete"><i class="icon-trash-2"></i></a>
+                              <div class="p-dropdown">
+                                  <a class="btn btn-light btn-shadow"><i class="icon-menu"></i></a>
+                                  <ul class="p-dropdown-content">
+                                    <li><a href="{% url 'milugar' lugar.id %}"><i class="icon-edit"></i>Editar</a></li>
+                                    <li><a href="{% url 'borrarlugar' lugar.id %}"><i class="icon-x"></i>Borrar</a></li>
+                                  </ul>
+                              </div>
                             </td>
                         </tr>
                       {% endfor %}
@@ -77,7 +82,6 @@
                 </table>
             </div>
         </div>
-        {% else %}
         {% endif %}
         <!-- end: DataTable -->
     </div>
@@ -92,6 +96,5 @@
 </section>
 {% endif %}
 <!-- end: Page Content -->
-
 
 {% endblock %}
