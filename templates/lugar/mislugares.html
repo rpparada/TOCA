@@ -62,7 +62,11 @@
                                   <a class="btn btn-light btn-shadow"><i class="icon-menu"></i></a>
                                   <ul class="p-dropdown-content">
                                     <li><a href="{% url 'milugar' lugar.id %}"><i class="icon-edit"></i>Editar</a></li>
-                                    <li><a id="botonborrar" href="{% url 'borrarlugar' lugar.id %}"><i class="icon-x"></i>Borrar</a></li>
+                                    {% if lugar.borra == 'SI' %}
+                                    <li><a href="{% url 'borrarlugar' lugar.id %}"><i class="icon-x"></i>Borrar</a></li>
+                                    {% else %}
+                                    <li><a><i class="icon-x"></i><del>Borrar</del></a></li>
+                                    {% endif %}
                                   </ul>
                               </div>
                             </td>

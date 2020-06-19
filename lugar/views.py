@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.utils import timezone
+
 from .models import Lugar, Region, Provincia, Comuna
 from .forms import LugarForm, RegionForm, ComunaForm
-from django.contrib import messages
-
-from django.utils import timezone
+from tocata.models import Tocata
 
 from home.views import getTocatasArtistasHeadIndex
 from toca.parametros import parToca
@@ -68,6 +69,12 @@ def misLugares(request):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
     mislugares = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
+
+    for milugar in mislugares:
+        if Tocata.objects.filter(lugar=milugar):
+            milugar.borra = 'NO'
+        else:
+            milugar.borra = 'SI'
 
     context = {
         'tocatas_h': tocatas[:3],
