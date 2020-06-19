@@ -235,3 +235,8 @@ $("#formtocheck").submit(function(){
   return isFormValid;
 
 });
+
+$('#botonborrar').click(function () {
+  console.log("hola");
+  return confirm('¿Seguro quieres borra?') 
+})

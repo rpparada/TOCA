@@ -18,7 +18,7 @@
                   <p>Esta es la lista de tus lugares registrados.</p>
               </div>
               <div class="col-lg-6 text-right">
-                <a href="{% url 'agregarlugar' %}" class="btn btn-light"><i class="icon-plus"></i> Crear Lugar</a>
+                <a href="{% url 'agregarlugar' %}" class="btn btn-light"><i class="icon-plus"></i> Agregar Lugar</a>
                 <div id="export_buttons" class="mt-2"></div>
               </div>
           </div>
@@ -62,7 +62,7 @@
                                   <a class="btn btn-light btn-shadow"><i class="icon-menu"></i></a>
                                   <ul class="p-dropdown-content">
                                     <li><a href="{% url 'milugar' lugar.id %}"><i class="icon-edit"></i>Editar</a></li>
-                                    <li><a href="{% url 'borrarlugar' lugar.id %}"><i class="icon-x"></i>Borrar</a></li>
+                                    <li><a id="botonborrar" href="{% url 'borrarlugar' lugar.id %}"><i class="icon-x"></i>Borrar</a></li>
                                   </ul>
                               </div>
                             </td>
