@@ -24,9 +24,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         {% if lugar.borra == 'SI' %}
-                        <p>¿Estas seguro que quieres borra "{{lugar.nombre}}"?</p>
+                        <p>¿Estas seguro que quieres borralo?</p>
                         {% else %}
-                        <p>No puedes borra lugar "{{lugar.nombre}}" por que sera utilizado en "{{ lugar.tocata.0 }}"</p>
+                        <p>No puedes borralo, será utilizado en "<a href="{% url 'tocata' lugar.tocata.0.id %}">{{ lugar.tocata.0.nombre }}</a>"</p>
                         {% endif %}
                     </div>
                 </div>
@@ -65,10 +65,8 @@
                 <table id="datatable" class="table table-bordered table-hover" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Calle</th>
+                            <th>Calle y Número</th>
                             <th>Regio/Comuna</th>
-                            <th>Cuidad</th>
                             <th>Capacidad</th>
                             <th class="noExport">Acciones</th>
                         </tr>
@@ -76,16 +74,14 @@
                     <tbody>
                       {% for lugar in mislugares %}
                         <tr>
-                            <td>{{ lugar.nombre }}</td>
                             <td>{{ lugar.nombre_calle }}, {{ lugar.numero }}</td>
                             <td>{{ lugar.region }}/{{ lugar.comuna }}</td>
-                            <td>{{ lugar.ciudad }}</td>
                             <td>{{ lugar.capacidad }}</td>
                             <td>
                               <div class="p-dropdown">
-                                  <a class="btn btn-light btn-shadow"><i class="icon-menu"></i></a>
+                                  <a class="btn btn-light btn-shadow btn-round"><i class="icon-sliders"></i></a>
                                   <ul class="p-dropdown-content">
-                                    <li><a href="{% url 'milugar' lugar.id %}"><i class="icon-edit"></i>Editar</a></li>
+                                    <li><a href="{% url 'milugar' lugar.id %}"><i class="icon-eye"></i>Ver</a></li>
                                     <li><a data-target="#modal{{lugar.id}}" data-toggle="modal" href="#"><i class="icon-x"></i>Borrar</a></li>
                                   </ul>
                               </div>
@@ -95,10 +91,8 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                          <th>Nombre</th>
                           <th>Calle</th>
                           <th>Comuna</th>
-                          <th>Cuidad</th>
                           <th>Capacidad</th>
                           <th>Acciones</th>
                         </tr>

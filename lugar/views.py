@@ -72,7 +72,7 @@ def misLugares(request):
     tocatas = Tocata.objects.filter(estado__in=[parToca['inicial'],parToca['publicado'],parToca['confirmado'],])
 
     for milugar in mislugares:
-        tocata = tocatas.filter(lugar=milugar)
+        tocata = tocatas.filter(lugar=milugar).values('id','nombre')
         if tocata:
             milugar.borra = 'NO'
             milugar.tocata = tocata

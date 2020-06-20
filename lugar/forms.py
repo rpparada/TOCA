@@ -13,7 +13,7 @@ class LugarForm(forms.ModelForm):
 
     class Meta:
         model = Lugar
-        exclude = ['usuario','fecha_crea','fecha_actua','estado','codigo_postal','evaluacion','pais','provincia',]
+        exclude = ['nombre','usuario','fecha_crea','fecha_actua','estado','codigo_postal','evaluacion','pais','provincia',]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
