@@ -69,10 +69,13 @@ def misLugares(request):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
     mislugares = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
+    tocatas = Tocata.objects.filter(estado__in=[parToca['inicial'],parToca['publicado'],parToca['confirmado'],])
 
     for milugar in mislugares:
-        if Tocata.objects.filter(lugar=milugar):
+        tocata = tocatas.filter(lugar=milugar)
+        if tocata:
             milugar.borra = 'NO'
+            milugar.tocata = tocata
         else:
             milugar.borra = 'SI'
 
@@ -87,9 +90,11 @@ def misLugares(request):
 
 def borrarlugar(request, lugar_id):
 
-    lugar = get_object_or_404(Lugar, pk=lugar_id)
-    lugar.estado = parToca['noDisponible']
-    lugar.save()
+    if request.method == 'POST':
+        lugar = get_object_or_404(Lugar, pk=lugar_id)
+        lugar.estado = parToca['noDisponible']
+        lugar.save()
+
     return redirect('mislugares')
 
 
