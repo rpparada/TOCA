@@ -32,7 +32,7 @@
                               <div class="col-sm-10">
                                 <select class="form-control" name="lugar" id="opcionestipo">
                                   {% for lugar in mislugares %}
-                                    <option value="{{ lugar.id }}">{{ lugar.nombre|upper }}, {{ lugar.region }}, {{ lugar.comuna }}</option>
+                                    <option value="{{ lugar.id }}">{{ lugar.nombre_calle }} {{ lugar.numero }}, {{ lugar.region }}, {{ lugar.comuna }}</option>
                                   {% endfor %}
                                 </select>
                               </div>

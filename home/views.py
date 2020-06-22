@@ -5,6 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from tocata.models import Tocata
 from artista.models import Artista
 from usuario.models import Usuario
+from home.models import Testimonios
 
 from django.db.models import Q
 from datetime import datetime
@@ -18,6 +19,10 @@ def index(request):
     tocatas_ini = Tocata.objects.filter(estado=parToca['inicial'])
     tocatas_ini = tocatas_ini.filter(fecha__gte=datetime.today()).order_by('-fecha_crea')[:parToca['muestraTocatas']]
 
+    testimonios = Testimonios.objects.filter(estado=parToca['disponible'])
+    testimonios_art = testimonios.filter(objetivo=parToca['artistas'])[:3]
+    testimonios_usu = testimonios.filter(objetivo=parToca['usuarios'])[:3]
+
     context = {
         'tocatas_h': tocatas,
         'artistas_h': artistas,
@@ -25,6 +30,8 @@ def index(request):
         'tocatas': tocatas,
         'tocatas_ini': tocatas_ini,
         'artistas': artistas,
+        'testimonios_art': testimonios_art,
+        'testimonios_usu': testimonios_usu,
     }
 
     return render(request, 'home/index.html', context)

@@ -157,7 +157,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-7">
-                <div class="text-medium">TOCATAS ÍNTIMAS</div>
+              {% if usuario.es_artista %}
+                <div class="text-medium">TOCATAS ÍNTIMAS - *Artistas</div>
                 <p class="lead">
                     Organiza tus Tocatas Íntimas por medio de esta aplicación, la cual gestionara asistencia y el cobro. Define quorum mínimo de asistentes para confirmar la realizacion de la tocata. Y si no tiene donde tocar, deja tu Tocata Intima "abierta" para que sean tu fanáticos quienes te ofrescan sus espacios.
                 </p>
@@ -182,42 +183,65 @@
                         </div>
                     </div>
                 </div>
+              {% else %}
+                <div class="text-medium">TOCATAS ÍNTIMAS - *Usuario</div>
+                <p class="lead">
+                    Organiza tus Tocatas Íntimas por medio de esta aplicación, la cual gestionara asistencia y el cobro. Define quorum mínimo de asistentes para confirmar la realizacion de la tocata. Y si no tiene donde tocar, deja tu Tocata Intima "abierta" para que sean tu fanáticos quienes te ofrescan sus espacios.
+                </p>
+                <div class="accordion toggle fancy clean accordion-transparent">
+                    <div class="ac-item">
+                        <h5 class="ac-title">TOCATAS ÍNTIMAS</h5>
+                        <div class="ac-content">
+                            <h4>¿Qué son las Tocatas Íntimas?</h4>Son todas aquellas tocatas en espacion reducido y con mínima en producción. La idea es que los asistentes tengan la posibilidad de interactuar con sus artistas favoritos directamente en un ambiente intimo.
+                        </div>
+                    </div>
+                    <div class="ac-item ac-active">
+                        <h5 class="ac-title">MIS LUGARES</h5>
+                        <div class="ac-content">
+                          <h4>¿Qué son Mis Lugares?</h4>Cuando el artista esta en busqueda de un espacio donde realizar una Tocata Íntima, tu puedes ofrecerles tu espacio. Lugar que puede ser el living de tu casa o la sala del evento de departamento. Incribe tu lugar y quedate atento cuando un artista necesite uno.
+                        </div>
+                    </div>
+                    <div class="ac-item">
+                        <h5 class="ac-title">COMPARTE CON TU ARTISTAS FAVORITOS</h5>
+                        <div class="ac-content">
+                            <h4>Tienes la Oportunidad de Compartir con tus Artistas FAvoritos</h4>
+                            <p>En las Tocatas Intimas podras tener la oportunidad de compartir contu artistas favoritos en ambientes intimos. Los ambientes intimos dan espacio a compartir y saber muchas cosas que te interesan saber de tus artistas, por ejemplo como nacio tu cancion favoritas, gustos musicales, etc.</p>
+                        </div>
+                    </div>
+                </div>
+              {% endif %}
             </div>
             <div class="col-lg-5">
                 <div class="text-medium">TESTIMONIOS</div>
                 <p class="lead">
-                    Beautiful websites are now easy to made! Ready to Purchase POLO Template?
+                    Revisa el testimonio de artistas que ya son parte de Tocatas Intimas.
                 </p>
                 <!-- Testimonials -->
                 <div class="carousel arrows-visibile testimonial testimonial-single" data-items="1" data-loop="true" data-autoplay="true" data-autoplay="3500" data-arrows="false">
 
+                  {% if usuarios.es_artista %}
+                    <!-- Testimonials item -->
+                    {% for test_art in testimonios_art %}
+                    <div class="testimonial-item">
+                        <img src="{{ test_art.foto.url }}" alt="">
+                        <p>{{ test_art.testimonio }}</p>
+                        <span>{{ test_art.artista.nombre }}</span>
+                        <span>{{ test_art.artista.habilidades }}</span>
+                    </div>
+                    {% endfor %}
+                    <!-- end: Testimonials item-->
+                  {% else %}
+                    {% for test_usu in testimonios_usu %}
                     <!-- Testimonials item -->
                     <div class="testimonial-item">
-                        <img src="images/team/6.jpg" alt="">
-                        <p>Polo is by far the most amazing template out there! I literally could not be happier that I chose to buy this template!</p>
-                        <span>Alan Monre</span>
-                        <span>CEO, Square Software</span>
+                        <img src="{{ test_usu.foto.url }}" alt="">
+                        <p>{{ test_usu.testimonio }}</p>
+                        <span>{{ test_usu.artista.nombre }}</span>
+                        <span>{{ test_usu.artista.habilidades }}</span>
                     </div>
                     <!-- end: Testimonials item-->
-
-                    <!-- Testimonials item -->
-                    <div class="testimonial-item">
-                        <img src="images/team/7.jpg" alt="">
-                        <p>Polo is by far the most amazing template out there! I literally could not be happier that I chose to buy this template!</p>
-                        <span>Alan Monre</span>
-                        <span>CEO, Square Software</span>
-                    </div>
-                    <!-- end: Testimonials item-->
-
-                    <!-- Testimonials item -->
-                    <div class="testimonial-item">
-                        <img src="images/team/8.jpg" alt="">
-                        <p>The world is a dangerous place to live; not because of the people who are evil, but because of the people who don't do anything about it.</p>
-                        <span>Alan Monre</span>
-                        <span>CEO, Square Software</span>
-                    </div>
-                    <!-- end: Testimonials item-->
-
+                    {% endfor %}
+                  {% endif %}
                 </div>
                 <!-- end: Testimonials -->
             </div>
@@ -277,33 +301,5 @@
 {% endif %}
 <!-- end:Team members -->
 
-
-<!-- Subscribe form -->
-<!--
-<section class="background-colored text-center p-t-80  p-b-30">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-5">
-                <div class="widget widget-newsletter">
-                    <form class="widget-subscribe-form" action="include/subscribe-form.php" role="form" method="post" novalidate="novalidate">
-                        <h3 class="text-light">Suscribete a Nuestro Newsletter</h3>
-                        <div class="input-group mb-0">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-paper-plane"></i></span>
-                            </div>
-                            <input type="email" required name="widget-subscribe-form-email" class="form-control required email" placeholder="Ingresa tu Email">
-                            <div class="input-group-append">
-                                <button type="submit" id="widget-subscribe-submit-button" class="btn btn-light">Suscribete</button>
-                            </div>
-                        </div>
-                        <small class="text-light">Mantente informado sobre nuestras próximas tocatas!</small>
-                    </form>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section> -->
-<!-- end: Subscribe form -->
 
 {% endblock %}

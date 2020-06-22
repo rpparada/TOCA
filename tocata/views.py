@@ -197,17 +197,16 @@ def seleccionarPropuestas(request, tocata_id):
             lugartocata.estado = parToca['elegido']
 
             tocata = get_object_or_404(Tocata, pk=tocata_id)
-            print(tocata)
             tocata.lugar = lugartocata.lugar
             tocata.comuna = lugartocata.lugar.comuna
             tocata.region = lugartocata.lugar.region
             tocata.provincia = lugartocata.lugar.provincia
 
-            print(tocata.lugar)
             tocata.estado = parToca['publicado']
-            print(tocata.estado)
             tocata.lugar_def = parToca['cerrada']
-            print(tocata.lugar_def)
+
+            #ajustar asistencias
+            
 
             lugartocata.save()
             tocata.save()

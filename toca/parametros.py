@@ -42,6 +42,9 @@ parToca = {
     # Lugares Tocatas
     'elegido': 'EL',
     'noelegido': 'NE',
+    # Testimonios Objetivos
+    'artistas': 'AR',
+    'usuarios': 'US',
 }
 
 parLugaresToc = {
@@ -115,4 +118,15 @@ parLugares = {
         (parToca['disponible'], 'Disponible'),
         (parToca['noDisponible'], 'No Disponible'),
     ],
+}
+
+parTestimonios = {
+    'estado_tipos': [
+        (parToca['disponible'], 'Disponible'),
+        (parToca['noDisponible'], 'No Disponible'),
+    ],
+    'objetivos_tipos': [
+        (parToca['artistas'], 'Artistas'),
+        (parToca['usuarios'], 'Usuarios'),
+    ]
 }

@@ -84,7 +84,7 @@
                             {% endif %}
                         </div>
                         <div class="product-description">
-                            <div class="product-category">{{ tocata_vista.artista.nombre }}, {{ tocata_vista.lugar.region }}, {{ tocata_vista.lugar.comuna }}</div>
+                            <div class="product-category">{{ tocata_vista.artista.nombre }}, {{ tocata_vista.comuna }}</div>
                             <div class="product-title">
                                 <h3><a href="{% url 'tocata' tocata_vista.id %}">{{ tocata_vista.nombre|truncatechars:20 }}</a></h3>
                             </div>
@@ -97,7 +97,7 @@
                 </div>
               {% endfor %}
             </div>
-            
+
             <!-- Pagination -->
             {% if tocatas_vista.has_other_pages %}
             <ul class="pagination">
