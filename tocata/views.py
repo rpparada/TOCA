@@ -205,8 +205,11 @@ def seleccionarPropuestas(request, tocata_id):
             tocata.estado = parToca['publicado']
             tocata.lugar_def = parToca['cerrada']
 
-            #ajustar asistencias
-            
+            if lugartocata.lugar.capacidad < tocata.asistentes_min:
+                tocata.asistentes_min = lugartocata.lugar.capacidad
+                tocata.asistentes_max = lugartocata.lugar.capacidad
+            else:
+                tocata.asistentes_max = lugartocata.lugar.capacidad
 
             lugartocata.save()
             tocata.save()

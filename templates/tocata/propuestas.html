@@ -28,18 +28,12 @@
                             <p>Cambiaremos Asistentencia Mínima de {{tocata.asistentes_min}} a {{lugar.lugar.capacidad}}.</p>
                             <p>Cambiaremos Asistentencia Máxima de {{tocata.asistentes_max}} a {{lugar.lugar.capacidad}}.</p>
                           {% else %}
-                            {% if lugar.lugar.capacidad < tocata.asistentes_max %}
+                            {% if lugar.lugar.capacidad != tocata.asistentes_max %}
                               <p>El lugar seleccionado tiene capacidades de asistencia diferentes a lo esperado.</p>
                               <p>Si aceptas, se ajustaran los datos de asistencia definidos inicialmente a:</p>
                               <p>Cambiaremos Asistentencia Máxima de {{tocata.asistentes_max}} a {{lugar.lugar.capacidad}}.</p>
                             {% else %}
-                              {% if lugar.lugar.capacidad > tocata.asistentes_max %}
-                                <p>El lugar seleccionado tiene capacidades de asistencia diferentes a lo esperado.</p>
-                                <p>Si aceptas, se ajustaran los datos de asistencia definidos inicialmente a:</p>
-                                <p>Cambiaremos Asistentencia Máxima de {{tocata.asistentes_max}} a {{lugar.lugar.capacidad}}.</p>
-                              {% else %}
-                                <p>¿Estas seguro de aceptar este lugar?</p>
-                              {% endif %}
+                              <p>¿Estas seguro de aceptar este lugar?</p>
                             {% endif %}
                           {% endif %}
                       </div>
@@ -47,6 +41,9 @@
               </div>
               <form action="{% url 'propuestas' tocata.id %}" method="POST">
                 {% csrf_token %}
+                <input type="hidden" class="form-control" value="{{ tocata.id }}" name="tocata">
+                <input type="hidden" class="form-control" value="{{ tocata.usuario.id }}" name="usuario">
+                <input type="hidden" class="form-control" value="{{ lugar.lugar.id }}" name="lugar">
                 <div class="modal-footer">
                   <button type="submit" class="btn btn-b">Confirmo Lugar</button>
                   <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
