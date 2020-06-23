@@ -79,17 +79,6 @@ $(document).ready(function (){
     // Agregar Lugar
     // Define posibles comunas de acuerdo a region seleccionada
     // Habilita campos de acuerdo con el tipo de tocata
-    $('#opcionestipo').prop('disabled', false);
-    $('#opcionestipo').val($("#opcionestipo option:first").val());
-
-    $('#opcionesregion').off();
-    $('#opcionesregion').prop('disabled', true);
-    $('#opcionesregion').val($("#opcionesregion option:first").val());
-
-    $('#opcionescomuna').off();
-    $('#opcionescomuna').prop('disabled', true);
-    $('#opcionescomuna').val($("#opcionescomuna option:first").val());
-
     var url = $("#formtocheck").attr("data-ciudad-url-agregar");
     var regionId = $("#id_region").val();
 
@@ -102,6 +91,7 @@ $(document).ready(function (){
         $("#id_comuna").html(data);
       }
     });
+    
   } else if (!window.location.pathname.search("/lugares/milugar_")){
     // Actualizacion lugar
     // Define posibles comunas de acuerdo a region seleccionada
@@ -118,6 +108,32 @@ $(document).ready(function (){
       },
       success: function (data) {
         $("#id_comuna").html(data);
+      }
+    });
+
+  } else if (window.location.pathname === "/tocatas/artista/creartocata") {
+    console.log("aqui vamo");
+    $('#opcionestipo').prop('disabled', false);
+    $('#opcionestipo').val($("#opcionestipo option:first").val());
+
+    $('#opcionesregion').off();
+    $('#opcionesregion').prop('disabled', true);
+    $('#opcionesregion').val($("#opcionesregion option:first").val());
+
+    $('#opcionescomuna').off();
+    $('#opcionescomuna').prop('disabled', true);
+    $('#opcionescomuna').val($("#opcionescomuna option:first").val());
+
+    var url = $("#formtocheck").attr("data-ciudad-url-agregar");
+    var regionId = $("#opcionesregion").val();
+
+    $.ajax({
+      url: url,
+      data: {
+        'region': regionId
+      },
+      success: function (data) {
+        $("#opcionescomuna").html(data);
       }
     });
   }

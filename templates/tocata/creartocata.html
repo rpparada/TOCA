@@ -14,11 +14,12 @@
             <div class="content col-lg-12">
               <div class="card">
                   <div class="card-header">
-                      <h5 class="card-title">Horizontal form</h5>
-                      <h6 class="card-subtitle text-muted">Horizontal Bootstrap layout.</h6>
+                      <h5 class="card-title">Crea Tocata Íntima</h5>
+                      <h6 class="card-subtitle text-muted">Completa el formulario para crear tu Tocata Íntima.</h6>
+                      <p hidden id="mensajerror"></p>
                   </div>
                   <div class="card-body">
-                      <form action="{% url 'creartocata' %}" method="POST" id="tocataForm" data-ciudad-url-agregar="{% url 'ajax_load_comunas_tocata' %}" enctype="multipart/form-data">
+                      <form id="formtocheck" action="{% url 'creartocata' %}" method="POST" id="tocataForm" data-ciudad-url-agregar="{% url 'ajax_load_comunas_tocata' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                           <input type="hidden" class="form-control" value="{{ user.id }}" name="usuario">
                           <input type="hidden" class="form-control" value="{{ artista.id }}" name="artista">
@@ -28,7 +29,7 @@
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Nombre</label>
                               <div class="col-sm-10">
-                                  <input type="text" class="form-control" placeholder="Nombre" value="" name="nombre">
+                                  <input id="primercampo" type="text" class="requerido form-control" placeholder="Nombre" value="" name="nombre">
                               </div>
                           </div>
                           <div class="form-group row">
@@ -85,32 +86,32 @@
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Costo</label>
                               <div class="col-sm-10">
-                                  <input type="number" class="form-control" placeholder="Costo" value="" name="costo">
+                                  <input type="number" class="requerido form-control" placeholder="Costo" value="" name="costo">
                               </div>
                           </div>
                           <div class="form-group row">
                               <label for="example-date-input" class="col-2 col-form-label">Fecha</label>
                               <div class="col-10">
-                                  <input class="form-control" type="date" value="" name="fecha">
+                                  <input class="requerido form-control" type="date" value="" name="fecha">
                               </div>
                           </div>
                           <div class="form-group row">
                               <label for="example-date-input" class="col-2 col-form-label">Hora</label>
                               <div class="col-10">
-                                  <input class="form-control" type="time" value="" name="hora">
+                                  <input class="requerido form-control" type="time" value="" name="hora">
                               </div>
                           </div>
                           <input type="hidden" class="form-control" value="0" name="asistentes_total">
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Asistentes Minimos</label>
                               <div class="col-sm-10">
-                                  <input type="number" class="form-control" placeholder="Asistentes Minimos" value="" name="asistentes_min">
+                                  <input type="number" class="requerido form-control" placeholder="Asistentes Minimos" value="" name="asistentes_min">
                               </div>
                           </div>
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Asistentes Maximo</label>
                               <div class="col-sm-10">
-                                  <input type="number" class="form-control" placeholder="Asistentes Maximo" value="" name="asistentes_max">
+                                  <input type="number" class="requerido form-control" placeholder="Asistentes Maximo" value="" name="asistentes_max">
                               </div>
                           </div>
                           <div class="form-group row">
@@ -128,7 +129,7 @@
 
                           <div class="form-group row">
                               <div class="col-sm-10 ml-sm-auto">
-                                  <button type="submit" class="btn btn-primary">Crear</button>
+                                  <button type="submit" class="btn btn-primary">Crear Tocata</button>
                               </div>
                           </div>
                       </form>
