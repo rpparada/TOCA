@@ -19,7 +19,7 @@
                       <p hidden id="mensajerror"></p>
                   </div>
                   <div class="card-body">
-                      <form id="formtocheck" action="{% url 'creartocata' %}" method="POST" id="tocataForm" data-ciudad-url-agregar="{% url 'ajax_load_comunas_tocata' %}" enctype="multipart/form-data">
+                      <form id="formtocheck" action="{% url 'creartocata' %}" method="POST" data-ciudad-url-agregar="{% url 'ajax_load_comunas_tocata' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                           <input type="hidden" class="form-control" value="{{ user.id }}" name="usuario">
                           <input type="hidden" class="form-control" value="{{ artista.id }}" name="artista">
@@ -48,7 +48,7 @@
                               <div class="col-sm-10">
                                 <select class="form-control" name="{{ tocata_form.lugar.html_name }}" id="opcionestipo">
                                   {% for lugar in mislugares %}
-                                    <option value="{{ lugar.id }}">{{ lugar.nombre }}</option>
+                                    <option value="{{ lugar.id }}">{{ lugar.nombre_calle }} {{ lugar.numero}}, {{ lugar.region }} {{ lugar.comuna }}</option>
                                   {% endfor %}
                                 </select>
                               </div>
@@ -57,7 +57,7 @@
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Lugar</label>
                               <div class="col-sm-10">
-                                  <input type="text" class="form-control" placeholder="No tienes lugares registrados" value="" name="lugar" readonly>
+                                  <input type="text" class="form-control" placeholder="No tienes lugares registrados" value="No tienes lugares registrados" name="lugar" id="checklugar" readonly>
                               </div>
                           </div>
                           {% endif %}

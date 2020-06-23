@@ -13,66 +13,7 @@ $('.close').click(function () {
   $('.bootstrap-notify').fadeOut();
 });
 
-/* Creacion de Tocatas */
-// Define posibles comunas de acuerdo a region seleccionada
-// Habilita campos de acuerdo con el tipo de tocata
-$("#tipotocata").change(function () {
-
-  var tipotocata = $(this).val();
-
-  if (tipotocata == 'AB') {
-    $('#opcionestipo').off();
-    $('#opcionestipo').prop('disabled', true);
-    $('#opcionestipo').val('');
-
-    $('#opcionesregion').prop('disabled', false);
-    $('#opcionesregion').val($("#opcionesregion option:first").val())
-
-    $('#opcionescomuna').prop('disabled', false);
-    $('#opcionescomuna').val($("#opcionescomuna option:first").val())
-
-    var url = $("#tocataForm").attr("data-ciudad-url-agregar");
-    var regionId = $('#opcionesregion').val();
-
-    $.ajax({
-      url: url,
-      data: {
-        'region': regionId
-      },
-      success: function (data) {
-        $("#opcionescomuna").html(data);
-      }
-    });
-
-  } else if (tipotocata == 'CE') {
-    $('#opcionestipo').prop('disabled', false);
-    $('#opcionestipo').val($("#opcionestipo option:first").val());
-
-    $('#opcionesregion').off();
-    $('#opcionesregion').prop('disabled', true);
-    $('#opcionesregion').val($("#opcionesregion option:first").val());
-
-    $('#opcionescomuna').off();
-    $('#opcionescomuna').prop('disabled', true);
-    $('#opcionescomuna').val($("#opcionescomuna option:first").val());
-  }
-});
-
-// Define posibles comunas de acuerdo a region seleccionada
-$(document).on('change','#opcionesregion', function () {
-  var url = $("#tocataForm").attr("data-ciudad-url-agregar");
-  var regionId = $(this).val();
-  $.ajax({
-    url: url,
-    data: {
-      'region': regionId
-    },
-    success: function (data) {
-      $("#opcionescomuna").html(data);
-    }
-  });
-});
-
+// Acciones cuando paguinas cargan
 $(document).ready(function (){
 
   if (window.location.pathname === "/lugares/agregarlugar"){
@@ -91,7 +32,7 @@ $(document).ready(function (){
         $("#id_comuna").html(data);
       }
     });
-    
+
   } else if (!window.location.pathname.search("/lugares/milugar_")){
     // Actualizacion lugar
     // Define posibles comunas de acuerdo a region seleccionada
@@ -112,17 +53,21 @@ $(document).ready(function (){
     });
 
   } else if (window.location.pathname === "/tocatas/artista/creartocata") {
-    console.log("aqui vamo");
-    $('#opcionestipo').prop('disabled', false);
-    $('#opcionestipo').val($("#opcionestipo option:first").val());
+    // Creacion de Tocatas
+    // Define variables iniciales
+    var opcione = $("#checklugar").val();
 
-    $('#opcionesregion').off();
-    $('#opcionesregion').prop('disabled', true);
-    $('#opcionesregion').val($("#opcionesregion option:first").val());
-
-    $('#opcionescomuna').off();
-    $('#opcionescomuna').prop('disabled', true);
-    $('#opcionescomuna').val($("#opcionescomuna option:first").val());
+    if (opcione === "No tienes lugares registrados") {
+      $('select[name=lugar_def] option:eq(1)').attr('selected', 'selected');
+      $('select[name=lugar_def]').prop('disabled', true);
+      $('#opcionestipo').prop('disabled', true);
+      $('#opcionesregion').prop('disabled', false);
+      $('#opcionescomuna').prop('disabled', false);
+    } else {
+      $('#opcionestipo').prop('disabled', false);
+      $('#opcionesregion').prop('disabled', true);
+      $('#opcionescomuna').prop('disabled', true);
+    }
 
     var url = $("#formtocheck").attr("data-ciudad-url-agregar");
     var regionId = $("#opcionesregion").val();
@@ -169,6 +114,39 @@ $("#id_region").change(function () {
       }
     });
   }
+});
+
+/* Creacion de Tocatas */
+// Define posibles comunas de acuerdo a region seleccionada
+// Habilita campos de acuerdo con el tipo de tocata
+$("#tipotocata").change(function () {
+
+  var tipotocata = $(this).val();
+
+  if (tipotocata == 'AB') {
+    $('#opcionestipo').prop('disabled', true);
+    $('#opcionesregion').prop('disabled', false);
+    $('#opcionescomuna').prop('disabled', false);
+  } else if (tipotocata == 'CE') {
+    $('#opcionestipo').prop('disabled', false);
+    $('#opcionesregion').prop('disabled', true);
+    $('#opcionescomuna').prop('disabled', true);
+  }
+});
+
+// Define posibles comunas de acuerdo a region seleccionada
+$(document).on('change','#opcionesregion', function () {
+  var url = $("#formtocheck").attr("data-ciudad-url-agregar");
+  var regionId = $(this).val();
+  $.ajax({
+    url: url,
+    data: {
+      'region': regionId
+    },
+    success: function (data) {
+      $("#opcionescomuna").html(data);
+    }
+  });
 });
 
 // Al cargar la pagina deja el foco en el primer campo del formulario
@@ -247,5 +225,11 @@ $("#formtocheck").submit(function(){
       }
     }
   }
+  
+  // validaciones formulario de tocatas
+  if (isFormValid) {
+
+  }
+
   return isFormValid;
 });

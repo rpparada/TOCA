@@ -121,11 +121,12 @@ def creartocata(request):
     artista = UsuarioArtista.objects.get(user=request.user).artista
     mislugares = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
 
+    print(mislugares)
     tocata_form = TocataForm();
 
     context = {
-        'tocatas_h': tocatas[:3],
-        'artistas_h': artistas[:3],
+        'tocatas_h': tocatas,
+        'artistas_h': artistas,
         'usuario': usuario,
         'artista': artista,
         'mislugares': mislugares,
@@ -241,7 +242,6 @@ def carga_comunas_tocata(request):
 
     context = {
         'comunas_reg': comunas,
-        'comuna_id': comuna_id,
     }
 
     return render(request, 'tocata/comuna_dropdown_list_options_tocata.html', context)
