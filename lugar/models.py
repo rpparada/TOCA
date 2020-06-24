@@ -47,7 +47,7 @@ class Lugar(models.Model):
     nombre_calle = models.CharField(max_length=200)
     numero = models.IntegerField()
     region = models.ForeignKey(Region, on_delete=models.DO_NOTHING)
-    provincia = models.ForeignKey(Provincia, on_delete=models.DO_NOTHING)
+    provincia = models.ForeignKey(Provincia, null=True, blank=True, on_delete=models.DO_NOTHING)
     comuna = models.ForeignKey(Comuna, on_delete=models.DO_NOTHING)
     ciudad = models.CharField(max_length=200, blank=True)
     pais = models.CharField(max_length=100, default=parToca['paisDefecto'])

@@ -175,7 +175,7 @@ $("#formtocheck").submit(function(){
   });
 
   if (!isFormValid) {
-    $("#mensajerror").text("Completa los campos detacados");
+    $("#mensajerror").text("Completa los campos destacados");
     $("#mensajerror").removeAttr('hidden');
   };
 
@@ -225,10 +225,22 @@ $("#formtocheck").submit(function(){
       }
     }
   }
-  
+
   // validaciones formulario de tocatas
   if (isFormValid) {
+    // asistentes_max tiene que ser mayor que asistentes_min
+    asis_min = $('input[name=asistentes_min]');
+    asis_max = $('input[name=asistentes_max]');
 
+    if (parseInt(asis_min.val()) > parseInt(asis_max.val())) {
+      asis_min.focus();
+      $("#mensajerror").text("Asistencia Mínima debe ser menor o igual que Asistencia Máxima.");
+      $("#mensajerror").removeAttr('hidden');
+      isFormValid = false;
+    } else {
+      $("#mensajerror").empty();
+      $("#mensajerror").attr('hidden');
+    }
   }
 
   return isFormValid;

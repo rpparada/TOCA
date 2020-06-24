@@ -84,13 +84,15 @@ def mistocatas(request):
 
 def creartocata(request):
 
+    tocata_form = TocataForm();
+
     if request.method == 'POST':
 
-        form = TocataForm(request.POST)
+        tocata_form = TocataForm(request.POST)
 
-        if form.is_valid():
+        if tocata_form.is_valid():
 
-            nuevaTocata = form.save(commit=False)
+            nuevaTocata = tocata_form.save(commit=False)
             if 'flayer_original' in request.FILES:
                 nuevaTocata.flayer_original = request.FILES['flayer_original']
                 nuevaTocata.flayer_380_507 = request.FILES['flayer_original']
@@ -98,9 +100,6 @@ def creartocata(request):
 
             if nuevaTocata.lugar_def == parToca['cerrada']:
                 nuevaTocata.estado = parToca['publicado']
-                print(nuevaTocata.lugar.region)
-                print(nuevaTocata.lugar.comuna)
-                print(nuevaTocata.lugar.provincia)
                 nuevaTocata.region = nuevaTocata.lugar.region
                 nuevaTocata.comuna = nuevaTocata.lugar.comuna
                 nuevaTocata.provincia = nuevaTocata.lugar.provincia
@@ -114,15 +113,12 @@ def creartocata(request):
             messages.success(request, 'Tocata creada exitosamente')
             return redirect('mistocatas')
         else:
-            print(form.errors.as_data())
+            print(tocata_form.errors.as_data())
             messages.error(request,'Error en form')
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
     artista = UsuarioArtista.objects.get(user=request.user).artista
     mislugares = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
-
-    print(mislugares)
-    tocata_form = TocataForm();
 
     context = {
         'tocatas_h': tocatas,
@@ -238,7 +234,7 @@ def carga_comunas_tocata(request):
 
     region_id = request.GET.get('region')
     comuna_id = request.GET.get('comuna')
-    comunas = Comuna.objects.filter(region=int(region_id)).order_by('nombre')
+    comunas = Comuna.objects.filter(region=int(region_id)).order_by('codigo')
 
     context = {
         'comunas_reg': comunas,
