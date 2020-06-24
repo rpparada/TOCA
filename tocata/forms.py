@@ -14,7 +14,7 @@ class TocataForm(forms.ModelForm):
     #hora = forms.TimeField(input_formats=['%H:%M', '%I:%M%p', '%I:%M %p'])
     class Meta:
         model = Tocata
-        exclude = ('fecha_actu','fecha_crea','asistentes_total','evaluacion',)
+        exclude = ('fecha_actu','fecha_crea','asistentes_total','evaluacion','asistentes_max')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

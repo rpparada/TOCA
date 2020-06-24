@@ -129,16 +129,6 @@
                               </div>
                           </div>
                           <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">Asistentes Máximo</label>
-                              <div class="col-sm-10">
-                                {% if tocata_form.asistentes_max.value %}
-                                  <input type="number" class="requerido form-control" placeholder="Asistentes Maximo" value="{{ tocata_form.asistentes_max.value }}" name="asistentes_max">
-                                {% else %}
-                                  <input type="number" class="requerido form-control" placeholder="Asistentes Maximo" value="" name="asistentes_max">
-                                {% endif %}
-                              </div>
-                          </div>
-                          <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Descripción</label>
                               <div class="col-sm-10">
                                 {% if tocata_form.descripción.value %}
