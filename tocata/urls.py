@@ -8,9 +8,12 @@ urlpatterns = [
     path('artista/mistocatas', views.mistocatas, name='mistocatas'),
     path('artista/creartocatacerrada', views.creartocatacerrada, name='creartocatacerrada'),
     path('artista/creartocataabierta', views.creartocataabierta, name='creartocataabierta'),
+    path('artista/detallestocata_<int:tocata_id>', views.detallestocataabierta, name='detallestocataabierta'),
+    
     path('artista/creartocata', views.creartocata, name='creartocata'),
     path('artista/borrartocata_<int:tocata_id>', views.borrartocata, name='borrartocata'),
     path('artista/suspendertocata_<int:tocata_id>', views.suspendertocata, name='suspendertocata'),
+    path('artista/suspendertocataabierta_<int:tocata_id>', views.suspendertocataabierta, name='suspendertocataabierta'),
     path('artista/propuestas_<int:tocata_id>', views.seleccionarPropuestas, name='propuestas'),
     path('ajax/load-comunas_tocata/', views.carga_comunas_tocata, name='ajax_load_comunas_tocata'),
 ]

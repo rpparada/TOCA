@@ -186,6 +186,21 @@ def creartocataabierta(request):
 
     return render(request, 'tocata/creartocataabierta.html', context)
 
+def detallestocataabierta(request, tocata_id):
+
+    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
+
+    context = {
+        'tocatas_h': tocatas,
+        'artistas_h': artistas,
+        'usuario': usuario,
+        'tocata': tocata,
+    }
+
+    return render(request, 'tocata/detallestocataabierta.html', context)
+
+
 def borrartocata(request, tocata_id):
 
     tocata = get_object_or_404(Tocata, pk=tocata_id)
@@ -195,10 +210,22 @@ def borrartocata(request, tocata_id):
 
 def suspendertocata(request, tocata_id):
 
-    tocata = get_object_or_404(Tocata, pk=tocata_id)
-    tocata.estado = parToca['suspendido']
-    tocata.save()
+    if request.method == 'POST':
+        tocata = get_object_or_404(Tocata, pk=tocata_id)
+        tocata.estado = parToca['suspendido']
+        tocata.save()
+
     return redirect('mistocatas')
+
+def suspendertocataabierta(request, tocata_id):
+
+    if request.method == 'POST':
+        tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
+        tocata.estado = parToca['suspendido']
+        tocata.save()
+
+    return redirect('mistocatas')
+
 
 def proponerlugar(request, tocata_id):
 
