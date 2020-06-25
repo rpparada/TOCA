@@ -23,11 +23,10 @@ parToca = {
     'cerrada': 'CE',
     'abierta': 'AB',
     # Estado tocata
-    'inicial': 'IN',
     'publicado': 'PU',
     'suspendido': 'SU',
-    'aplazado': 'AP',
     'confirmado': 'CN',
+    'vendido': 'VE',
     'completado': 'CM',
     'borrado': 'BO',
     # Paginacion tocatas_vista
@@ -67,23 +66,30 @@ parTocatas = {
         (parToca['abierta'],'Abierta'),
     ],
     'estado_tipos': [
-        (parToca['inicial'], 'Inicial'),
         (parToca['publicado'], 'Publicado'),
         (parToca['suspendido'], 'Suspendido'),
-        (parToca['aplazado'], 'Aplazado'),
         (parToca['confirmado'], 'Confirmado'),
+        (parToca['vendido'], 'Vendido'),
         (parToca['completado'], 'Completado'),
         (parToca['borrado'], 'Borrado'),
     ],
     'estado_tipos_vista': [
-        parToca['inicial'],
         parToca['publicado'],
         parToca['suspendido'],
-        parToca['aplazado'],
         parToca['confirmado'],
+        parToca['vendido'],
         parToca['completado'],
     ],
 
+}
+
+parTocatasAbiertas = {
+    'estado_tipos': [
+        (parToca['publicado'], 'Publicado'),
+        (parToca['suspendido'], 'Suspendido'),
+        (parToca['confirmado'], 'Confirmado'),
+        (parToca['borrado'], 'Borrado'),
+    ],
 }
 
 parUsuarioArtistas = {

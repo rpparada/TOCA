@@ -41,7 +41,6 @@
                     <nav>
                         <ul>
                             <li><a href="{% url 'index' %}">Home</a></li>
-
                             {% if tocatas_h %}
                             <li class="dropdown"><a href="{% url 'tocatas' %}">Tocatas</a>
                                 <ul class="dropdown-menu">
@@ -79,7 +78,12 @@
                                 <li class="dropdown"><a href="{% url 'mistocatas' %}">Mis Tocatas</a>
                                   <ul class="dropdown-menu">
                                     <li><a href="{% url 'mistocatas' %}">Mis Tocatas</a></li>
-                                    <li><a href="{% url 'creartocata' %}">Crear Tocata</a></li>
+                                    <li class="dropdown-submenu"><a href="{% url 'creartocata' %}">Crea Tocata</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{% url 'creartocatacerrada' %}">Tocata Cerrada</a></li>
+                                            <li><a href="{% url 'creartocataabierta' %}">Tocata Abierta</a></li>
+                                        </ul>
+                                    </li>
                                   </ul>
                                 </li>
                                 <li class="dropdown"><a href="{% url 'mislugares' %}">Mis Lugares</a>

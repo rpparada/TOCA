@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from tocata.models import Tocata
+from tocata.models import Tocata, TocataAbierta
 from artista.models import Artista
 from usuario.models import Usuario
 from home.models import Testimonios
@@ -16,20 +16,25 @@ from toca.parametros import parToca
 def index(request):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
-    tocatas_ini = Tocata.objects.filter(estado=parToca['inicial'])
-    tocatas_ini = tocatas_ini.filter(fecha__gte=datetime.today()).order_by('-fecha_crea')[:parToca['muestraTocatas']]
+
+    tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
+    tocatasabiertas = tocatasabiertas.filter(fecha__gte=datetime.today()).order_by('-fecha_crea')[:parToca['muestraTocatas']]
 
     testimonios = Testimonios.objects.filter(estado=parToca['disponible'])
     testimonios_art = testimonios.filter(objetivo=parToca['artistas'])[:3]
     testimonios_usu = testimonios.filter(objetivo=parToca['usuarios'])[:3]
 
     context = {
+        # Cabecera
         'tocatas_h': tocatas,
         'artistas_h': artistas,
         'usuario': usuario,
+        # Tocatas y Tocatas Abiertas nuevas
         'tocatas': tocatas,
-        'tocatas_ini': tocatas_ini,
+        'tocatasabiertas': tocatasabiertas,
+        # Artistas
         'artistas': artistas,
+        # Testimonios
         'testimonios_art': testimonios_art,
         'testimonios_usu': testimonios_usu,
     }
@@ -82,8 +87,7 @@ def busqueda(request):
 
 def getTocatasArtistasHeadIndex(request):
 
-
-    tocatas = Tocata.objects.filter(estado=parToca['publicado'])
+    tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
     tocatas = tocatas.filter(fecha__gte=datetime.today()).order_by('-fecha_crea')[:parToca['muestraTocatas']]
     for tocata in tocatas:
         diff = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)

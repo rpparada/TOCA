@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load thumbnail %}
+{% block title %} | CREAR TOCATAS{% endblock %}
+{% block content %}
+
+{% include 'partials/_alerts.html' %}
+
+{% if user.is_authenticated %}
+{% if usuario.es_artista %}
+<section id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="content col-lg-12">
+              <div class="card">
+                  <div class="card-header">
+                      <h5 class="card-title">Crea tu próxima Tocata Íntima</h5>
+                      <h6 class="card-subtitle text-muted">Completa el formulario para crear tu Tocata Íntima.</h6>
+                      <p hidden id="mensajerror"></p>
+                  </div>
+                  <div class="card-body">
+                      <form id="formtocheck" action="{% url 'creartocata' %}" method="POST" data-ciudad-url-agregar="{% url 'ajax_load_comunas_tocata' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                          <input type="hidden" class="form-control" value="{{ user.id }}" name="usuario">
+                          <input type="hidden" class="form-control" value="{{ artista.id }}" name="artista">
+                          <input type="hidden" class="form-control" value="IN" name="estado">
+                          <input type="hidden" class="form-control" value="1" name="region">
+                          <input type="hidden" class="form-control" value="1" name="comuna">
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Nombre</label>
+                              <div class="col-sm-10">
+                                {% if tocata_form.nombre.value %}
+                                  <input id="primercampo" type="text" class="requerido form-control" placeholder="Nombre" value="{{ tocata_form.nombre.value }}" name="nombre">
+                                {% else %}
+                                  <input id="primercampo" type="text" class="requerido form-control" placeholder="Nombre" value="" name="nombre">
+                                {% endif %}
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ tocata_form.lugar_def.id_for_label }}">Tipo Tocata</label>
+                              <div class="col-sm-10">
+                                <select class="form-control" name="{{ tocata_form.lugar_def.html_name }}" id="tipotocata">
+                                  {% for lugar_def in tocata_form.lugar_def.field.choices %}
+                                    <option value="{{ lugar_def.0 }}">{{ lugar_def.1 }}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                          </div>
+                          {% if mislugares %}
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ tocata_form.lugar.id_for_label }}">{{ tocata_form.lugar.label_tag }}</label>
+                              <div class="col-sm-10">
+                                <select class="form-control" name="{{ tocata_form.lugar.html_name }}" id="opcionestipo">
+                                    {% for lugar in mislugares %}
+                                      <option value="{{ lugar.id }} {% if lugar.id == tocata_form.lugar.value %} selected {% endif %}">{{ lugar.nombre_calle }} {{ lugar.numero}}, {{ lugar.region }} {{ lugar.comuna }}</option>
+                                    {% endfor %}
+                                </select>
+                              </div>
+                          </div>
+                          {% else %}
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Lugar</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control" placeholder="No tienes lugares registrados" value="No tienes lugares registrados" name="lugar" id="checklugar" readonly>
+                              </div>
+                          </div>
+                          {% endif %}
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ tocata_form.region.id_for_label }}">Region</label>
+                              <div class="col-sm-10">
+                                <select class="form-control" name="region" id="opcionesregion">
+                                  {% for region in tocata_form.region.field.choices %}
+                                    <option value="{{ region.0 }}">{{ region.1 }}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ tocata_form.comuna.id_for_label }}">Comuna</label>
+                              <div class="col-sm-10">
+                                <select class="form-control" name="comuna" id="opcionescomuna">
+                                  {% for comuna in tocata_form.comuna.field.choices %}
+                                    <option value="{{ comuna.0 }}">{{ comuna.1 }}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                          </div>
+
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Costo</label>
+                              <div class="col-sm-10">
+                                {% if tocata_form.costo.value %}
+                                  <input type="number" class="requerido form-control" placeholder="Costo" value="{{ tocata_form.costo.value }}" name="costo">
+                                {% else %}
+                                  <input type="number" class="requerido form-control" placeholder="Costo" value="" name="costo">
+                                {% endif %}
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label for="example-date-input" class="col-form-label col-sm-2 text-sm-right">Fecha</label>
+                              <div class="col-10">
+                                {% if tocata_form.fecha.value %}
+                                  <input class="requerido form-control" type="date" value="{{ tocata_form.fecha.value }}" name="fecha">
+                                {% else %}
+                                  <input class="requerido form-control" type="date" value="" name="fecha">
+                                {% endif %}
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label for="example-date-input" class="col-form-label col-sm-2 text-sm-right">Hora</label>
+                              <div class="col-10">
+                                {% if tocata_form.hora.value %}
+                                  <input class="requerido form-control" type="time" value="{{ tocata_form.hora.value }}" name="hora">
+                                {% else %}
+                                  <input class="requerido form-control" type="time" value="" name="hora">
+                                {% endif %}
+                              </div>
+                          </div>
+                          <input type="hidden" class="form-control" value="0" name="asistentes_total">
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Asistentes Mínimos</label>
+                              <div class="col-sm-10">
+                                {% if tocata_form.asistentes_min.value %}
+                                  <input type="number" class="requerido form-control" placeholder="Asistentes Minimos" value="{{ tocata_form.asistentes_min.value }}" name="asistentes_min">
+                                {% else %}
+                                  <input type="number" class="requerido form-control" placeholder="Asistentes Minimos" value="" name="asistentes_min">
+                                {% endif %}
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Descripción</label>
+                              <div class="col-sm-10">
+                                {% if tocata_form.descripción.value %}
+                                  <textarea class="form-control" placeholder="Descripción" rows="3" name="descripción">{{ tocata_form.descripción.value }}</textarea>
+                                {% else %}
+                                  <textarea class="form-control" placeholder="Descripción" rows="3" name="descripción"></textarea>
+                                {% endif %}
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-form-label col-sm-2 text-sm-right" for="exampleFormControlFile1">Subir Flayer</label>
+                            <div class="col-sm-10">
+                              <input type="file" class="form-control-file" accept="image/*" name="{{ tocata_form.flayer_original.html_name }}">
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                              <div class="col-sm-10 ml-sm-auto">
+                                  <button type="submit" class="btn btn-primary">Crear Tocata</button>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% else %}
+<section id="page-content">
+    <div class="container">
+      <div data-animate="fadeInUp" class="text-center">
+          <a href="{% url 'ingresar' %}?next={{request.path|urlencode}}" class="btn">INGRESA A TU CUENTA</a>
+      </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

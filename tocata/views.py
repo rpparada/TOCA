@@ -3,18 +3,21 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.core.mail import send_mail
 from django.contrib import messages
+from django.utils import timezone
 
 from datetime import datetime
-from django.utils import timezone
+
 import operator
 
-from .models import Tocata, LugaresTocata
-from .forms import TocataForm, LugaresTocataForm
+from .forms import TocataForm, LugaresTocataForm, TocataAbiertaForm
+
+from .models import Tocata, LugaresTocata, TocataAbierta
 from artista.models import Artista
 from lugar.models import Lugar, Comuna, Region
-from usuario.models import UsuarioArtista
+from usuario.models import UsuarioArtista, Usuario
 
 from home.views import getTocatasArtistasHeadIndex
+
 from toca.parametros import parToca, parTocatas
 
 # Create your views here.
@@ -22,29 +25,33 @@ def tocatas(request):
 
     toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
 
-    hoy = datetime.today()
-    tocatas = Tocata.objects.all().filter(estado__in=[parToca['inicial'],parToca['publicado'],parToca['confirmado'],])
+    tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
     for tocata in tocatas:
-        diff = hoy - tocata.fecha_crea.replace(tzinfo=None)
-        if diff.days <= parToca['diasNuevoTocata']:
+        dif = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)
+        if dif.days <= parToca['diasNuevoTocata']:
             tocata.nuevo = 'SI'
         else:
             tocata.nuevo = 'NO'
-        tocata.evaluacionRange = range(tocata.evaluacion)
-        tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
+        tocata.asistentes_dif = tocata.asistentes_max - tocata.asistentes_total
+
+    tocatasAbiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
+    for tocataAbierta in tocatasAbiertas:
+        dif = datetime.today() - tocataAbierta.fecha_crea.replace(tzinfo=None)
+        if dif.days <= parToca['diasNuevoTocata']:
+            tocataAbierta.nuevo = 'SI'
+        else:
+            tocataAbierta.nuevo = 'NO'
+
 
     paginador = Paginator(tocatas, parToca['tocatas_pag'])
     pagina = request.GET.get('page')
     pagina_tocatas = paginador.get_page(pagina)
 
-    tocatas_evaluacion = sorted(tocatas, key=operator.attrgetter('evaluacion'), reverse=True)
-
     context = {
-        'tocatas_vista': pagina_tocatas,
-        'tocatas_h': toc_head[:3],
-        'artistas_h': art_head[:3],
-        'tocatas_evaluacion': tocatas_evaluacion[:3],
+        'tocatas_h': toc_head,
+        'artistas_h': art_head,
         'usuario': usuario,
+        'tocatas_vista': pagina_tocatas,
     }
 
     return render(request, 'tocata/tocatas.html', context)
@@ -54,10 +61,7 @@ def tocata(request, tocata_id):
     toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
 
     tocata = get_object_or_404(Tocata, pk=tocata_id)
-    tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
-
-    #desc = str(tocata.artista.descripción)
-    #tocata.des_part1,tocata.des_part2 = desc[:round(len(desc)/2)], desc[round(len(desc)/2):]
+    tocata.asistentes_dif = tocata.asistentes_max - tocata.asistentes_total
 
     context = {
         'tocata_vista': tocata,
@@ -83,6 +87,19 @@ def mistocatas(request):
     return render(request,'tocata/mistocatas.html', context)
 
 def creartocata(request):
+
+    if request.user.is_authenticated:
+        usuario = Usuario.objects.filter(user=request.user)[0]
+    else:
+        usuario = None
+
+    context = {
+        'usuario': usuario,
+    }
+
+    return render(request, 'tocata/creartocata.html', context)
+
+def creartocatacerrada(request):
 
     tocata_form = TocataForm();
 
@@ -129,7 +146,44 @@ def creartocata(request):
         'tocata_form': tocata_form,
     }
 
-    return render(request, 'tocata/creartocata.html', context)
+    return render(request, 'tocata/creartocatacerrada.html', context)
+
+def creartocataabierta(request):
+
+    tocata_form = TocataAbiertaForm()
+    if request.method == 'POST':
+        tocata_form = TocataAbiertaForm(request.POST)
+        if tocata_form.is_valid():
+
+            nuevaTocata = tocata_form.save(commit=False)
+            if 'flayer_original' in request.FILES:
+                nuevaTocata.flayer_original = request.FILES['flayer_original']
+                nuevaTocata.flayer_380_507 = request.FILES['flayer_original']
+                nuevaTocata.flayer_1920_1280 = request.FILES['flayer_original']
+
+            nuevaTocata.estado = parToca['publicado']
+            nuevaTocata.usuario = request.user
+            nuevaTocata.artista = Artista.objects.get(user=request.user)
+            nuevaTocata.save()
+
+            messages.success(request, 'Tocata Abierta creada')
+            return redirect('mistocatas')
+        else:
+            print(tocata_form.errors.as_data())
+            messages.error(request,'Error en form')
+
+    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    artista = UsuarioArtista.objects.get(user=request.user).artista
+
+    context = {
+        'tocatas_h': tocatas,
+        'artistas_h': artistas,
+        'usuario': usuario,
+        'artista': artista,
+        'tocata_form': tocata_form,
+    }
+
+    return render(request, 'tocata/creartocataabierta.html', context)
 
 def borrartocata(request, tocata_id):
 
