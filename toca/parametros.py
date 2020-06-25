@@ -90,6 +90,11 @@ parTocatasAbiertas = {
         (parToca['confirmado'], 'Confirmado'),
         (parToca['borrado'], 'Borrado'),
     ],
+    'estado_tipos_vista': [
+        parToca['publicado'],
+        parToca['suspendido'],
+        parToca['confirmado'],
+    ],
 }
 
 parUsuarioArtistas = {

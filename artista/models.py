@@ -10,7 +10,7 @@ from toca.parametros import parToca, parArtistas
 class Artista(models.Model):
 
     nombre = models.CharField(max_length=200)
-    usuario = usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
+    usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
 
     foto1 = models.ImageField(upload_to='fotos/artistas/%Y/%m/%d/', blank=True)
     foto2 = models.ImageField(upload_to='fotos/artistas/%Y/%m/%d/', blank=True)

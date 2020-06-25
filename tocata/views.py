@@ -18,7 +18,7 @@ from usuario.models import UsuarioArtista, Usuario
 
 from home.views import getTocatasArtistasHeadIndex
 
-from toca.parametros import parToca, parTocatas
+from toca.parametros import parToca, parTocatas, parTocatasAbiertas
 
 # Create your views here.
 def tocatas(request):
@@ -75,13 +75,15 @@ def mistocatas(request):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
     artista = UsuarioArtista.objects.get(user=request.user)
-    mistocatas = Tocata.objects.filter(artista=artista.artista).filter(estado__in=parTocatas['estado_tipos_vista'])
+    tocatascerradas = Tocata.objects.filter(artista=artista.artista).filter(estado__in=parTocatas['estado_tipos_vista'])
+    tocatasabiertas = TocataAbierta.objects.filter(artista=artista.artista).filter(estado__in=parTocatasAbiertas['estado_tipos_vista'])
 
     context = {
         'tocatas_h': tocatas,
         'artistas_h': artistas,
         'usuario': usuario,
-        'mistocatas': mistocatas,
+        'tocatascerradas': tocatascerradas,
+        'tocatasabiertas': tocatasabiertas,
     }
 
     return render(request,'tocata/mistocatas.html', context)
@@ -115,15 +117,14 @@ def creartocatacerrada(request):
                 nuevaTocata.flayer_380_507 = request.FILES['flayer_original']
                 nuevaTocata.flayer_1920_1280 = request.FILES['flayer_original']
 
-            if nuevaTocata.lugar_def == parToca['cerrada']:
-                nuevaTocata.estado = parToca['publicado']
-                nuevaTocata.region = nuevaTocata.lugar.region
-                nuevaTocata.comuna = nuevaTocata.lugar.comuna
-                nuevaTocata.provincia = nuevaTocata.lugar.provincia
-            elif nuevaTocata.lugar_def == parToca['abierta']:
-                nuevaTocata.estado = parToca['inicial']
+            nuevaTocata.estado = parToca['publicado']
+            nuevaTocata.region = nuevaTocata.lugar.region
+            nuevaTocata.comuna = nuevaTocata.lugar.comuna
 
             nuevaTocata.usuario = request.user
+            nuevaTocata.artista = Artista.objects.get(usuario=request.user)
+
+            nuevaTocata.asistentes_max = nuevaTocata.lugar.capacidad
 
             nuevaTocata.save()
 
@@ -134,14 +135,13 @@ def creartocatacerrada(request):
             messages.error(request,'Error en form')
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
-    artista = UsuarioArtista.objects.get(user=request.user).artista
     mislugares = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
 
     context = {
         'tocatas_h': tocatas,
         'artistas_h': artistas,
         'usuario': usuario,
-        'artista': artista,
+
         'mislugares': mislugares,
         'tocata_form': tocata_form,
     }
@@ -151,6 +151,7 @@ def creartocatacerrada(request):
 def creartocataabierta(request):
 
     tocata_form = TocataAbiertaForm()
+
     if request.method == 'POST':
         tocata_form = TocataAbiertaForm(request.POST)
         if tocata_form.is_valid():
@@ -163,7 +164,7 @@ def creartocataabierta(request):
 
             nuevaTocata.estado = parToca['publicado']
             nuevaTocata.usuario = request.user
-            nuevaTocata.artista = Artista.objects.get(user=request.user)
+            nuevaTocata.artista = Artista.objects.get(usuario=request.user)
             nuevaTocata.save()
 
             messages.success(request, 'Tocata Abierta creada')

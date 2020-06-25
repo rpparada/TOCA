@@ -20,13 +20,8 @@
                       <p hidden id="mensajerror"></p>
                   </div>
                   <div class="card-body">
-                      <form id="formtocheck" action="{% url 'creartocata' %}" method="POST" data-ciudad-url-agregar="{% url 'ajax_load_comunas_tocata' %}" enctype="multipart/form-data">
+                      <form id="formtocheck" action="{% url 'creartocatacerrada' %}" method="POST" data-ciudad-url-agregar="{% url 'ajax_load_comunas_tocata' %}" enctype="multipart/form-data">
                         {% csrf_token %}
-                          <input type="hidden" class="form-control" value="{{ user.id }}" name="usuario">
-                          <input type="hidden" class="form-control" value="{{ artista.id }}" name="artista">
-                          <input type="hidden" class="form-control" value="IN" name="estado">
-                          <input type="hidden" class="form-control" value="1" name="region">
-                          <input type="hidden" class="form-control" value="1" name="comuna">
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Nombre</label>
                               <div class="col-sm-10">
@@ -35,16 +30,6 @@
                                 {% else %}
                                   <input id="primercampo" type="text" class="requerido form-control" placeholder="Nombre" value="" name="nombre">
                                 {% endif %}
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ tocata_form.lugar_def.id_for_label }}">Tipo Tocata</label>
-                              <div class="col-sm-10">
-                                <select class="form-control" name="{{ tocata_form.lugar_def.html_name }}" id="tipotocata">
-                                  {% for lugar_def in tocata_form.lugar_def.field.choices %}
-                                    <option value="{{ lugar_def.0 }}">{{ lugar_def.1 }}</option>
-                                  {% endfor %}
-                                </select>
                               </div>
                           </div>
                           {% if mislugares %}
@@ -66,27 +51,6 @@
                               </div>
                           </div>
                           {% endif %}
-                          <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ tocata_form.region.id_for_label }}">Region</label>
-                              <div class="col-sm-10">
-                                <select class="form-control" name="region" id="opcionesregion">
-                                  {% for region in tocata_form.region.field.choices %}
-                                    <option value="{{ region.0 }}">{{ region.1 }}</option>
-                                  {% endfor %}
-                                </select>
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ tocata_form.comuna.id_for_label }}">Comuna</label>
-                              <div class="col-sm-10">
-                                <select class="form-control" name="comuna" id="opcionescomuna">
-                                  {% for comuna in tocata_form.comuna.field.choices %}
-                                    <option value="{{ comuna.0 }}">{{ comuna.1 }}</option>
-                                  {% endfor %}
-                                </select>
-                              </div>
-                          </div>
-
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Costo</label>
                               <div class="col-sm-10">
@@ -144,7 +108,6 @@
                               <input type="file" class="form-control-file" accept="image/*" name="{{ tocata_form.flayer_original.html_name }}">
                             </div>
                           </div>
-
                           <div class="form-group row">
                               <div class="col-sm-10 ml-sm-auto">
                                   <button type="submit" class="btn btn-primary">Crear Tocata</button>

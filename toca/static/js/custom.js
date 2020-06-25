@@ -52,23 +52,9 @@ $(document).ready(function (){
       }
     });
 
-  } else if (window.location.pathname === "/tocatas/artista/creartocata") {
+  } else if (window.location.pathname === "/tocatas/artista/creartocataabierta") {
     // Creacion de Tocatas
     // Define variables iniciales
-    var opcione = $("#checklugar").val();
-
-    if (opcione === "No tienes lugares registrados") {
-      $('select[name=lugar_def] option:eq(1)').attr('selected', 'selected');
-      $('select[name=lugar_def]').prop('disabled', true);
-      $('#opcionestipo').prop('disabled', true);
-      $('#opcionesregion').prop('disabled', false);
-      $('#opcionescomuna').prop('disabled', false);
-    } else {
-      $('#opcionestipo').prop('disabled', false);
-      $('#opcionesregion').prop('disabled', true);
-      $('#opcionescomuna').prop('disabled', true);
-    }
-
     var url = $("#formtocheck").attr("data-ciudad-url-agregar");
     var regionId = $("#opcionesregion").val();
 
@@ -117,23 +103,6 @@ $("#id_region").change(function () {
 });
 
 /* Creacion de Tocatas */
-// Define posibles comunas de acuerdo a region seleccionada
-// Habilita campos de acuerdo con el tipo de tocata
-$("#tipotocata").change(function () {
-
-  var tipotocata = $(this).val();
-
-  if (tipotocata == 'AB') {
-    $('#opcionestipo').prop('disabled', true);
-    $('#opcionesregion').prop('disabled', false);
-    $('#opcionescomuna').prop('disabled', false);
-  } else if (tipotocata == 'CE') {
-    $('#opcionestipo').prop('disabled', false);
-    $('#opcionesregion').prop('disabled', true);
-    $('#opcionescomuna').prop('disabled', true);
-  }
-});
-
 // Define posibles comunas de acuerdo a region seleccionada
 $(document).on('change','#opcionesregion', function () {
   var url = $("#formtocheck").attr("data-ciudad-url-agregar");
@@ -227,14 +196,13 @@ $("#formtocheck").submit(function(){
   }
 
   // validaciones formulario de tocatas
+  // asistentes_max tiene que ser mayor que asistentes_min
   if (isFormValid) {
-    // asistentes_max tiene que ser mayor que asistentes_min
     asis_min = $('input[name=asistentes_min]');
-    asis_max = $('input[name=asistentes_max]');
 
-    if (parseInt(asis_min.val()) > parseInt(asis_max.val())) {
+    if (parseInt(asis_min.val()) <= 0) {
       asis_min.focus();
-      $("#mensajerror").text("Asistencia Mínima debe ser menor o igual que Asistencia Máxima.");
+      $("#mensajerror").text("Asistencia Mínima debe ser mayor a 0.");
       $("#mensajerror").removeAttr('hidden');
       isFormValid = false;
     } else {

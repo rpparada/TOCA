@@ -11,7 +11,7 @@
 <section id="page-content" class="no-sidebar">
     <div class="container">
         <!-- DataTable -->
-        {% if mistocatas %}
+        {% if tocatascerradas %}
         <div class="row mb-3">
             <div class="col-lg-6">
                 <h4>Mis Tocatas</h4>
@@ -35,7 +35,7 @@
         </div>
         {% endif %}
 
-        {% if mistocatas %}
+        {% if tocatascerradas %}
         <div class="row">
             <div class="col-lg-12">
                 <table id="datatable" class="table table-bordered table-hover" style="width:100%">
@@ -51,29 +51,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                      {% for tocata in mistocatas %}
+                      {% for tocatacerrada in tocatascerradas %}
                         <tr>
-                            <td>{{ tocata.nombre }}</td>
-                            {% if tocata.lugar %}
-                            <td>{{ tocata.lugar.region.nombre }}, {{ tocata.lugar.comuna.nombre }}</td>
-                            {% else %}
-                            <td> --- En busqueda de local --- </td>
-                            {% endif %}
-                            <td>{{ tocata.fecha }}, {{ tocata.hora}}</td>
-                            <td>${{ tocata.costo|intcomma }}</td>
-                            <td>{{ tocata.asistentes_min }} / {{ tocata.asistentes_max }} / {{ tocata.asistentes_total }}</td>
-                            {% if tocata.estado == 'IN' %} <!-- 'inicial': 'IN' -->
-                              <td><span class="badge badge-pill badge-info">{{ tocata.get_estado_display }}</span></td>
-                            {% elif tocata.estado == 'PU' %} <!-- 'publicado': 'PU' -->
-                              <td><span class="badge badge-pill badge-warning">{{ tocata.get_estado_display }}</span></td>
-                            {% elif tocata.estado == 'SU' %} <!-- 'suspendido': 'SU' -->
-                              <td><span class="badge badge-pill badge-danger">{{ tocata.get_estado_display }}</span></td>
-                            {% elif tocata.estado == 'AP' %} <!-- 'aplazado': 'AP' -->
-                              <td><span class="badge badge-pill badge-danger">{{ tocata.get_estado_display }}</span></td>
-                            {% elif tocata.estado == 'CN' %} <!-- 'confirmado': 'CN' -->
-                              <td><span class="badge badge-pill badge-primary">{{ tocata.get_estado_display }}</span></td>
-                            {% elif tocata.estado == 'CM' %} <!-- 'completado': 'CM' -->
-                              <td><span class="badge badge-pill badge-success">{{ tocata.get_estado_display }}</span></td>
+                            <td>{{ tocatacerrada.nombre }}</td>
+                            <td>{{ tocatacerrada.lugar.region.nombre }}, {{ tocatacerrada.lugar.comuna.nombre }}</td>
+                            <td>{{ tocatacerrada.fecha }}, {{ tocatacerrada.hora}}</td>
+                            <td>${{ tocatacerrada.costo|intcomma }}</td>
+                            <td>{{ tocatacerrada.asistentes_min }} / {{ tocatacerrada.asistentes_max }} / {{ tocatacerrada.asistentes_total }}</td>
+                            {% if tocatacerrada.estado == 'PU' %} <!-- 'publicado': 'PU' -->
+                              <td><span class="badge badge-pill badge-warning">{{ tocatacerrada.get_estado_display }}</span></td>
+                            {% elif tocatacerrada.estado == 'SU' %} <!-- 'suspendido': 'SU' -->
+                              <td><span class="badge badge-pill badge-danger">{{ tocatacerrada.get_estado_display }}</span></td>
+                            {% elif tocatacerrada.estado == 'CN' %} <!-- 'confirmado': 'CN' -->
+                              <td><span class="badge badge-pill badge-primary">{{ tocatacerrada.get_estado_display }}</span></td>
+                            {% elif tocatacerrada.estado == 'CM' %} <!-- 'completado': 'CM' -->
+                              <td><span class="badge badge-pill badge-success">{{ tocatacerrada.get_estado_display }}</span></td>
                             {% endif %}
                             <td>
                               <div class="p-dropdown">
@@ -81,18 +73,102 @@
                                   <ul class="p-dropdown-content">
                                       <li><a href="#"><i class="icon-refresh-cw"></i>Update Records</a></li>
                                       <li><a href="#"><i class="icon-edit"></i>Edit</a></li>
-                                      <li><a href="{% url 'suspendertocata' tocata.id %}"><i class="icon-alert-triangle"></i>Suspender</a></li>
-                                      {% if tocata.estado == 'SU' %}
-                                      <li><a href="{% url 'borrartocata' tocata.id %}"><i class="icon-x"></i>Borrar</a></li>
+                                      <li><a href="{% url 'suspendertocata' tocatacerrada.id %}"><i class="icon-alert-triangle"></i>Suspender</a></li>
+                                      {% if tocatacerrada.estado == 'SU' %}
+                                      <li><a href="{% url 'borrartocata' tocatacerrada.id %}"><i class="icon-x"></i>Borrar</a></li>
+                                      {% endif %}
+                                  </ul>
+                              </div>
+                            </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                          <th>Nombre</th>
+                          <th>Lugar</th>
+                          <th>Fecha y Hora</th>
+                          <th>Costo</th>
+                          <th>Asistentes Min/Max</th>
+                          <th>Estado</th>
+                          <th>Acciones</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+        <!-- end: DataTable -->
+
+        <!-- DataTable -->
+        {% if tocatasabiertas %}
+        <div class="row mb-3">
+            <div class="col-lg-6">
+                <h4>Buscando en donde tocar</h4>
+                <p>Esta la lista de tus tocatas en busca de lugar.</p>
+            </div>
+            <div class="col-lg-6 text-right">
+                <a href="{% url 'creartocata' %}" class="btn btn-light"><i class="icon-plus"></i> Crear Tocata</a>
+                <div id="export_buttons" class="mt-2"></div>
+            </div>
+        </div>
+        {% else %}
+        <div class="row mb-3">
+            <div class="col-lg-6">
+                <h4>Buscando en donde tocar</h4>
+                <p>Actualmente no estas buscando donde tocar.</p>
+            </div>
+            <div class="col-lg-6 text-right">
+                <a href="{% url 'creartocata' %}" class="btn btn-light"><i class="icon-plus"></i> Crear Tocata</a>
+                <div id="export_buttons" class="mt-2"></div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if tocatasabiertas %}
+        <div class="row">
+            <div class="col-lg-12">
+                <table id="datatable" class="table table-bordered table-hover" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Lugar</th>
+                            <th>Fecha y Hora</th>
+                            <th>Asistentes Mínimo</th>
+                            <th>Estado</th>
+                            <th class="noExport">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for tocataabierta in tocatasabiertas %}
+                        <tr>
+                            <td>{{ tocataabierta.nombre }}</td>
+                            <td>{{ tocataabierta.region.nombre }}, {{ tocataabierta.comuna.nombre }}</td>
+                            <td>{{ tocataabierta.fecha }}, {{ tocataabierta.hora}}</td>
+                            <td>{{ tocataabierta.asistentes_min }}</td>
+                            {% if tocataabierta.estado == 'PU' %} <!-- 'publicado': 'PU' -->
+                              <td><span class="badge badge-pill badge-warning">{{ tocataabierta.get_estado_display }}</span></td>
+                            {% elif tocataabierta.estado == 'SU' %} <!-- 'suspendido': 'SU' -->
+                              <td><span class="badge badge-pill badge-danger">{{ tocataabierta.get_estado_display }}</span></td>
+                            {% elif tocataabierta.estado == 'CN' %} <!-- 'confirmado': 'CN' -->
+                              <td><span class="badge badge-pill badge-primary">{{ tocataabierta.get_estado_display }}</span></td>
+                            {% endif %}
+                            <td>
+                              <div class="p-dropdown">
+                                  <a class="btn btn-light btn-shadow"><i class="icon-menu"></i></a>
+                                  <ul class="p-dropdown-content">
+                                      <li><a href="#"><i class="icon-refresh-cw"></i>Update Records</a></li>
+                                      <li><a href="#"><i class="icon-edit"></i>Edit</a></li>
+                                      <li><a href="{% url 'suspendertocata' tocataabierta.id %}"><i class="icon-alert-triangle"></i>Suspender</a></li>
+                                      {% if tocataabierta.estado == 'SU' %}
+                                      <li><a href="{% url 'borrartocata' tocataabierta.id %}"><i class="icon-x"></i>Borrar</a></li>
                                       {% endif %}
                                       <li>
                                           <hr>
                                       </li>
-                                      {% if tocata.lugar_def == 'AB' %}
-                                      <li><a href="{% url 'propuestas' tocata.id %}"><i class="icon-life-buoy"></i>Ver Propuestas</a></li>
+                                      <li><a href="{% url 'propuestas' tocataabierta.id %}"><i class="icon-life-buoy"></i>Ver Propuestas</a></li>
                                       <li><a href="#"><i class="icon-mail"></i>Email Support Team</a></li>
                                       <li><a href="#"><i class="icon-alert-triangle"></i>Report an issue</a></li>
-                                      {% endif %}
                                   </ul>
                               </div>
                             </td>
