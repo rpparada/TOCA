@@ -2,7 +2,7 @@
 {% load static %}
 {% load humanize %}
 {% load thumbnail %}
-{% block title %} | CREAR TOCATAS{% endblock %}
+{% block title %} | TOCATA ABIERTA{% endblock %}
 {% block content %}
 
 {% include 'partials/_alerts.html' %}
@@ -15,105 +15,76 @@
             <div class="content col-lg-12">
               <div class="card">
                   <div class="card-header">
-                      <h5 class="card-title">Crea tu próxima Tocata Íntima</h5>
-                      <h6 class="card-subtitle text-muted">Completa el formulario para crear tu Tocata Íntima.</h6>
-                      <p hidden id="mensajerror"></p>
+                      <h5 class="card-title">{{ tocata.nombre }}</h5>
+                      <h6 class="card-subtitle text-muted">{{ tocata.lugar.region }}, {{ tocata.lugar.comuna }}</h6>
+                      <div class="col-lg-4">
+                          <div class="grid-item">
+                              <div class="grid-item-wrap">
+                                  <div class="grid-image"> <img alt="Image Lightbox" src="{{ tocata.flayer_original.url }}"/>
+                                  </div>
+                                  <div class="grid-description">
+                                      <a title="{{ tocata.artista.nombre }}" data-lightbox="image" href="{{ tocata.flayer_original.url }}" class="btn btn-light btn-rounded">Zoom</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
                   </div>
+
                   <div class="card-body">
-                      <form id="formtocheck" action="{% url 'creartocatacerrada' %}" method="POST" data-ciudad-url-agregar="{% url 'ajax_load_comunas_tocata' %}" enctype="multipart/form-data">
-                        {% csrf_token %}
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Nombre</label>
                               <div class="col-sm-10">
-                                {% if tocata_form.nombre.value %}
-                                  <input id="primercampo" type="text" class="requerido form-control" placeholder="Nombre" value="{{ tocata_form.nombre.value }}" name="nombre">
-                                {% else %}
-                                  <input id="primercampo" type="text" class="requerido form-control" placeholder="Nombre" value="" name="nombre">
-                                {% endif %}
+                                  <input type="text" class="form-control" placeholder="Nombre" value="{{ tocata.nombre }}" readonly>
                               </div>
                           </div>
-                          {% if mislugares %}
-                          <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ tocata_form.lugar.id_for_label }}">{{ tocata_form.lugar.label_tag }}</label>
-                              <div class="col-sm-10">
-                                <select class="form-control" name="{{ tocata_form.lugar.html_name }}" id="opcionestipo">
-                                    {% for lugar in mislugares %}
-                                      <option value="{{ lugar.id }} {% if lugar.id == tocata_form.lugar.value %} selected {% endif %}">{{ lugar.nombre_calle }} {{ lugar.numero}}, {{ lugar.region }} {{ lugar.comuna }}</option>
-                                    {% endfor %}
-                                </select>
-                              </div>
-                          </div>
-                          {% else %}
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Lugar</label>
                               <div class="col-sm-10">
-                                  <input type="text" class="form-control" placeholder="No tienes lugares registrados" value="No tienes lugares registrados" name="lugar" id="checklugar" readonly>
+                                <input type="text" class="form-control" placeholder="Lugar" value="{{ tocata.lugar.nombre_calle }} {{ tocata.lugar.numero}}, {{ tocata.lugar.region }}, {{ tocata.lugar.comuna }}" readonly>
                               </div>
                           </div>
-                          {% endif %}
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Costo</label>
                               <div class="col-sm-10">
-                                {% if tocata_form.costo.value %}
-                                  <input type="number" class="requerido form-control" placeholder="Costo" value="{{ tocata_form.costo.value }}" name="costo">
-                                {% else %}
-                                  <input type="number" class="requerido form-control" placeholder="Costo" value="" name="costo">
-                                {% endif %}
+                                  <input type="number" class="form-control" placeholder="Costo" value="{{ tocata.costo }}" readonly>
                               </div>
                           </div>
                           <div class="form-group row">
                               <label for="example-date-input" class="col-form-label col-sm-2 text-sm-right">Fecha</label>
                               <div class="col-10">
-                                {% if tocata_form.fecha.value %}
-                                  <input class="requerido form-control" type="date" value="{{ tocata_form.fecha.value }}" name="fecha">
-                                {% else %}
-                                  <input class="requerido form-control" type="date" value="" name="fecha">
-                                {% endif %}
+                                  <input class="form-control" type="date" value="{{ tocata.fecha|date:"Y-m-d" }}" readonly>
                               </div>
                           </div>
                           <div class="form-group row">
                               <label for="example-date-input" class="col-form-label col-sm-2 text-sm-right">Hora</label>
                               <div class="col-10">
-                                {% if tocata_form.hora.value %}
-                                  <input class="requerido form-control" type="time" value="{{ tocata_form.hora.value }}" name="hora">
-                                {% else %}
-                                  <input class="requerido form-control" type="time" value="" name="hora">
-                                {% endif %}
+                                  <input class="form-control" type="time" value="{{ tocata.hora|time:"H:i" }}" readonly>
                               </div>
                           </div>
                           <input type="hidden" class="form-control" value="0" name="asistentes_total">
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Asistentes Mínimos</label>
                               <div class="col-sm-10">
-                                {% if tocata_form.asistentes_min.value %}
-                                  <input type="number" class="requerido form-control" placeholder="Asistentes Minimos" value="{{ tocata_form.asistentes_min.value }}" name="asistentes_min">
-                                {% else %}
-                                  <input type="number" class="requerido form-control" placeholder="Asistentes Minimos" value="" name="asistentes_min">
-                                {% endif %}
+                                  <input type="number" class="form-control" placeholder="Asistentes Minimos" value="{{ tocata.asistentes_min }}" readonly>
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">Asistentes Máximos</label>
+                              <div class="col-sm-10">
+                                  <input type="number" class="form-control" placeholder="Asistentes Máximos" value="{{ tocata.asistentes_max }}" readonly>
                               </div>
                           </div>
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Descripción</label>
                               <div class="col-sm-10">
-                                {% if tocata_form.descripción.value %}
-                                  <textarea class="form-control" placeholder="Descripción" rows="3" name="descripción">{{ tocata_form.descripción.value }}</textarea>
-                                {% else %}
-                                  <textarea class="form-control" placeholder="Descripción" rows="3" name="descripción"></textarea>
-                                {% endif %}
+                                  <textarea class="form-control" placeholder="Descripción" rows="3" name="descripción" readonly>{{ tocata.descripción }}</textarea>
                               </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-form-label col-sm-2 text-sm-right" for="exampleFormControlFile1">Subir Flayer</label>
-                            <div class="col-sm-10">
-                              <input type="file" class="form-control-file" accept="image/*" name="{{ tocata_form.flayer_original.html_name }}">
-                            </div>
                           </div>
                           <div class="form-group row">
                               <div class="col-sm-10 ml-sm-auto">
-                                  <button type="submit" class="btn btn-primary">Crear Tocata</button>
+                                  <a href="{% url 'mistocatas' %}" class="btn btn-primary">Mis Lugares</a>
                               </div>
                           </div>
-                      </form>
                   </div>
               </div>
 

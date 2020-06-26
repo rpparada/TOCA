@@ -69,10 +69,10 @@ def misLugares(request):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
     mislugares = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
-    tocatas = Tocata.objects.filter(estado__in=[parToca['inicial'],parToca['publicado'],parToca['confirmado'],])
+    tocataslugar = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
 
     for milugar in mislugares:
-        tocata = tocatas.filter(lugar=milugar).values('id','nombre')
+        tocata = tocataslugar.filter(lugar=milugar).values('id','nombre')
         if tocata:
             milugar.borra = 'NO'
             milugar.tocata = tocata

@@ -63,12 +63,12 @@ class TocataAbierta(models.Model):
 
 class LugaresTocata(models.Model):
 
-    tocata = models.ForeignKey(Tocata, on_delete=models.DO_NOTHING)
+    tocataabierta = models.ForeignKey(TocataAbierta, on_delete=models.DO_NOTHING)
     lugar = models.ForeignKey(Lugar, on_delete=models.DO_NOTHING)
-    usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
+
     fecha_actu = models.DateTimeField(auto_now=True)
     fecha_crea = models.DateTimeField(auto_now_add=True)
     estado = models.CharField(max_length=2, choices=parLugaresToc['estado_lugartocata'],default=parToca['noelegido'])
 
     def __str__(self):
-        return self.tocata.nombre+' - '+self.lugar.nombre
+        return self.tocata.nombre+' - '+str(self.lugar.nombre_calle)+' '+str(self.lugar.numero)

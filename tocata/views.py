@@ -74,9 +74,15 @@ def tocata(request, tocata_id):
 def mistocatas(request):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+
     artista = UsuarioArtista.objects.get(user=request.user)
+
     tocatascerradas = Tocata.objects.filter(artista=artista.artista).filter(estado__in=parTocatas['estado_tipos_vista'])
+
     tocatasabiertas = TocataAbierta.objects.filter(artista=artista.artista).filter(estado__in=parTocatasAbiertas['estado_tipos_vista'])
+
+    for tocataabierta in tocatasabiertas:
+        tocataabierta.numeropropuestas  = LugaresTocata.objects.filter(tocataabierta=tocataabierta).count()
 
     context = {
         'tocatas_h': tocatas,
@@ -186,6 +192,20 @@ def creartocataabierta(request):
 
     return render(request, 'tocata/creartocataabierta.html', context)
 
+def detallestocata(request, tocata_id):
+
+    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    tocata = get_object_or_404(Tocata, pk=tocata_id)
+
+    context = {
+        'tocatas_h': tocatas,
+        'artistas_h': artistas,
+        'usuario': usuario,
+        'tocata': tocata,
+    }
+
+    return render(request, 'tocata/detallestocatacerrada.html', context)
+
 def detallestocataabierta(request, tocata_id):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
@@ -203,9 +223,20 @@ def detallestocataabierta(request, tocata_id):
 
 def borrartocata(request, tocata_id):
 
-    tocata = get_object_or_404(Tocata, pk=tocata_id)
-    tocata.estado = parToca['borrado']
-    tocata.save()
+    if request.method == 'POST':
+        tocata = get_object_or_404(Tocata, pk=tocata_id)
+        tocata.estado = parToca['borrado']
+        tocata.save()
+
+    return redirect('mistocatas')
+
+def borrartocataabierta(request, tocata_id):
+
+    if request.method == 'POST':
+        tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
+        tocata.estado = parToca['borrado']
+        tocata.save()
+
     return redirect('mistocatas')
 
 def suspendertocata(request, tocata_id):

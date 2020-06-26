@@ -15,7 +15,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="modal-label">Aceptar Lugar</h4>
+                    <h4 class="modal-title" id="modal-label">Suspender Tocata</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
@@ -37,6 +37,96 @@
         </div>
     </div>
     <!-- end: Modal -->
+
+    <!--Modal borrar -->
+    <div class="modal fade" id="modalboce{{tocatacerrada.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-label">Borrar Tocata</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>¿Seguro quieres borrar "{{ tocatacerrada.nombre }}"?</p>
+                        </div>
+                    </div>
+                </div>
+                <form action="{% url 'borrartocata' tocatacerrada.id %}" method="POST">
+                  {% csrf_token %}
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-b">Confirmo Borrado</button>
+                    <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
+                  </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end: Modal -->
+
+    <!--Modal detalle -->
+    <div class="modal fade" id="modaldece{{tocatacerrada.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-label">{{ tocatacerrada.nombre }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group row">
+                      <label class="col-form-label col-sm-2 text-sm-right">Lugar</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="Lugar" value="{{ tocatacerrada.lugar.nombre_calle }} {{ tocatacerrada.lugar.numero}}, {{ tocatacerrada.lugar.region }}, {{ tocatacerrada.lugar.comuna }}" readonly>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-form-label col-sm-2 text-sm-right">Costo</label>
+                      <div class="col-sm-10">
+                          <input type="number" class="form-control" placeholder="Costo" value="{{ tocatacerrada.costo }}" readonly>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label for="example-date-input" class="col-form-label col-sm-2 text-sm-right">Fecha</label>
+                      <div class="col-10">
+                          <input class="form-control" type="date" value="{{ tocatacerrada.fecha|date:"Y-m-d" }}" readonly>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label for="example-date-input" class="col-form-label col-sm-2 text-sm-right">Hora</label>
+                      <div class="col-10">
+                          <input class="form-control" type="time" value="{{ tocatacerrada.hora|time:"H:i" }}" readonly>
+                      </div>
+                  </div>
+                  <input type="hidden" class="form-control" value="0" name="asistentes_total">
+                  <div class="form-group row">
+                      <label class="col-form-label col-sm-2 text-sm-right">Asistentes Mínimos</label>
+                      <div class="col-sm-10">
+                          <input type="number" class="form-control" placeholder="Asistentes Minimos" value="{{ tocatacerrada.asistentes_min }}" readonly>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-form-label col-sm-2 text-sm-right">Asistentes Máximos</label>
+                      <div class="col-sm-10">
+                          <input type="number" class="form-control" placeholder="Asistentes Máximos" value="{{ tocatacerrada.asistentes_max }}" readonly>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-form-label col-sm-2 text-sm-right">Descripción</label>
+                      <div class="col-sm-10">
+                          <textarea class="form-control" placeholder="Descripción" rows="3" name="descripción" readonly>{{ tocatacerrada.descripción }}</textarea>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-b" data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end: Modal -->
+
     {% endfor %}
   {% endif %}
 
@@ -47,7 +137,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="modal-label">Aceptar Lugar</h4>
+                    <h4 class="modal-title" id="modal-label">Suspender Tocata Abierta</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
@@ -68,6 +158,88 @@
         </div>
     </div>
     <!-- end: Modal -->
+
+    <!--Modal borrar -->
+    <div class="modal fade" id="modalboab{{tocataabierta.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-label">Borrar Tocata Abierta</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>¿Seguro quieres borrar "{{ tocataabierta.nombre }}"?</p>
+                        </div>
+                    </div>
+                </div>
+                <form action="{% url 'borrartocataabierta' tocataabierta.id %}" method="POST">
+                  {% csrf_token %}
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-b">Confirmo Borrado</button>
+                    <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
+                  </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end: Modal -->
+
+    <!--Modal detalle -->
+    <div class="modal fade" id="modaldeab{{tocataabierta.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-label">{{ tocataabierta.nombre }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group row">
+                      <label class="col-form-label col-sm-2 text-sm-right">Region</label>
+                      <div class="col-sm-10">
+                        <input id="primercampo" type="text" class="requerido form-control" placeholder="Region" value="{{ tocataabierta.region.nombre }}" name="region" readonly>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-form-label col-sm-2 text-sm-right">Comuna</label>
+                      <div class="col-sm-10">
+                        <input id="primercampo" type="text" class="requerido form-control" placeholder="Comuna" value="{{ tocataabierta.comuna.nombre }}" name="comuna" readonly>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label for="example-date-input" class="col-form-label col-sm-2 text-sm-right">Fecha</label>
+                      <div class="col-10">
+                          <input class="requerido form-control" type="date" value="{{ tocataabierta.fecha|date:"Y-m-d" }}" name="fecha" readonly>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label for="example-date-input" class="col-form-label col-sm-2 text-sm-right">Hora</label>
+                      <div class="col-10">
+                          <input class="requerido form-control" type="time" value="{{ tocataabierta.hora|time:"H:i" }}" name="hora" readonly>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-form-label col-sm-2 text-sm-right">Asistentes Mínimos</label>
+                      <div class="col-sm-10">
+                          <input type="number" class="requerido form-control" placeholder="Asistentes Minimos" value="{{ tocataabierta.asistentes_min }}" name="asistentes_min" readonly>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-form-label col-sm-2 text-sm-right">Descripción</label>
+                      <div class="col-sm-10">
+                          <textarea class="form-control" placeholder="Descripción" rows="3" name="descripción" readonly>{{ tocataabierta.descripción }}</textarea>
+                      </div>
+                  </div>
+                </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-b" data-dismiss="modal">Aceptar</button>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <!-- end: Modal -->
+
     {% endfor %}
   {% endif %}
 
@@ -124,11 +296,12 @@
                                   <div class="p-dropdown">
                                       <a class="btn btn-light btn-shadow"><i class="icon-menu"></i></a>
                                       <ul class="p-dropdown-content">
+                                          <li><a href="" data-target="#modaldece{{tocatacerrada.id}}" data-toggle="modal"><i class="icon-eye"></i>Ver</a></li>
                                           {% if tocatacerrada.estado == 'PU' %}
                                           <li><a href="" data-target="#modalsuce{{tocatacerrada.id}}" data-toggle="modal"><i class="icon-alert-triangle"></i>Suspender</a></li>
                                           {% endif %}
                                           {% if tocatacerrada.estado == 'SU' %}
-                                          <li><a href="{% url 'borrartocata' tocatacerrada.id %}"><i class="icon-x"></i>Borrar</a></li>
+                                          <li><a href="" data-target="#modalboce{{tocatacerrada.id}}" data-toggle="modal"><i class="icon-x"></i>Borrar</a></li>
                                           {% endif %}
                                       </ul>
                                   </div>
@@ -196,6 +369,7 @@
                               <th>Lugar</th>
                               <th>Fecha y Hora</th>
                               <th>Asistentes Mínimo</th>
+                              <th>Número de Propuestas</th>
                               <th>Estado</th>
                               <th class="noExport">Acciones</th>
                           </tr>
@@ -207,6 +381,7 @@
                               <td>{{ tocataabierta.region.nombre }}, {{ tocataabierta.comuna.nombre }}</td>
                               <td>{{ tocataabierta.fecha }}, {{ tocataabierta.hora}}</td>
                               <td>{{ tocataabierta.asistentes_min }}</td>
+                              <td>{{ tocataabierta.numeropropuestas }}</td>
                               {% if tocataabierta.estado == 'PU' %} <!-- 'publicado': 'PU' -->
                                 <td><span class="badge badge-pill badge-warning">{{ tocataabierta.get_estado_display }}</span></td>
                               {% elif tocataabierta.estado == 'SU' %} <!-- 'suspendido': 'SU' -->
@@ -218,13 +393,15 @@
                                 <div class="p-dropdown">
                                     <a class="btn btn-light btn-shadow"><i class="icon-menu"></i></a>
                                     <ul class="p-dropdown-content">
-                                        <li><a href="{% url 'detallestocataabierta' tocataabierta.id %}"><i class="icon-life-buoy"></i>Ver</a></li>
+                                        <li><a href="" data-target="#modaldeab{{tocataabierta.id}}" data-toggle="modal"><i class="icon-eye"></i>Ver</a></li>
                                         {% if tocataabierta.estado == 'PU' %}
                                         <li><a href="" data-target="#modalsuab{{tocataabierta.id}}" data-toggle="modal"><i class="icon-alert-triangle"></i>Suspender</a></li>
+                                        {% endif %}
+                                        {% if tocataabierta.numeropropuestas > 0 %}
                                         <li><a href="{% url 'propuestas' tocataabierta.id %}"><i class="icon-life-buoy"></i>Ver Propuestas</a></li>
                                         {% endif %}
                                         {% if tocataabierta.estado == 'SU' %}
-                                        <li><a href="{% url 'borrartocata' tocataabierta.id %}"><i class="icon-x"></i>Borrar</a></li>
+                                        <li><a href="" data-target="#modalboab{{tocataabierta.id}}" data-toggle="modal"><i class="icon-x"></i>Borrar</a></li>
                                         {% endif %}
                                     </ul>
                                 </div>
@@ -238,6 +415,7 @@
                             <th>Lugar</th>
                             <th>Fecha y Hora</th>
                             <th>Asistentes Min/Max</th>
+                            <th>Número de Propuestas</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                           </tr>

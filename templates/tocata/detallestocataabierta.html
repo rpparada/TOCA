@@ -2,7 +2,7 @@
 {% load static %}
 {% load humanize %}
 {% load thumbnail %}
-{% block title %} | CREAR TOCATAS{% endblock %}
+{% block title %} | BUSCANDO DONDE TOCAR{% endblock %}
 {% block content %}
 
 {% include 'partials/_alerts.html' %}
@@ -17,7 +17,6 @@
                   <div class="card-header">
                       <h5 class="card-title">Tocata Íntima Abierta "{{ tocata.nombre }}"</h5>
                       <h6 class="card-subtitle text-muted">Completa el formulario para crear tu Tocata Íntima Abierta.</h6>
-
                       <div class="col-lg-4">
                           <div class="grid-item">
                               <div class="grid-item-wrap">
@@ -29,13 +28,13 @@
                               </div>
                           </div>
                       </div>
-
                   </div>
+
                   <div class="card-body">
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">Nombre</label>
                               <div class="col-sm-10">
-                                <input id="primercampo" type="text" class="requerido form-control" placeholder="Nombre" value="{{ tocata.nombre }}" name="nombre" readonly>
+                                <input type="text" class="requerido form-control" placeholder="Nombre" value="{{ tocata.nombre }}" name="nombre" readonly>
                               </div>
                           </div>
                           <div class="form-group row">
@@ -45,7 +44,7 @@
                               </div>
                           </div>
                           <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ tocata_form.comuna.id_for_label }}">Comuna</label>
+                              <label class="col-form-label col-sm-2 text-sm-right">Comuna</label>
                               <div class="col-sm-10">
                                 <input id="primercampo" type="text" class="requerido form-control" placeholder="Comuna" value="{{ tocata.comuna.nombre }}" name="comuna" readonly>
                               </div>
