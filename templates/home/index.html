@@ -134,7 +134,7 @@
                           {% endif %}
                       </div>
                       <div class="product-description">
-                          <div class="product-category">{{ tocataabierta.artista.nombre|upper }}, {{ tocataabierta.comuna }}</div>
+                          <div class="product-category">{{ tocataabierta.artista.nombre|upper }}, {{ tocataabierta.region }} {{ tocataabierta.comuna }}</div>
                           <div class="product-title">
                               <h3><a href="{% url 'tocataabierta' tocataabierta.id %}">{{ tocataabierta.nombre|truncatechars:20 }}</a></h3>
                           </div>

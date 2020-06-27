@@ -294,7 +294,7 @@
                                 {% endif %}
                                 <td>
                                   <div class="p-dropdown">
-                                      <a class="btn btn-light btn-shadow"><i class="icon-menu"></i></a>
+                                      <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
                                       <ul class="p-dropdown-content">
                                           <li><a href="" data-target="#modaldece{{tocatacerrada.id}}" data-toggle="modal"><i class="icon-eye"></i>Ver</a></li>
                                           {% if tocatacerrada.estado == 'PU' %}
@@ -391,14 +391,14 @@
                               {% endif %}
                               <td>
                                 <div class="p-dropdown">
-                                    <a class="btn btn-light btn-shadow"><i class="icon-menu"></i></a>
+                                    <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
                                     <ul class="p-dropdown-content">
                                         <li><a href="" data-target="#modaldeab{{tocataabierta.id}}" data-toggle="modal"><i class="icon-eye"></i>Ver</a></li>
                                         {% if tocataabierta.estado == 'PU' %}
                                         <li><a href="" data-target="#modalsuab{{tocataabierta.id}}" data-toggle="modal"><i class="icon-alert-triangle"></i>Suspender</a></li>
                                         {% endif %}
                                         {% if tocataabierta.numeropropuestas > 0 %}
-                                        <li><a href="{% url 'propuestas' tocataabierta.id %}"><i class="icon-life-buoy"></i>Ver Propuestas</a></li>
+                                        <li><a href="{% url 'propuestas' tocataabierta.id %}"><i class="icon-home"></i>Ver Propuestas</a></li>
                                         {% endif %}
                                         {% if tocataabierta.estado == 'SU' %}
                                         <li><a href="" data-target="#modalboab{{tocataabierta.id}}" data-toggle="modal"><i class="icon-x"></i>Borrar</a></li>

@@ -68,7 +68,7 @@ class LugaresTocata(models.Model):
 
     fecha_actu = models.DateTimeField(auto_now=True)
     fecha_crea = models.DateTimeField(auto_now_add=True)
-    estado = models.CharField(max_length=2, choices=parLugaresToc['estado_lugartocata'],default=parToca['noelegido'])
+    estado = models.CharField(max_length=2, choices=parLugaresToc['estado_lugartocata'],default=parToca['pendiente'])
 
     def __str__(self):
         return self.tocataabierta.nombre+' - '+str(self.lugar.nombre_calle)+' '+str(self.lugar.numero)

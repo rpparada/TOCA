@@ -11,7 +11,7 @@
 {% if user.is_authenticated %}
 {% if listaLugares %}
   {% for lugar in listaLugares %}
-  <!--Modal -->
+  <!--Modal seleccion -->
   <div class="modal fade" id="modal{{lugar.lugar.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
       <div class="modal-dialog">
           <div class="modal-content">
@@ -53,6 +53,78 @@
       </div>
   </div>
   <!-- end: Modal -->
+
+  <!--Modal detalles lugar -->
+  <div class="modal fade" id="modalde{{lugar.lugar.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h4 class="modal-title" id="modal-label">Detalles Lugar</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Calle</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ lugar.lugar.nombre_calle }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Número</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ lugar.lugar.numero }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Region</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" value="{{ lugar.lugar.region.nombre }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Comuna</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" value="{{ lugar.lugar.comuna.nombre }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Ciudad</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ lugar.lugar.ciudad }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Depto.</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ lugar.lugar.departamento }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Otros</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ lugar.lugar.otros }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Capacidad Aprox.</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" value="{{ lugar.lugar.capacidad }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Descripción</label>
+                    <div class="col-sm-10">
+                      <textarea class="form-control" rows="3" name="descripción" readonly>{{ lugar.lugar.descripción }}</textarea>
+                    </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-b" data-dismiss="modal">Aceptar</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- end: Modal -->
   {% endfor %}
 {% endif %}
 
@@ -74,7 +146,7 @@
                   <table id="datatable" class="table table-bordered table-hover" style="width:100%">
                       <thead>
                           <tr>
-                              <th>Datos Dueño</th>
+                              <th>Contacto</th>
                               <th>Calle</th>
                               <th>Comuna</th>
                               <th>Cuidad</th>
@@ -89,16 +161,22 @@
                               <td>{{ lugar.lugar.nombre_calle }}, {{ lugar.lugar.numero }}</td>
                               <td>{{ lugar.lugar.comuna }}</td>
                               <td>{{ lugar.lugar.ciudad }}</td>
-                              <td>{{ lugar.lugar.capacidad }} (Lo que pides: {{ tocata.asistentes_min}} min/ {{tocata.asistentes_max }} max)</td>
+                              <td>{{ lugar.lugar.capacidad }} (Lo que pides: {{ tocata.asistentes_min}} min)</td>
                               <td>
-                                <button type="button" class="btn btn-light" data-target="#modal{{lugar.lugar.id}}" data-toggle="modal">Seleccionar</button>
+                                <div class="p-dropdown">
+                                    <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
+                                    <ul class="p-dropdown-content">
+                                        <li><a href="" data-target="#modal{{lugar.lugar.id}}" data-toggle="modal"><i class="icon-check-circle"></i>Seleccionar</a></li>
+                                        <li><a href="" data-target="#modalde{{lugar.lugar.id}}" data-toggle="modal"><i class="icon-eye"></i>Ver</a></li>
+                                    </ul>
+                                </div>
                               </td>
                           </tr>
                         {% endfor %}
                       </tbody>
                       <tfoot>
                           <tr>
-                            <th>Datos Dueño</th>
+                            <th>Contacto</th>
                             <th>Calle</th>
                             <th>Comuna</th>
                             <th>Cuidad</th>

@@ -41,6 +41,8 @@ parToca = {
     # Lugares Tocatas
     'elegido': 'EL',
     'noelegido': 'NE',
+    'pendiente': 'PE',
+    'cancelada': 'CA',
     # Testimonios Objetivos
     'artistas': 'AR',
     'usuarios': 'US',
@@ -49,7 +51,9 @@ parToca = {
 parLugaresToc = {
     'estado_lugartocata': [
         (parToca['elegido'], 'Elegido'),
-        (parToca['noelegido'], 'No Elegido')
+        (parToca['noelegido'], 'No Elegido'),
+        (parToca['pendiente'], 'Pendiente'),
+        (parToca['cancelada'], 'Cancelada'),
     ]
 }
 
