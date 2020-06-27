@@ -126,7 +126,7 @@
               <div class="grid-item">
                   <div class="product">
                       <div class="product-image">
-                          <a href="{% url 'tocata' tocataabierta.id %}"><img alt="Shop product image!" src="{{ tocataabierta.flayer_380_507.url }}">
+                          <a href="{% url 'tocataabierta' tocataabierta.id %}"><img alt="Shop product image!" src="{{ tocataabierta.flayer_380_507.url }}">
                           </a>
                           <span class="product-sale-off">Abierta</span>
                           {% if tocataabierta.nuevo == 'SI' %}
@@ -136,9 +136,7 @@
                       <div class="product-description">
                           <div class="product-category">{{ tocataabierta.artista.nombre|upper }}, {{ tocataabierta.comuna }}</div>
                           <div class="product-title">
-                              <h3><a href="{% url 'tocata' tocataabierta.id %}">{{ tocataabierta.nombre|truncatechars:20 }}</a></h3>
-                          </div>
-                          <div class="product-price"><ins>$ {{ tocataabierta.costo|intcomma }}</ins>
+                              <h3><a href="{% url 'tocataabierta' tocataabierta.id %}">{{ tocataabierta.nombre|truncatechars:20 }}</a></h3>
                           </div>
                       </div>
                   </div>

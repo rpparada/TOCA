@@ -33,6 +33,7 @@ class TocataAbiertaForm(forms.ModelForm):
 
 class LugaresTocataForm(forms.ModelForm):
 
+
     class Meta:
         model = LugaresTocata
-        exclude = ('fecha_actu','fecha_crea','estado',)
+        exclude = ('fecha_actu','fecha_crea','estado')

@@ -59,26 +59,37 @@ def tocatas(request):
 def tocata(request, tocata_id):
 
     toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
-
     tocata = get_object_or_404(Tocata, pk=tocata_id)
     tocata.asistentes_dif = tocata.asistentes_max - tocata.asistentes_total
 
     context = {
-        'tocata_vista': tocata,
-        'tocatas_h': toc_head[:3],
-        'artistas_h': art_head[:3],
+        'tocatas_h': toc_head,
+        'artistas_h': art_head,
         'usuario': usuario,
+        'tocata_vista': tocata,
     }
     return render(request, 'tocata/tocata.html', context)
+
+def tocataabierta(request, tocata_id):
+
+    toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
+    tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
+
+    context = {
+        'tocatas_h': toc_head,
+        'artistas_h': art_head,
+        'usuario': usuario,
+        'tocata_vista': tocata,
+    }
+
+    return render(request, 'tocata/tocataabierta.html', context)
 
 def mistocatas(request):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
 
     artista = UsuarioArtista.objects.get(user=request.user)
-
     tocatascerradas = Tocata.objects.filter(artista=artista.artista).filter(estado__in=parTocatas['estado_tipos_vista'])
-
     tocatasabiertas = TocataAbierta.objects.filter(artista=artista.artista).filter(estado__in=parTocatasAbiertas['estado_tipos_vista'])
 
     for tocataabierta in tocatasabiertas:
@@ -266,34 +277,40 @@ def proponerlugar(request, tocata_id):
         if form.is_valid():
 
             lugartocata = form.save(commit=False)
-            if LugaresTocata.objects.filter(tocata=tocata_id).filter(lugar=lugartocata.lugar):
-
-                messages.error(request,'Ya habias enviado este ligar para esta tocata')
+            if LugaresTocata.objects.filter(tocataabierta=tocata_id).filter(lugar=lugartocata.lugar):
+                messages.error(request,'Ya habias enviado este lugar para esta tocata')
             else:
-
-                if Tocata.objects.filter(region=lugartocata.lugar.region).filter(comuna=lugartocata.lugar.comuna):
-
-                    lugartocata.usuario = request.user
-                    lugartocata.save()
-                    messages.success(request, 'Lugar enviado al artista')
-                    return redirect('tocatas')
+                tocataabierta = TocataAbierta.objects.get(pk=tocata_id)
+                if tocataabierta.comuna.nombre == 'Todas':
+                    if tocataabierta.region.nombre == lugartocata.lugar.region.nombre:
+                        lugartocata.save()
+                        messages.success(request, 'Lugar enviado al artista')
+                        return redirect('index')
+                    else:
+                        messages.error(request,'Lugar no esta en la Region')
                 else:
+                    if tocataabierta.region.nombre == lugartocata.lugar.region.nombre\
+                     and tocataabierta.comuna.nombre == lugartocata.lugar.comuna.nombre:
+                     lugartocata.save()
+                     messages.success(request, 'Lugar enviado al artista')
+                     return redirect('index')
+                    else:
+                        messages.error(request,'Lugar no esta en la Region y/o Comuna')
 
-                    messages.error(request,'Lugar no esta en la Region/Comuna')
         else:
             print(form.errors.as_data())
             messages.error(request,'Error en form')
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
-    tocata = get_object_or_404(Tocata, pk=tocata_id)
+    tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
     mislugares = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
 
     context = {
-        'tocata': tocata,
-        'tocatas_h': tocatas[:3],
-        'artistas_h': artistas[:3],
+        'tocatas_h': tocatas,
+        'artistas_h': artistas,
         'usuario': usuario,
         'mislugares': mislugares,
+        'tocata': tocata,
     }
 
     return render(request, 'tocata/proponerlugar.html', context)
@@ -306,7 +323,7 @@ def seleccionarPropuestas(request, tocata_id):
             lugartocata = form.save(commit=False)
             lugartocata.estado = parToca['elegido']
 
-            tocata = get_object_or_404(Tocata, pk=tocata_id)
+            tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
             tocata.lugar = lugartocata.lugar
             tocata.comuna = lugartocata.lugar.comuna
             tocata.region = lugartocata.lugar.region
@@ -331,11 +348,11 @@ def seleccionarPropuestas(request, tocata_id):
             messages.error(request,'Error en form')
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
-    tocata = get_object_or_404(Tocata, pk=tocata_id)
-    listaLugares  = LugaresTocata.objects.filter(tocata=tocata)
+    tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
+    listaLugares  = LugaresTocata.objects.filter(tocataabierta=tocata)
     context = {
-        'tocatas_h': tocatas[:3],
-        'artistas_h': artistas[:3],
+        'tocatas_h': tocatas,
+        'artistas_h': artistas,
         'usuario': usuario,
         'tocata': tocata,
         'listaLugares': listaLugares,

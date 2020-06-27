@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} | {{ tocata_vista.nombre }} {% endblock %}
+{% block content %}
+{% include 'partials/_alerts.html' %}
+
+<!-- SECTION IMAGE FULLSCREEN -->
+<section class="text-center fullscreen p-t-200 p-b-100 text-light" data-bg-image="{{ tocata_vista.flayer_1920_1280.url }}">
+    <div class="bg-overlay"></div>
+    <div class="container">
+        <div data-animate="fadeInUp" class="text-center">
+            <div class="text-lg">{{ tocata_vista.nombre }}</div>
+            <div class="text-medium">WILL BE OPEN IN:</div>
+        </div>
+
+
+        <div class="countdown medium rectangle countdown-light m-b-40" data-countdown="{{ tocata_vista.fecha|date:"Y/m/d"}} {{ tocata_vista.hora|date:"H:i:s" }}" data-animate="fadeInUp"></div>
+        <div data-animate-delay="600" data-animate="fadeInUp">
+            <p class="lead">Mobile World Congress (MWC) is the world’s largest annual gathering for the mobile industry, organised by the GSMA, and held in the Mobile World Capital: Barcelona, Spain.
+
+            </p>
+            {% if user.is_authenticated %}
+              <a href="{% url 'proponerlugar' tocata_vista.id %}" class="btn">PRESTA TU CASA</a>
+            {% else %}
+              {% if tocata_vista.estado == 'PU' %}
+              <a href="{% url 'ingresar' %}?next={{request.path|urlencode}}" class="btn">INGRESA PARA COMPRAR</a>
+              {% else %}
+              <a href="{% url 'ingresar' %}?next={{request.path|urlencode}}" class="btn">INGRESA PARA PRESTAR TU CASA</a>
+              {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+</section>
+<!-- end: SECTION IMAGE FULLSCREEN -->
+
+<!-- EVENT INFO BOX -->
+<div class="event-info-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="event-info-icon"><i class="fa fa-calendar fa-2x"></i></div>
+                <div class="event-info-content">
+                    <div class="info-title">CUANDO</div>
+                    <div class="info-description">{{ tocata_vista.fecha|date:"D d M Y"}} {{ tocata_vista.hora|date:"H:i" }}</div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="event-info-icon"><i class="fa fa-map-marker-alt fa-2x"></i></div>
+                <div class="event-info-content">
+                    <div class="info-title">DONDE</div>
+                    <div class="info-description">{{ tocata_vista.region }}, {{ tocata_vista.comuna }}</div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="event-info-icon"><i class="fa fa-group fa-2x media-object"></i></div>
+                <div class="event-info-content">
+                    <div class="info-title">ENTRADAS</div>
+                    <div class="info-description">{{ tocata_vista.asistentes_max }} entradas</div>
+
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="event-info-icon"><i class="fa fa-microphone fa-2x"></i></div>
+                <div class="event-info-content">
+                    <div class="info-title">ARTISTA</div>
+                    <div class="info-description">{{ tocata_vista.artista.nombre }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: EVENT INFO BOX -->
+
+<!-- APPLY / REGISTER FORM -->
+<section id="section2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="heading m-b-40">
+                    <h2>{{ tocata_vista.nombre }}</h2>
+                    <span class="lead">{{ tocata_vista.artista.nombre }}</span>
+                </div>
+                <p>{{ tocata_vista.descripción }}
+                </p>
+                <!--
+                <p> Ipsum gravida tortor, vel interdum mi sapien ut justo. Nulla varius consequat magna, id molestie ipsum volutpat quis. A true story, that never been told!. Fusce id mi diam, non ornare orci. Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel dolor. Morbi sagittis, sem quis lacinia faucibus.
+                </p> -->
+                <div class="seperator">EVENT INFO NUMBERS</div>
+                <div class="row">
+                    <div class="col-lg-3">
+
+                        <div class="text-center">
+                            <div class="counter small"> <span data-speed="3000" data-refresh-interval="50" data-to="{{ tocata_vista.asistentes_max }}" data-from="0" data-seperator="true"></span> </div>
+                            <p>MÁXIMO ASISTENTES</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <div class="text-center">
+                            <div class="counter small"> <span data-speed="4500" data-refresh-interval="23" data-to="{{ tocata_vista.asistentes_min }}" data-from="0" data-seperator="true"></span> </div>
+                            <p>MÍNIMO ASISTENTES</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <div class="text-center">
+                            <div class="counter small"> <span data-speed="3000" data-refresh-interval="12" data-to="{{ tocata_vista.asistentes_total }}" data-from="0" data-seperator="true"></span> </div>
+                            <p>ENTRADAS VENDIDAS</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <div class="text-center">
+                            <div class="counter small"> <span data-speed="4550" data-refresh-interval="50" data-to="{{ tocata_vista.asistentes_diff }}" data-from="0" data-seperator="true"></span> </div>
+                            <p>ENTREDAS DISPONIBLES</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--
+            <div class="col-lg-4 col-md-12 text-light p-50 rounded" style="background-color:#111;">
+                <div class="heading p-20 m-b-0">
+                    <h2 class="text-colored">EVENT REGISTER</h2>
+                    <span class="text-light">Create amam ipsum dolor sit amet, Beautiful nature, and rare feathers!.
+                    </span>
+                </div>
+                <form class="widget-contact-form text-center" action="include/event-register-form.php" role="form" method="post">
+                    <div class="form-group m-b-5">
+                        <input type="text" aria-required="true" name="widget-contact-form-name" class="form-control form-control-sm required name" placeholder="Your Name*">
+                    </div>
+                    <div class="form-group m-b-5">
+                        <input type="text" aria-required="true" name="widget-contact-form-phone" class="form-control form-control-sm required phone" placeholder="Your Phone Number*">
+                    </div>
+                    <div class="form-group m-b-5">
+                        <input type="email" aria-required="true" name="widget-contact-form-email" class="form-control form-control-sm required email" placeholder="Your Email">
+                    </div>
+                    <div class="form-group m-b-5">
+                        <select aria-required="true" name="widget-contact-form-ticket-type" class="form-control form-control-sm required ticket-type">
+                            <option selected>Ticket Type</option>
+                            <option>Vip</option>
+                            <option>Elite</option>
+                            <option>Standard</option>
+                        </select>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <select aria-required="true" name="widget-contact-form-day-pass" class="form-control form-control-sm required day-pass">
+                            <option selected>Day Pass</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-block" type="submit" id="form-submit"><i class="fa fa-paper-plane"></i>&nbsp;APPLY NOW</button>
+                </form>
+                <p class="p-20 m-b-0"><b>Note:</b> Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p>
+
+            </div> -->
+
+        </div>
+    </div>
+</section>
+<!-- end: APPLY / REGISTER FORM -->
+
+<!--Team members -->
+<section class="background-grey">
+    <div class="container">
+        <div class="row team-members team-members-shadow m-b-40">
+            <div class="col-lg-10 center">
+                <div class="team-member">
+                    <div class="team-image">
+                        <img src="{{ tocata_vista.artista.foto1.url }}">
+                    </div>
+                    <div class="team-desc">
+                        <h3><a href="{% url 'artista' tocata_vista.artista.id %}">{{ tocata_vista.artista.nombre }}</a></h3>
+                        <span>{{ tocata_vista.artista.habilidades }}</span>
+                        <p>{{ tocata_vista.artista.descripción|truncatechars:500 }}</p>
+                        <div class="align-center">
+                          {% if tocata_vista.artista.link_facebook %}
+                            <a class="btn btn-xs btn-slide btn-light" href="{{ artista.link_facebook }}">
+                                <i class="fab fa-facebook-f"></i>
+                                <span>Facebook</span></a>
+                          {% endif %}
+                          {% if tocata_vista.artista.link_twitter %}
+                            <a class="btn btn-xs btn-slide btn-light" href="{{ artista.link_twitter }}" data-width="100">
+                                <i class="fab fa-twitter"></i>
+                                <span>Twitter</span></a>
+                          {% endif %}
+                          {% if tocata_vista.artista.link_instagram %}
+                            <a class="btn btn-xs btn-slide btn-light" href="{{ artista.link_instagram }}" data-width="118">
+                                <i class="fab fa-instagram"></i>
+                                <span>Instagram</span></a>
+                          {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+        </div>
+</section>
+<!-- end:Team members -->
+
+{% endblock %}

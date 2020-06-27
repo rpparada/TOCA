@@ -71,4 +71,4 @@ class LugaresTocata(models.Model):
     estado = models.CharField(max_length=2, choices=parLugaresToc['estado_lugartocata'],default=parToca['noelegido'])
 
     def __str__(self):
-        return self.tocata.nombre+' - '+str(self.lugar.nombre_calle)+' '+str(self.lugar.numero)
+        return self.tocataabierta.nombre+' - '+str(self.lugar.nombre_calle)+' '+str(self.lugar.numero)
