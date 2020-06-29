@@ -81,6 +81,7 @@ def mispropuestas(request):
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
 
     mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
+    mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
 
     context = {
         'tocatas_h': tocatas,
@@ -91,10 +92,20 @@ def mispropuestas(request):
 
     return render(request,'lugar/mispropuestas.html', context)
 
+@login_required
 def cancelarpropuesta(request, propuesta_id):
+
+    if request.method == 'POST':
+        propuesta = get_object_or_404(LugaresTocata, pk=propuesta_id)
+        if propuesta.estado == parToca['pendiente']:
+            propuesta.estado = parToca['cancelado']
+            propuesta.save()
+        else:
+            messages.success(request, 'Solo puede cancelar un propuesta cuando esta pendiente')
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
     mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
+    mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
 
     context = {
         'tocatas_h': tocatas,
@@ -105,7 +116,29 @@ def cancelarpropuesta(request, propuesta_id):
 
     return render(request,'lugar/mispropuestas.html', context)
 
+@login_required
+def borrarpropuesta(request, propuesta_id):
 
+    if request.method == 'POST':
+        propuesta = get_object_or_404(LugaresTocata, pk=propuesta_id)
+        if propuesta.estado in [parToca['noelegido'], parToca['cancelado'],parToca['completado']]:
+            propuesta.estado = parToca['borrado']
+            propuesta.save()
+        else:
+            messages.success(request, 'No puedes borrar un propuesta mintras tenga tocatas activas')
+
+    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
+    mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
+
+    context = {
+        'tocatas_h': tocatas,
+        'artistas_h': artistas,
+        'usuario': usuario,
+        'mispropuestas': mispropuestas,
+    }
+
+    return render(request,'lugar/mispropuestas.html', context)
 
 @login_required
 def borrarlugar(request, lugar_id):

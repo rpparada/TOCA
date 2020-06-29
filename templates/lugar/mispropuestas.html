@@ -12,7 +12,7 @@
 {% if mispropuestas %}
 
 {% for propuesta in mispropuestas %}
-<!--Modal Borrar -->
+<!--Modal Cancelar -->
 <div class="modal fade" id="modalca{{propuesta.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -34,8 +34,41 @@
             <div class="modal-footer">
               <form action="{% url 'cancelarpropuesta' propuesta.id %}" method="POST">
               {% csrf_token %}
-                {% if lugar.borra == 'SI' %}
+                {% if propuesta.estado == 'PE' %}
                 <button type="submit" class="btn btn-b">Confirmo Cancelación</button>
+                {% endif %}
+                <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: Modal -->
+
+<!--Modal Borrar -->
+<div class="modal fade" id="modalbo{{propuesta.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-label">Borrar Propuesta</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        {% if propuesta.estado == 'PE' %}
+                        <p>¿Estas seguro que quieres borralo?</p>
+                        {% else %}
+                        <p>No puedes cancelarla</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <form action="{% url 'borrarpropuesta' propuesta.id %}" method="POST">
+              {% csrf_token %}
+                {% if propuesta.estado == 'NE' or propuesta.estado == 'CA' or propuesta.estado == 'CM' %}
+                <button type="submit" class="btn btn-b">Confirmo Borrado</button>
                 {% endif %}
                 <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
               </form>
@@ -78,7 +111,10 @@
                                   <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
                                   <ul class="p-dropdown-content">
                                     {% if propuesta.estado == 'PE' %}
-                                    <li><a data-target="#modalca{{propuesta.id}}" data-toggle="modal" href="#"><i class="icon-x"></i>Cancelar</a></li>
+                                    <li><a data-target="#modalca{{propuesta.id}}" data-toggle="modal" href="#"><i class="icon-stop-circle"></i>Cancelar</a></li>
+                                    {% endif %}
+                                    {% if propuesta.estado == 'NE' or propuesta.estado == 'CA' or propuesta.estado == 'CM' %}
+                                    <li><a data-target="#modalbo{{propuesta.id}}" data-toggle="modal" href="#"><i class="icon-x"></i>Borrar</a></li>
                                     {% endif %}
                                   </ul>
                               </div>

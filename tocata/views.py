@@ -93,7 +93,7 @@ def mistocatas(request):
     tocatasabiertas = TocataAbierta.objects.filter(artista=artista.artista).filter(estado__in=parTocatasAbiertas['estado_tipos_vista'])
 
     for tocataabierta in tocatasabiertas:
-        tocataabierta.numeropropuestas  = LugaresTocata.objects.filter(tocataabierta=tocataabierta).count()
+        tocataabierta.numeropropuestas  = LugaresTocata.objects.filter(tocataabierta=tocataabierta).filter(estado=parToca['pendiente']).count()
 
     context = {
         'tocatas_h': tocatas,
@@ -277,7 +277,7 @@ def proponerlugar(request, tocata_id):
         if form.is_valid():
 
             lugartocata = form.save(commit=False)
-            if LugaresTocata.objects.filter(tocataabierta=tocata_id).filter(lugar=lugartocata.lugar):
+            if LugaresTocata.objects.filter(tocataabierta=tocata_id).filter(lugar=lugartocata.lugar).exclude(estado__in=[parToca['cancelado'],parToca['borrado']]):
                 messages.error(request,'Ya habias enviado este lugar para esta tocata')
             else:
                 tocataabierta = TocataAbierta.objects.get(pk=tocata_id)
@@ -315,41 +315,84 @@ def proponerlugar(request, tocata_id):
 
     return render(request, 'tocata/proponerlugar.html', context)
 
-def seleccionarPropuestas(request, tocata_id):
-
-    if request.method == 'POST':
-        form = LugaresTocataForm(request.POST)
-        if form.is_valid():
-            lugartocata = form.save(commit=False)
-            lugartocata.estado = parToca['elegido']
-
-            tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
-            tocata.lugar = lugartocata.lugar
-            tocata.comuna = lugartocata.lugar.comuna
-            tocata.region = lugartocata.lugar.region
-            tocata.provincia = lugartocata.lugar.provincia
-
-            tocata.estado = parToca['publicado']
-            tocata.lugar_def = parToca['cerrada']
-
-            if lugartocata.lugar.capacidad < tocata.asistentes_min:
-                tocata.asistentes_min = lugartocata.lugar.capacidad
-                tocata.asistentes_max = lugartocata.lugar.capacidad
-            else:
-                tocata.asistentes_max = lugartocata.lugar.capacidad
-
-            lugartocata.save()
-            tocata.save()
-
-            messages.success(request, 'Lugar enviado al artista')
-            return redirect('mistocatas')
-        else:
-            print(form.errors.as_data())
-            messages.error(request,'Error en form')
+def verpropuestas(request, tocata_id):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+
     tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
-    listaLugares  = LugaresTocata.objects.filter(tocataabierta=tocata)
+    listaLugares  = LugaresTocata.objects.filter(tocataabierta=tocata).filter(estado=parToca['pendiente'])
+
+    context = {
+        'tocatas_h': tocatas,
+        'artistas_h': artistas,
+        'usuario': usuario,
+        'tocata': tocata,
+        'listaLugares': listaLugares,
+    }
+
+    return render(request, 'tocata/propuestas.html', context)
+
+def seleccionarpropuestas(request, tocata_id, lugar_id):
+
+    if request.method == 'POST':
+
+        # Cambia estado de TocataAbierta a confirmado
+        tocataabierta = get_object_or_404(TocataAbierta, pk=tocata_id)
+        tocataabierta.estado = parToca['confirmado']
+
+        # Cambia estado del lugar elegido a "Elegido"
+        lugartocata = get_object_or_404(LugaresTocata, pk=lugar_id)
+        lugartocata.estado = parToca['elegido']
+        lugartocata.save()
+
+        # Cambiar las otras propuestas a "no elegido"
+        listaLugares  = LugaresTocata.objects.filter(tocataabierta=tocataabierta).filter(estado=parToca['pendiente'])
+        for lugar in listaLugares:
+            lugar.estado = parToca['noelegido']
+            lugar.save()
+
+        # Define capacidades
+        asis_min = tocataabierta.asistentes_min
+        if lugartocata.lugar.capacidad < tocataabierta.asistentes_min:
+            asis_min = lugartocata.lugar.capacidad
+            asis_max = lugartocata.lugar.capacidad
+        else:
+            asis_max = lugartocata.lugar.capacidad
+
+        # Crear Tocata oficial (tabla Tocata)
+        tocata = Tocata(
+            artista=tocataabierta.artista,
+            usuario=tocataabierta.usuario,
+            nombre=tocataabierta.nombre,
+            lugar=lugartocata.lugar,
+            region=lugartocata.lugar.region,
+            comuna=lugartocata.lugar.comuna,
+            descripción=tocataabierta.descripción,
+            costo=0,
+            fecha=tocataabierta.fecha,
+            hora=tocataabierta.hora,
+            asistentes_total=0,
+            asistentes_min=asis_min,
+            asistentes_max=asis_max,
+            flayer_original=tocataabierta.flayer_original,
+            flayer_1920_1280=tocataabierta.flayer_1920_1280,
+            flayer_380_507=tocataabierta.flayer_380_507,
+            evaluacion=0,
+            estado=parToca['publicado'],
+        )
+        tocataabierta.tocata = tocata
+
+        tocata.save()
+        tocataabierta.save()
+
+        messages.success(request, 'Lugar seleccionado con exito y Tocata publicada')
+        return redirect('mistocatas')
+
+    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+
+    tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
+    listaLugares  = LugaresTocata.objects.filter(tocataabierta=tocata).filter(estado=parToca['pendiente'])
+
     context = {
         'tocatas_h': tocatas,
         'artistas_h': artistas,

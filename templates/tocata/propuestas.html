@@ -39,11 +39,8 @@
                       </div>
                   </div>
               </div>
-              <form action="{% url 'propuestas' tocata.id %}" method="POST">
+              <form action="{% url 'seleccionarpropuestas' tocata.id lugar.id %}" method="POST">
                 {% csrf_token %}
-                <input type="hidden" class="form-control" value="{{ tocata.id }}" name="tocata">
-                <input type="hidden" class="form-control" value="{{ tocata.usuario.id }}" name="usuario">
-                <input type="hidden" class="form-control" value="{{ lugar.lugar.id }}" name="lugar">
                 <div class="modal-footer">
                   <button type="submit" class="btn btn-b">Confirmo Lugar</button>
                   <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
@@ -150,7 +147,7 @@
                               <th>Calle</th>
                               <th>Comuna</th>
                               <th>Cuidad</th>
-                              <th>Capacidad Aprox.</th>
+                              <th>Capacidad Aprox.<br>(Lo que pides: {{ tocata.asistentes_min}} min)</th>
                               <th class="noExport">Seleccionar</th>
                           </tr>
                       </thead>
@@ -161,7 +158,7 @@
                               <td>{{ lugar.lugar.nombre_calle }}, {{ lugar.lugar.numero }}</td>
                               <td>{{ lugar.lugar.comuna }}</td>
                               <td>{{ lugar.lugar.ciudad }}</td>
-                              <td>{{ lugar.lugar.capacidad }} (Lo que pides: {{ tocata.asistentes_min}} min)</td>
+                              <td>{{ lugar.lugar.capacidad }}</td>
                               <td>
                                 <div class="p-dropdown">
                                     <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>

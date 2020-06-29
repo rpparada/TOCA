@@ -42,8 +42,9 @@ parToca = {
     'elegido': 'EL',
     'noelegido': 'NE',
     'pendiente': 'PE',
-    'cancelada': 'CA',
+    'cancelado': 'CA',
     'completado': 'CM',
+    'borrado': 'BO',
     # Testimonios Objetivos
     'artistas': 'AR',
     'usuarios': 'US',
@@ -54,8 +55,9 @@ parLugaresToc = {
         (parToca['elegido'], 'Elegido'),
         (parToca['noelegido'], 'No Elegido'),
         (parToca['pendiente'], 'Pendiente'),
-        (parToca['cancelada'], 'Cancelada'),
+        (parToca['cancelado'], 'Cancelado'),
         (parToca['completado'], 'Completado'),
+        (parToca['borrado'], 'Borrado'),
     ]
 }
 

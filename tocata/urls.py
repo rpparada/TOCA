@@ -16,6 +16,7 @@ urlpatterns = [
     path('artista/borrartocataabierta_<int:tocata_id>', views.borrartocataabierta, name='borrartocataabierta'),
     path('artista/suspendertocata_<int:tocata_id>', views.suspendertocata, name='suspendertocata'),
     path('artista/suspendertocataabierta_<int:tocata_id>', views.suspendertocataabierta, name='suspendertocataabierta'),
-    path('artista/propuestas_<int:tocata_id>', views.seleccionarPropuestas, name='propuestas'),
+    path('artista/propuestas_<int:tocata_id>', views.verpropuestas, name='verpropuestas'),
+    path('artista/seleccionarpropuestas_<int:tocata_id>_<int:lugar_id>', views.seleccionarpropuestas, name='seleccionarpropuestas'),
     path('ajax/load-comunas_tocata/', views.carga_comunas_tocata, name='ajax_load_comunas_tocata'),
 ]
