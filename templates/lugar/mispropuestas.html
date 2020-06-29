@@ -62,7 +62,7 @@
                     <thead>
                         <tr>
                             <th>Lugar</th>
-                            <th>Tocata</th>
+                            <th>Artista/Tocata</th>
                             <th>Estado</th>
                             <th class="noExport">Acciones</th>
                         </tr>
@@ -70,14 +70,16 @@
                     <tbody>
                       {% for propuesta in mispropuestas %}
                         <tr>
-                            <td>{{ propuesta.lugar.nombre_calle }} {{ propuesta.lugar.numero }}</td>
-                            <td>{{ propuesta.tocataabierta.nombre }}</td>
-                            <td>{{ propuesta.estado }}</td>
+                            <td>{{ propuesta.lugar.nombre_calle }} {{ propuesta.lugar.numero }}, {{ propuesta.lugar.comuna }}</td>
+                            <td>{{ propuesta.tocataabierta.artista.nombre }}, {{ propuesta.tocataabierta.nombre }}</td>
+                            <td>{{ propuesta.get_estado_display }}</td>
                             <td>
                               <div class="p-dropdown">
                                   <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
                                   <ul class="p-dropdown-content">
+                                    {% if propuesta.estado == 'PE' %}
                                     <li><a data-target="#modalca{{propuesta.id}}" data-toggle="modal" href="#"><i class="icon-x"></i>Cancelar</a></li>
+                                    {% endif %}
                                   </ul>
                               </div>
                             </td>
@@ -87,7 +89,7 @@
                     <tfoot>
                         <tr>
                           <th>Lugar</th>
-                          <th>Tocata</th>
+                          <th>Artista/Tocata</th>
                           <th>Estado</th>
                           <th>Acciones</th>
                         </tr>
@@ -105,7 +107,7 @@
           <div class="row mb-3">
               <div class="col-lg-6">
                   <h4>Mis Propuestas</h4>
-                  <p>Actualmente no tienes ningun lpropuesta invitando a tus artistas favoritos.</p>
+                  <p>Actualmente no tienes ningun propuesta invitando a tus artistas favoritos.</p>
               </div>
           </div>
         <!-- end: DataTable -->
