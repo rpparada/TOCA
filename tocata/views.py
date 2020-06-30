@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
 from datetime import datetime
+from itertools import chain
 
 import operator
 
@@ -34,17 +35,27 @@ def tocatas(request):
         else:
             tocata.nuevo = 'NO'
         tocata.asistentes_dif = tocata.asistentes_max - tocata.asistentes_total
+        tocata.tipo = 'cerrada'
 
-    tocatasAbiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
-    for tocataAbierta in tocatasAbiertas:
-        dif = datetime.today() - tocataAbierta.fecha_crea.replace(tzinfo=None)
+    tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
+    for tocataabierta in tocatasabiertas:
+        dif = datetime.today() - tocataabierta.fecha_crea.replace(tzinfo=None)
         if dif.days <= parToca['diasNuevoTocata']:
-            tocataAbierta.nuevo = 'SI'
+            tocataabierta.nuevo = 'SI'
         else:
-            tocataAbierta.nuevo = 'NO'
+            tocataabierta.nuevo = 'NO'
+        tocataabierta.tipo = 'abierta'
 
+    result_list = list(chain(tocatas, tocatasabiertas))
+    print('tocatas')
+    print(tocatas)
+    print('tocatas abiertas')
+    print(tocatasabiertas)
+    print('union')
+    print(result_list)
 
-    paginador = Paginator(tocatas, parToca['tocatas_pag'])
+    #paginador = Paginator(tocatas, parToca['tocatas_pag'])
+    paginador = Paginator(result_list, parToca['tocatas_pag'])
     pagina = request.GET.get('page')
     pagina_tocatas = paginador.get_page(pagina)
 
