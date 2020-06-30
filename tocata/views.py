@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 from datetime import datetime
 
@@ -84,6 +85,7 @@ def tocataabierta(request, tocata_id):
 
     return render(request, 'tocata/tocataabierta.html', context)
 
+@login_required(login_url='index')
 def mistocatas(request):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
@@ -105,6 +107,7 @@ def mistocatas(request):
 
     return render(request,'tocata/mistocatas.html', context)
 
+@login_required(login_url='index')
 def creartocata(request):
 
     if request.user.is_authenticated:
@@ -118,6 +121,7 @@ def creartocata(request):
 
     return render(request, 'tocata/creartocata.html', context)
 
+@login_required(login_url='index')
 def creartocatacerrada(request):
 
     tocata_form = TocataForm();
@@ -165,6 +169,7 @@ def creartocatacerrada(request):
 
     return render(request, 'tocata/creartocatacerrada.html', context)
 
+@login_required(login_url='index')
 def creartocataabierta(request):
 
     tocata_form = TocataAbiertaForm()
@@ -203,6 +208,7 @@ def creartocataabierta(request):
 
     return render(request, 'tocata/creartocataabierta.html', context)
 
+@login_required(login_url='index')
 def detallestocata(request, tocata_id):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
@@ -217,6 +223,7 @@ def detallestocata(request, tocata_id):
 
     return render(request, 'tocata/detallestocatacerrada.html', context)
 
+@login_required(login_url='index')
 def detallestocataabierta(request, tocata_id):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
@@ -231,7 +238,7 @@ def detallestocataabierta(request, tocata_id):
 
     return render(request, 'tocata/detallestocataabierta.html', context)
 
-
+@login_required(login_url='index')
 def borrartocata(request, tocata_id):
 
     if request.method == 'POST':
@@ -241,6 +248,7 @@ def borrartocata(request, tocata_id):
 
     return redirect('mistocatas')
 
+@login_required(login_url='index')
 def borrartocataabierta(request, tocata_id):
 
     if request.method == 'POST':
@@ -250,6 +258,7 @@ def borrartocataabierta(request, tocata_id):
 
     return redirect('mistocatas')
 
+@login_required(login_url='index')
 def suspendertocata(request, tocata_id):
 
     if request.method == 'POST':
@@ -259,6 +268,7 @@ def suspendertocata(request, tocata_id):
 
     return redirect('mistocatas')
 
+@login_required(login_url='index')
 def suspendertocataabierta(request, tocata_id):
 
     if request.method == 'POST':
@@ -268,7 +278,7 @@ def suspendertocataabierta(request, tocata_id):
 
     return redirect('mistocatas')
 
-
+@login_required(login_url='index')
 def proponerlugar(request, tocata_id):
 
     if request.method == 'POST':
@@ -315,6 +325,7 @@ def proponerlugar(request, tocata_id):
 
     return render(request, 'tocata/proponerlugar.html', context)
 
+@login_required(login_url='index')
 def verpropuestas(request, tocata_id):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
@@ -332,6 +343,7 @@ def verpropuestas(request, tocata_id):
 
     return render(request, 'tocata/propuestas.html', context)
 
+@login_required(login_url='index')
 def seleccionarpropuestas(request, tocata_id, lugar_id):
 
     if request.method == 'POST':
@@ -406,6 +418,7 @@ def seleccionarpropuestas(request, tocata_id, lugar_id):
 
     return render(request, 'tocata/propuestas.html', context)
 
+@login_required(login_url='index')
 def carga_comunas_tocata(request):
 
     region_id = request.GET.get('region')

@@ -7,6 +7,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.models import User
 
@@ -209,7 +210,7 @@ def ingresar(request):
         return render(request, 'usuario/ingresar.html')
 
 def salir(request):
-    
+
     if request.method == 'POST':
         next = request.POST.get('next', '/')
         auth.logout(request)
@@ -219,6 +220,7 @@ def salir(request):
         else:
             return redirect('index')
 
+@login_required(login_url='index')
 def cuenta(request):
 
     toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
@@ -229,6 +231,7 @@ def cuenta(request):
     }
     return render(request, 'usuario/cuenta.html', context)
 
+@login_required(login_url='index')
 def actualizar(request):
 
     toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
@@ -252,6 +255,7 @@ def actualizar(request):
 
     return render(request, 'usuario/cuenta.html', context)
 
+@login_required(login_url='index')
 def actualizarArt(request):
 
     if request.method == 'POST':
@@ -296,6 +300,7 @@ def actualizarArt(request):
 
     return render(request, 'usuario/cuentaart.html', context)
 
+@login_required(login_url='index')
 def cuentaArt(request):
 
     toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
@@ -311,6 +316,7 @@ def cuentaArt(request):
     }
     return render(request, 'usuario/cuentaart.html', context)
 
+@login_required(login_url='index')
 def cambioContra(request):
 
     if request.method == 'POST':
@@ -343,6 +349,7 @@ def cambioContra(request):
 
     return render(request, 'usuario/cambiocontra.html')
 
+@login_required(login_url='index')
 def enviaform(request):
 
     if request.method == 'POST':
