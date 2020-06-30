@@ -112,31 +112,33 @@ def registrar(request):
         usuario_form = UsuarioForm(request.POST)
 
         if form.is_valid() and usuario_form.is_valid():
+            if User.objects.filter(username=form.cleaned_data.get('email')).exists():
+                messages.error(request,"Email ya registrado")
+            else:
+                user = form.save(commit=False)
+                user.username = user.email
+                user.is_active = False
+                user.save()
 
-            user = form.save(commit=False)
-            user.username = user.email
-            user.is_active = False
-            user.save()
+                usuario = usuario_form.save(commit=False)
+                usuario.user = user
+                usuario.save()
 
-            usuario = usuario_form.save(commit=False)
-            usuario.user = user
-            usuario.save()
+                current_site = get_current_site(request)
+                mail_subject = 'Activa tu cuenta en Tocatas Intimas.'
 
-            current_site = get_current_site(request)
-            mail_subject = 'Activa tu cuenta en Tocatas Intimas.'
-
-            message = render_to_string('usuario/email_activacion_cuenta.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-                'token':account_activation_token.make_token(user),
-            })
-            to_email = form.cleaned_data.get('email')
-            email = EmailMessage(
-                        mail_subject, message, to=[to_email]
-            )
-            email.send()
-            return render(request, 'usuario/activacion_cuenta_done.html')
+                message = render_to_string('usuario/email_activacion_cuenta.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token':account_activation_token.make_token(user),
+                })
+                to_email = form.cleaned_data.get('email')
+                email = EmailMessage(
+                            mail_subject, message, to=[to_email]
+                )
+                email.send()
+                return render(request, 'usuario/activacion_cuenta_done.html')
         else:
 
             context = {

@@ -359,6 +359,9 @@ def seleccionarpropuestas(request, tocata_id, lugar_id):
         else:
             asis_max = lugartocata.lugar.capacidad
 
+        # Costo
+        costotocata = request.POST.get('costo')
+
         # Crear Tocata oficial (tabla Tocata)
         tocata = Tocata(
             artista=tocataabierta.artista,
@@ -368,7 +371,7 @@ def seleccionarpropuestas(request, tocata_id, lugar_id):
             region=lugartocata.lugar.region,
             comuna=lugartocata.lugar.comuna,
             descripción=tocataabierta.descripción,
-            costo=0,
+            costo=int(costotocata),
             fecha=tocataabierta.fecha,
             hora=tocataabierta.hora,
             asistentes_total=0,
@@ -380,9 +383,9 @@ def seleccionarpropuestas(request, tocata_id, lugar_id):
             evaluacion=0,
             estado=parToca['publicado'],
         )
-        tocataabierta.tocata = tocata
-
         tocata.save()
+
+        tocataabierta.tocata = tocata
         tocataabierta.save()
 
         messages.success(request, 'Lugar seleccionado con exito y Tocata publicada')

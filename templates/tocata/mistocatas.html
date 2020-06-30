@@ -377,11 +377,15 @@
                       <tbody>
                         {% for tocataabierta in tocatasabiertas %}
                           <tr>
-                              <td><a href="{% url 'tocata' tocataabierta.id %}">{{ tocataabierta.nombre }}</a></td>
+                              <td><a href="{% url 'tocataabierta' tocataabierta.id %}">{{ tocataabierta.nombre }}</a></td>
                               <td>{{ tocataabierta.region.nombre }}, {{ tocataabierta.comuna.nombre }}</td>
                               <td>{{ tocataabierta.fecha }}, {{ tocataabierta.hora}}</td>
                               <td>{{ tocataabierta.asistentes_min }}</td>
+                              {% if tocataabierta.estado == 'CN' %}
+                              <td>--</td>
+                              {% else %}
                               <td>{{ tocataabierta.numeropropuestas }}</td>
+                              {% endif %}
                               {% if tocataabierta.estado == 'PU' %} <!-- 'publicado': 'PU' -->
                                 <td><span class="badge badge-pill badge-warning">{{ tocataabierta.get_estado_display }}</span></td>
                               {% elif tocataabierta.estado == 'SU' %} <!-- 'suspendido': 'SU' -->
