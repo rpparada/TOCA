@@ -77,6 +77,34 @@
     </div>
 </div>
 <!-- end: Modal -->
+
+<!--Modal Cancelar elegida -->
+<div class="modal fade" id="modalcael{{propuesta.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-label">Cancelar Propuesta Elegida</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Si cancelas el lugar tambien se cancelará la Tocata</p>
+                        <p>¿Estas seguro que quieres cancelarla?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <form action="{% url 'cancelarpropuestaelegida' propuesta.id %}" method="POST">
+              {% csrf_token %}
+                <button type="submit" class="btn btn-b">Confirmo Cancelación</button>
+                <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: Modal -->
 {% endfor %}
 
 <section id="page-content" class="no-sidebar">
@@ -104,7 +132,11 @@
                       {% for propuesta in mispropuestas %}
                         <tr>
                             <td>{{ propuesta.lugar.nombre_calle }} {{ propuesta.lugar.numero }}, {{ propuesta.lugar.comuna }}</td>
-                            <td>{{ propuesta.tocataabierta.artista.nombre }}, {{ propuesta.tocataabierta.nombre }}</td>
+                            {% if propuesta.estado == 'EL' %}
+                            <td><a href="{% url 'tocata' propuesta.tocataabierta.tocata.id %}">{{ propuesta.tocataabierta.artista.nombre }}, {{ propuesta.tocataabierta.nombre }}</a></td>
+                            {% else %}
+                            <td><a href="{% url 'tocataabierta' propuesta.tocataabierta.id %}">{{ propuesta.tocataabierta.artista.nombre }}, {{ propuesta.tocataabierta.nombre }}</a></td>
+                            {% endif %}
                             <td>{{ propuesta.get_estado_display }}</td>
                             <td>
                               <div class="p-dropdown">
@@ -112,8 +144,9 @@
                                   <ul class="p-dropdown-content">
                                     {% if propuesta.estado == 'PE' %}
                                     <li><a data-target="#modalca{{propuesta.id}}" data-toggle="modal" href="#"><i class="icon-stop-circle"></i>Cancelar</a></li>
-                                    {% endif %}
-                                    {% if propuesta.estado == 'NE' or propuesta.estado == 'CA' or propuesta.estado == 'CM' %}
+                                    {% elif propuesta.estado == 'EL' %}
+                                    <li><a data-target="#modalcael{{propuesta.id}}" data-toggle="modal" href="#"><i class="icon-stop-circle"></i>Cancelar</a></li>
+                                    {% elif propuesta.estado == 'NE' or propuesta.estado == 'CA' or propuesta.estado == 'CM' %}
                                     <li><a data-target="#modalbo{{propuesta.id}}" data-toggle="modal" href="#"><i class="icon-x"></i>Borrar</a></li>
                                     {% endif %}
                                   </ul>

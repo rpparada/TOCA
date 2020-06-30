@@ -5,6 +5,7 @@ urlpatterns = [
     path('mislugares',views.misLugares, name='mislugares'),
     path('mispropuestas',views.mispropuestas, name='mispropuestas'),
     path('cancelarpropuesta_<int:propuesta_id>',views.cancelarpropuesta, name='cancelarpropuesta'),
+    path('cancelarpropuestaelegida_<int:propuesta_id>',views.cancelarpropuestaelegida, name='cancelarpropuestaelegida'),
     path('borrarpropuesta_<int:propuesta_id>',views.borrarpropuesta, name='borrarpropuesta'),
     path('agregarlugar', views.agregarLugar, name='agregarlugar'),
     path('actualizarlugar_<int:lugar_id>', views.actualizarLugar, name='actualizarlugar'),

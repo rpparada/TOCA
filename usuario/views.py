@@ -209,6 +209,7 @@ def ingresar(request):
         return render(request, 'usuario/ingresar.html')
 
 def salir(request):
+    
     if request.method == 'POST':
         next = request.POST.get('next', '/')
         auth.logout(request)

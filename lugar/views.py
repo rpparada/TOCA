@@ -12,7 +12,7 @@ from home.views import getTocatasArtistasHeadIndex
 from toca.parametros import parToca
 
 # Create your views here.
-@login_required
+@login_required(login_url='index')
 def agregarLugar(request):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
@@ -40,7 +40,7 @@ def agregarLugar(request):
     }
     return render(request, 'lugar/agregarlugar.html', context)
 
-@login_required
+@login_required(login_url='index')
 def actualizarLugar(request, lugar_id):
 
     if request.method == 'POST':
@@ -51,7 +51,7 @@ def actualizarLugar(request, lugar_id):
 
     return redirect('mislugares')
 
-@login_required
+@login_required(login_url='index')
 def misLugares(request):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
@@ -75,7 +75,7 @@ def misLugares(request):
 
     return render(request,'lugar/mislugares.html', context)
 
-@login_required
+@login_required(login_url='index')
 def mispropuestas(request):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
@@ -92,7 +92,7 @@ def mispropuestas(request):
 
     return render(request,'lugar/mispropuestas.html', context)
 
-@login_required
+@login_required(login_url='index')
 def cancelarpropuesta(request, propuesta_id):
 
     if request.method == 'POST':
@@ -116,7 +116,38 @@ def cancelarpropuesta(request, propuesta_id):
 
     return render(request,'lugar/mispropuestas.html', context)
 
-@login_required
+@login_required(login_url='index')
+def cancelarpropuestaelegida(request, propuesta_id):
+
+    if request.method == 'POST':
+        propuesta = get_object_or_404(LugaresTocata, pk=propuesta_id)
+        tocata = Tocata.objects.get(pk=propuesta.tocataabierta.tocata.id)
+        print(propuesta)
+        print(tocata)
+
+        propuesta.estado = parToca['cancelado']
+        propuesta.save()
+
+        tocata.estado = parToca['suspendido']
+        tocata.save()
+
+        messages.success(request, 'Solo puede cancelar un propuesta cuando esta pendiente')
+
+
+    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
+    mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
+
+    context = {
+        'tocatas_h': tocatas,
+        'artistas_h': artistas,
+        'usuario': usuario,
+        'mispropuestas': mispropuestas,
+    }
+
+    return render(request,'lugar/mispropuestas.html', context)
+
+@login_required(login_url='index')
 def borrarpropuesta(request, propuesta_id):
 
     if request.method == 'POST':
@@ -140,7 +171,7 @@ def borrarpropuesta(request, propuesta_id):
 
     return render(request,'lugar/mispropuestas.html', context)
 
-@login_required
+@login_required(login_url='index')
 def borrarlugar(request, lugar_id):
 
     if request.method == 'POST':
@@ -150,7 +181,7 @@ def borrarlugar(request, lugar_id):
 
     return redirect('mislugares')
 
-@login_required
+@login_required(login_url='index')
 def carga_comunas_agregar(request):
 
     region_id = request.GET.get('region')
@@ -160,7 +191,7 @@ def carga_comunas_agregar(request):
     }
     return render(request, 'lugar/comuna_dropdown_list_options_agregar.html', context)
 
-@login_required
+@login_required(login_url='index')
 def carga_comunas_actualizar(request):
 
     region_id = request.GET.get('region')

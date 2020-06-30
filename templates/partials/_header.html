@@ -104,6 +104,7 @@
                                     <li><a href="javascript:{document.getElementById('salir').submit()}">Salir</a>
                                       <form class="" id="salir" action="{% url 'salir' %}" method="POST">
                                         {% csrf_token %}
+                                        <input type="hidden" name="next" value="{{request.path|urlencode}}">
                                         <input type="hidden">
                                       </form>
                                     </li>
