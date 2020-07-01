@@ -27,30 +27,74 @@ def tocatas(request):
 
     toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
 
-    criterio = 'fechapublicacion'
+    orden = 'fecha'
+    filtro = 'todas'
     if request.method == 'POST':
-        criterio = request.POST.get('criterio')
-    print(criterio)
-    tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
-    for tocata in tocatas:
-        dif = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)
-        if dif.days <= parToca['diasNuevoTocata']:
-            tocata.nuevo = 'SI'
-        else:
-            tocata.nuevo = 'NO'
-        tocata.asistentes_dif = tocata.asistentes_max - tocata.asistentes_total
-        tocata.tipo = 'cerrada'
+        orden = request.POST.get('orden')
+        filtro = request.POST.get('filtro')
 
-    tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
-    for tocataabierta in tocatasabiertas:
-        dif = datetime.today() - tocataabierta.fecha_crea.replace(tzinfo=None)
-        if dif.days <= parToca['diasNuevoTocata']:
-            tocataabierta.nuevo = 'SI'
-        else:
-            tocataabierta.nuevo = 'NO'
-        tocataabierta.tipo = 'abierta'
+    if filtro == 'todas':
+        #tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],]).order_by(orden)
+        tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
+        #if orden != 'costo':
+        #    tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],]).order_by(orden)
+        #else:
+        #    tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],]).order_by('nombre')
+        tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
 
-    result_list = list(chain(tocatas, tocatasabiertas))
+        for tocata in tocatas:
+            dif = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)
+            if dif.days <= parToca['diasNuevoTocata']:
+                tocata.nuevo = 'SI'
+            else:
+                tocata.nuevo = 'NO'
+            tocata.asistentes_dif = tocata.asistentes_max - tocata.asistentes_total
+            tocata.tipo = 'cerrada'
+
+        for tocataabierta in tocatasabiertas:
+            dif = datetime.today() - tocataabierta.fecha_crea.replace(tzinfo=None)
+            if dif.days <= parToca['diasNuevoTocata']:
+                tocataabierta.nuevo = 'SI'
+            else:
+                tocataabierta.nuevo = 'NO'
+            tocataabierta.tipo = 'abierta'
+
+        if orden != 'costo':
+            result_list = list(chain(tocatas, tocatasabiertas))
+            result_list = sorted(result_list, key=operator.attrgetter(orden))
+        else:
+            tocatas.order_by(orden)
+            result_list = list(chain(tocatas, tocatasabiertas))
+
+    elif filtro == 'cerradas':
+        tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],]).order_by(orden)
+
+        for tocata in tocatas:
+            dif = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)
+            if dif.days <= parToca['diasNuevoTocata']:
+                tocata.nuevo = 'SI'
+            else:
+                tocata.nuevo = 'NO'
+            tocata.asistentes_dif = tocata.asistentes_max - tocata.asistentes_total
+            tocata.tipo = 'cerrada'
+
+        result_list = list(chain(tocatas))
+    elif filtro == 'abiertas':
+
+        if orden != 'costo':
+            tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],]).order_by(orden)
+        else:
+            tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],]).order_by('nombre')
+
+        for tocataabierta in tocatasabiertas:
+            dif = datetime.today() - tocataabierta.fecha_crea.replace(tzinfo=None)
+            if dif.days <= parToca['diasNuevoTocata']:
+                tocataabierta.nuevo = 'SI'
+            else:
+                tocataabierta.nuevo = 'NO'
+            tocataabierta.tipo = 'abierta'
+
+        result_list = list(chain(tocatasabiertas))
 
     paginador = Paginator(result_list, parToca['tocatas_pag'])
     pagina = request.GET.get('page')
@@ -61,6 +105,8 @@ def tocatas(request):
         'artistas_h': art_head,
         'usuario': usuario,
         'tocatas_vista': pagina_tocatas,
+        'orden': orden,
+        'filtro': filtro,
     }
 
     return render(request, 'tocata/tocatas.html', context)

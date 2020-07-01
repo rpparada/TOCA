@@ -7,28 +7,47 @@
 
 {% if tocatas_vista %}
 <!-- Shop products -->
-<section>
+<section id="page-content">
     <div class="container">
+      <form id="ordenfiltro" action="{% url 'tocatas' %}" method="POST">
+        {% csrf_token %}
         <div class="row m-b-20">
-            <div class="col-lg-6 p-t-10 m-b-20">
+            <div class="col-lg-5 p-t-10 m-b-20">
                 <h3 class="m-b-20">A Monochromatic Spring ’15</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sit, exercitationem, consequuntur, assumenda iusto eos commodi alias.</p>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-3">
                 <div class="order-select">
                     <h6>Ordenar por:</h6>
                     <p>Showing 1&ndash;12 of 25 results</p>
-                    <form id="paraordenar" action="{% url 'tocatas' %}" method="POST">
-                      {% csrf_token %}
-                        <select name="criterio" class="form-control" onchange="change()">
-                            <option value="fechapublicacion" selected="selected">Fecha Publicacion</option>
-                            <option value="tipo">Tipo</option>
-                            <option value="artista">Artista</option>
+                        <select class="form-control" name="orden" onchange="changeorden()">
+                            <option value="fecha" {% if orden == 'fecha' %} selected="selected" {% endif %}>Fecha Evento</option>
+                            <option value="costo" {% if orden == 'costo' %} selected="selected" {% endif %}>Precio</option>
+                            <option value="nombre" {% if orden == 'nombre' %} selected="selected" {% endif %}>Nombre Tocarta</option>
+                            <option value="artista" {% if orden == 'artista' %} selected="selected" {% endif %}>Nombre Artista</option>
                         </select>
-                    </form>
                 </div>
             </div>
-        </div>
+            <div class="col-lg-3">
+                <div class="order-select">
+                    <h6>Filtrar por:</h6>
+                    <p>From 0 - 190$</p>
+                        <select class="form-control" name="filtro" onchange="changefiltro()">
+                            <option value="todas" {% if filtro == 'todas' %} selected="selected" {% endif %}>Todas</option>
+                            <option value="cerradas" {% if filtro == 'cerradas' %} selected="selected" {% endif %}>Con lugar definido</option>
+                            <option value="abiertas" {% if filtro == 'abiertas' %} selected="selected" {% endif %}>Buscando donde tocar</option>
+                        </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-1">
+                  <br>
+                  <br>
+                  <br>
+                  <button type="submit" class="btn btn-sm">Aplica</button>
+                </div>
+            </div>
+          </div>
+        </form>
 
         <!--Product list-->
         <div class="shop">
@@ -45,13 +64,13 @@
                             {% endif %}
                         </div>
                         <div class="product-description">
-                            <div class="product-category">{{ tocata_vista.artista.nombre }}, {{ tocata_vista.comuna }}</div>
+                            <div class="product-category">{{ tocata_vista.artista.nombre }}, {{ tocata_vista.region }}, {{ tocata_vista.comuna }}</div>
                             <div class="product-title">
                                 <h3><a href="{% url 'tocata' tocata_vista.id %}">{{ tocata_vista.nombre|truncatechars:20 }}</a></h3>
                             </div>
                             <div class="product-price"><ins>$ {{ tocata_vista.costo|intcomma }}</ins>
                             </div>
-                            <div class="product-reviews"><a href="#">Aun quedan {{ tocata_vista.asistentes_dif|intcomma }} entradas a la venta</a>
+                            <div class="product-reviews">Cuando: {{ tocata_vista.fecha }} {{ tocata_vista.hora }}
                             </div>
                         </div>
                     </div>
@@ -70,7 +89,9 @@
                         <div class="product-description">
                             <div class="product-category">{{ tocata_vista.artista.nombre }}, {{ tocata_vista.region }}, {{ tocata_vista.comuna }}</div>
                             <div class="product-title">
-                                <h3><a href="{% url 'tocataabierta' tocata_vista.id %}">{{ tocata_vista.nombre|truncatechars:20 }}</a></h3>
+                                <h3><a href="{% url 'tocata' tocata_vista.id %}">{{ tocata_vista.nombre|truncatechars:20 }}</a></h3>
+                            </div>
+                            <div class="product-reviews">Cuando: {{ tocata_vista.fecha }} {{ tocata_vista.hora }}
                             </div>
                         </div>
                     </div>
@@ -146,11 +167,5 @@
     </div>
 </section>
 <!-- end: DELIVERY INFO -->
-
-<script>
-function change(){
-    document.getElementById("paraordenar").submit();
-}
-</script>
 
 {% endblock %}
