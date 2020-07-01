@@ -27,6 +27,10 @@ def tocatas(request):
 
     toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
 
+    criterio = 'fechapublicacion'
+    if request.method == 'POST':
+        criterio = request.POST.get('criterio')
+    print(criterio)
     tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
     for tocata in tocatas:
         dif = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)
@@ -47,14 +51,7 @@ def tocatas(request):
         tocataabierta.tipo = 'abierta'
 
     result_list = list(chain(tocatas, tocatasabiertas))
-    print('tocatas')
-    print(tocatas)
-    print('tocatas abiertas')
-    print(tocatasabiertas)
-    print('union')
-    print(result_list)
 
-    #paginador = Paginator(tocatas, parToca['tocatas_pag'])
     paginador = Paginator(result_list, parToca['tocatas_pag'])
     pagina = request.GET.get('page')
     pagina_tocatas = paginador.get_page(pagina)

@@ -5,27 +5,6 @@
 {% block content %}
 {% include 'partials/_alerts.html' %}
 
-<!-- Page title -->
-<section id="page-title">
-    <div class="container">
-        <div class="page-title">
-            <h1>Shop</h1>
-            <span>Shop 3 columns version</span>
-        </div>
-        <div class="breadcrumb">
-            <ul>
-                <li><a href="#">Home</a>
-                </li>
-                <li><a href="#">Shop</a>
-                </li>
-                <li class="active"><a href="#">3 columns version</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</section>
-<!-- end: Page title -->
-
 {% if tocatas_vista %}
 <!-- Shop products -->
 <section>
@@ -35,32 +14,16 @@
                 <h3 class="m-b-20">A Monochromatic Spring ’15</h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, sit, exercitationem, consequuntur, assumenda iusto eos commodi alias.</p>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-6">
                 <div class="order-select">
-                    <h6>Sort by</h6>
+                    <h6>Ordenar por:</h6>
                     <p>Showing 1&ndash;12 of 25 results</p>
-                    <form method="get">
-                        <select class="form-control">
-                            <option value="order" selected="selected">Default sorting</option>
-                            <option value="popularity">Sort by popularity</option>
-                            <option value="rating">Sort by average rating</option>
-                            <option value="date">Sort by newness</option>
-                            <option value="price">Sort by price: low to high</option>
-                            <option value="price-desc">Sort by price: high to low</option>
-                        </select>
-                    </form>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="order-select">
-                    <h6>Sort by Price</h6>
-                    <p>From 0 - 190$</p>
-                    <form method="get">
-                        <select class="form-control">
-                            <option value="" selected="selected">0$ - 50$</option>
-                            <option value="">51$ - 90$</option>
-                            <option value="">91$ - 120$</option>
-                            <option value="">121$ - 200$</option>
+                    <form id="paraordenar" action="{% url 'tocatas' %}" method="POST">
+                      {% csrf_token %}
+                        <select name="criterio" class="form-control" onchange="change()">
+                            <option value="fechapublicacion" selected="selected">Fecha Publicacion</option>
+                            <option value="tipo">Tipo</option>
+                            <option value="artista">Artista</option>
                         </select>
                     </form>
                 </div>
@@ -71,6 +34,7 @@
         <div class="shop">
             <div class="grid-layout grid-3-columns" data-item="grid-item">
               {% for tocata_vista in tocatas_vista %}
+                {% if tocata_vista.tipo == 'cerrada' %}
                 <div class="grid-item">
                     <div class="product">
                         <div class="product-image">
@@ -78,9 +42,6 @@
                             </a>
                             {% if tocata_vista.nuevo == 'SI' %}
                             <span class="product-new">NUEVA</span>
-                            {% endif %}
-                            {% if tocata_vista.tipo == 'abierta' %}
-                            <span class="product-sale-off">BUSCANDO</span>
                             {% endif %}
                         </div>
                         <div class="product-description">
@@ -95,6 +56,26 @@
                         </div>
                     </div>
                 </div>
+                {% else %}
+                <div class="grid-item">
+                    <div class="product">
+                        <div class="product-image">
+                            <a href="{% url 'tocataabierta' tocata_vista.id %}"><img alt="Shop product image!" src="{{ tocata_vista.flayer_380_507.url }}">
+                            </a>
+                            {% if tocata_vista.nuevo == 'SI' %}
+                            <span class="product-new">NUEVA</span>
+                            {% endif %}
+                            <span class="product-sale-off">BUSCANDO</span>
+                        </div>
+                        <div class="product-description">
+                            <div class="product-category">{{ tocata_vista.artista.nombre }}, {{ tocata_vista.region }}, {{ tocata_vista.comuna }}</div>
+                            <div class="product-title">
+                                <h3><a href="{% url 'tocataabierta' tocata_vista.id %}">{{ tocata_vista.nombre|truncatechars:20 }}</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
               {% endfor %}
             </div>
 
@@ -166,5 +147,10 @@
 </section>
 <!-- end: DELIVERY INFO -->
 
+<script>
+function change(){
+    document.getElementById("paraordenar").submit();
+}
+</script>
 
 {% endblock %}

@@ -30,7 +30,7 @@ def artista(request, artista_id):
     artista = get_object_or_404(Artista, pk=artista_id)
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
 
-    tocatas_art = Tocata.objects.filter(estado__in=[parToca['inicial'],parToca['publicado'],parToca['confirmado'],])
+    tocatas_art = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado']])
     tocatas_art = tocatas_art.filter(artista=artista_id)
     hoy = datetime.today()
     for tocata_art in tocatas_art:
