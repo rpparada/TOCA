@@ -18,19 +18,26 @@
             <div class="col-lg-3">
                 <div class="order-select">
                     <h6>Ordenar por:</h6>
-                    <p>Showing 1&ndash;12 of 25 results</p>
                         <select class="form-control" name="orden" onchange="changeorden()">
                             <option value="fecha" {% if orden == 'fecha' %} selected="selected" {% endif %}>Fecha Evento</option>
                             <option value="costo" {% if orden == 'costo' %} selected="selected" {% endif %}>Precio</option>
                             <option value="nombre" {% if orden == 'nombre' %} selected="selected" {% endif %}>Nombre Tocarta</option>
-                            <option value="artista" {% if orden == 'artista' %} selected="selected" {% endif %}>Nombre Artista</option>
+                            <option value="artista__nombre" {% if orden == 'artista__nombre' %} selected="selected" {% endif %}>Nombre Artista</option>
                         </select>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-1">
+                <div class="order-select">
+                    <h6> -- ↑ ↓ -- </h6>
+                        <select class="form-control" name="direccion" onchange="changefiltro()">
+                            <option value="asc" {% if direccion == 'asc' %} selected="selected" {% endif %}>ASC</option>
+                            <option value="des" {% if direccion == 'des' %} selected="selected" {% endif %}>DES</option>
+                        </select>
+                </div>
+            </div>
+            <div class="col-lg-2">
                 <div class="order-select">
                     <h6>Filtrar por:</h6>
-                    <p>From 0 - 190$</p>
                         <select class="form-control" name="filtro" onchange="changefiltro()">
                             <option value="todas" {% if filtro == 'todas' %} selected="selected" {% endif %}>Todas</option>
                             <option value="cerradas" {% if filtro == 'cerradas' %} selected="selected" {% endif %}>Con lugar definido</option>
@@ -40,9 +47,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-1">
-                  <br>
-                  <br>
-                  <br>
+                  <h6> <br> </h6>
                   <button type="submit" class="btn btn-sm">Aplica</button>
                 </div>
             </div>
@@ -89,7 +94,7 @@
                         <div class="product-description">
                             <div class="product-category">{{ tocata_vista.artista.nombre }}, {{ tocata_vista.region }}, {{ tocata_vista.comuna }}</div>
                             <div class="product-title">
-                                <h3><a href="{% url 'tocata' tocata_vista.id %}">{{ tocata_vista.nombre|truncatechars:20 }}</a></h3>
+                                <h3><a href="{% url 'tocataabierta' tocata_vista.id %}">{{ tocata_vista.nombre|truncatechars:20 }}</a></h3>
                             </div>
                             <div class="product-reviews">Cuando: {{ tocata_vista.fecha }} {{ tocata_vista.hora }}
                             </div>

@@ -51,6 +51,7 @@
         <div class="shop">
             <div class="grid-layout grid-3-columns" data-item="grid-item">
               {% for item in resultado %}
+                {% if item.tipo == 'cerrada' %}
                 <div class="grid-item">
                     <div class="product">
                         <div class="product-image">
@@ -59,25 +60,71 @@
                             {% if item.nuevo == 'SI' %}
                             <span class="product-new">NUEVA</span>
                             {% endif %}
-                            {% if item.lugar_def == 'AB' %}
-                            <span class="product-sale-off">BUSCANDO</span>
-                            {% endif %}
                         </div>
                         <div class="product-description">
-                            <div class="product-category">{{ item.artista.nombre }}, {{ item.lugar.region }}, {{ item.lugar.comuna }}</div>
+                            <div class="product-category">{{ item.artista.nombre }}, {{ item.region }}, {{ item.comuna }}</div>
                             <div class="product-title">
                                 <h3><a href="{% url 'tocata' item.id %}">{{ item.nombre|truncatechars:20 }}</a></h3>
                             </div>
                             <div class="product-price"><ins>$ {{ item.costo|intcomma }}</ins>
                             </div>
-                            <div class="product-reviews"><a href="#">Aun quedan {{ tocata.asistentes_diff|intcomma }} entradas a la venta</a>
+                            <div class="product-reviews">Cuando: {{ item.fecha }} {{ item.hora }}
                             </div>
                         </div>
                     </div>
                 </div>
+                {% elif item.tipo == 'abierta' %}
+                <div class="grid-item">
+                    <div class="product">
+                        <div class="product-image">
+                            <a href="{% url 'tocataabierta' item.id %}"><img alt="Shop product image!" src="{{ item.flayer_380_507.url }}">
+                            </a>
+                            {% if item.nuevo == 'SI' %}
+                            <span class="product-new">NUEVA</span>
+                            {% endif %}
+                            <span class="product-sale-off">BUSCANDO</span>
+                        </div>
+                        <div class="product-description">
+                            <div class="product-category">{{ item.artista.nombre }}, {{ item.region }}, {{ item.comuna }}</div>
+                            <div class="product-title">
+                                <h3><a href="{% url 'tocataabierta' item.id %}">{{ item.nombre|truncatechars:20 }}</a></h3>
+                            </div>
+                            <div class="product-reviews">Cuando: {{ item.fecha }} {{ item.hora }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% elif item.tipo == 'artista' %}
+                <div class="grid-item">
+                  <div class="team-member">
+                      <div class="team-image">
+                          <img src="{{ item.foto_525_350.url }}">
+                      </div>
+                      <div class="team-desc">
+                          <h3>{{ item.nombre }}</h3>
+                          <span>{{ item.habilidades }}</span>
+                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing tristique hendrerit laoreet. </p>
+                          <div class="align-center">
+                              <a class="btn btn-xs btn-slide btn-light" href="#">
+                                  <i class="fab fa-facebook-f"></i>
+                                  <span>Facebook</span></a>
+                              <a class="btn btn-xs btn-slide btn-light" href="#" data-width="100">
+                                  <i class="fab fa-twitter"></i>
+                                  <span>Twitter</span></a>
+                              <a class="btn btn-xs btn-slide btn-light" href="#" data-width="118">
+                                  <i class="fab fa-instagram"></i>
+                                  <span>Instagram</span></a>
+                              <a class="btn btn-xs btn-slide btn-light" href="mailto:#" data-width="80">
+                                  <i class="icon-mail"></i>
+                                  <span>Mail</span></a>
+                          </div>
+                      </div>
+                  </div>
+
+                </div>
+                {% endif %}
               {% endfor %}
             </div>
-
 
             <!-- Pagination -->
             {% if resultado.has_other_pages %}

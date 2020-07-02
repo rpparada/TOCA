@@ -1,14 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
+
+from datetime import datetime
+from itertools import chain
 
 from tocata.models import Tocata, TocataAbierta
 from artista.models import Artista
 from usuario.models import Usuario
 from home.models import Testimonios
-
-from django.db.models import Q
-from datetime import datetime
 
 from toca.parametros import parToca
 
@@ -45,17 +46,18 @@ def busqueda(request):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
 
-    queryset_list_tocatas = Tocata.objects.filter(estado__in=[parToca['inicial'],parToca['publicado'],parToca['confirmado'],])
+    queryset_list_tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
+    queryset_list_tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
+    queryset_list_artistas = Artista.objects.filter(estado=parToca['disponible'])
 
     if 'q' in request.GET:
         busqueda = request.GET['q']
         if busqueda:
-            queryset_list_tocatas = Tocata.objects.filter(
+            queryset_list_tocatas = queryset_list_tocatas.filter(
                 Q(nombre__icontains=busqueda) |
                 Q(descripción__icontains=busqueda) |
                 Q(artista__nombre__icontains=busqueda)
             )
-
             for tocata in queryset_list_tocatas:
                 diff = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)
                 if diff.days <= parToca['diasNuevoTocata']:
@@ -63,8 +65,32 @@ def busqueda(request):
                 else:
                     tocata.nuevo = 'NO'
                 tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
+                tocata.tipo = 'cerrada'
 
-    paginador = Paginator(queryset_list_tocatas, parToca['tocatas_pag'])
+            queryset_list_tocatasabiertas = queryset_list_tocatasabiertas.filter(
+                Q(nombre__icontains=busqueda) |
+                Q(descripción__icontains=busqueda) |
+                Q(artista__nombre__icontains=busqueda)
+            )
+            for tocataabierta in queryset_list_tocatasabiertas:
+                diff = datetime.today() - tocataabierta.fecha_crea.replace(tzinfo=None)
+                if diff.days <= parToca['diasNuevoTocata']:
+                    tocataabierta.nuevo = 'SI'
+                else:
+                    tocataabierta.nuevo = 'NO'
+                tocataabierta.tipo = 'abierta'
+
+            queryset_list_artistas = queryset_list_artistas.filter(
+                Q(nombre__icontains=busqueda) |
+                Q(descripción__icontains=busqueda)
+            )
+            for artista in queryset_list_artistas:
+                artista.nuevo = 'NO'
+                artista.tipo = 'artista'
+
+            result_list = list(chain(queryset_list_tocatas, queryset_list_tocatasabiertas, queryset_list_artistas))
+
+    paginador = Paginator(result_list, parToca['tocatas_pag'])
     pagina = request.GET.get('page')
 
     try:
@@ -80,7 +106,7 @@ def busqueda(request):
         'artistas_h': artistas,
         'usuario': usuario,
         'resultado': pagina_search,
-        'valores': request.GET,
+        #'valores': request.GET,
     }
 
     return render(request, 'home/busqueda.html', context)
