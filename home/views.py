@@ -46,13 +46,29 @@ def busqueda(request):
 
     tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
 
-    queryset_list_tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
-    queryset_list_tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
-    queryset_list_artistas = Artista.objects.filter(estado=parToca['disponible'])
+    orden = 'fecha'
+    filtro = 'todas'
+    direccion = 'asc'
+    busqueda = ' '
+    if request.method == 'POST':
+        orden = request.POST.get('orden')
+        filtro = request.POST.get('filtro')
+        direccion = request.POST.get('direccion')
+        busqueda = request.POST.get('q2')
+
+    if direccion == 'des':
+        orden = '-' + orden
+
+    queryset_list_tocatas = Tocata.objects.none()
+    queryset_list_tocatasabiertas = TocataAbierta.objects.none()
+    queryset_list_artistas = Artista.objects.none()
 
     if 'q' in request.GET:
         busqueda = request.GET['q']
-        if busqueda:
+
+    if busqueda:
+        if filtro == 'todas':
+            queryset_list_tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],]).order_by(orden)
             queryset_list_tocatas = queryset_list_tocatas.filter(
                 Q(nombre__icontains=busqueda) |
                 Q(descripción__icontains=busqueda) |
@@ -67,6 +83,11 @@ def busqueda(request):
                 tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
                 tocata.tipo = 'cerrada'
 
+            if orden != 'costo' and orden != '-costo':
+                queryset_list_tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],]).order_by(orden)
+            else:
+                queryset_list_tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],]).order_by('fecha')
+
             queryset_list_tocatasabiertas = queryset_list_tocatasabiertas.filter(
                 Q(nombre__icontains=busqueda) |
                 Q(descripción__icontains=busqueda) |
@@ -80,15 +101,67 @@ def busqueda(request):
                     tocataabierta.nuevo = 'NO'
                 tocataabierta.tipo = 'abierta'
 
+            queryset_list_artistas = Artista.objects.filter(estado=parToca['disponible']).order_by('nombre')
             queryset_list_artistas = queryset_list_artistas.filter(
                 Q(nombre__icontains=busqueda) |
                 Q(descripción__icontains=busqueda)
             )
             for artista in queryset_list_artistas:
-                artista.nuevo = 'NO'
+                diff = datetime.today() - artista.fecha_crea.replace(tzinfo=None)
+                if diff.days <= parToca['diasNuevoArtista']:
+                    artista.nuevo = 'SI'
+                else:
+                    artista.nuevo = 'NO'
                 artista.tipo = 'artista'
 
-            result_list = list(chain(queryset_list_tocatas, queryset_list_tocatasabiertas, queryset_list_artistas))
+        elif filtro == 'cerradas':
+            queryset_list_tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],]).order_by(orden)
+            queryset_list_tocatas = queryset_list_tocatas.filter(
+                Q(nombre__icontains=busqueda) |
+                Q(descripción__icontains=busqueda) |
+                Q(artista__nombre__icontains=busqueda)
+            )
+            for tocata in queryset_list_tocatas:
+                diff = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)
+                if diff.days <= parToca['diasNuevoTocata']:
+                    tocata.nuevo = 'SI'
+                else:
+                    tocata.nuevo = 'NO'
+                tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
+                tocata.tipo = 'cerrada'
+        elif filtro == 'abiertas':
+            if orden != 'costo' and orden != '-costo':
+                queryset_list_tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],]).order_by(orden)
+            else:
+                queryset_list_tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],]).order_by('fecha')
+
+            queryset_list_tocatasabiertas = queryset_list_tocatasabiertas.filter(
+                Q(nombre__icontains=busqueda) |
+                Q(descripción__icontains=busqueda) |
+                Q(artista__nombre__icontains=busqueda)
+            )
+            for tocataabierta in queryset_list_tocatasabiertas:
+                diff = datetime.today() - tocataabierta.fecha_crea.replace(tzinfo=None)
+                if diff.days <= parToca['diasNuevoTocata']:
+                    tocataabierta.nuevo = 'SI'
+                else:
+                    tocataabierta.nuevo = 'NO'
+                tocataabierta.tipo = 'abierta'
+        elif filtro == 'artistas':
+            queryset_list_artistas = Artista.objects.filter(estado=parToca['disponible']).order_by('nombre')
+            queryset_list_artistas = queryset_list_artistas.filter(
+                Q(nombre__icontains=busqueda) |
+                Q(descripción__icontains=busqueda)
+            )
+            for artista in queryset_list_artistas:
+                diff = datetime.today() - artista.fecha_crea.replace(tzinfo=None)
+                if diff.days <= parToca['diasNuevoArtista']:
+                    artista.nuevo = 'SI'
+                else:
+                    artista.nuevo = 'NO'
+                artista.tipo = 'artista'
+
+    result_list = list(chain(queryset_list_tocatas, queryset_list_tocatasabiertas, queryset_list_artistas))
 
     paginador = Paginator(result_list, parToca['tocatas_pag'])
     pagina = request.GET.get('page')
@@ -100,13 +173,18 @@ def busqueda(request):
     except EmptyPage:
         pagina_search = paginador.page(paginador.num_pages)
 
-    print(pagina_search)
+    if orden[0] == '-':
+        orden = orden[1:]
+        
     context = {
         'tocatas_h': tocatas,
         'artistas_h': artistas,
         'usuario': usuario,
         'resultado': pagina_search,
-        #'valores': request.GET,
+        'valores': busqueda,
+        'orden': orden,
+        'filtro': filtro,
+        'direccion': direccion,
     }
 
     return render(request, 'home/busqueda.html', context)

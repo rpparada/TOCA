@@ -46,8 +46,8 @@
                                 <ul class="dropdown-menu">
                                   {% for tocata_h in tocatas_h %}
                                     <li><a href="{% url 'tocata' tocata_h.id %}">{{ tocata_h.nombre|truncatewords:3 }}
-                                      {% if tocata.nuevo == 'SI' %}
-                                      <span class="badge badge-danger">NEW</span></a></li>
+                                      {% if tocata_h.nuevo == 'SI' %}
+                                      <span class="badge badge-danger">Nueva</span></a></li>
                                       {% endif %}
                                   {% endfor %}
                                   <li><a href="{% url 'tocatas' %}">Mas ...</a></li>
@@ -62,8 +62,8 @@
                                 <ul class="dropdown-menu">
                                   {% for artista_h in artistas_h %}
                                     <li><a href="{% url 'artista' artista_h.id %}">{{ artista_h.nombre|truncatewords:3 }}
-                                      {% if artista.nuevo == 'SI' %}
-                                      <span class="badge badge-danger">NEW</span></a></li>
+                                      {% if artista_h.nuevo == 'SI' %}
+                                      <span class="badge badge-danger">Nuevo</span></a></li>
                                       {% endif %}
                                   {% endfor %}
                                   <li><a href="{% url 'artistas' %}">Mas ...</a></li>
