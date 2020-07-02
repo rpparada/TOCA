@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django.contrib.humanize',
     'sorl.thumbnail',
+    'rest_framework',
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
