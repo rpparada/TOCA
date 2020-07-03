@@ -5,6 +5,7 @@ from django.db.models import Q
 
 from datetime import datetime
 from itertools import chain
+from operator import attrgetter
 
 from tocata.models import Tocata, TocataAbierta
 from artista.models import Artista
@@ -56,19 +57,15 @@ def busqueda(request):
         direccion = request.POST.get('direccion')
         busqueda = request.POST.get('q2')
 
-    if direccion == 'des':
-        orden = '-' + orden
-
     queryset_list_tocatas = Tocata.objects.none()
     queryset_list_tocatasabiertas = TocataAbierta.objects.none()
-    queryset_list_artistas = Artista.objects.none()
 
     if 'q' in request.GET:
         busqueda = request.GET['q']
 
     if busqueda:
         if filtro == 'todas':
-            queryset_list_tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],]).order_by(orden)
+            queryset_list_tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
             queryset_list_tocatas = queryset_list_tocatas.filter(
                 Q(nombre__icontains=busqueda) |
                 Q(descripción__icontains=busqueda) |
@@ -83,11 +80,7 @@ def busqueda(request):
                 tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
                 tocata.tipo = 'cerrada'
 
-            if orden != 'costo' and orden != '-costo':
-                queryset_list_tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],]).order_by(orden)
-            else:
-                queryset_list_tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],]).order_by('fecha')
-
+            queryset_list_tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
             queryset_list_tocatasabiertas = queryset_list_tocatasabiertas.filter(
                 Q(nombre__icontains=busqueda) |
                 Q(descripción__icontains=busqueda) |
@@ -100,22 +93,9 @@ def busqueda(request):
                 else:
                     tocataabierta.nuevo = 'NO'
                 tocataabierta.tipo = 'abierta'
-
-            queryset_list_artistas = Artista.objects.filter(estado=parToca['disponible']).order_by('nombre')
-            queryset_list_artistas = queryset_list_artistas.filter(
-                Q(nombre__icontains=busqueda) |
-                Q(descripción__icontains=busqueda)
-            )
-            for artista in queryset_list_artistas:
-                diff = datetime.today() - artista.fecha_crea.replace(tzinfo=None)
-                if diff.days <= parToca['diasNuevoArtista']:
-                    artista.nuevo = 'SI'
-                else:
-                    artista.nuevo = 'NO'
-                artista.tipo = 'artista'
 
         elif filtro == 'cerradas':
-            queryset_list_tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],]).order_by(orden)
+            queryset_list_tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
             queryset_list_tocatas = queryset_list_tocatas.filter(
                 Q(nombre__icontains=busqueda) |
                 Q(descripción__icontains=busqueda) |
@@ -129,12 +109,9 @@ def busqueda(request):
                     tocata.nuevo = 'NO'
                 tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
                 tocata.tipo = 'cerrada'
-        elif filtro == 'abiertas':
-            if orden != 'costo' and orden != '-costo':
-                queryset_list_tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],]).order_by(orden)
-            else:
-                queryset_list_tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],]).order_by('fecha')
 
+        elif filtro == 'abiertas':
+            queryset_list_tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
             queryset_list_tocatasabiertas = queryset_list_tocatasabiertas.filter(
                 Q(nombre__icontains=busqueda) |
                 Q(descripción__icontains=busqueda) |
@@ -147,21 +124,11 @@ def busqueda(request):
                 else:
                     tocataabierta.nuevo = 'NO'
                 tocataabierta.tipo = 'abierta'
-        elif filtro == 'artistas':
-            queryset_list_artistas = Artista.objects.filter(estado=parToca['disponible']).order_by('nombre')
-            queryset_list_artistas = queryset_list_artistas.filter(
-                Q(nombre__icontains=busqueda) |
-                Q(descripción__icontains=busqueda)
-            )
-            for artista in queryset_list_artistas:
-                diff = datetime.today() - artista.fecha_crea.replace(tzinfo=None)
-                if diff.days <= parToca['diasNuevoArtista']:
-                    artista.nuevo = 'SI'
-                else:
-                    artista.nuevo = 'NO'
-                artista.tipo = 'artista'
 
-    result_list = list(chain(queryset_list_tocatas, queryset_list_tocatasabiertas, queryset_list_artistas))
+    if direccion == 'asc':
+        result_list = sorted(chain(queryset_list_tocatas, queryset_list_tocatasabiertas,), key=attrgetter(orden), reverse=False)
+    else:
+        result_list = sorted(chain(queryset_list_tocatas, queryset_list_tocatasabiertas,), key=attrgetter(orden), reverse=True)
 
     paginador = Paginator(result_list, parToca['tocatas_pag'])
     pagina = request.GET.get('page')
