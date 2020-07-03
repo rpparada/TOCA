@@ -175,7 +175,7 @@ def busqueda(request):
 
     if orden[0] == '-':
         orden = orden[1:]
-        
+
     context = {
         'tocatas_h': tocatas,
         'artistas_h': artistas,
