@@ -16,7 +16,7 @@
 
             <!-- Search -->
             <div id="search"><a id="btn-search-close" class="btn-search-close" aria-label="Close search form"><i class="icon-x"></i></a>
-                <form class="search-form" action="{% url 'busqueda_test' %}" method="get">
+                <form class="search-form" action="{% url 'busqueda' %}" method="get">
                     <input id="busquedacolortext" class="form-control" name="q" type="text" value="{{ valores.q }}" placeholder="Type & Search..." />
                     <span class="text-muted">Start typing & press "Enter" or "ESC" to close</span>
                 </form>
