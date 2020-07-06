@@ -34,6 +34,7 @@ if DEBUG == True:
 # Application definition
 
 INSTALLED_APPS = [
+    'cobro.apps.CobroConfig',
     'artista.apps.ArtistaConfig',
     'lugar.apps.LugarConfig',
     'usuario.apps.UsuarioConfig',

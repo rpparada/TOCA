@@ -48,6 +48,10 @@ parToca = {
     # Testimonios Objetivos
     'artistas': 'AR',
     'usuarios': 'US',
+    # Estado elementos carro
+    # - 'pendiente': 'PE',
+    'pagado': 'PA',
+    # - 'cancelado'; 'CA'
 }
 
 parLugaresToc = {
@@ -147,5 +151,13 @@ parTestimonios = {
     'objetivos_tipos': [
         (parToca['artistas'], 'Artistas'),
         (parToca['usuarios'], 'Usuarios'),
+    ]
+}
+
+parCarro = {
+    'estado_carro': [
+        (parToca['pendiente'],'Pendiente'),
+        (parToca['pagado'],'Pagado'),
+        (parToca['cancelado'],'Cancelado'),
     ]
 }

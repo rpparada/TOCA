@@ -27,6 +27,9 @@
             <div class="header-extras">
                 <ul>
                     <li> <a id="btn-search" href="#"> <i class="icon-search"></i></a> </li>
+                    {% if user.is_authenticated %}
+                    <li> <a href="{% url 'micarro' %}"> <i class="icon-shopping-cart"></i></a></li> [0]
+                    {% endif %}
                 </ul>
             </div>
             <!--end: Header Extras-->
