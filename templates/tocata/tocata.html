@@ -5,6 +5,44 @@
 {% block content %}
 {% include 'partials/_alerts.html' %}
 
+<!--Modal seleccion -->
+<div class="modal fade" id="modalag{{tocata_vista.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="{% url 'agregaracarro' tocata_vista.id %}" method="POST">
+            {% csrf_token %}
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-label">Agregar a Carro</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                      <p>¿Cuantas Entradas Quieres (máximo 2 por persona)?</p>
+                      <p hidden id="mensajerror"></p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-4 text-sm-right">Número Entradas</label>
+                    <div class="col-sm-8">
+                      <select name="numeroentradas">
+                          <option value="1">1 Entrada</option>
+                          <option value="2">2 Entradas</option>
+                      </select>
+                    </div>
+                </div>
+                <input type="hidden" name="next" value="{{ request.path }}">
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-b">Agregar</button>
+              <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
+            </div>
+          </form>
+        </div>
+    </div>
+</div>
+<!-- end: Modal -->
+
 <!-- SECTION IMAGE FULLSCREEN -->
 <section class="text-center fullscreen p-t-200 p-b-100 text-light" data-bg-image="{{ tocata_vista.flayer_1920_1280.url }}">
     <div class="bg-overlay"></div>
@@ -13,8 +51,6 @@
             <div class="text-lg">{{ tocata_vista.nombre }}</div>
             <div class="text-medium">WILL BE OPEN IN:</div>
         </div>
-
-
         <div class="countdown medium rectangle countdown-light m-b-40" data-countdown="{{ tocata_vista.fecha|date:"Y/m/d"}} {{ tocata_vista.hora|date:"H:i:s" }}" data-animate="fadeInUp"></div>
         <div data-animate-delay="600" data-animate="fadeInUp">
             <p class="lead">Mobile World Congress (MWC) is the world’s largest annual gathering for the mobile industry, organised by the GSMA, and held in the Mobile World Capital: Barcelona, Spain.
@@ -22,7 +58,7 @@
             </p>
             {% if user.is_authenticated %}
               {% if tocata_vista.estado == 'PU' %}
-              <a class="btn">COMPRA TU ENTREDA</a>
+              <a href="" data-target="#modalag{{tocata_vista.id}}" data-toggle="modal" class="btn">COMPRA TU ENTREDA</a>
               {% endif %}
             {% else %}
               {% if tocata_vista.estado == 'PU' %}

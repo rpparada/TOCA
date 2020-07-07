@@ -223,23 +223,25 @@ def salir(request):
 @login_required(login_url='index')
 def cuenta(request):
 
-    toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
+    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
     context = {
-        'tocatas_h': toc_head[:3],
-        'artistas_h': art_head[:3],
+        'tocatas_h': toc_head,
+        'artistas_h': art_head,
         'usuario': usuario,
+        'numitemscarro': numitemscarro,
     }
     return render(request, 'usuario/cuenta.html', context)
 
 @login_required(login_url='index')
 def actualizar(request):
 
-    toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
+    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
 
     context = {
-        'tocatas_h': toc_head[:3],
-        'artistas_h': art_head[:3],
+        'tocatas_h': toc_head,
+        'artistas_h': art_head,
         'usuario': usuario,
+        'numitemscarro': numitemscarro,
     }
 
     if request.method == 'POST':
@@ -286,14 +288,15 @@ def actualizarArt(request):
 
         messages.success(request,'Actualizacion Existosa')
 
-    toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
+    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
     usuario_art = UsuarioArtista.objects.filter(user=request.user)[0]
     usuario_art_form = UsuarioArtistaForm(request)
 
     context = {
-        'tocatas_h': toc_head[:3],
-        'artistas_h': art_head[:3],
+        'tocatas_h': toc_head,
+        'artistas_h': art_head,
         'usuario': usuario,
+        'numitemscarro': numitemscarro,
         'usuario_art': usuario_art,
         'usuario_art_form': usuario_art_form,
     }
@@ -303,14 +306,15 @@ def actualizarArt(request):
 @login_required(login_url='index')
 def cuentaArt(request):
 
-    toc_head, art_head, usuario = getTocatasArtistasHeadIndex(request)
+    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
     usuario_art = UsuarioArtista.objects.filter(user=request.user)[0]
     usuario_art_form = UsuarioArtistaForm()
 
     context = {
-        'tocatas_h': toc_head[:3],
-        'artistas_h': art_head[:3],
+        'tocatas_h': toc_head,
+        'artistas_h': art_head,
         'usuario': usuario,
+        'numitemscarro': numitemscarro,
         'usuario_art': usuario_art,
         'usuario_art_form': usuario_art_form,
     }

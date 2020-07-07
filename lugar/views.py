@@ -15,7 +15,7 @@ from toca.parametros import parToca
 @login_required(login_url='index')
 def agregarLugar(request):
 
-    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    tocatas, artistas, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
     lugar_form = LugarForm();
 
     if request.method == 'POST':
@@ -33,9 +33,10 @@ def agregarLugar(request):
             messages.error(request,'Error en form')
 
     context = {
-        'tocatas_h': tocatas[:3],
-        'artistas_h': artistas[:3],
+        'tocatas_h': tocatas,
+        'artistas_h': artistas,
         'usuario': usuario,
+        'numitemscarro': numitemscarro,
         'lugar_form': lugar_form,
     }
     return render(request, 'lugar/agregarlugar.html', context)
@@ -54,7 +55,7 @@ def actualizarLugar(request, lugar_id):
 @login_required(login_url='index')
 def misLugares(request):
 
-    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    tocatas, artistas, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
     mislugares = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
     tocataslugar = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
 
@@ -70,6 +71,7 @@ def misLugares(request):
         'tocatas_h': tocatas,
         'artistas_h': artistas,
         'usuario': usuario,
+        'numitemscarro': numitemscarro,
         'mislugares': mislugares,
     }
 
@@ -78,7 +80,7 @@ def misLugares(request):
 @login_required(login_url='index')
 def mispropuestas(request):
 
-    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    tocatas, artistas, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
 
     mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
     mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
@@ -87,6 +89,7 @@ def mispropuestas(request):
         'tocatas_h': tocatas,
         'artistas_h': artistas,
         'usuario': usuario,
+        'numitemscarro': numitemscarro,
         'mispropuestas': mispropuestas,
     }
 
@@ -103,7 +106,7 @@ def cancelarpropuesta(request, propuesta_id):
         else:
             messages.success(request, 'Solo puede cancelar un propuesta cuando esta pendiente')
 
-    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    tocatas, artistas, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
     mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
     mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
 
@@ -111,6 +114,7 @@ def cancelarpropuesta(request, propuesta_id):
         'tocatas_h': tocatas,
         'artistas_h': artistas,
         'usuario': usuario,
+        'numitemscarro': numitemscarro,
         'mispropuestas': mispropuestas,
     }
 
@@ -134,7 +138,7 @@ def cancelarpropuestaelegida(request, propuesta_id):
         messages.success(request, 'Solo puede cancelar un propuesta cuando esta pendiente')
 
 
-    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    tocatas, artistas, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
     mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
     mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
 
@@ -142,6 +146,7 @@ def cancelarpropuestaelegida(request, propuesta_id):
         'tocatas_h': tocatas,
         'artistas_h': artistas,
         'usuario': usuario,
+        'numitemscarro': numitemscarro,
         'mispropuestas': mispropuestas,
     }
 
@@ -158,7 +163,7 @@ def borrarpropuesta(request, propuesta_id):
         else:
             messages.success(request, 'No puedes borrar un propuesta mintras tenga tocatas activas')
 
-    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    tocatas, artistas, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
     mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
     mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
 
@@ -166,6 +171,7 @@ def borrarpropuesta(request, propuesta_id):
         'tocatas_h': tocatas,
         'artistas_h': artistas,
         'usuario': usuario,
+        'numitemscarro': numitemscarro,
         'mispropuestas': mispropuestas,
     }
 

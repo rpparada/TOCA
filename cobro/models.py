@@ -17,4 +17,4 @@ class Carro(models.Model):
     fecha_crea = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.usuario.nombre+' '+self.tocata.nombre+' '+str(self.cantidad)+' '+str(self.cantidad*self.tocata.costo)
+        return self.usuario.email+' '+self.tocata.nombre+' '+str(self.cantidad)+' '+str(self.cantidad*self.tocata.costo)

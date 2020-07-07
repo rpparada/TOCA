@@ -12,7 +12,7 @@ from toca.parametros import parToca, parTocatas
 # Create your views here.
 def artistas(request):
 
-    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    tocatas, artistas, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
 
     artistas_vista = Artista.objects.filter(estado=parToca['disponible'])
 
@@ -20,6 +20,7 @@ def artistas(request):
         'tocatas_h': tocatas,
         'artistas_h': artistas,
         'usuario': usuario,
+        'numitemscarro': numitemscarro,
         'artistas': artistas_vista
     }
 
@@ -28,7 +29,7 @@ def artistas(request):
 def artista(request, artista_id):
 
     artista = get_object_or_404(Artista, pk=artista_id)
-    tocatas, artistas, usuario = getTocatasArtistasHeadIndex(request)
+    tocatas, artistas, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
 
     tocatas_art = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado']])
     tocatas_art = tocatas_art.filter(artista=artista_id)
@@ -45,6 +46,7 @@ def artista(request, artista_id):
         'tocatas_h': tocatas,
         'artistas_h': artistas,
         'usuario': usuario,
+        'numitemscarro': numitemscarro,
         'tocatas_art': tocatas_art,
         'artista': artista,
     }
