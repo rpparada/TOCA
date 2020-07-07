@@ -96,8 +96,6 @@ def tocatas(request):
     except EmptyPage:
         pagina_tocatas = paginador.page(paginador.num_pages)
 
-    #pagina_tocatas = paginador.get_page(pagina)
-
     context = {
         'tocatas_h': toc_head,
         'artistas_h': art_head,

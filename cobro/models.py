@@ -11,6 +11,7 @@ class Carro(models.Model):
     tocata = models.ForeignKey(Tocata, on_delete=models.DO_NOTHING)
     usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     cantidad = models.IntegerField(default=0)
+    total = models.IntegerField(default=0)
 
     estado = models.CharField(max_length=2, choices=parCarro['estado_carro'],default=parToca['pendiente'])
     fecha_actu = models.DateTimeField(auto_now=True)

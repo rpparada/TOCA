@@ -6,6 +6,24 @@
 {% block content %}
 {% include 'partials/_alerts.html' %}
 
+<!-- Page title -->
+<section id="page-title" class="page-title-right text-light" data-bg-parallax="images/parallax/5.jpg">
+    <div class="container">
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="#">Home</a> </li>
+                <li><a href="#">Page title</a> </li>
+                <li class="active"><a href="#">Right aligned</a> </li>
+            </ul>
+        </div>
+        <div class="page-title">
+            <h1>Page title - Right aligned</h1>
+            <span>Simple page title right aligned</span>
+        </div>
+    </div>
+</section>
+<!-- end: Page title -->
+
 {% if listacarro %}
 <!-- SHOP CART -->
 <section id="shop-cart">
@@ -16,138 +34,47 @@
                     <thead>
                         <tr>
                             <th class="cart-product-remove"></th>
-                            <th class="cart-product-thumbnail">Product</th>
-                            <th class="cart-product-name">Description</th>
-                            <th class="cart-product-price">Unit Price</th>
-                            <th class="cart-product-quantity">Quantity</th>
+                            <th class="cart-product-thumbnail">Tocata</th>
+                            <th class="cart-product-name">Descripción</th>
+                            <th class="cart-product-price">Precio Unitario</th>
+                            <th class="cart-product-quantity">Cantidad</th>
                             <th class="cart-product-subtotal">Total</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for item in listacarro %}
                         <tr>
                             <td class="cart-product-remove">
                                 <a href="#"><i class="fa fa-times"></i></a>
                             </td>
                             <td class="cart-product-thumbnail">
-                                <a href="#">
-                                    <img src="images/shop/products/1.jpg" alt="Bolt Sweatshirt">
+                                <a href="{% url 'tocata' item.tocata.id %}">
+                                    <img src="{{ item.tocata.flayer_1920_1280.url }}" alt="{{ item.tocata.nombre }}">
                                 </a>
-                                <div class="cart-product-thumbnail-name">Bolt Sweatshirt</div>
+                                <div class="cart-product-thumbnail-name">{{ item.tocata.nombre }}</div>
                             </td>
                             <td class="cart-product-description">
-                                <p><span>Bolt Sweatshirt</span>
-                                    <span>Size: M</span>
-                                    <span>Color: Blue</span>
-                                    <span>Gender: Women</span>
+                                <p><span>{{ item.tocata.artista.nombre }}</span>
+                                    <span>{{ item.tocata.region }}</span>
+                                    <span>{{ item.tocata.comuna }}</span>
+                                    <span>{{ item.tocata.fecha }} {{ item.tocata.hora }}</span>
                                 </p>
                             </td>
                             <td class="cart-product-price">
-                                <span class="amount">$20.00</span>
+                                <span class="amount">${{ item.tocata.costo|intcomma }}</span>
                             </td>
                             <td class="cart-product-quantity">
                                 <div class="quantity">
-                                    <input type="button" class="minus" value="-">
-                                    <input type="text" class="qty" value="1" name="quantity">
-                                    <input type="button" class="plus" value="+">
+                                  <input type="button" class="minus" value="-">
+                                  <input type="text" class="qty" value="{{ item.cantidad }}" name="quantity">
+                                  <input type="button" class="plus" value="+">
                                 </div>
                             </td>
                             <td class="cart-product-subtotal">
-                                <span class="amount">$20.00</span>
+                                <span class="amount">${{ item.total|intcomma }}</span>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="cart-product-remove">
-                                <a href="#"><i class="fa fa-times"></i></a>
-                            </td>
-                            <td class="cart-product-thumbnail">
-                                <a href="#">
-                                    <img alt="Consume Tshirt" src="images/shop/products/2.jpg">
-                                </a>
-                                <div class="cart-product-thumbnail-name">Consume Tshirt</div>
-                            </td>
-                            <td class="cart-product-description">
-                                <p><span>Consume Tshirt</span>
-                                    <span>Size: S</span>
-                                    <span>Color: Blue</span>
-                                    <span>Gender: Women</span>
-                                </p>
-                            </td>
-                            <td class="cart-product-price">
-                                <span class="amount">$18.99</span>
-                            </td>
-                            <td class="cart-product-quantity">
-                                <div class="quantity">
-                                    <input type="button" class="minus" value="-">
-                                    <input type="text" class="qty" value="1" name="quantity">
-                                    <input type="button" class="plus" value="+">
-                                </div>
-                            </td>
-                            <td class="cart-product-subtotal">
-                                <span class="amount">$18.99</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="cart-product-remove">
-                                <a href="#"><i class="fa fa-times"></i></a>
-                            </td>
-                            <td class="cart-product-thumbnail">
-                                <a href="#">
-                                    <img src="images/shop/products/3.jpg" alt="Logo Tshirt">
-                                </a>
-                                <div class="cart-product-thumbnail-name">Logo Tshirt</div>
-                            </td>
-                            <td class="cart-product-description">
-                                <p><span>Logo Tshirt</span>
-                                    <span>Size: L</span>
-                                    <span>Color: Grey</span>
-                                    <span>Gender: Man</span>
-                                </p>
-                            </td>
-                            <td class="cart-product-price">
-                                <span class="amount">$9.00</span>
-                            </td>
-                            <td class="cart-product-quantity">
-                                <div class="quantity">
-                                    <input type="button" class="minus" value="-">
-                                    <input type="text" class="qty" value="2" name="quantity">
-                                    <input type="button" class="plus" value="+">
-                                </div>
-                            </td>
-                            <td class="cart-product-subtotal">
-                                <span class="amount">$18.00</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="cart-product-remove">
-                                <a href="#"><i class="fa fa-times"></i></a>
-                            </td>
-                            <td class="cart-product-thumbnail">
-                                <a href="#">
-                                    <img src="images/shop/products/5.jpg" alt="Grey Sweatshirt">
-                                </a>
-                                <div class="cart-product-thumbnail-name">Grey Sweatshirt</div>
-                            </td>
-                            <td class="cart-product-description">
-                                <p><span>Grey Sweatshirt</span>
-                                    <span>Size: L</span>
-                                    <span>Color: Grey</span>
-                                    <span>Gender: Man</span>
-                                </p>
-                            </td>
-                            <td class="cart-product-price">
-                                <span class="amount">$22.99</span>
-                            </td>
-                            <td class="cart-product-quantity">
-                                <div class="quantity">
-                                    <input type="button" class="minus" value="-">
-                                    <input type="text" class="qty" value="3" name="quantity">
-                                    <input type="button" class="plus" value="+">
-                                </div>
-                            </td>
-                            <td class="cart-product-subtotal">
-                                <span class="amount">$68.97</span>
-                            </td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

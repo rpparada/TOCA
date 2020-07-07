@@ -32,20 +32,37 @@ def agregaracarro(request, tocata_id):
 
     if request.method == 'POST':
 
-        # Agregar tocata a carro
-        cantidad = request.POST.get('numeroentradas')
-        tocata = Tocata.objects.get(pk=tocata_id)
-
-        itemcarro = Carro(
-            tocata = tocata,
-            usuario = request.user,
-            cantidad = cantidad
-        )
-
-        itemcarro.save()
-
         next = request.POST.get('next', '/')
-        messages.success(request,'Tocata Agregada a tu Carro')
+        cantidad = request.POST.get('numeroentradas')
+
+        # Agregar tocata a Carro
+        try:
+            item = Carro.objects.get(tocata=tocata_id)
+        except Carro.DoesNotExist:
+            item = None
+        #item = Carro.objects.get(tocata=tocata_id)
+        if item:
+            if item.cantidad == 2:
+                messages.error(request,'Ya compraste dos entradas para esta Tocata Intima')
+            else:
+                if int(cantidad) == 2:
+                    messages.error(request,'Ya compraste una entrada, solo puedes comprar una mas')
+                else:
+                    item.cantidad = 2
+                    item.total = item.tocata.costo * 2
+                    item.save()
+                    messages.success(request,'Tocata Agregada a Carro')
+
+        else:
+            tocata = Tocata.objects.get(pk=tocata_id)
+            itemcarro = Carro(
+                tocata = tocata,
+                usuario = request.user,
+                cantidad = cantidad,
+                total = tocata.costo * int(cantidad)
+            )
+            itemcarro.save()
+            messages.success(request,'Tocata Agregada a Carro')
 
     if next:
         return HttpResponseRedirect(next)
