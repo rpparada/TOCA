@@ -185,10 +185,9 @@ def getTocatasArtistasHeadIndex(request):
     # Usuario Artista Header
     if request.user.is_authenticated:
         usuario = Usuario.objects.filter(user=request.user)[0]
+        numitemscarro = Carro.objects.filter(usuario=request.user).filter(estado=parToca['pendiente']).count()
     else:
         usuario = None
-
-    # Numero de item en micarro
-    numitemscarro = Carro.objects.filter(usuario=request.user).filter(estado=parToca['pendiente']).count()
+        numitemscarro = 0
 
     return tocatas, artistas, usuario, numitemscarro

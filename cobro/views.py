@@ -17,12 +17,17 @@ def micarro(request):
 
     listacarro = Carro.objects.filter(usuario=request.user).filter(estado=parToca['pendiente'])
 
+    sumatotal = 0
+    for compra in listacarro:
+        sumatotal = sumatotal + compra.total
+
     context = {
         'tocatas_h': toc_head,
         'artistas_h': art_head,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
         'listacarro': listacarro,
+        'sumatotal': sumatotal,
     }
 
     return render(request, 'cobro/micarro.html', context)
@@ -69,15 +74,13 @@ def agregaracarro(request, tocata_id):
 @login_required(login_url='index')
 def quitarcarro(request, item_id):
 
-    if request.method == 'POST':
+    next = request.GET.get('next', '/')
 
-        next = request.POST.get('next', '/')
-
-        # Quitar item de carro
-        item = Carro.objects.get(pk=item_id)
-        item.estado = parToca['cancelado']
-        item.save()
-        messages.success(request,'Item quitado de carro')
+    # Quitar item de carro
+    item = Carro.objects.get(pk=item_id)
+    item.estado = parToca['cancelado']
+    item.save()
+    messages.success(request,'Item quitado de carro')
 
     if next:
         return HttpResponseRedirect(next)

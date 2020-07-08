@@ -7,51 +7,76 @@
 <!-- Alertas -->
 {% include 'partials/_alerts.html' %}
 
-<!-- Inspiro Slider -->
-<div id="slider" class="inspiro-slider slider-fullscreen dots-creative" data-height-xs="360">
-    <!-- Slide 1 -->
-    <div class="slide kenburns" style="background-image:url('{% static 'images/slider/slider01.jpg' %}');">
-        <div class="bg-overlay"></div>
-        <div class="container">
-            <div class="slide-captions text-center text-light">
-                <!-- Captions -->
-                <span class="strong">W
-                    ITH POLO TEMPLATE</span>
-                <h2 class="text-dark">Create Your <br>Awesome Website With Ease</h2>
-                <a class="btn" href="#">Purchase Now</a>
-                <a class="btn btn-light">Purchase</a>
-                <!-- end: Captions -->
-            </div>
+<!-- SECTION IMAGE FULLSCREEN -->
+<section class="fullscreen" data-bg-parallax="{% static 'images/slider/slider01.jpg' %}">
+    <div class="container container-fullscreen">
+        <div class="text-middle text-center">
+            <h1 class="text-uppercase text-lg text-light" data-animate="fadeInUp"> - TOCATAS ÍNTIMAS - </h1>
+            {% if usuario.es_artista %}
+            <p class="lead text-light " data-animate="fadeInUp" data-animate-delay="600">La mejor aplicación para publicar y organizar tus Tocatas Íntimas.</p>
+            <span data-animate="fadeInUp" data-animate-delay="900">
+                <a href="{% url 'creartocata' %}" class="btn">Crea una nueva Tocata Intima</a>
+            {% else %}
+            <p class="lead text-light " data-animate="fadeInUp" data-animate-delay="600">Disfruta de tus artistas favoritos en un ambiente íntimo.</p>
+            <span data-animate="fadeInUp" data-animate-delay="900">
+                <a href="{% url 'tocatas' %}" class="btn">Mira nuestras Tocatas Intimas publicadas</a>
+            {% endif %}
+            </span>
         </div>
     </div>
-    <!-- end: Slide 1 -->
-    <!-- Slide 2 -->
-    <div class="slide kenburns" style="background-image:url('{% static 'images/slider/slider02.jpg' %}');">
-        <div class="bg-overlay"></div>
-        <div class="container">
-            <div class="slide-captions text-center text-light">
-                <!-- Captions -->
-                <span class="strong">WITH POLO TEMPLATE</span>
-                <h2 class="text-dark">Explore The <br>New World of Creativity</h2>
-                <a class="btn" href="#">Purchase Now</a>
-                <a class="btn btn-light">Purchase</a>
-                <!-- end: Captions -->
-            </div>
-        </div>
-    </div>
-    <!-- end: Slide 2 -->
-</div>
-<!--end: Inspiro Slider -->
-
-<!-- SUMMER SALE -->
-<!--
-<section class="section-pattern p-t-60 p-b-30 text-center" style="background: url({% static 'images/patrones/pattern19.png' %})">
-  <div class="container">
-    <h1>Próximas <strong>Tocatas Intimas</strong></h1>
-  </div>
 </section>
--->
-<!-- end: SUMMER SALE -->
+<!-- end: SECTION IMAGE FULLSCREEN -->
+
+<!-- Text Boxes -->
+<section class="no-padding equalize" data-equalize-item=".text-box">
+    <div class="row col-no-margin">
+        <!--Box 1-->
+        <div class="col-lg-3" style="background-color: #2F2F2F;">
+            <div class="text-box">
+                <a href="#">
+                    <i class="fa fa-users"></i>
+                    <h3>Espacios Intimidad</h3>
+                    <p>Disfrutas de tus artistas favoritos en un ambiente intimo.</p>
+                </a>
+            </div>
+        </div>
+        <!--End: Box 1-->
+        <!--Box 2-->
+        <div class="col-lg-3" style="background-color: #383838;">
+            <div class="text-box">
+                <a href="#">
+                    <i class="fas fa-chart-pie"></i>
+                    <h3>Presta la Casa</h3>
+                    <p>Prestale tu casa a los artistas que buscan donde tocar.</p>
+                </a>
+            </div>
+        </div>
+        <!--End: Box 2-->
+        <!--Box 3-->
+        <div class="col-lg-3" style="background-color: #313131;">
+            <div class="text-box">
+                <a href="#">
+                    <i class="far fa-lightbulb"></i>
+                    <h3>Light &amp; Dark</h3>
+                    <p>Ispendisse consectetur fringilla luctus usce id mi diam, non ornare.</p>
+                </a>
+            </div>
+        </div>
+        <!--End: Box 3-->
+        <!--Box 4-->
+        <div class="col-lg-3" style="background-color: #383838;">
+            <div class="text-box">
+                <a href="#">
+                    <i class="fa fa-language"></i>
+                    <h3>RTL Support</h3>
+                    <p>Ispendisse consectetur fringilla luctus usce id mi diam, non ornare.</p>
+                </a>
+            </div>
+        </div>
+        <!--End: Box 4-->
+    </div>
+</section>
+<!-- end: Text Boxes -->
 
 <!-- Shop products -->
 {% if tocatas %}
@@ -161,103 +186,48 @@
 {% endif %}
 <!-- end: Shop products -->
 
-<!-- SERVICES & TESTOMONIALS -->
-<section class="background-dark text-light">
+<!-- Testimonial -->
+<section id="section-testimonials">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-7">
-              {% if usuario.es_artista %}
-                <div class="text-medium">TOCATAS ÍNTIMAS - *Artistas</div>
-                <p class="lead">
-                    Organiza tus Tocatas Íntimas por medio de esta aplicación, la cual gestionara asistencia y el cobro. Define quorum mínimo de asistentes para confirmar la realizacion de la tocata. Y si no tiene donde tocar, deja tu Tocata Intima "abierta" para que sean tu fanáticos quienes te ofrescan sus espacios.
-                </p>
-                <div class="accordion toggle fancy clean accordion-transparent">
-                    <div class="ac-item">
-                        <h5 class="ac-title">TOCATAS ÍNTIMAS</h5>
-                        <div class="ac-content">
-                            <h4>¿Qué son las Tocatas Íntimas?</h4>Son todas aquellas tocatas en espacion reducido y con mínima en producción. La idea es que los asistentes tengan la posibilidad de interactuar con sus artistas favoritos directamente en un ambiente intimo.
-                        </div>
-                    </div>
-                    <div class="ac-item ac-active">
-                        <h5 class="ac-title">MIS LUGARES</h5>
-                        <div class="ac-content">
-                          <h4>¿Qué son Mis Lugares?</h4>Cuando el artista esta en busqueda de un espacio donde realizar una Tocata Íntima, tu puedes ofrecerles tu espacio. Lugar que puede ser el living de tu casa o la sala del evento de departamento. Incribe tu lugar y quedate atento cuando un artista necesite uno.
-                        </div>
-                    </div>
-                    <div class="ac-item">
-                        <h5 class="ac-title">COMPARTE CON TU ARTISTAS FAVORITOS</h5>
-                        <div class="ac-content">
-                            <h4>Tienes la Oportunidad de Compartir con tus Artistas FAvoritos</h4>
-                            <p>En las Tocatas Intimas podras tener la oportunidad de compartir contu artistas favoritos en ambientes intimos. Los ambientes intimos dan espacio a compartir y saber muchas cosas que te interesan saber de tus artistas, por ejemplo como nacio tu cancion favoritas, gustos musicales, etc.</p>
-                        </div>
-                    </div>
-                </div>
-              {% else %}
-                <div class="text-medium">TOCATAS ÍNTIMAS - *Usuario</div>
-                <p class="lead">
-                    Organiza tus Tocatas Íntimas por medio de esta aplicación, la cual gestionara asistencia y el cobro. Define quorum mínimo de asistentes para confirmar la realizacion de la tocata. Y si no tiene donde tocar, deja tu Tocata Intima "abierta" para que sean tu fanáticos quienes te ofrescan sus espacios.
-                </p>
-                <div class="accordion toggle fancy clean accordion-transparent">
-                    <div class="ac-item">
-                        <h5 class="ac-title">TOCATAS ÍNTIMAS</h5>
-                        <div class="ac-content">
-                            <h4>¿Qué son las Tocatas Íntimas?</h4>Son todas aquellas tocatas en espacion reducido y con mínima en producción. La idea es que los asistentes tengan la posibilidad de interactuar con sus artistas favoritos directamente en un ambiente intimo.
-                        </div>
-                    </div>
-                    <div class="ac-item ac-active">
-                        <h5 class="ac-title">MIS LUGARES</h5>
-                        <div class="ac-content">
-                          <h4>¿Qué son Mis Lugares?</h4>Cuando el artista esta en busqueda de un espacio donde realizar una Tocata Íntima, tu puedes ofrecerles tu espacio. Lugar que puede ser el living de tu casa o la sala del evento de departamento. Incribe tu lugar y quedate atento cuando un artista necesite uno.
-                        </div>
-                    </div>
-                    <div class="ac-item">
-                        <h5 class="ac-title">COMPARTE CON TU ARTISTAS FAVORITOS</h5>
-                        <div class="ac-content">
-                            <h4>Tienes la Oportunidad de Compartir con tus Artistas FAvoritos</h4>
-                            <p>En las Tocatas Intimas podras tener la oportunidad de compartir contu artistas favoritos en ambientes intimos. Los ambientes intimos dan espacio a compartir y saber muchas cosas que te interesan saber de tus artistas, por ejemplo como nacio tu cancion favoritas, gustos musicales, etc.</p>
-                        </div>
-                    </div>
-                </div>
-              {% endif %}
-            </div>
-            <div class="col-lg-5">
-                <div class="text-medium">TESTIMONIOS</div>
-                <p class="lead">
-                    Revisa el testimonio de artistas que ya son parte de Tocatas Intimas.
-                </p>
-                <!-- Testimonials -->
-                <div class="carousel arrows-visibile testimonial testimonial-single" data-items="1" data-loop="true" data-autoplay="true" data-autoplay="3500" data-arrows="false">
-
-                  {% if usuarios.es_artista %}
-                    <!-- Testimonials item -->
-                    {% for test_art in testimonios_art %}
-                    <div class="testimonial-item">
-                        <img src="{{ test_art.foto.url }}" alt="">
-                        <p>{{ test_art.testimonio }}</p>
-                        <span>{{ test_art.artista.nombre }}</span>
-                        <span>{{ test_art.artista.habilidades }}</span>
-                    </div>
-                    {% endfor %}
-                    <!-- end: Testimonials item-->
-                  {% else %}
-                    {% for test_usu in testimonios_usu %}
-                    <!-- Testimonials item -->
-                    <div class="testimonial-item">
-                        <img src="{{ test_usu.foto.url }}" alt="">
-                        <p>{{ test_usu.testimonio }}</p>
-                        <span>{{ test_usu.artista.nombre }}</span>
-                        <span>{{ test_usu.artista.habilidades }}</span>
-                    </div>
-                    <!-- end: Testimonials item-->
-                    {% endfor %}
-                  {% endif %}
-                </div>
-                <!-- end: Testimonials -->
-            </div>
+        <!-- Heading -->
+        <div class="text-center m-b-60">
+            <h2>Nuestros Artistas.</h2>
+            <p>Lee algunos de los testimonios de nuestros artistas...</p>
         </div>
+        <!-- end: Heading -->
+
+        <!-- Testimonials -->
+        {% if usuarios.es_artista %}
+          <div class="carousel arrows-visibile testimonial testimonial-single" data-items="1" data-loop="true" data-autoplay="true" data-autoplay="3500" data-arrows="false">
+              <!-- Testimonials item -->
+              {% for test_art in testimonios_art %}
+              <div class="testimonial-item">
+                  <img src="{{ test_art.foto.url }}" alt="">
+                  <p>{{ test_art.testimonio }}</p>
+                  <span>{{ test_art.artista.nombre }}</span>
+                  <span>{{ test_art.artista.habilidades }}</span>
+              </div>
+              {% endfor %}
+              <!-- end: Testimonials item-->
+          </div>
+        {% else %}
+          <div class="carousel arrows-visibile testimonial testimonial-single" data-items="1" data-loop="true" data-autoplay="true" data-autoplay="3500" data-arrows="false">
+              <!-- Testimonials item -->
+              {% for test_usu in testimonios_usu %}
+              <div class="testimonial-item">
+                  <img src="{{ test_usu.foto.url }}" alt="">
+                  <p>{{ test_usu.testimonio }}</p>
+                  <span>{{ test_usu.artista.nombre }}</span>
+                  <span>{{ test_usu.artista.habilidades }}</span>
+              </div>
+              {% endfor %}
+              <!-- end: Testimonials item-->
+          </div>
+        {% endif %}
+        <!-- end: Testimonials -->
     </div>
 </section>
-<!-- end: SERVICES & TESTOMONIALS -->
+<!-- end: Testimonial -->
 
 <!--Team members -->
 {% if artistas %}
@@ -272,7 +242,7 @@
         </div>
         <div class="row team-members team-members-shadow m-b-40">
           {% for artista in artistas %}
-            <div class="col-lg-6 center">
+            <div class="col-lg-4 center">
                 <div class="team-member">
                     <div class="team-image">
                         <img src="{{ artista.foto1.url }}">
@@ -319,6 +289,5 @@
 </section>
 {% endif %}
 <!-- end:Team members -->
-
 
 {% endblock %}
