@@ -36,21 +36,18 @@ def agregaracarro(request, tocata_id):
         cantidad = request.POST.get('numeroentradas')
 
         # Agregar tocata a Carro
-        try:
-            item = Carro.objects.get(tocata=tocata_id)
-        except Carro.DoesNotExist:
-            item = None
-        #item = Carro.objects.get(tocata=tocata_id)
+        item = Carro.objects.filter(tocata=tocata_id).filter(estado=parToca['pendiente'])
+
         if item:
-            if item.cantidad == 2:
+            if item[0].cantidad == 2:
                 messages.error(request,'Ya compraste dos entradas para esta Tocata Intima')
             else:
                 if int(cantidad) == 2:
                     messages.error(request,'Ya compraste una entrada, solo puedes comprar una mas')
                 else:
-                    item.cantidad = 2
-                    item.total = item.tocata.costo * 2
-                    item.save()
+                    item[0].cantidad = 2
+                    item[0].total = item[0].tocata.costo * 2
+                    item[0].save()
                     messages.success(request,'Tocata Agregada a Carro')
 
         else:
@@ -63,6 +60,24 @@ def agregaracarro(request, tocata_id):
             )
             itemcarro.save()
             messages.success(request,'Tocata Agregada a Carro')
+
+    if next:
+        return HttpResponseRedirect(next)
+    else:
+        return redirect('tocatas')
+
+@login_required(login_url='index')
+def quitarcarro(request, item_id):
+
+    if request.method == 'POST':
+
+        next = request.POST.get('next', '/')
+
+        # Quitar item de carro
+        item = Carro.objects.get(pk=item_id)
+        item.estado = parToca['cancelado']
+        item.save()
+        messages.success(request,'Item quitado de carro')
 
     if next:
         return HttpResponseRedirect(next)

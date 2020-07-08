@@ -6,24 +6,6 @@
 {% block content %}
 {% include 'partials/_alerts.html' %}
 
-<!-- Page title -->
-<section id="page-title" class="page-title-right text-light" data-bg-parallax="images/parallax/5.jpg">
-    <div class="container">
-        <div class="breadcrumb">
-            <ul>
-                <li><a href="#">Home</a> </li>
-                <li><a href="#">Page title</a> </li>
-                <li class="active"><a href="#">Right aligned</a> </li>
-            </ul>
-        </div>
-        <div class="page-title">
-            <h1>Page title - Right aligned</h1>
-            <span>Simple page title right aligned</span>
-        </div>
-    </div>
-</section>
-<!-- end: Page title -->
-
 {% if listacarro %}
 <!-- SHOP CART -->
 <section id="shop-cart">
@@ -45,7 +27,14 @@
                         {% for item in listacarro %}
                         <tr>
                             <td class="cart-product-remove">
-                                <a href="#"><i class="fa fa-times"></i></a>
+                              <form action="{% url 'quitarcarro' item.id %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <button type="submit" class="fa fa-times"></button>
+                                <!--
+                                <a href="{% url 'quitarcarro' item.id %}"><i class="fa fa-times"></i></a>
+                                -->
+                              </form>
                             </td>
                             <td class="cart-product-thumbnail">
                                 <a href="{% url 'tocata' item.tocata.id %}">
@@ -64,11 +53,7 @@
                                 <span class="amount">${{ item.tocata.costo|intcomma }}</span>
                             </td>
                             <td class="cart-product-quantity">
-                                <div class="quantity">
-                                  <input type="button" class="minus" value="-">
-                                  <input type="text" class="qty" value="{{ item.cantidad }}" name="quantity">
-                                  <input type="button" class="plus" value="+">
-                                </div>
+                                <span class="qty">{{ item.cantidad }}</span>
                             </td>
                             <td class="cart-product-subtotal">
                                 <span class="amount">${{ item.total|intcomma }}</span>
