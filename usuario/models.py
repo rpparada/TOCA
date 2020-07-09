@@ -7,8 +7,8 @@ from toca.parametros import parUsuarioArtistas, parToca
 
 # Create your models here.
 class Usuario(models.Model):
-    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
 
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
     es_artista = models.BooleanField(default=False)
 
     def __str__(self):

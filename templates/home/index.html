@@ -13,7 +13,7 @@
         <div class="text-middle text-center">
             <h1 class="text-uppercase text-lg text-light" data-animate="fadeInUp"> - TOCATAS ÍNTIMAS - </h1>
             {% if usuario.es_artista %}
-            <p class="lead text-light " data-animate="fadeInUp" data-animate-delay="600">La mejor aplicación para publicar y organizar tus Tocatas Íntimas.</p>
+            <p class="lead text-light " data-animate="fadeInUp" data-animate-delay="600">La mejor forma de publicar, organizar y cobrar Tocatas Íntimas.</p>
             <span data-animate="fadeInUp" data-animate-delay="900">
                 <a href="{% url 'creartocata' %}" class="btn">Crea una nueva Tocata Intima</a>
             {% else %}
@@ -28,6 +28,7 @@
 <!-- end: SECTION IMAGE FULLSCREEN -->
 
 <!-- Text Boxes -->
+{% if usuario.es_artista %}
 <section class="no-padding equalize" data-equalize-item=".text-box">
     <div class="row col-no-margin">
         <!--Box 1-->
@@ -35,7 +36,56 @@
             <div class="text-box">
                 <a href="#">
                     <i class="fa fa-users"></i>
-                    <h3>Espacios Intimidad</h3>
+                    <h3>Organizador de tus Tocatas</h3>
+                    <p>Tocatas Íntimas gestionará el cobro y asistencia de tus tocatas. Define quorum mínimo para confirmarla.</p>
+                </a>
+            </div>
+        </div>
+        <!--End: Box 1-->
+        <!--Box 2-->
+        <div class="col-lg-3" style="background-color: #383838;">
+            <div class="text-box">
+                <a href="#">
+                    <i class="fa fa-search"></i>
+                    <h3>¿No Tienes Donde Tocar?</h3>
+                    <p>Publica tu tocata en la region y/o comuna que quieras; y deja que tus fanaticos te inviten a sus casas.</p>
+                </a>
+            </div>
+        </div>
+        <!--End: Box 2-->
+        <!--Box 3-->
+        <div class="col-lg-3" style="background-color: #313131;">
+            <div class="text-box">
+                <a href="#">
+                    <i class="fa fa-money-bill-wave"></i>
+                    <h3>Recibe Todo lo Recaudado</h3>
+                    <p>Recibe la totalidad de lo recaudado sin descuentos ni cobros el mismo dia en que se realizará la tocata.</p>
+                </a>
+            </div>
+        </div>
+        <!--End: Box 3-->
+        <!--Box 4-->
+        <div class="col-lg-3" style="background-color: #383838;">
+            <div class="text-box">
+                <a href="#">
+                    <i class="fa fa-smile"></i>
+                    <h3>Conectate con tus Fanáticos</h3>
+                    <p>Pasa un buen momento junto a tus seguidores compartiendo tu música y experiencias.</p>
+                </a>
+            </div>
+        </div>
+        <!--End: Box 4-->
+    </div>
+</section>
+{% else %}
+<section class="no-padding equalize" data-equalize-item=".text-box">
+    <div class="row col-no-margin">
+        <!--Box 1-->
+        <div class="col-lg-3" style="background-color: #2F2F2F;">
+            <div class="text-box">
+                <a href="#">
+                    <i class="fa fa-users"></i>
+                    <h3>Espacios Íntimos1</h3>
                     <p>Disfrutas de tus artistas favoritos en un ambiente intimo.</p>
                 </a>
             </div>
@@ -76,6 +126,7 @@
         <!--End: Box 4-->
     </div>
 </section>
+{% endif %}
 <!-- end: Text Boxes -->
 
 <!-- Shop products -->
@@ -84,8 +135,8 @@
     <div class="container">
       <div class="col-lg-8 m-b-100 center">
           <div class="heading-text heading-section text-center">
-              <h2>PUBLICADAS</h2>
-              <p>Compra tus entredas y disfrutar de tus artistas favoritos.</p>
+              <h2>PRÓXIMAS TOCATAS INTIMAS</h2>
+              <p>Compra tus entradas y disfrutar de tus artistas favoritos.</p>
           </div>
       </div>
       <!--Product list-->
@@ -140,7 +191,7 @@
     <div class="container">
       <div class="col-lg-8 m-b-100 center">
           <div class="heading-text heading-section text-center">
-            <h2>BUSCANDO LUGAR</h2>
+            <h2>ARTISTAS BUSCAN DÓNDE TOCAR</h2>
             <p>El artista esta esperando a que lo invites a tocar a tu casa.</p>
           </div>
       </div>
@@ -177,7 +228,7 @@
     <div class="container">
       <div class="col-lg-8 m-b-100 center">
           <div class="heading-text heading-section text-center">
-            <h2>BUSCANDO LUGAR</h2>
+            <h2>ARTISTAS BUSCAN DÓNDE TOCAR</h2>
             <p>Actualmente no hay artistas buscando lugar donde tocar.</p>
           </div>
       </div>
@@ -197,7 +248,7 @@
         <!-- end: Heading -->
 
         <!-- Testimonials -->
-        {% if usuarios.es_artista %}
+        {% if usuario.es_artista %}
           <div class="carousel arrows-visibile testimonial testimonial-single" data-items="1" data-loop="true" data-autoplay="true" data-autoplay="3500" data-arrows="false">
               <!-- Testimonials item -->
               {% for test_art in testimonios_art %}
