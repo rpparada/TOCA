@@ -22,6 +22,7 @@ class Artista(models.Model):
 
     descripción = models.TextField(blank=True)
     habilidades = models.TextField(blank=True)
+    estilos = models.TextField(blank=True)
 
     email = models.EmailField(max_length=254, blank=True)
     telefono_contacto = models.CharField(max_length=200, blank=True)

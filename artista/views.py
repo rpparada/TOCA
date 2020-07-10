@@ -16,6 +16,9 @@ def artistas(request):
 
     artistas_vista = Artista.objects.filter(estado=parToca['disponible'])
 
+    for art in artistas_vista:
+        art.cats = art.estilos.split() 
+
     context = {
         'tocatas_h': tocatas,
         'artistas_h': artistas,
