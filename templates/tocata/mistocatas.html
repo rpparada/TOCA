@@ -303,6 +303,13 @@
                                           {% if tocatacerrada.estado == 'SU' %}
                                           <li><a href="" data-target="#modalboce{{tocatacerrada.id}}" data-toggle="modal"><i class="icon-x"></i>Borrar</a></li>
                                           {% endif %}
+                                          {% if tocatacerrada.estado == 'PU' %}
+                                          <li>
+                                            <hr>
+                                          </li>
+                                          <li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8000/{% url 'tocata' tocatacerrada.id %}"><i class="icon-facebook"></i>Compartir</a></li>
+                                          <li><a href="#"><i class="icon-twitter"></i>Compartir</a></li>
+                                          {% endif %}
                                       </ul>
                                   </div>
                                 </td>
