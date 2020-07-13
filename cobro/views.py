@@ -2,6 +2,10 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+from tbk.services import WebpayService
+from tbk.commerce import Commerce
+from tbk import INTEGRACION
+
 from cobro.models import Carro
 from tocata.models import Tocata
 
@@ -10,6 +14,82 @@ from home.views import getTocatasArtistasHeadIndex
 from toca.parametros import parToca, parCarro
 
 # Create your views here.
+import tbk
+import os
+
+CERTIFICATES_DIR = os.path.join(os.path.dirname(__file__), "commerces")
+HOST = os.getenv("HOST", "http://127.0.0.1")
+PORT = os.getenv("PORT", 8000)
+BASE_URL = "{host}:{port}".format(host=HOST, port=PORT)
+NORMAL_COMMERCE_CODE = "597020000540"
+
+def load_commerce_data(commerce_code):
+    with open(
+        os.path.join(CERTIFICATES_DIR, commerce_code, commerce_code + ".key"), "r"
+    ) as file:
+        key_data = file.read()
+    with open(
+        os.path.join(CERTIFICATES_DIR, commerce_code, commerce_code + ".crt"), "r"
+    ) as file:
+        cert_data = file.read()
+    with open(os.path.join(CERTIFICATES_DIR, "tbk.pem"), "r") as file:
+        tbk_cert_data = file.read()
+
+    return {
+        "key_data": key_data,
+        "cert_data": cert_data,
+        "tbk_cert_data": tbk_cert_data,
+    }
+
+normal_commerce_data = load_commerce_data(NORMAL_COMMERCE_CODE)
+normal_commerce = tbk.commerce.Commerce(
+    commerce_code=NORMAL_COMMERCE_CODE,
+    key_data=normal_commerce_data["key_data"],
+    cert_data=normal_commerce_data["cert_data"],
+    tbk_cert_data=normal_commerce_data["tbk_cert_data"],
+    environment=tbk.environments.DEVELOPMENT,
+)
+webpay_service = tbk.services.WebpayService(normal_commerce)
+
+def prueba(request):
+
+    return render(request, 'cobro/test_index.html')
+
+def iniciar(reques):
+
+    return render(request, 'cobro/test_index.html')
+
+    #transaction = webpay_service.init_transaction(
+    #    amount=1000,
+    #    buy_order=10,
+    #    return_url=BASE_URL + "/normal/return",
+    #    final_url=BASE_URL + "/normal/final",
+    #    session_id=1,
+    #)
+
+    #print(transaction)
+
+    #toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+    #listacarro = Carro.objects.filter(usuario=request.user).filter(estado=parToca['pendiente'])
+
+    #sumatotal = 0
+    #for compra in listacarro:
+    #    sumatotal = sumatotal + compra.total
+
+    #context = {
+    #    'tocatas_h': toc_head,
+    #    'artistas_h': art_head,
+    #    'usuario': usuario,
+    #    'numitemscarro': numitemscarro,
+    #    'listacarro': listacarro,
+    #    'sumatotal': sumatotal,
+    #}
+
+    #return render(request, 'cobro/micarro.html', context)
+
+
+
+
 @login_required(login_url='index')
 def micarro(request):
 
