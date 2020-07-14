@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
 
 from tbk.services import WebpayService
 from tbk.commerce import Commerce
@@ -51,43 +52,56 @@ normal_commerce = tbk.commerce.Commerce(
 )
 webpay_service = tbk.services.WebpayService(normal_commerce)
 
+print(webpay_service)
+
 def prueba(request):
 
     return render(request, 'cobro/test_index.html')
 
-def iniciar(reques):
+def iniciar(request):
 
-    return render(request, 'cobro/test_index.html')
+    if request.method == 'POST':
+        transaction = webpay_service.init_transaction(
+            amount=request.POST.get('amount'),
+            buy_order=request.POST.get('buy_order'),
+            return_url=BASE_URL + "/cobro/volver",
+            final_url=BASE_URL + "/cobro/final",
+            session_id=request.POST.get('session_id'),
+        )
 
-    #transaction = webpay_service.init_transaction(
-    #    amount=1000,
-    #    buy_order=10,
-    #    return_url=BASE_URL + "/normal/return",
-    #    final_url=BASE_URL + "/normal/final",
-    #    session_id=1,
-    #)
+    context = {
+        'transaction': transaction,
+    }
 
-    #print(transaction)
+    return render(request, 'cobro/test_init.html', context)
 
-    #toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
-    #listacarro = Carro.objects.filter(usuario=request.user).filter(estado=parToca['pendiente'])
+@csrf_exempt
+def volver(request):
 
-    #sumatotal = 0
-    #for compra in listacarro:
-    #    sumatotal = sumatotal + compra.total
+    if request.method == 'POST':
+        token = request.POST.get('token_ws')
+        transaction = webpay_service.get_transaction_result(token)
+        transaction_detail = transaction["detailOutput"][0]
+        webpay_service.acknowledge_transaction(token)
+        if transaction_detail["responseCode"] == 0:
+            context = {
+                'transaction': transaction,
+                'transaction_detail': transaction_detail,
+                'token': token,
+            }
+            return render(request, 'cobro/bien.html', context)
+        else:
+            context = {
+                'transaction': transaction,
+                'transaction_detail': transaction_detail,
+                'token': token,
+            }
+            return render(request, 'cobro/mal.html', context)
 
-    #context = {
-    #    'tocatas_h': toc_head,
-    #    'artistas_h': art_head,
-    #    'usuario': usuario,
-    #    'numitemscarro': numitemscarro,
-    #    'listacarro': listacarro,
-    #    'sumatotal': sumatotal,
-    #}
+@csrf_exempt
+def final(request):
 
-    #return render(request, 'cobro/micarro.html', context)
-
-
+    return render(request, 'cobro/final.html')
 
 
 @login_required(login_url='index')

@@ -10,9 +10,11 @@ Checkout
 {% endblock header %}
 
 {% block content %}
-<form method="POST" action="/normal/init" class="pure-form pure-form-stacked">
+<form method="POST" action="{% url 'iniciar' %}" class="pure-form pure-form-stacked">
+  {% csrf_token %}
   <fieldset>
     <legend>New Transaction Data</legend>
+    <p>{{ transaction }}</p>
 
     <label for="amount">Amount
       <input type="text" name="amount" id="amount">

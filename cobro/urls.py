@@ -7,5 +7,8 @@ urlpatterns = [
     path('quitarcarro_<int:item_id>', views.quitarcarro, name='quitarcarro'),
 
     path('prueba', views.prueba, name='prueba'),
+    path('iniciar', views.iniciar, name='iniciar'),
+    path('volver', views.volver, name='volver'),
+    path('final', views.final, name='final')
 
 ]
