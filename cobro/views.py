@@ -52,6 +52,7 @@ normal_commerce = tbk.commerce.Commerce(
 )
 webpay_service = tbk.services.WebpayService(normal_commerce)
 
+print('===== run =====')
 print(webpay_service)
 
 def prueba(request):
@@ -103,6 +104,23 @@ def final(request):
 
     return render(request, 'cobro/final.html')
 
+@login_required(login_url='index')
+def comprar(request):
+
+    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+
+    context = {
+        'tocatas_h': toc_head,
+        'artistas_h': art_head,
+        'usuario': usuario,
+    }
+
+    return render(request, 'cobro/comprar.html', context)
+
+@login_required(login_url='index')
+def procesarorden(request):
+
+    pass
 
 @login_required(login_url='index')
 def micarro(request):
