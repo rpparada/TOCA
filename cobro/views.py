@@ -52,9 +52,6 @@ normal_commerce = tbk.commerce.Commerce(
 )
 webpay_service = tbk.services.WebpayService(normal_commerce)
 
-print('===== run =====')
-print(webpay_service)
-
 def prueba(request):
 
     return render(request, 'cobro/test_index.html')
@@ -119,7 +116,7 @@ def comprar(request):
     contador = 0
     for compra in listacarro:
         sumatotal = sumatotal + compra.total
-        contador = contador + 1
+        contador = contador + compra.cantidad
 
     # crear orden
     orden = Orden(
@@ -130,17 +127,24 @@ def comprar(request):
     orden.save()
 
     # Agregar items a ordenitem
+    ordentocata = []
     for compra in listacarro:
         item = OrdenTocata(
             orden = orden,
-            tocata = compra.tocata
+            tocata = compra.tocata,
+            cantidad = compra.cantidad,
+            total = compra.total,
         )
         item.save()
+        ordentocata.append(item)
 
     context = {
         'tocatas_h': toc_head,
         'artistas_h': art_head,
         'usuario': usuario,
+        'orden': orden,
+        'ordentocata': ordentocata,
+
     }
 
     return render(request, 'cobro/comprar.html', context)

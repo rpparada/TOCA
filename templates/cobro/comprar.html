@@ -50,77 +50,38 @@
             </div>
             <div class="row">
                 <div class="col-lg-6">
-                    <h4 class="upper">Your Order</h4>
+                    <h4 class="upper">Orden número: {{ orden.id }}</h4>
                     <div class="table table-sm table-striped table-responsive table table-bordered table-responsive">
                         <table class="table m-b-0">
                             <thead>
                                 <tr>
                                     <th class="cart-product-thumbnail">Product</th>
                                     <th class="cart-product-name">Description</th>
-                                    <th class="cart-product-subtotal">Total</th>
+                                    <th class="cart-product-name">Cantidad</th>
+                                    <th class="cart-product-subtotal">Total (Unidad)</th>
                                 </tr>
                             </thead>
                             <tbody>
+                              {% for item in ordentocata %}
                                 <tr>
                                     <td class="cart-product-thumbnail">
-                                        <div class="cart-product-thumbnail-name">Bolt Sweatshirt</div>
+                                        <div class="cart-product-thumbnail-name">{{ item.tocata.artista.nombre }}</div>
                                     </td>
                                     <td class="cart-product-description">
-                                        <p><span>Bolt Sweatshirt</span>
-                                            <span>Size: M</span>
-                                            <span>Color: Blue</span>
-                                            <span>Gender: Women</span>
+                                        <p><span>{{ item.tocata.nombre }}</span>
+                                            <span>{{ item.tocata.region }}</span>
+                                            <span>{{ item.tocata.comuna }}</span>
+                                            <span>{{ item.tocata.fecha }} {{ item.tocata.hora }}</span>
                                         </p>
                                     </td>
-                                    <td class="cart-product-subtotal">
-                                        <span class="amount">$20.00</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="cart-product-thumbnail">
-                                        <div class="cart-product-thumbnail-name">Consume Tshirt</div>
-                                    </td>
-                                    <td class="cart-product-description">
-                                        <p><span>Consume Tshirt</span>
-                                            <span>Size: S</span>
-                                            <span>Color: Blue</span>
-                                            <span>Gender: Women</span>
-                                        </p>
+                                    <td class="cart-product-quantity">
+                                        <span>{{ item.cantidad }}</span>
                                     </td>
                                     <td class="cart-product-subtotal">
-                                        <span class="amount">$18.99</span>
+                                        <span class="amount">${{ item.total|intcomma }} (${{ item.tocata.costo|intcomma }})</span>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="cart-product-thumbnail">
-                                        <div class="cart-product-thumbnail-name">Logo Tshirt</div>
-                                    </td>
-                                    <td class="cart-product-description">
-                                        <p><span>Logo Tshirt</span>
-                                            <span>Size: L</span>
-                                            <span>Color: Grey</span>
-                                            <span>Gender: Man</span>
-                                        </p>
-                                    </td>
-                                    <td class="cart-product-subtotal">
-                                        <span class="amount">$18.00</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="cart-product-thumbnail">
-                                        <div class="cart-product-thumbnail-name">Grey Sweatshirt</div>
-                                    </td>
-                                    <td class="cart-product-description">
-                                        <p><span>Grey Sweatshirt</span>
-                                            <span>Size: L</span>
-                                            <span>Color: Grey</span>
-                                            <span>Gender: Man</span>
-                                        </p>
-                                    </td>
-                                    <td class="cart-product-subtotal">
-                                        <span class="amount">$68.97</span>
-                                    </td>
-                                </tr>
+                              {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -129,31 +90,23 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="table-responsive">
-                                <h4>Order Total</h4>
+                                <h4>Total Orden</h4>
                                 <table class="table">
                                     <tbody>
                                         <tr>
                                             <td class="cart-product-name">
-                                                <strong>Order Subtotal</strong>
+                                                <strong>Subtotal Orden</strong>
                                             </td>
                                             <td class="cart-product-name text-right">
-                                                <span class="amount">$125.96</span>
+                                                <span class="amount">$ {{ orden.totalapagar|intcomma }}</span>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="cart-product-name">
-                                                <strong>Shipping</strong>
+                                                <strong>Email Ticket </strong>
                                             </td>
                                             <td class="cart-product-name  text-right">
-                                                <span class="amount">Free Shipping</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="cart-product-name">
-                                                <strong>Coupon</strong>
-                                            </td>
-                                            <td class="cart-product-name  text-right">
-                                                <span class="amount">-20%</span>
+                                                <span class="amount">$ 0</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -161,7 +114,7 @@
                                                 <strong>Total</strong>
                                             </td>
                                             <td class="cart-product-name text-right">
-                                                <span class="amount color lead"><strong>$100.76</strong></span>
+                                                <span class="amount color lead"><strong>$ {{ orden.totalapagar|intcomma }}</strong></span>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -169,19 +122,14 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <h4 class="upper">Payment Method</h4>
+                            <h4 class="upper">Método de Pago</h4>
                             <div class="list-group">
-                                <input type="radio" name="RadioInputName" value="Value1" id="Radio1" />
-                                <label class="list-group-item" for="Radio1">Direct Bank Transfer</label>
-                                <input type="radio" name="RadioInputName" value="Value2" id="Radio2" />
-                                <label class="list-group-item" for="Radio2">Cheque Payment</label>
-                                <input type="radio" name="RadioInputName" value="Value3" id="Radio3" />
-                                <label class="list-group-item" for="Radio3"><img width="90" alt="paypal" src="images/shop/paypal-logo.png"></label>
+                              <input type="radio" name="RadioInputName" value="Value1" id="Radio1" />
+                              <label class="list-group-item" for="Radio1"><img width="90" alt="Webpay" src="{% static 'images/iconos/webpay.png' %}"></label>
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <a class="btn icon-left float-right mt-3" href="#"><span>Proceed to
-                                    PayPal</span></a>
+                            <a class="btn icon-left float-right mt-3" href="#"><span>Pagar con Webpay</span></a>
                         </div>
                     </div>
                 </div>
@@ -190,8 +138,9 @@
     </div>
 </section>
 <!-- end: SHOP CHECKOUT -->
+
 <!-- DELIVERY INFO -->
-<section class="background-grey p-t-40 p-b-0">
+<section class="p-t-40 p-b-0">
     <div class="container">
         <div class="row">
             <div class="col-lg-4">
