@@ -51,7 +51,14 @@ parToca = {
     # Estado elementos carro
     # - 'pendiente': 'PE',
     'pagado': 'PA',
-    # - 'cancelado'; 'CA'
+    # 'cancelado'; 'CA'
+    # Estado Ordenes
+    #'pendiente': 'PE',
+    #'cancelado': 'CA',
+    #'completado': 'CM',
+    # Medio de Pago
+    'webpay': 'WP',
+
 }
 
 parLugaresToc = {
@@ -159,5 +166,19 @@ parCarro = {
         (parToca['pendiente'],'Pendiente'),
         (parToca['pagado'],'Pagado'),
         (parToca['cancelado'],'Cancelado'),
+    ]
+}
+
+parOrden = {
+    'estado_orden': [
+        (parToca['pendiente'],'Pendiente'),
+        (parToca['pagado'],'Pagado'),
+        (parToca['cancelado'],'Cancelado'),
+    ]
+}
+
+mediodepago = {
+    'medio_de_pago': [
+        (parToca['webpay'],'Webpay'),
     ]
 }

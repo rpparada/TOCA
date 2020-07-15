@@ -7,7 +7,7 @@ from tbk.services import WebpayService
 from tbk.commerce import Commerce
 from tbk import INTEGRACION
 
-from cobro.models import Carro
+from cobro.models import Carro, Orden, OrdenTocata
 from tocata.models import Tocata
 
 from home.views import getTocatasArtistasHeadIndex
@@ -105,9 +105,37 @@ def final(request):
     return render(request, 'cobro/final.html')
 
 @login_required(login_url='index')
+def procesarorden(request):
+
+    pass
+
+@login_required(login_url='index')
 def comprar(request):
 
     toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+
+    listacarro = Carro.objects.filter(usuario=request.user).filter(estado=parToca['pendiente'])
+    sumatotal = 0
+    contador = 0
+    for compra in listacarro:
+        sumatotal = sumatotal + compra.total
+        contador = contador + 1
+
+    # crear orden
+    orden = Orden(
+        usuario=request.user,
+        numerodeitems=contador,
+        totalapagar=sumatotal
+    )
+    orden.save()
+
+    # Agregar items a ordenitem
+    for compra in listacarro:
+        item = OrdenTocata(
+            orden = orden,
+            tocata = compra.tocata
+        )
+        item.save()
 
     context = {
         'tocatas_h': toc_head,
@@ -116,11 +144,6 @@ def comprar(request):
     }
 
     return render(request, 'cobro/comprar.html', context)
-
-@login_required(login_url='index')
-def procesarorden(request):
-
-    pass
 
 @login_required(login_url='index')
 def micarro(request):
