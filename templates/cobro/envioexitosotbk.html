@@ -1,0 +1,7 @@
+<html>
+    <body onload="document.exitosotbkform.submit()">
+        <form action="{{ transaction.urlRedirection }}" name="exitosotbkform" method="POST">
+            <input type="hidden" name="token_ws" value="{{ token }}" />
+        </form>
+    </body>
+</html>

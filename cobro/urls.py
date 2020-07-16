@@ -7,10 +7,7 @@ urlpatterns = [
     path('quitarcarro_<int:item_id>', views.quitarcarro, name='quitarcarro'),
     path('comprar', views.comprar, name='comprar'),
     path('procesarorden_<int:orden_id>', views.procesarorden, name='procesarorden'),
-
-    path('prueba', views.prueba, name='prueba'),
-    path('iniciar', views.iniciar, name='iniciar'),
-    path('volver', views.volver, name='volver'),
-    path('final', views.final, name='final')
+    path('retornotbk', views.retornotbk, name='retornotbk'),
+    path('compraexitosa', views.compraexitosa, name='compraexitosa')
 
 ]

@@ -24,6 +24,7 @@ PORT = os.getenv("PORT", 8000)
 BASE_URL = "{host}:{port}".format(host=HOST, port=PORT)
 NORMAL_COMMERCE_CODE = "597020000540"
 
+
 def load_commerce_data(commerce_code):
     with open(
         os.path.join(CERTIFICATES_DIR, commerce_code, commerce_code + ".key"), "r"
@@ -52,31 +53,27 @@ normal_commerce = tbk.commerce.Commerce(
 )
 webpay_service = tbk.services.WebpayService(normal_commerce)
 
-def prueba(request):
+@csrf_exempt
+def compraexitosa(request):
 
-    return render(request, 'cobro/test_index.html')
-
-def iniciar(request):
+    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
 
     if request.method == 'POST':
-        transaction = webpay_service.init_transaction(
-            amount=request.POST.get('amount'),
-            buy_order=request.POST.get('buy_order'),
-            return_url=BASE_URL + "/cobro/volver",
-            final_url=BASE_URL + "/cobro/final",
-            session_id=request.POST.get('session_id'),
-        )
+        print(request.POST.get('token_ws'))
 
     context = {
-        'transaction': transaction,
+        'tocatas_h': toc_head,
+        'artistas_h': art_head,
+        'usuario': usuario,
     }
 
-    return render(request, 'cobro/test_init.html', context)
+    return render(request, 'cobro/compraexitosa.html', context)
 
 @csrf_exempt
-def volver(request):
+def retornotbk(request):
 
     if request.method == 'POST':
+
         token = request.POST.get('token_ws')
         transaction = webpay_service.get_transaction_result(token)
         transaction_detail = transaction["detailOutput"][0]
@@ -87,7 +84,7 @@ def volver(request):
                 'transaction_detail': transaction_detail,
                 'token': token,
             }
-            return render(request, 'cobro/bien.html', context)
+            return render(request, 'cobro/envioexitosotbk.html', context)
         else:
             context = {
                 'transaction': transaction,
@@ -96,15 +93,26 @@ def volver(request):
             }
             return render(request, 'cobro/mal.html', context)
 
-@csrf_exempt
-def final(request):
-
-    return render(request, 'cobro/final.html')
-
 @login_required(login_url='index')
-def procesarorden(request):
+def procesarorden(request, orden_id):
 
-    pass
+    if request.method == 'POST':
+
+        orden = Orden.objects.get(pk=orden_id)
+
+        transaction = webpay_service.init_transaction(
+            amount=orden.totalapagar,
+            buy_order=orden_id,
+            return_url=BASE_URL + "/cobro/retornotbk",
+            final_url=BASE_URL + "/cobro/compraexitosa",
+            session_id=request.user.email,
+        )
+
+        context = {
+            'transaction': transaction,
+        }
+
+        return render(request, 'cobro/enviotbk.html', context)
 
 @login_required(login_url='index')
 def comprar(request):
@@ -114,17 +122,26 @@ def comprar(request):
     listacarro = Carro.objects.filter(usuario=request.user).filter(estado=parToca['pendiente'])
     sumatotal = 0
     contador = 0
+    orden = Orden.objects.none()
+    # ver si ya tiene orden asociada
     for compra in listacarro:
         sumatotal = sumatotal + compra.total
         contador = contador + compra.cantidad
+        if compra.orden:
+            orden = compra.orden
 
-    # crear orden
-    orden = Orden(
-        usuario=request.user,
-        numerodeitems=contador,
-        totalapagar=sumatotal
-    )
-    orden.save()
+    # Actualiza orden si existe o crear orden
+    if orden:
+        orden.numerodeitems = contador
+        orden.totalapagar = sumatotal
+        orden.save()
+    else:
+        orden = Orden(
+            usuario=request.user,
+            numerodeitems=contador,
+            totalapagar=sumatotal
+        )
+        orden.save()
 
     # Agregar items a ordenitem
     ordentocata = []
@@ -137,6 +154,8 @@ def comprar(request):
         )
         item.save()
         ordentocata.append(item)
+        compra.orden = orden
+        compra.save()
 
     context = {
         'tocatas_h': toc_head,
