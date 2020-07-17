@@ -7,7 +7,7 @@ from tbk.services import WebpayService
 from tbk.commerce import Commerce
 from tbk import INTEGRACION
 
-from cobro.models import Carro, Orden, OrdenTocata
+from cobro.models import Carro, Orden, OrdenTocata, OrdenTBK
 from tocata.models import Tocata
 
 from home.views import getTocatasArtistasHeadIndex
@@ -77,18 +77,51 @@ def retornotbk(request):
         transaction_detail = transaction["detailOutput"][0]
         webpay_service.acknowledge_transaction(token)
         if transaction_detail["responseCode"] == 0:
-            print('---- transaction ----')
-            print(transaction)
-            print('---- detail ----')
-            print(transaction_detail)
-            print('---- token ----')
-            print(token)
+
+            # Recuperar Orden
+            orden = Orden.objects.get(pk=transaction['buyOrder'])
+
+            # Guardar trasaccion TBK
+            ordentbk = OrdenTBK(
+                orden = orden,
+                accountingDate = transaction['accountingDate'],
+                buyOrder = transaction['buyOrder'],
+                cardNumber = transaction['cardDetail']['cardNumber'],
+                cardExpirationDate = transaction['cardDetail']['cardExpirationDate'],
+                sharesAmount = transaction['detailOutput'][0]['sharesAmount'],
+                sharesNumber = transaction['detailOutput'][0]['sharesNumber'],
+                amount = transaction['detailOutput'][0]['amount'],
+                commerceCode = transaction['detailOutput'][0]['commerceCode'],
+                authorizationCode = transaction['detailOutput'][0]['authorizationCode'],
+                paymentTypeCode = transaction['detailOutput'][0]['paymentTypeCode'],
+                responseCode = transaction['detailOutput'][0]['responseCode'],
+                sessionId = transaction['sessionId'],
+                transactionDate = transaction['transactionDate'],
+                urlRedirection = transaction['urlRedirection'],
+                VCI = transaction['VCI']
+            )
+            ordentbk.save()
+
+            # Actualizar Orden
+            orden.estado = parToca['pagado']
+            orden.save()
+
+            # Actualizar Carro y Tocatas
+            listacarro = Carro.objects.filter(orden=orden)
+            for item in listacarro:
+                item.estado = parToca['pagado']
+                item.save()
+                tocata = Tocata.objects.get(pk=item.tocata.pk)
+                tocata.asistentes_total += item.cantidad
+                tocata.save()
+
             context = {
                 'transaction': transaction,
                 'transaction_detail': transaction_detail,
                 'token': token,
             }
             return render(request, 'cobro/envioexitosotbk.html', context)
+
         else:
             context = {
                 'transaction': transaction,
@@ -132,7 +165,8 @@ def comprar(request):
     sumatotal = 0
     contador = 0
     orden = Orden.objects.none()
-    # ver si ya tiene orden asociada
+
+    # Calcular totales y verificar si ya tiene orden asociada
     for compra in listacarro:
         sumatotal = sumatotal + compra.total
         contador = contador + compra.cantidad
@@ -144,6 +178,7 @@ def comprar(request):
         orden.numerodeitems = contador
         orden.totalapagar = sumatotal
         orden.save()
+        OrdenTocata.objects.filter(orden=orden).delete()
     else:
         orden = Orden(
             usuario=request.user,
@@ -152,7 +187,7 @@ def comprar(request):
         )
         orden.save()
 
-    # Agregar items a ordenitem
+    # Agregar Tocatas a OrdenTocata
     ordentocata = []
     for compra in listacarro:
         item = OrdenTocata(
@@ -208,19 +243,52 @@ def agregaracarro(request, tocata_id):
         next = request.POST.get('next', '/')
         cantidad = request.POST.get('numeroentradas')
 
-        # Agregar tocata a Carro
-        item = Carro.objects.filter(tocata=tocata_id).filter(estado=parToca['pendiente'])
+        # Verifica si ya compro entradas para esta tocata
+        item = Carro.objects.filter(tocata=tocata_id).filter(usuario=request.user)
+        listapagados = item.filter(estado=parToca['pagado'])
+        if listapagados:
+            totalpagados = 0
+            for pagado in listapagados:
+                totalpagados += pagado.cantidad
 
-        if item:
-            if item[0].cantidad == 2:
+            if totalpagados == 2:
                 messages.error(request,'Ya compraste dos entradas para esta Tocata Intima')
+                if next:
+                    return HttpResponseRedirect(next)
+                else:
+                    return redirect('tocatas')
             else:
                 if int(cantidad) == 2:
                     messages.error(request,'Ya compraste una entrada, solo puedes comprar una mas')
+                    if next:
+                        return HttpResponseRedirect(next)
+                    else:
+                        return redirect('tocatas')
+
+        # Verifica si ya tiene entradas en el carro y cuantas tiene (solo puede comprar maximo 2)
+        listapendientes = item.filter(estado=parToca['pendiente'])
+        if listapendientes:
+            totalpendientes = 0
+            for pendiente in listapendientes:
+                totalpendientes += pendiente.cantidad
+
+            if totalpendientes == 2:
+                messages.error(request,'Ya tienes en tu canasta dos entradas')
+                if next:
+                    return HttpResponseRedirect(next)
                 else:
-                    item[0].cantidad = 2
-                    item[0].total = item[0].tocata.costo * 2
-                    item[0].save()
+                    return redirect('tocatas')
+            else:
+                if int(cantidad) == 2:
+                    messages.error(request,'Ya tienes en tu canasta una entrada, solo puedes agregar una mas')
+                    if next:
+                        return HttpResponseRedirect(next)
+                    else:
+                        return redirect('tocatas')
+                else:
+                    pendientes[0].cantidad = 2
+                    pendientes[0].total = pendiente[0].tocata.costo * 2
+                    pendientes[0].save()
                     messages.success(request,'Tocata Agregada a Carro')
 
         else:

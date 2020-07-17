@@ -1,0 +1,61 @@
+---- transaction ----
+  OrderedDict([
+      ('accountingDate', '0717'),
+      ('buyOrder', '41'),
+      ('cardDetail', OrderedDict([
+          ('cardNumber', '6623'),
+          ('cardExpirationDate', None)
+          ])),
+      ('detailOutput', [OrderedDict([
+          ('sharesAmount', None),
+          ('sharesNumber', 0),
+          ('amount', Decimal('36000')),
+          ('commerceCode', '597020000540'),
+          ('buyOrder', '41'),
+          ('authorizationCode', '1213'),
+          ('paymentTypeCode', 'VN'),
+          ('responseCode', 0)])
+          ]),
+      ('sessionId', 'rpparada@gmail.com'),
+      ('transactionDate', datetime.datetime(2020, 7, 17, 12, 47, 32, 288000, tzinfo=<FixedOffset '-04:00'>)),
+      ('urlRedirection', 'https://webpay3gint.transbank.cl/webpayserver/voucher.cgi'),
+      ('VCI', 'TSY')
+  ])
+
+  ---- detail ----
+  OrderedDict([
+      ('sharesAmount', None),
+      ('sharesNumber', 0),
+      ('amount', Decimal('36000')),
+      ('commerceCode', '597020000540'),
+      ('buyOrder', '41'),
+      ('authorizationCode', '1213'),
+      ('paymentTypeCode', 'VN'),
+      ('responseCode', 0)
+  ])
+  ---- token ----
+  ed8c3990f9a64cee4633f1e0cb944236ea27ad7b022272ef48139e5791468168
+
+  prueba final super bkn
+  prueba final super bkn
+  Julio Piña
+  Metropolitana de Santiago
+  Santiago
+  July 4, 2020 9 p.m.
+  $0	1	$0
+
+  JULIO PIÑA LANZA SU PRIMER DISCO EN SANTIAGO
+  JULIO PIÑA LANZA SU PRIMER DISCO EN SANTIAGO
+  Julio Piña
+  Tarapacá
+  Iquique
+  July 25, 2020 10 p.m.
+  $8,000	2	$16,000
+
+  Pies Descalzos
+  Pies Descalzos
+  Nicole Bunout
+  Valparaíso
+  Valparaíso
+  June 20, 2020 9 p.m.
+  $10,000	2	$20,000
