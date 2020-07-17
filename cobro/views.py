@@ -58,13 +58,11 @@ def compraexitosa(request):
 
     toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
 
-    if request.method == 'POST':
-        print(request.POST.get('token_ws'))
-
     context = {
         'tocatas_h': toc_head,
         'artistas_h': art_head,
         'usuario': usuario,
+        'numitemscarro': numitemscarro,
     }
 
     return render(request, 'cobro/compraexitosa.html', context)
@@ -79,6 +77,12 @@ def retornotbk(request):
         transaction_detail = transaction["detailOutput"][0]
         webpay_service.acknowledge_transaction(token)
         if transaction_detail["responseCode"] == 0:
+            print('---- transaction ----')
+            print(transaction)
+            print('---- detail ----')
+            print(transaction_detail)
+            print('---- token ----')
+            print(token)
             context = {
                 'transaction': transaction,
                 'transaction_detail': transaction_detail,
@@ -97,8 +101,13 @@ def retornotbk(request):
 def procesarorden(request, orden_id):
 
     if request.method == 'POST':
-
+        email = request.POST.get('altemail')
         orden = Orden.objects.get(pk=orden_id)
+        if email:
+            orden.email = email
+        else:
+            orden.email = request.user.email
+        orden.save()
 
         transaction = webpay_service.init_transaction(
             amount=orden.totalapagar,
@@ -161,6 +170,7 @@ def comprar(request):
         'tocatas_h': toc_head,
         'artistas_h': art_head,
         'usuario': usuario,
+        'numitemscarro': numitemscarro,
         'orden': orden,
         'ordentocata': ordentocata,
 
