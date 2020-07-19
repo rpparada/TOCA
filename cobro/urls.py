@@ -8,6 +8,7 @@ urlpatterns = [
     path('comprar', views.comprar, name='comprar'),
     path('procesarorden_<int:orden_id>', views.procesarorden, name='procesarorden'),
     path('retornotbk', views.retornotbk, name='retornotbk'),
-    path('compraexitosa', views.compraexitosa, name='compraexitosa')
+    path('compraexitosa', views.compraexitosa, name='compraexitosa'),
+    path('miscompras', views.miscompras, name='miscompras'),
 
 ]

@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load thumbnail %}
+{% block title %} | MIS COMPRAS{% endblock %}
+{% block content %}
+{% include 'partials/_alerts.html' %}
+
+{% if user.is_authenticated %}
+
+  {% if listaorden %}
+    {% for orden in listaorden %}
+    <!--Modal detalle -->
+    <div class="modal fade" id="modaldeor{{orden.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-label">Orden número: {{ orden.id }} - Pago Total: ${{ orden.totalapagar|intcomma }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+
+                <div class="modal-body">
+                  <table class="table m-b-0">
+                      <thead>
+                          <tr>
+                              <th class="cart-product-thumbnail">Artista</th>
+                              <th class="cart-product-name">Descripción</th>
+                              <th class="cart-product-name">Cantidad</th>
+                              <th class="cart-product-subtotal">Total (Unidad)</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        {% for item in orden.detalles %}
+                          <tr>
+                              <td class="cart-product-thumbnail">
+                                  <div class="cart-product-thumbnail-name">{{ item.tocata.artista.nombre }}</div>
+                              </td>
+                              <td class="cart-product-description">
+                                  <p><span>{{ item.tocata.nombre }}</span>
+                                      <span>{{ item.tocata.region }}</span>
+                                      <span>{{ item.tocata.comuna }}</span>
+                                      <span>{{ item.tocata.fecha }} {{ item.tocata.hora }}</span>
+                                  </p>
+                              </td>
+                              <td class="cart-product-quantity">
+                                  <span>{{ item.cantidad }}</span>
+                              </td>
+                              <td class="cart-product-subtotal">
+                                  <span class="amount">${{ item.total|intcomma }} (${{ item.tocata.costo|intcomma }})</span>
+                              </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                  </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-b" data-dismiss="modal">Aceptar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end: Modal -->
+    {% endfor %}
+  {% endif %}
+
+
+  {% if listaorden %}
+    <section id="page-content" class="no-sidebar">
+        <div class="container">
+
+            <div class="row mb-3">
+                <div class="col-lg-6">
+                    <h4>Mis Compras</h4>
+                    <p>Listado de tus compras.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <table id="datatable" class="table table-bordered table-hover" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Número Orden</th>
+                                <th>Número de Entradas</th>
+                                <th>Total Pagado</th>
+                                <th>Email</th>
+                                <th>Estado</th>
+                                <th class="noExport">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          {% for orden in listaorden %}
+                            <tr>
+                                <td>{{ orden.id }}</td>
+                                <td>{{ orden.numerodeitems }}</td>
+                                <td>${{ orden.totalapagar|intcomma }}</td>
+                                <td>{{ orden.email }}</td>
+                                {% if orden.estado == 'PE' %}
+                                <td><span class="badge badge-pill badge-warning">{{ orden.get_estado_display }}</span></td>
+                                {% elif orden.estado == 'PA' %}
+                                <td><span class="badge badge-pill badge-success">{{ orden.get_estado_display }}</span></td>
+                                {% elif orden.estado == 'CA' %}
+                                <td><span class="badge badge-pill badge-danger">{{ orden.get_estado_display }}</span></td>
+                                {% endif %}
+                                <td>
+                                  <div class="p-dropdown">
+                                      <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
+                                      <ul class="p-dropdown-content">
+                                          <li><a href="" data-target="#modaldeor{{orden.id}}" data-toggle="modal"><i class="icon-eye"></i>Ver</a></li>
+                                      </ul>
+                                  </div>
+                                </td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                              <th>Número Orden</th>
+                              <th>Número de Entradas</th>
+                              <th>Total Pagado</th>
+                              <th>Email</th>
+                              <th>Estado</th>
+                              <th>Acciones</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+  {% else %}
+    <section id="page-content" class="no-sidebar">
+        <div class="container">
+
+            <div class="row mb-3">
+                <div class="col-lg-6">
+                    <h4>Mis Compras</h4>
+                    <p>Actualmente no tienes ninguna compra.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+  {% endif %}
+{% else %}
+  <section id="page-content">
+      <div class="container">
+        <div data-animate="fadeInUp" class="text-center">
+            <a href="{% url 'ingresar' %}?next={{request.path|urlencode}}" class="btn">INGRESA A TU CUENTA</a>
+        </div>
+      </div>
+  </section>
+{% endif %}
+
+{% endblock %}

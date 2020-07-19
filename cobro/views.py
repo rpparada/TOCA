@@ -322,3 +322,22 @@ def quitarcarro(request, item_id):
         return HttpResponseRedirect(next)
     else:
         return redirect('tocatas')
+
+@login_required(login_url='index')
+def miscompras(request):
+
+    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+
+    listaorden = Orden.objects.filter(usuario=request.user)
+
+    for orden in listaorden:
+        orden.detalles = OrdenTocata.objects.filter(orden=orden)
+
+    context = {
+        'tocatas_h': toc_head,
+        'artistas_h': art_head,
+        'usuario': usuario,
+        'listaorden': listaorden,
+    }
+
+    return render(request, 'usuario/miscompras.html', context)
