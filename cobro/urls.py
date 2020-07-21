@@ -11,6 +11,7 @@ urlpatterns = [
     path('compraexitosa', views.compraexitosa, name='compraexitosa'),
     path('miscompras', views.miscompras, name='miscompras'),
     path('fincompra', views.fincompra, name='fincompra'),
+    path('finerrorcompra', views.finerrorcompra, name='finerrorcompra'),
     path('detalleorden_<int:orden_id>', views.detalleorden, name='detalleorden')
 
 ]

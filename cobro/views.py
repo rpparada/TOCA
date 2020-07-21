@@ -73,6 +73,27 @@ def detalleorden(request, orden_id):
     return render(request, 'cobro/detalleorden.html', context)
 
 
+def finerrorcompra (request):
+
+    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+
+    token = ''
+    orden = OrdenTBK.objects.none()
+    if request.method == 'POST':
+        token = request.POST.get('token_ws')
+        ordenTBK = OrdenTBK.objects.get(token=token)
+
+    context = {
+        'tocatas_h': toc_head,
+        'artistas_h': art_head,
+        'usuario': usuario,
+        'numitemscarro': numitemscarro,
+        'ordenTBK': ordenTBK,
+    }
+
+    return render(request, 'cobro/finerrorcompra.html', context)
+
+
 def fincompra(request):
 
     toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
@@ -164,12 +185,38 @@ def retornotbk(request):
             return render(request, 'cobro/envioexitosotbk.html', context)
 
         else:
+
+            # Recuperar Orden
+            orden = Orden.objects.get(pk=transaction['buyOrder'])
+
+            # Guardar trasaccion TBK
+            ordentbk = OrdenTBK(
+                orden = orden,
+                token = token,
+                accountingDate = transaction['accountingDate'],
+                buyOrder = transaction['buyOrder'],
+                cardNumber = transaction['cardDetail']['cardNumber'],
+                cardExpirationDate = transaction['cardDetail']['cardExpirationDate'],
+                sharesAmount = transaction['detailOutput'][0]['sharesAmount'],
+                sharesNumber = transaction['detailOutput'][0]['sharesNumber'],
+                amount = transaction['detailOutput'][0]['amount'],
+                commerceCode = transaction['detailOutput'][0]['commerceCode'],
+                authorizationCode = transaction['detailOutput'][0]['authorizationCode'],
+                paymentTypeCode = transaction['detailOutput'][0]['paymentTypeCode'],
+                responseCode = transaction['detailOutput'][0]['responseCode'],
+                sessionId = transaction['sessionId'],
+                transactionDate = transaction['transactionDate'],
+                urlRedirection = transaction['urlRedirection'],
+                VCI = transaction['VCI']
+            )
+            ordentbk.save()
+            
             context = {
                 'transaction': transaction,
                 'transaction_detail': transaction_detail,
                 'token': token,
             }
-            return render(request, 'cobro/mal.html', context)
+            return render(request, 'cobro/errorenpago.html', context)
 
 @login_required(login_url='index')
 def procesarorden(request, orden_id):
