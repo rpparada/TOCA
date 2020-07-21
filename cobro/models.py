@@ -55,6 +55,7 @@ class OrdenTBK(models.Model):
 
     orden = models.ForeignKey(Orden, on_delete=models.DO_NOTHING)
 
+    token = models.CharField(max_length=200, blank=True, null=True)
     accountingDate = models.CharField(max_length=200, blank=True, null=True)
     buyOrder = models.CharField(max_length=200, blank=True, null=True)
     cardNumber = models.CharField(max_length=200, blank=True, null=True)

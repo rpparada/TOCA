@@ -9,14 +9,12 @@
 <!-- SHOP CHECKOUT -->
 <section id="shop-checkout">
     <div class="container">
-      <form action="{% url 'procesarorden' orden.id %}" method="POST">
         <div class="shop-cart">
-            {% csrf_token %}
             <div class="row">
                 <div class="col-lg-6 no-padding">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h4 class="upper">Boleta y Entrada(s) seran enviadas al siguiente Email:</h4>
+                            <h4 class="upper">Boleta y Entrada(s) enviados al siguiente Email:</h4>
                         </div>
                         <div class="col-lg-12 form-group">
                             <label class="sr-only">Email</label>
@@ -24,27 +22,22 @@
                         </div>
                     </div>
                 </div>
+
+                {% if user.email != orden.email %}
                 <div class="col-lg-6">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h4 class="upper"><a href="#collapseFour" data-toggle="collapse" class="collapsed" aria-expanded="false"> Enviar a otro Email: <i class="icon-arrow-down-circle"></i></a></h4>
-                        </div>
-                        <div class="col-lg-12">
-                            <div style="height: 0px;" aria-expanded="false" id="collapseFour" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <div class="sep-top-xs">
-                                        <div class="row">
-                                            <div class="col-lg-12 form-group">
-                                                <label class="sr-only">Email</label>
-                                                <input type="email" class="form-control" placeholder="Email" value="" name="altemail">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  <div class="row">
+                      <div class="col-lg-12">
+                          <h4 class="upper">Email adicional de envio:</h4>
+                      </div>
+                      <div class="col-lg-12 form-group">
+                          <label class="sr-only">Email</label>
+                          <input type="email" class="form-control" placeholder="Email" value="{{orden.email}}" readonly>
+                      </div>
+                  </div>
                 </div>
+                {% endif %}
+
+              </div>
             </div>
             <div class="seperator"><i class="fa fa-credit-card"></i>
             </div>
@@ -121,21 +114,10 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-lg-12">
-                            <h4 class="upper">Método de Pago</h4>
-                            <div class="list-group">
-                              <input type="radio" name="RadioInputName" value="Value1" id="Radio1"/>
-                              <label class="list-group-item" for="Radio1"><img width="90" alt="Webpay" src="{% static 'images/iconos/webpay.png' %}"></label>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <button type="submit" class="btn icon-left float-right mt-3">Pagar</button>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-      </form>
     </div>
 </section>
 <!-- end: SHOP CHECKOUT -->

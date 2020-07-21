@@ -53,16 +53,56 @@ normal_commerce = tbk.commerce.Commerce(
 )
 webpay_service = tbk.services.WebpayService(normal_commerce)
 
-@csrf_exempt
-def compraexitosa(request):
+
+def detalleorden(request, orden_id):
 
     toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+
+    orden = Orden.objects.get(pk=orden_id)
+    ordentocata = OrdenTocata.objects.filter(orden=orden)
 
     context = {
         'tocatas_h': toc_head,
         'artistas_h': art_head,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
+        'orden': orden,
+        'ordentocata': ordentocata,
+    }
+
+    return render(request, 'cobro/detalleorden.html', context)
+
+
+def fincompra(request):
+
+    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+
+    token = ''
+    orden = OrdenTBK.objects.none()
+    if request.method == 'POST':
+        token = request.POST.get('token_ws')
+        ordenTBK = OrdenTBK.objects.get(token=token)
+
+    context = {
+        'tocatas_h': toc_head,
+        'artistas_h': art_head,
+        'usuario': usuario,
+        'numitemscarro': numitemscarro,
+        'ordenTBK': ordenTBK,
+    }
+
+    return render(request, 'cobro/fincompra.html', context)
+
+
+@csrf_exempt
+def compraexitosa(request):
+
+    token = ''
+    if request.method == 'POST':
+        token = request.POST.get('token_ws')
+
+    context = {
+        'token': token,
     }
 
     return render(request, 'cobro/compraexitosa.html', context)
@@ -84,6 +124,7 @@ def retornotbk(request):
             # Guardar trasaccion TBK
             ordentbk = OrdenTBK(
                 orden = orden,
+                token = token,
                 accountingDate = transaction['accountingDate'],
                 buyOrder = transaction['buyOrder'],
                 cardNumber = transaction['cardDetail']['cardNumber'],
@@ -286,9 +327,9 @@ def agregaracarro(request, tocata_id):
                     else:
                         return redirect('tocatas')
                 else:
-                    pendientes[0].cantidad = 2
-                    pendientes[0].total = pendiente[0].tocata.costo * 2
-                    pendientes[0].save()
+                    pendiente.cantidad = 2
+                    pendiente.total = pendiente.tocata.costo * 2
+                    pendiente.save()
                     messages.success(request,'Tocata Agregada a Carro')
 
         else:

@@ -94,7 +94,7 @@
                         <tbody>
                           {% for orden in listaorden %}
                             <tr>
-                                <td>{{ orden.id }}</td>
+                                <td><a href="{% url 'detalleorden' orden.id %}">{{ orden.id }}</a></td>
                                 <td>{{ orden.numerodeitems }}</td>
                                 <td>${{ orden.totalapagar|intcomma }}</td>
                                 <td>{{ orden.email }}</td>

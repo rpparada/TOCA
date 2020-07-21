@@ -10,5 +10,7 @@ urlpatterns = [
     path('retornotbk', views.retornotbk, name='retornotbk'),
     path('compraexitosa', views.compraexitosa, name='compraexitosa'),
     path('miscompras', views.miscompras, name='miscompras'),
+    path('fincompra', views.fincompra, name='fincompra'),
+    path('detalleorden_<int:orden_id>', views.detalleorden, name='detalleorden')
 
 ]
