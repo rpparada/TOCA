@@ -16,20 +16,20 @@ from toca.parametros import parToca
 def agregarLugar(request):
 
     tocatas, artistas, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
-    lugar_form = LugarForm();
+    form = LugarForm();
 
     if request.method == 'POST':
-        lugar_form = LugarForm(request.POST)
+        form = LugarForm(request.POST)
 
-        if lugar_form.is_valid():
-            nuevoLugar = lugar_form.save(commit=False)
+        if form.is_valid():
+            nuevoLugar = form.save(commit=False)
             nuevoLugar.provincia = Comuna.objects.get(id=request.POST.get('comuna')).provincia
             nuevoLugar.usuario = request.user
             nuevoLugar.save()
             messages.success(request, 'Lugar agregado exitosamente')
             return redirect('mislugares')
         else:
-            print(lugar_form.errors.as_data())
+            print(form.errors.as_data())
             messages.error(request,'Error en form')
 
     context = {
@@ -37,7 +37,7 @@ def agregarLugar(request):
         'artistas_h': artistas,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
-        'lugar_form': lugar_form,
+        'lugar_form': form,
     }
     return render(request, 'lugar/agregarlugar.html', context)
 

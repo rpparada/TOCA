@@ -10,12 +10,37 @@ class LugarForm(forms.ModelForm):
                                                             }), label='Nombre'
                                     )
 
-    nombre_calle    = forms.CharField()
-    numero          = forms.IntegerField()
-    ciudad          = forms.CharField()
-    departamento    = forms.CharField()
-    otros           = forms.CharField()
-    descripción     = forms.CharField()
+    nombre_calle    = forms.CharField(widget=forms.TextInput(attrs={
+                                                                'class': 'form-control',
+                                                                'placeholder': 'Nombre Calle'
+                                                            }), label='Calle'
+                                    )
+
+    numero          = forms.IntegerField(widget=forms.TextInput(attrs={
+                                                                'class': 'form-control',
+                                                                'placeholder': 'Número Calle'
+                                                            }), label='Número'
+                                    )
+    ciudad          = forms.CharField(widget=forms.TextInput(attrs={
+                                                                'class': 'form-control',
+                                                                'placeholder': 'Ciudad'
+                                                            }), label='Ciudad'
+                                    )
+    departamento    = forms.CharField(widget=forms.TextInput(attrs={
+                                                                'class': 'form-control',
+                                                                'placeholder': 'Departamento'
+                                                            }), label='Depto.'
+                                    )
+    otros           = forms.CharField(widget=forms.TextInput(attrs={
+                                                                'class': 'form-control',
+                                                                'placeholder': 'Block/Villa/etc.'
+                                                            }), label='Otros'
+                                    )
+    descripción     = forms.CharField(widget=forms.Textarea(attrs={
+                                                                'class': 'form-control',
+                                                                'placeholder': 'Descripción'
+                                                            }), label='Descripción'
+                                    )
     capacidad       = forms.IntegerField()
 
     region          = forms.ModelChoiceField(queryset=Region.objects, empty_label=None)
