@@ -3,17 +3,27 @@ from .models import Lugar, Region, Provincia, Comuna
 
 class LugarForm(forms.ModelForm):
 
-    '''
-    Referencia implementacion:
-    https://simpleisbetterthancomplex.com/tutorial/2018/01/29/how-to-implement-dependent-or-chained-dropdown-list-with-django.html
-    '''
+    nombre          = forms.CharField(widget=forms.TextInput(attrs={
+                                                                'id': 'primercampo',
+                                                                'class': 'form-control',
+                                                                'placeholder': 'Nombre'
+                                                            }), label='Nombre'
+                                    )
 
-    region = forms.ModelChoiceField(queryset=Region.objects, empty_label=None)
-    comuna = forms.ModelChoiceField(queryset=Comuna.objects, empty_label=None)
+    nombre_calle    = forms.CharField()
+    numero          = forms.IntegerField()
+    ciudad          = forms.CharField()
+    departamento    = forms.CharField()
+    otros           = forms.CharField()
+    descripción     = forms.CharField()
+    capacidad       = forms.IntegerField()
+
+    region          = forms.ModelChoiceField(queryset=Region.objects, empty_label=None)
+    comuna          = forms.ModelChoiceField(queryset=Comuna.objects, empty_label=None)
 
     class Meta:
-        model = Lugar
-        exclude = ['nombre','usuario','fecha_crea','fecha_actua','estado','codigo_postal','evaluacion','pais','provincia',]
+        model       = Lugar
+        exclude     = ['usuario','fecha_crea','fecha_actua','estado','codigo_postal','evaluacion','pais','provincia',]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
