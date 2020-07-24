@@ -59,48 +59,9 @@
             <div class="grid-layout grid-3-columns" data-item="grid-item">
               {% for tocata_vista in tocatas_vista %}
                 {% if tocata_vista.tipo == 'cerrada' %}
-                <div class="grid-item">
-                    <div class="product">
-                        <div class="product-image">
-                            <a href="{% url 'tocata' tocata_vista.id %}"><img alt="Shop product image!" src="{{ tocata_vista.flayer_380_507.url }}">
-                            </a>
-                            {% if tocata_vista.nuevo == 'SI' %}
-                            <span class="product-new">NUEVA</span>
-                            {% endif %}
-                        </div>
-                        <div class="product-description">
-                            <div class="product-category">{{ tocata_vista.artista.nombre }}, {{ tocata_vista.region }}, {{ tocata_vista.comuna }}</div>
-                            <div class="product-title">
-                                <h3><a href="{% url 'tocata' tocata_vista.id %}">{{ tocata_vista.nombre|truncatechars:20 }}</a></h3>
-                            </div>
-                            <div class="product-price"><ins>$ {{ tocata_vista.costo|intcomma }}</ins>
-                            </div>
-                            <div class="product-reviews">Cuando: {{ tocata_vista.fecha }} {{ tocata_vista.hora }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                  {% include 'snippets/gridtocata.html' with instance=tocata_vista %}
                 {% else %}
-                <div class="grid-item">
-                    <div class="product">
-                        <div class="product-image">
-                            <a href="{% url 'tocataabierta' tocata_vista.id %}"><img alt="Shop product image!" src="{{ tocata_vista.flayer_380_507.url }}">
-                            </a>
-                            {% if tocata_vista.nuevo == 'SI' %}
-                            <span class="product-new">NUEVA</span>
-                            {% endif %}
-                            <span class="product-sale-off">BUSCANDO</span>
-                        </div>
-                        <div class="product-description">
-                            <div class="product-category">{{ tocata_vista.artista.nombre }}, {{ tocata_vista.region }}, {{ tocata_vista.comuna }}</div>
-                            <div class="product-title">
-                                <h3><a href="{% url 'tocataabierta' tocata_vista.id %}">{{ tocata_vista.nombre|truncatechars:20 }}</a></h3>
-                            </div>
-                            <div class="product-reviews">Cuando: {{ tocata_vista.fecha }} {{ tocata_vista.hora }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                  {% include 'snippets/gridtocataabierta.html' with instance=tocata_vista %}
                 {% endif %}
               {% endfor %}
             </div>

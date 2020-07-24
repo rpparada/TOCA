@@ -1,0 +1,28 @@
+{% load humanize %}
+<div class="team-member">
+    <div class="team-image">
+        <img src="{{ instance.foto1.url }}">
+    </div>
+    <div class="team-desc">
+        <h3><a href="{% url 'artista' instance.id %}">{{ instance.nombre }}</a></h3>
+        <span>{{ instance.habilidades }}</span>
+        <p>{{ instance.descripción|truncatechars:150 }}</p>
+        <div class="align-center">
+          {% if instance.link_facebook %}
+            <a class="btn btn-xs btn-slide btn-light" href="{{ instance.link_facebook }}">
+                <i class="fab fa-facebook-f"></i>
+                <span>Facebook</span></a>
+          {% endif %}
+          {% if instance.link_twitter %}
+            <a class="btn btn-xs btn-slide btn-light" href="{{ instance.link_twitter }}" data-width="100">
+                <i class="fab fa-twitter"></i>
+                <span>Twitter</span></a>
+          {% endif %}
+          {% if instance.link_instagram %}
+            <a class="btn btn-xs btn-slide btn-light" href="{{ instance.link_instagram }}" data-width="118">
+                <i class="fab fa-instagram"></i>
+                <span>Instagram</span></a>
+          {% endif %}
+        </div>
+    </div>
+</div>

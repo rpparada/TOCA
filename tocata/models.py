@@ -46,7 +46,6 @@ class TocataAbierta(models.Model):
     region              = models.ForeignKey(Region, on_delete=models.DO_NOTHING, null=True, blank=True)
     comuna              = models.ForeignKey(Comuna, on_delete=models.DO_NOTHING, null=True, blank=True)
     descripción         = models.TextField(blank=True)
-    costo               = models.DecimalField(max_digits=10,decimal_places=2, default=0)
     fecha               = models.DateField()
     hora                = models.TimeField()
     asistentes_min      = models.IntegerField()

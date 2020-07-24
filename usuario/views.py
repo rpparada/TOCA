@@ -190,55 +190,37 @@ def activate(request, uidb64, token):
     else:
         return render(request, 'usuario/link_invalido.html')
 
-def test_ingresar(request):
+def ingresar(request):
 
     form = IngresarForm(request.POST or None)
 
     if form.is_valid():
+        next = request.POST.get('next', '/')
 
         nombreusuario = form.cleaned_data.get('nombreusuario')
         contra = form.cleaned_data.get('contra')
-        usuario = auth.authenticate(username=nombreusuario, password=contra)
-
-        if usuario is not None:
-
-            auth.login(request, usuario)
-            messages.success(request,'Ingreso Existos')
-            return redirect('/')
-        else:
-            
-            messages.error(request,'Error en Usuario y/o Contraseña')
-
-    context = {
-        'form': form
-    }
-
-    return render(request, 'usuario/test_ingresar.html', context)
-
-def ingresar(request):
-
-    if request.method == 'POST':
-        nombreusuario = request.POST['nombreusuario']
-        contra = request.POST['contra']
-        next = request.POST.get('next', '/')
 
         usuario = auth.authenticate(username=nombreusuario, password=contra)
+
         if usuario is not None:
             auth.login(request, usuario)
             messages.success(request,'Ingreso Existos')
 
             if next:
                 return HttpResponseRedirect(next)
+
             else:
                 return redirect('index')
+
         else:
-            context = {
-                'nombreusuario': nombreusuario,
-            }
             messages.error(request,'Error en Usuario y/o Contraseña')
-            return render(request, 'usuario/ingresar.html', context)
-    else:
-        return render(request, 'usuario/ingresar.html')
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'usuario/ingresar.html', context)
+
 
 def salir(request):
 

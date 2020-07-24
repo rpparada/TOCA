@@ -17,27 +17,20 @@
             <div class="row">
                 <div class="col-lg-5 center p-50 background-white b-r-6">
                     <h3>Ingresa a tu Cuenta</h3>
-                    <p hidden id="mensajerror"></p>
-                    <form id="formtocheck" action="{% url 'ingresar' %}" method="POST">
-                      {% csrf_token %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
                         <input type="hidden" name="next" value="{{ request.GET.next }}">
                         <div class="form-group">
-                            {% if nombreusuario %}
-                            <input id="primercampo" type="text" class="requerido form-control" placeholder="Email" name="nombreusuario" value="{{nombreusuario}}">
-                            {% else %}
-                            <input id="primercampo" type="text" class="requerido form-control" placeholder="Email" name="nombreusuario">
-                            {% endif  %}
+                            {{ form.nombreusuario }}
                         </div>
-                        <div class="form-group m-b-5">
-                            <label class="sr-only">Contraseña</label>
-                            <input id="contra" type="password" class="requerido form-control" placeholder="Contraseña" name="contra">
+                        <div class="form-group">
+                            {{ form.contra }}
                         </div>
-                        <br>
                         <div class="text-left form-group">
                             <button type="submit" class="btn">Ingresar</button>
                             <a href="{% url 'index' %}" class="btn btn-danger m-l-10">Anular</a>
                         </div>
-
                     </form>
                     <p class="small">¿Olvidates tu contraseña?<a href="{% url 'password_reset' %}"> Recuperar Contraseña</a></p>
                     <p class="small">¿Quieres crear una cuenta?<a href="{% url 'registrar' %}"> Registrate</a></p>
