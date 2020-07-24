@@ -34,21 +34,24 @@ if DEBUG == True:
 # Application definition
 
 INSTALLED_APPS = [
-    'cobro.apps.CobroConfig',
-    'artista.apps.ArtistaConfig',
-    'lugar.apps.LugarConfig',
-    'usuario.apps.UsuarioConfig',
-    'tocata.apps.TocataConfig',
-    'home.apps.HomeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Barra de Debug
     'debug_toolbar',
+    # Aplicaciones Externas
     'django.contrib.humanize',
     'sorl.thumbnail',
+    # Nuestras aplicaciones
+    'cobro.apps.CobroConfig',
+    'artista.apps.ArtistaConfig',
+    'lugar.apps.LugarConfig',
+    'usuario.apps.UsuarioConfig',
+    'tocata.apps.TocataConfig',
+    'home.apps.HomeConfig',
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (

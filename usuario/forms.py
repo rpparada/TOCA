@@ -7,6 +7,21 @@ from artista.models import Artista
 
 from toca.parametros import parUsuarioArtistas
 
+class IngresarForm(forms.Form):
+
+    nombreusuario   = forms.CharField(widget=forms.TextInput(attrs={
+                                                                "id": "primercampo",
+                                                                "class": "form-control",
+                                                                "placeholder": "Email"
+                                                            }), label=''
+                                    )
+    contra          = forms.CharField(widget=forms.PasswordInput(attrs={
+                                                                "id": "contra",
+                                                                "class": "form-control",
+                                                                "placeholder": "Contraseña"
+                                                            }), label=''
+                                    )
+
 class AgregaCamposUsuarioForm(UserCreationForm):
 
     class Meta:

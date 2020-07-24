@@ -15,7 +15,14 @@ from lugar.models import Lugar
 from artista.models import Artista
 from usuario.models import UsuarioArtista
 
-from .forms import AgregaCamposUsuarioForm, UsuarioForm, UsuarioArtistaForm, AgregaCamposUsuarioArtForm, ArtistaForm
+from .forms import (
+        AgregaCamposUsuarioForm,
+        UsuarioForm,
+        UsuarioArtistaForm,
+        AgregaCamposUsuarioArtForm,
+        ArtistaForm,
+        IngresarForm
+        )
 
 from home.views import getTocatasArtistasHeadIndex
 from .tokens import account_activation_token, art_activation_token
@@ -23,7 +30,6 @@ from .tokens import account_activation_token, art_activation_token
 from toca.parametros import parToca
 
 # Create your views here.
-
 def activateArt(request, uidb64, token):
 
     try:
@@ -183,6 +189,31 @@ def activate(request, uidb64, token):
         return render(request, 'usuario/activacion_cuenta_completa.html')
     else:
         return render(request, 'usuario/link_invalido.html')
+
+def test_ingresar(request):
+
+    form = IngresarForm(request.POST or None)
+
+    if form.is_valid():
+
+        nombreusuario = form.cleaned_data.get('nombreusuario')
+        contra = form.cleaned_data.get('contra')
+        usuario = auth.authenticate(username=nombreusuario, password=contra)
+
+        if usuario is not None:
+
+            auth.login(request, usuario)
+            messages.success(request,'Ingreso Existos')
+            return redirect('/')
+        else:
+            
+            messages.error(request,'Error en Usuario y/o Contraseña')
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'usuario/test_ingresar.html', context)
 
 def ingresar(request):
 
