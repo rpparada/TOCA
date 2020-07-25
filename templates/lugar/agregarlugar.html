@@ -2,12 +2,11 @@
 {% load static %}
 {% load humanize %}
 {% load thumbnail %}
-{% block title %} | CUENTA{% endblock %}
-{% block content %}
+{% block title %} | AGREGAR LUGAR{% endblock %}
 
+{% block content %}
 {% include 'partials/_alerts.html' %}
 
-{% if user.is_authenticated %}
 <section id="page-content">
     <div class="container">
         <div class="row">
@@ -22,69 +21,57 @@
                       <form id="formtocheck" action="{% url 'agregarlugar' %}" method="POST" data-ciudad-url-agregar="{% url 'ajax_load_comunas_agregar' %}">
                         {% csrf_token %}
                           <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">{{ lugar_form.nombre.label }}</label>
+                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.nombre.label }}</label>
                               <div class="col-sm-10">
-                                {{ lugar_form.nombre }}
+                                {{ form.nombre }}
                               </div>
                           </div>
                           <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">{{ lugar_form.nombre_calle.label }}</label>
+                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.nombre_calle.label }}</label>
                               <div class="col-sm-7">
-                                {{ lugar_form.nombre_calle }}
+                                {{ form.nombre_calle }}
                               </div>
-                              <label class="col-form-label col-sm-1">{{ lugar_form.numero.label }}</label>
+                              <label class="col-form-label col-sm-1">{{ form.numero.label }}</label>
                               <div class="col-sm-2">
-                                {{ lugar_form.numero }}
+                                {{ form.numero }}
                               </div>
                           </div>
                           <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right" for="{{ lugar_form.region.id_for_label }}">{{ lugar_form.region.label_tag }}</label>
-                              <div class="col-sm-5">
-                                <select class="form-control" name="{{ lugar_form.region.html_name }}" id="id_region">
-                                  {% for region in lugar_form.region.field.choices %}
-                                    <option value="{{ region.0 }}">{{ region.1 }}</option>
-                                  {% endfor %}
-                                </select>
-                              </div>
-                              <label class="col-form-label col-sm-1 text-sm-right" for="{{ lugar_form.comuna.id_for_label }}">{{ lugar_form.comuna.label_tag }}</label>
+                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.region.label }}</label>
                               <div class="col-sm-4">
-                                <select class="form-control" name="{{ lugar_form.comuna.html_name }}" id="id_comuna">
-                                  {% for comuna in lugar_form.comuna.field.choices %}
-                                    <option value="{{ comuna.0 }}">{{ comuna.1 }}</option>
-                                  {% endfor %}
-                                </select>
+                                {{ form.region }}
                               </div>
-                          </div>
-                          <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">{{ lugar_form.ciudad.label }}</label>
-                              <div class="col-sm-5">
-                                {{ lugar_form.ciudad }}
-                              </div>
-                              <label class="col-form-label col-sm-1 text-sm-right">{{ lugar_form.departamento.label }}</label>
+                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.comuna.label }}</label>
                               <div class="col-sm-4">
-                                {{ lugar_form.departamento }}
+                                {{ form.comuna }}
                               </div>
                           </div>
                           <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">{{ lugar_form.otros.label }}</label>
-                              <div class="col-sm-10">
-                                {{ lugar_form.otros }}
+                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.ciudad.label }}</label>
+                              <div class="col-sm-5">
+                                {{ form.ciudad }}
+                              </div>
+                              <label class="col-form-label col-sm-1 text-sm-right">{{ form.departamento.label }}</label>
+                              <div class="col-sm-4">
+                                {{ form.departamento }}
                               </div>
                           </div>
                           <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">{{ lugar_form.descripción.label }}</label>
+                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.otros.label }}</label>
                               <div class="col-sm-10">
-                                {{ lugar_form.descripción }}
+                                {{ form.otros }}
                               </div>
                           </div>
                           <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">Capacidad Aprox.</label>
+                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.descripción.label }}</label>
                               <div class="col-sm-10">
-                                {% if lugar_form.capacidad.value %}
-                                  <input type="number" class="requerido form-control" placeholder="Capacidad" value="{{ lugar_form.capacidad.value }}" name="capacidad">
-                                {% else %}
-                                  <input type="number" class="requerido form-control" placeholder="Capacidad" value="" name="capacidad">
-                                {% endif %}
+                                {{ form.descripción }}
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.capacidad.label }}</label>
+                              <div class="col-sm-10">
+                                {{ form.capacidad }}
                               </div>
                           </div>
                           <div class="form-group row">
@@ -100,15 +87,5 @@
         </div>
     </div>
 </section>
-{% else %}
-<section id="page-content">
-    <div class="container">
-      <div data-animate="fadeInUp" class="text-center">
-          <a href="{% url 'ingresar' %}?next={{request.path|urlencode}}" class="btn">INGRESA A TU CUENTA</a>
-      </div>
-    </div>
-</section>
-{% endif %}
-
 
 {% endblock %}

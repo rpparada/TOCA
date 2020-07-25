@@ -180,48 +180,41 @@ def creartocata(request):
 @login_required(login_url='index')
 def creartocatacerrada(request):
 
-    tocata_form = TocataForm();
+    form = TocataForm(request.user, request.POST or None)
 
-    if request.method == 'POST':
+    if form.is_valid():
 
-        tocata_form = TocataForm(request.POST)
+        nuevaTocata = form.save(commit=False)
+        if 'flayer_original' in request.FILES:
+            nuevaTocata.flayer_original = request.FILES['flayer_original']
+            nuevaTocata.flayer_380_507 = request.FILES['flayer_original']
+            nuevaTocata.flayer_1920_1280 = request.FILES['flayer_original']
 
-        if tocata_form.is_valid():
+        nuevaTocata.estado = parToca['publicado']
+        nuevaTocata.region = nuevaTocata.lugar.region
+        nuevaTocata.comuna = nuevaTocata.lugar.comuna
 
-            nuevaTocata = tocata_form.save(commit=False)
-            if 'flayer_original' in request.FILES:
-                nuevaTocata.flayer_original = request.FILES['flayer_original']
-                nuevaTocata.flayer_380_507 = request.FILES['flayer_original']
-                nuevaTocata.flayer_1920_1280 = request.FILES['flayer_original']
+        nuevaTocata.usuario = request.user
+        nuevaTocata.artista = Artista.objects.get(usuario=request.user)
 
-            nuevaTocata.estado = parToca['publicado']
-            nuevaTocata.region = nuevaTocata.lugar.region
-            nuevaTocata.comuna = nuevaTocata.lugar.comuna
+        nuevaTocata.asistentes_max = nuevaTocata.lugar.capacidad
 
-            nuevaTocata.usuario = request.user
-            nuevaTocata.artista = Artista.objects.get(usuario=request.user)
+        nuevaTocata.save()
 
-            nuevaTocata.asistentes_max = nuevaTocata.lugar.capacidad
-
-            nuevaTocata.save()
-
-            messages.success(request, 'Tocata creada exitosamente')
-            return redirect('mistocatas')
-        else:
-            print(tocata_form.errors.as_data())
-            messages.error(request,'Error en form')
+        messages.success(request, 'Tocata creada exitosamente')
+        return redirect('mistocatas')
+    #$else:
+    #    print(form.errors.as_data())
+    #    messages.error(request,'Error en form')
 
     tocatas, artistas, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
-    mislugares = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
 
     context = {
         'tocatas_h': tocatas,
         'artistas_h': artistas,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
-
-        'mislugares': mislugares,
-        'tocata_form': tocata_form,
+        'form': form,
     }
 
     return render(request, 'tocata/creartocatacerrada.html', context)
@@ -229,39 +222,35 @@ def creartocatacerrada(request):
 @login_required(login_url='index')
 def creartocataabierta(request):
 
-    tocata_form = TocataAbiertaForm()
+    form = TocataAbiertaForm(request.POST or None)
 
-    if request.method == 'POST':
-        tocata_form = TocataAbiertaForm(request.POST)
-        if tocata_form.is_valid():
+    if form.is_valid():
 
-            nuevaTocata = tocata_form.save(commit=False)
-            if 'flayer_original' in request.FILES:
-                nuevaTocata.flayer_original = request.FILES['flayer_original']
-                nuevaTocata.flayer_380_507 = request.FILES['flayer_original']
-                nuevaTocata.flayer_1920_1280 = request.FILES['flayer_original']
+        nuevaTocata = form.save(commit=False)
+        if 'flayer_original' in request.FILES:
+            nuevaTocata.flayer_original = request.FILES['flayer_original']
+            nuevaTocata.flayer_380_507 = request.FILES['flayer_original']
+            nuevaTocata.flayer_1920_1280 = request.FILES['flayer_original']
 
-            nuevaTocata.estado = parToca['publicado']
-            nuevaTocata.usuario = request.user
-            nuevaTocata.artista = Artista.objects.get(usuario=request.user)
-            nuevaTocata.save()
+        nuevaTocata.estado = parToca['publicado']
+        nuevaTocata.usuario = request.user
+        nuevaTocata.artista = Artista.objects.get(usuario=request.user)
+        nuevaTocata.save()
 
-            messages.success(request, 'Tocata Abierta creada')
-            return redirect('mistocatas')
-        else:
-            print(tocata_form.errors.as_data())
-            messages.error(request,'Error en form')
+        messages.success(request, 'Tocata Abierta creada')
+        return redirect('mistocatas')
+    #else:
+    #    print(form.errors.as_data())
+    #    messages.error(request,'Error en form')
 
     tocatas, artistas, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
-    artista = UsuarioArtista.objects.get(user=request.user).artista
 
     context = {
         'tocatas_h': tocatas,
         'artistas_h': artistas,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
-        'artista': artista,
-        'tocata_form': tocata_form,
+        'form': form,
     }
 
     return render(request, 'tocata/creartocataabierta.html', context)

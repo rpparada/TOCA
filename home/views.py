@@ -37,7 +37,7 @@ def index(request):
         'tocatas': tocatas,
         'tocatasabiertas': tocatasabiertas,
         # Artistas
-        'artistas': artistas[:2],
+        'artistas': artistas,
         # Testimonios
         'testimonios_art': testimonios_art,
         'testimonios_usu': testimonios_usu,

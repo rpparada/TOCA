@@ -249,16 +249,29 @@
         <div class="col-lg-8 m-b-100 center">
             <div class="heading-text heading-section text-center">
               <h2>NUESTROS ARTISTAS</h2>
-              <!--
-              <p>El artista esta esperando a que lo invites a tocar a tu casa.</p>-->
             </div>
         </div>
         <div class="row team-members team-members-shadow m-b-40">
-          {% for artista in artistas %}
-          <div class="col-lg-6 center">
-            {% include 'snippets/teammember.html' with instance=artista %}
-          </div>
-          {% endfor %}
+
+          {% if artistas.count == 3 %}
+            {% for artista in artistas %}
+            <div class="col-lg-4 center">
+              {% include 'snippets/teammember.html' with instance=artista %}
+            </div>
+            {% endfor %}
+          {% elif artistas.count == 2 %}
+            {% for artista in artistas %}
+            <div class="col-lg-6 center">
+              {% include 'snippets/teammember.html' with instance=artista %}
+            </div>
+            {% endfor %}
+          {% elif artistas.count == 1 %}
+            {% for artista in artistas %}
+            <div class="col-lg-8 center">
+              {% include 'snippets/teammember.html' with instance=artista %}
+            </div>
+            {% endfor %}
+          {% endif %}
         </div>
     </div>
 </section>
