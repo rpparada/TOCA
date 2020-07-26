@@ -142,7 +142,7 @@
                 <table id="datatable" class="table table-bordered table-hover" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Calle y Número</th>
+                            <th>Nombre, Calle y Número</th>
                             <th>Regio/Comuna</th>
                             <th>Capacidad</th>
                             <th class="noExport">Acciones</th>
@@ -151,7 +151,11 @@
                     <tbody>
                       {% for lugar in mislugares %}
                         <tr>
+                            {% if lugar.nombre %}
+                            <td>{{ lugar.nombre }}, {{ lugar.nombre_calle }} {{ lugar.numero }}</td>
+                            {% else %}
                             <td>{{ lugar.nombre_calle }} {{ lugar.numero }}</td>
+                            {% endif %}
                             <td>{{ lugar.region }}/{{ lugar.comuna }}</td>
                             <td>{{ lugar.capacidad }}</td>
                             <td>

@@ -23,8 +23,7 @@ class TocataForm(forms.ModelForm):
                                         )
     lugar               = forms.ModelChoiceField(queryset=None, empty_label=None, widget=forms.Select(attrs={
                                                                                         'class': 'form-control',
-                                                                                        'id': 'id_region'
-                                                            }), label='Region'
+                                                            }), label='Mis Lugares'
                                     )
     descripción         = forms.CharField(required=False, widget=forms.Textarea(attrs={
                                                                 'class': 'form-control',
@@ -74,7 +73,7 @@ class TocataForm(forms.ModelForm):
         self.user = user
         super(TocataForm, self).__init__(*args, **kwargs)
 
-        self.fields['lugar'].queryset = Lugar.objects.filter(usuario=user)
+        self.fields['lugar'].queryset = Lugar.objects.filter(usuario=user).filter(estado=parToca['disponible'])
 
 
 class TocataAbiertaForm(forms.ModelForm):

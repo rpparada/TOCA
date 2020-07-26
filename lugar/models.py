@@ -57,4 +57,7 @@ class Lugar(models.Model):
     fecha_actu      = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.nombre_calle+' '+str(self.numero)+', '+str(self.comuna)
+        if self.nombre:
+            return self.nombre+', '+self.nombre_calle+' '+str(self.numero)+', '+str(self.comuna)
+        else:
+            return self.nombre_calle+' '+str(self.numero)+', '+str(self.comuna)
