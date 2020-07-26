@@ -5,6 +5,8 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.views.generic.detail import DetailView
+from django.http import Http404
 
 from datetime import datetime
 from itertools import chain
@@ -109,35 +111,71 @@ def tocatas(request):
 
     return render(request, 'tocata/tocatas.html', context)
 
-def tocata(request, tocata_id):
+class TocataDetailView(DetailView):
+    queryset = Tocata.objects.all()
+    template_name = 'tocata/tocata.html'
 
-    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
-    tocata = get_object_or_404(Tocata, pk=tocata_id)
-    tocata.asistentes_dif = tocata.asistentes_max - tocata.asistentes_total
+    def get_context_data(self, *args, **kwargs):
+        context = super(TocataDetailView, self).get_context_data(*args, **kwargs)
+        toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(self.request)
 
-    context = {
-        'tocatas_h': toc_head,
-        'artistas_h': art_head,
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
-        'tocata_vista': tocata,
-    }
-    return render(request, 'tocata/tocata.html', context)
+        context['tocatas_h'] = toc_head
+        context['artistas_h'] = art_head
+        context['usuario'] = usuario
+        context['numitemscarro'] = numitemscarro
 
-def tocataabierta(request, tocata_id):
+        return context
 
-    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
-    tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
+    def get_object(self, queryset=None):
 
-    context = {
-        'tocatas_h': toc_head,
-        'artistas_h': art_head,
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
-        'tocata_vista': tocata,
-    }
+        request = self.request
+        slug = self.kwargs.get('slug')
 
-    return render(request, 'tocata/tocataabierta.html', context)
+        try:
+            tocata = Tocata.objects.get(slug=slug)
+        except Tocata.DoesNotExist:
+            raise Http404('Tocata No Encontrada')
+        except Tocata.MultipleObjectsReturned:
+            tocatas = Tocata.objects.filter(slug=slug)
+            tocata = tocatas.first()
+        except:
+            raise Http404('Error Desconocido')
+        tocata.asistentes_dif = tocata.asistentes_max - tocata.asistentes_total
+
+        return tocata
+
+class TocataAbiertaDetailView(DetailView):
+
+    queryset = TocataAbierta.objects.all()
+    template_name = 'tocata/tocataabierta.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(TocataAbiertaDetailView, self).get_context_data(*args, **kwargs)
+        toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(self.request)
+
+        context['tocatas_h'] = toc_head
+        context['artistas_h'] = art_head
+        context['usuario'] = usuario
+        context['numitemscarro'] = numitemscarro
+
+        return context
+
+    def get_object(self, queryset=None):
+
+        request = self.request
+        slug = self.kwargs.get('slug')
+
+        try:
+            tocataabierta = TocataAbierta.objects.get(slug=slug)
+        except TocataAbierta.DoesNotExist:
+            raise Http404('Tocata No Encontrada')
+        except TocataAbierta.MultipleObjectsReturned:
+            tocataabiertas = Tocata.objects.filter(slug=slug)
+            tocataabierta = tocataabiertas.first()
+        except:
+            raise Http404('Error Desconocido')
+
+        return tocataabierta
 
 @login_required(login_url='index')
 def mistocatas(request):

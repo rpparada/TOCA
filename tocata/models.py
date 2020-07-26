@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import pre_save
 
 from django_resized import ResizedImageField
 
@@ -7,6 +8,7 @@ from artista.models import Artista
 from lugar.models import Lugar, Region, Comuna
 
 from toca.parametros import parToca, parTocatas, parLugaresToc, parTocatasAbiertas
+from .utils  import unique_slug_generator
 
 # Create your models here.
 class Tocata(models.Model):
@@ -14,6 +16,7 @@ class Tocata(models.Model):
     artista             = models.ForeignKey(Artista, on_delete=models.DO_NOTHING)
     usuario             = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     nombre              = models.CharField(max_length=200)
+    slug                = models.SlugField(blank=True, unique=True)
     lugar               = models.ForeignKey(Lugar, on_delete=models.DO_NOTHING, null=True, blank=True)
     region              = models.ForeignKey(Region, on_delete=models.DO_NOTHING, null=True, blank=True)
     comuna              = models.ForeignKey(Comuna, on_delete=models.DO_NOTHING, null=True, blank=True)
@@ -36,11 +39,18 @@ class Tocata(models.Model):
     def __str__(self):
         return self.nombre
 
+def tocata_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance)
+
+pre_save.connect(tocata_pre_save_receiver, sender=Tocata)
+
 class TocataAbierta(models.Model):
 
     artista             = models.ForeignKey(Artista, on_delete=models.DO_NOTHING)
     usuario             = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     nombre              = models.CharField(max_length=200)
+    slug                = models.SlugField(blank=True, unique=True)
     region              = models.ForeignKey(Region, on_delete=models.DO_NOTHING, null=True, blank=True)
     comuna              = models.ForeignKey(Comuna, on_delete=models.DO_NOTHING, null=True, blank=True)
     descripción         = models.TextField(blank=True, null=True)
@@ -59,6 +69,12 @@ class TocataAbierta(models.Model):
 
     def __str__(self):
         return self.nombre
+
+def tocataabierta_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance)
+
+pre_save.connect(tocataabierta_pre_save_receiver, sender=TocataAbierta)
 
 class LugaresTocata(models.Model):
 

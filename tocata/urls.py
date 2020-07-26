@@ -3,8 +3,8 @@ from . import views
 
 urlpatterns = [
     path('', views.tocatas, name='tocatas'),
-    path('tocata_<int:tocata_id>', views.tocata, name='tocata'),
-    path('tocataabierta_<int:tocata_id>', views.tocataabierta, name='tocataabierta'),
+    path('<slug:slug>/', views.TocataDetailView.as_view(), name='tocata'),
+    path('tocataabierta/<slug:slug>/', views.TocataAbiertaDetailView.as_view(), name='tocataabierta'),
     path('proponerlugar_<int:tocata_id>', views.proponerlugar, name='proponerlugar'),
     path('artista/mistocatas', views.mistocatas, name='mistocatas'),
     path('artista/creartocatacerrada', views.creartocatacerrada, name='creartocatacerrada'),
