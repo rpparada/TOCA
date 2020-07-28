@@ -36,6 +36,9 @@ class Tocata(models.Model):
     fecha_actu          = models.DateTimeField(auto_now=True)
     fecha_crea          = models.DateTimeField(auto_now_add=True)
 
+    def get_absolute_url(self):
+        return "/tocatas/{slug}".format(slug=self.slug)
+
     def __str__(self):
         return self.nombre
 
@@ -66,6 +69,9 @@ class TocataAbierta(models.Model):
 
     fecha_actu          = models.DateTimeField(auto_now=True)
     fecha_crea          = models.DateTimeField(auto_now_add=True)
+
+    def get_absolute_url(self):
+        return "/tocatas/tocataabierta/{slug}".format(slug=self.slug)
 
     def __str__(self):
         return self.nombre

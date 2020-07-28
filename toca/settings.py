@@ -46,12 +46,13 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'sorl.thumbnail',
     # Nuestras aplicaciones
-    'cobro.apps.CobroConfig',
-    'artista.apps.ArtistaConfig',
-    'lugar.apps.LugarConfig',
-    'usuario.apps.UsuarioConfig',
-    'tocata.apps.TocataConfig',
-    'home.apps.HomeConfig',
+    'cobro',
+    'artista',
+    'lugar',
+    'usuario',
+    'tocata',
+    'home',
+    'busqueda',
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (

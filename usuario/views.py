@@ -13,18 +13,17 @@ from django.contrib.auth.models import User
 
 from lugar.models import Lugar
 from artista.models import Artista
-from usuario.models import UsuarioArtista
+from usuario.models import UsuarioArtista, Usuario
 
 from .forms import (
-        AgregaCamposUsuarioForm,
-        UsuarioForm,
+        UserForm,
         UsuarioArtistaForm,
-        AgregaCamposUsuarioArtForm,
-        ArtistaForm,
+        ArtistaUserForm,
         IngresarForm
         )
 
-from home.views import getTocatasArtistasHeadIndex
+from home.utils import getDataHeadIndex
+
 from .tokens import account_activation_token, art_activation_token
 
 from toca.parametros import parToca
@@ -40,14 +39,13 @@ def activateArt(request, uidb64, token):
         artista = None
 
     if artista is not None and art_activation_token.check_token(artista, token):
-        form = AgregaCamposUsuarioArtForm()
-        usuario_art_form = UsuarioArtistaForm()
-        #artista_form = ArtistaForm(instance=artista)
+        artistaUserForm = ArtistaUserForm(initial={'email':artista.email,
+                                                    'username':artista.email})
+        usuarioArtistaForm = UsuarioArtistaForm(initial={'artista':artista})
 
         context = {
-            'form': form,
-            'usuario_art_form': usuario_art_form,
-            'artistaini': artista,
+            'artistaUserForm': artistaUserForm,
+            'usuarioArtistaForm': usuarioArtistaForm,
         }
         return render(request, 'usuario/registrarart.html', context)
     else:
@@ -55,120 +53,92 @@ def activateArt(request, uidb64, token):
 
 def registrarArt(request):
 
-    if request.method == 'POST':
-        form = AgregaCamposUsuarioArtForm(request.POST)
-        usuario_art_form = UsuarioArtistaForm(request.POST)
-        artista_id = request.POST['artistaid']
+    artistaUserForm = ArtistaUserForm(request.POST or None)
+    usuarioArtistaForm = UsuarioArtistaForm(request.POST or None)
 
-        art = Artista.objects.get(id=artista_id)
+    if artistaUserForm.is_valid() and usuarioArtistaForm.is_valid():
 
-        if form.is_valid() and usuario_art_form.is_valid():
+        # Crea nuevo user
+        artistauser = artistaUserForm.save()
 
-            user = form.save()
+        # Define usuario como artista
+        usuario = Usuario(
+            user=artistauser,
+            es_artista=True
+        )
+        usuario.save()
 
-            usuario_form = UsuarioForm()
-            usuario = usuario_form.save(commit=False)
-            usuario.user = user
-            usuario.es_artista = True
-            usuario.save()
+        # Crea datos artistas
+        usuarioartista = usuarioArtistaForm.save(commit=False)
+        usuarioartista.user = artistauser
+        usuarioartista.save()
 
-            usuario_art = usuario_art_form.save(commit=False)
-            usuario_art.user = user
-            usuario_art.num_celular = parToca['prefijoCelChile']+str(usuario_art.num_celular)
-            usuario_art.artista = art
-            usuario_art.save()
+        # Actualizar y habilita artista
+        artista = Artista.objects.get(email=artistauser.email)
+        artista.usuario = artistauser
+        artista.estado = parToca['disponible']
+        artista.save()
 
-            art.usuario = user
-            art.estado = parToca['disponible']
-            art.save()
+        # Ingreso de Usuario Artista
+        username = artistaUserForm.cleaned_data.get('username')
+        password = artistaUserForm.cleaned_data.get('password1')
+        user = auth.authenticate(username=username, password=password)
+        auth.login(request, user)
 
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
+        messages.success(request, 'Artista registrado exitosamente')
+        return redirect('index')
 
-            user = auth.authenticate(username=username, password=password)
-            auth.login(request, user)
-
-            messages.success(request, 'Artista registrado exitosamente')
-            return redirect('index')
-        else:
-            messages.error(request,form.errors)
-            messages.error(request,usuario_art_form.errors)
-
-            context = {
-                'form': form,
-                'usuario_art_form': usuario_art_form,
-                'artistaini': art,
-            }
-            return render(request, 'usuario/registrarart.html', context)
-
-
-    form = AgregaCamposUsuarioArtForm()
-    usuario_art_form = UsuarioArtistaForm()
+    else:
+        print(artistaUserForm.errors.as_data())
+        print(usuarioArtistaForm.errors.as_data())
+        messages.error(request,'Error en form')
 
     context = {
-        'form': form,
-        'usuario_art_form': usuario_art_form,
+        'artistaUserForm': artistaUserForm,
+        'usuarioArtistaForm': usuarioArtistaForm,
     }
 
     return render(request, 'usuario/registrarart.html', context)
 
 def registrar(request):
 
-    if request.method == 'POST':
-        form = AgregaCamposUsuarioForm(request.POST)
-        usuario_form = UsuarioForm(request.POST)
+    form = UserForm(request.POST or None)
 
-        if form.is_valid() and usuario_form.is_valid():
-            if User.objects.filter(username=form.cleaned_data.get('email')).exists():
-                messages.error(request,"Email ya registrado")
-            else:
-                user = form.save(commit=False)
-                user.username = user.email
-                user.is_active = False
-                user.save()
-
-                usuario = usuario_form.save(commit=False)
-                usuario.user = user
-                usuario.save()
-
-                current_site = get_current_site(request)
-                mail_subject = 'Activa tu cuenta en Tocatas Intimas.'
-
-                message = render_to_string('usuario/email_activacion_cuenta.html', {
-                    'user': user,
-                    'domain': current_site.domain,
-                    'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token':account_activation_token.make_token(user),
-                })
-                to_email = form.cleaned_data.get('email')
-                email = EmailMessage(
-                            mail_subject, message, to=[to_email]
-                )
-                email.send()
-                return render(request, 'usuario/activacion_cuenta_done.html')
+    if form.is_valid():
+        if User.objects.filter(username=form.cleaned_data.get('email')).exists():
+            messages.error(request,"Email ya registrado")
         else:
+            user = form.save(commit=False)
+            user.username = user.email
+            user.is_active = False
+            user.save()
 
-            context = {
-                'form': form,
-            }
+            usuario = Usuario(
+                user = user,
+                es_artista = False
+            )
+            usuario.save()
 
-            mensaje = ''
-            for campo, errores in form.errors.as_data().items():
-                for error in errores:
-                    mensaje = mensaje+' '+str(error.message)[:-1]+' and'
+            current_site = get_current_site(request)
+            mail_subject = 'Activa tu cuenta en Tocatas Intimas.'
 
-            mensaje = mensaje.rsplit(' ', 1)[0]
-
-            messages.error(request,mensaje)
-            return render(request, 'usuario/registrar.html', context)
-
-    form = AgregaCamposUsuarioForm();
-    usuario_form = UsuarioForm();
+            message = render_to_string('usuario/email_activacion_cuenta.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                'token':account_activation_token.make_token(user),
+            })
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(
+                        mail_subject, message, to=[to_email]
+            )
+            email.send()
+            return render(request, 'usuario/activacion_cuenta_done.html')
 
     context = {
         'form': form,
-        'usuario_form': usuario_form,
     }
+
     return render(request, 'usuario/registrar.html', context)
 
 def activate(request, uidb64, token):
@@ -236,10 +206,8 @@ def salir(request):
 @login_required(login_url='index')
 def cuenta(request):
 
-    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+    usuario, numitemscarro = getDataHeadIndex(request)
     context = {
-        'tocatas_h': toc_head,
-        'artistas_h': art_head,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
     }
@@ -248,11 +216,9 @@ def cuenta(request):
 @login_required(login_url='index')
 def actualizar(request):
 
-    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+    usuario, numitemscarro = getDataHeadIndex(request)
 
     context = {
-        'tocatas_h': toc_head,
-        'artistas_h': art_head,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
     }
@@ -301,13 +267,11 @@ def actualizarArt(request):
 
         messages.success(request,'Actualizacion Existosa')
 
-    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+    usuario, numitemscarro = getDataHeadIndex(request)
     usuario_art = UsuarioArtista.objects.filter(user=request.user)[0]
     usuario_art_form = UsuarioArtistaForm(request)
 
     context = {
-        'tocatas_h': toc_head,
-        'artistas_h': art_head,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
         'usuario_art': usuario_art,
@@ -319,13 +283,11 @@ def actualizarArt(request):
 @login_required(login_url='index')
 def cuentaArt(request):
 
-    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+    usuario, numitemscarro = getDataHeadIndex(request)
     usuario_art = UsuarioArtista.objects.filter(user=request.user)[0]
     usuario_art_form = UsuarioArtistaForm()
 
     context = {
-        'tocatas_h': toc_head,
-        'artistas_h': art_head,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
         'usuario_art': usuario_art,

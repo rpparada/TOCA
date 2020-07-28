@@ -2,7 +2,7 @@
 <div class="grid-item">
     <div class="product">
         <div class="product-image">
-            <a href="{% url 'tocataabierta' instance.id %}"><img alt="Shop product image!" src="{{ instance.flayer_380_507.url }}">
+            <a href="{{ instance.get_absolute_url }}"><img alt="Shop product image!" src="{{ instance.flayer_380_507.url }}">
             </a>
             {% if instance.nuevo == 'SI' %}
             <span class="product-new">NUEVA</span>
@@ -12,7 +12,7 @@
         <div class="product-description">
             <div class="product-category">{{ instance.artista.nombre }}, {{ instance.region }}, {{ instance.comuna }}</div>
             <div class="product-title">
-                <h3><a href="{% url 'tocataabierta' instance.id %}">{{ instance.nombre|truncatechars:20 }}</a></h3>
+                <h3><a href="{{ instance.get_absolute_url }}">{{ instance.nombre|truncatechars:20 }}</a></h3>
             </div>
             <div class="product-reviews">Cuando: {{ instance.fecha }} {{ instance.hora }}
             </div>

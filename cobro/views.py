@@ -10,7 +10,7 @@ from tbk import INTEGRACION
 from cobro.models import Carro, Orden, OrdenTocata, OrdenTBK
 from tocata.models import Tocata
 
-from home.views import getTocatasArtistasHeadIndex
+from home.utils import getDataHeadIndex
 
 from toca.parametros import parToca, parCarro
 
@@ -56,14 +56,12 @@ webpay_service = tbk.services.WebpayService(normal_commerce)
 
 def detalleorden(request, orden_id):
 
-    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+    usuario, numitemscarro = getDataHeadIndex(request)
 
     orden = Orden.objects.get(pk=orden_id)
     ordentocata = OrdenTocata.objects.filter(orden=orden)
 
     context = {
-        'tocatas_h': toc_head,
-        'artistas_h': art_head,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
         'orden': orden,
@@ -75,7 +73,7 @@ def detalleorden(request, orden_id):
 
 def finerrorcompra (request):
 
-    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+    usuario, numitemscarro = getDataHeadIndex(request)
 
     token = ''
     orden = OrdenTBK.objects.none()
@@ -84,8 +82,6 @@ def finerrorcompra (request):
         ordenTBK = OrdenTBK.objects.get(token=token)
 
     context = {
-        'tocatas_h': toc_head,
-        'artistas_h': art_head,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
         'ordenTBK': ordenTBK,
@@ -96,7 +92,7 @@ def finerrorcompra (request):
 
 def fincompra(request):
 
-    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+    usuario, numitemscarro = getDataHeadIndex(request)
 
     token = ''
     orden = OrdenTBK.objects.none()
@@ -105,8 +101,6 @@ def fincompra(request):
         ordenTBK = OrdenTBK.objects.get(token=token)
 
     context = {
-        'tocatas_h': toc_head,
-        'artistas_h': art_head,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
         'ordenTBK': ordenTBK,
@@ -210,7 +204,7 @@ def retornotbk(request):
                 VCI = transaction['VCI']
             )
             ordentbk.save()
-            
+
             context = {
                 'transaction': transaction,
                 'transaction_detail': transaction_detail,
@@ -247,7 +241,7 @@ def procesarorden(request, orden_id):
 @login_required(login_url='index')
 def comprar(request):
 
-    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+    usuario, numitemscarro = getDataHeadIndex(request)
 
     listacarro = Carro.objects.filter(usuario=request.user).filter(estado=parToca['pendiente'])
     sumatotal = 0
@@ -290,8 +284,6 @@ def comprar(request):
         compra.save()
 
     context = {
-        'tocatas_h': toc_head,
-        'artistas_h': art_head,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
         'orden': orden,
@@ -304,7 +296,7 @@ def comprar(request):
 @login_required(login_url='index')
 def micarro(request):
 
-    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+    usuario, numitemscarro = getDataHeadIndex(request)
 
     listacarro = Carro.objects.filter(usuario=request.user).filter(estado=parToca['pendiente'])
 
@@ -313,8 +305,6 @@ def micarro(request):
         sumatotal = sumatotal + compra.total
 
     context = {
-        'tocatas_h': toc_head,
-        'artistas_h': art_head,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
         'listacarro': listacarro,
@@ -414,7 +404,7 @@ def quitarcarro(request, item_id):
 @login_required(login_url='index')
 def miscompras(request):
 
-    toc_head, art_head, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+    usuario, numitemscarro = getDataHeadIndex(request)
 
     listaorden = Orden.objects.filter(usuario=request.user)
 
@@ -422,8 +412,6 @@ def miscompras(request):
         orden.detalles = OrdenTocata.objects.filter(orden=orden)
 
     context = {
-        'tocatas_h': toc_head,
-        'artistas_h': art_head,
         'usuario': usuario,
         'listaorden': listaorden,
     }

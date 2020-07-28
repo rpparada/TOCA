@@ -13,12 +13,33 @@ from usuario.models import Usuario
 from home.models import Testimonios
 from cobro.models import Carro
 
+from .utils import getDataHeadIndex
+
 from toca.parametros import parToca
 
 # Create your views here.
 def index(request):
 
-    tocatas, artistas, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+    usuario, numitemscarro = getDataHeadIndex(request)
+
+    tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
+    tocatas = tocatas.filter(fecha__gte=datetime.today()).order_by('-fecha_crea')[:parToca['muestraTocatas']]
+    for tocata in tocatas:
+        diff = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)
+        if diff.days <= parToca['diasNuevoTocata']:
+            tocata.nuevo = 'SI'
+        else:
+            tocata.nuevo = 'NO'
+        tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
+
+    artistas = Artista.objects.filter(estado=parToca['disponible'])
+    artistas = artistas.exclude(usuario__isnull=True).order_by('-fecha_crea')[:parToca['muestraArtistas']]
+    for artista in artistas:
+        diff = datetime.today() - artista.fecha_crea.replace(tzinfo=None)
+        if diff.days <= parToca['diasNuevoArtista']:
+            artista.nuevo = 'SI'
+        else:
+            artista.nuevo = 'NO'
 
     tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
     tocatasabiertas = tocatasabiertas.filter(fecha__gte=datetime.today()).order_by('-fecha_crea')[:parToca['muestraTocatas']]
@@ -29,8 +50,6 @@ def index(request):
 
     context = {
         # Cabecera
-        'tocatas_h': tocatas,
-        'artistas_h': artistas,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
         # Tocatas y Tocatas Abiertas nuevas
@@ -47,7 +66,7 @@ def index(request):
 
 def busqueda(request):
 
-    tocatas, artistas, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+    usuario, numitemscarro = getDataHeadIndex(request)
 
     orden = 'fecha'
     filtro = 'todas'
@@ -146,8 +165,6 @@ def busqueda(request):
         orden = orden[1:]
 
     context = {
-        'tocatas_h': tocatas,
-        'artistas_h': artistas,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
         'resultado': pagina_search,
@@ -158,36 +175,3 @@ def busqueda(request):
     }
 
     return render(request, 'home/busqueda.html', context)
-
-def getTocatasArtistasHeadIndex(request):
-
-    # Tocatas Header
-    tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
-    tocatas = tocatas.filter(fecha__gte=datetime.today()).order_by('-fecha_crea')[:parToca['muestraTocatas']]
-    for tocata in tocatas:
-        diff = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)
-        if diff.days <= parToca['diasNuevoTocata']:
-            tocata.nuevo = 'SI'
-        else:
-            tocata.nuevo = 'NO'
-        tocata.asistentes_diff = tocata.asistentes_max - tocata.asistentes_total
-
-    # Artistas Header
-    artistas = Artista.objects.filter(estado=parToca['disponible'])
-    artistas = artistas.exclude(usuario__isnull=True).order_by('-fecha_crea')[:parToca['muestraArtistas']]
-    for artista in artistas:
-        diff = datetime.today() - artista.fecha_crea.replace(tzinfo=None)
-        if diff.days <= parToca['diasNuevoArtista']:
-            artista.nuevo = 'SI'
-        else:
-            artista.nuevo = 'NO'
-
-    # Usuario Artista Header
-    if request.user.is_authenticated:
-        usuario = Usuario.objects.filter(user=request.user)[0]
-        numitemscarro = Carro.objects.filter(usuario=request.user).filter(estado=parToca['pendiente']).count()
-    else:
-        usuario = None
-        numitemscarro = 0
-
-    return tocatas, artistas, usuario, numitemscarro

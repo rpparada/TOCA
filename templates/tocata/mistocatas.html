@@ -275,7 +275,7 @@
                         <tbody>
                           {% for tocatacerrada in tocatascerradas %}
                             <tr>
-                                <td><a href="{% url 'tocata' tocatacerrada.id %}">{{ tocatacerrada.nombre }}</a></td>
+                                <td><a href="{{ tocatacerrada.get_absolute_url }}">{{ tocatacerrada.nombre }}</a></td>
                                 <td>{{ tocatacerrada.lugar.nombre_calle }} {{ tocatacerrada.lugar.numero }} <br> {{ tocatacerrada.lugar.region.nombre }}, {{ tocatacerrada.lugar.comuna.nombre }}</td>
                                 <td>{{ tocatacerrada.fecha }}, {{ tocatacerrada.hora}}</td>
                                 <td>${{ tocatacerrada.costo|intcomma }}</td>
@@ -307,7 +307,7 @@
                                           <li>
                                             <hr>
                                           </li>
-                                          <li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8000/{% url 'tocata' tocatacerrada.id %}"><i class="icon-facebook"></i>Compartir</a></li>
+                                          <li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8000/{{ tocatacerrada.get_absolute_url }}"><i class="icon-facebook"></i>Compartir</a></li>
                                           <li><a href="#"><i class="icon-twitter"></i>Compartir</a></li>
                                           {% endif %}
                                       </ul>
@@ -384,7 +384,7 @@
                       <tbody>
                         {% for tocataabierta in tocatasabiertas %}
                           <tr>
-                              <td><a href="{% url 'tocataabierta' tocataabierta.id %}">{{ tocataabierta.nombre }}</a></td>
+                              <td><a href="{{ tocataabierta.get_absolute_url }}">{{ tocataabierta.nombre }}</a></td>
                               <td>{{ tocataabierta.region.nombre }}, {{ tocataabierta.comuna.nombre }}</td>
                               <td>{{ tocataabierta.fecha }}, {{ tocataabierta.hora}}</td>
                               <td>{{ tocataabierta.asistentes_min }}</td>

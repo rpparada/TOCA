@@ -26,9 +26,9 @@
             <!--Header Extras-->
             <div class="header-extras">
                 <ul>
-                    <li> <a id="btn-search" href="#"> <i class="icon-search"></i></a> </li>
+                    <li><a id="btn-search" href="#"> <i class="icon-search"></i></a> </li>
                     {% if user.is_authenticated %}
-                    <li> <a href="{% url 'micarro' %}"> <i class="icon-shopping-cart"></i></a></li> [ {{numitemscarro}} ]
+                    <li><a href="{% url 'micarro' %}"> <i class="icon-shopping-cart"></i></a></li> [ {{numitemscarro}} ]
                     {% endif %}
                 </ul>
             </div>
@@ -44,37 +44,8 @@
                     <nav>
                         <ul>
                             <li><a href="{% url 'index' %}">Home</a></li>
-                            {% if tocatas_h %}
-                            <li class="dropdown"><a href="{% url 'tocatas' %}">Tocatas</a>
-                                <ul class="dropdown-menu">
-                                  {% for tocata_h in tocatas_h %}
-                                    <li><a href="{% url 'tocata' tocata_h.id %}">{{ tocata_h.nombre|truncatewords:3 }}
-                                      {% if tocata_h.nuevo == 'SI' %}
-                                      <span class="badge badge-danger">Nueva</span></a></li>
-                                      {% endif %}
-                                  {% endfor %}
-                                  <li><a href="{% url 'tocatas' %}">Mas ...</a></li>
-                                </ul>
-                            </li>
-                            {% else %}
-                            <li><a href="#">Sin Tocatas</a></li>
-                            {% endif %}
-
-                            {% if artistas_h %}
-                            <li class="dropdown"><a href="{% url 'artistas' %}">Artistas</a>
-                                <ul class="dropdown-menu">
-                                  {% for artista_h in artistas_h %}
-                                    <li><a href="{% url 'artista' artista_h.id %}">{{ artista_h.nombre|truncatewords:3 }}
-                                      {% if artista_h.nuevo == 'SI' %}
-                                      <span class="badge badge-danger">Nuevo</span></a></li>
-                                      {% endif %}
-                                  {% endfor %}
-                                  <li><a href="{% url 'artistas' %}">Mas ...</a></li>
-                                </ul>
-                            </li>
-                            {% else %}
-                            <li><a href="#">Sin Artistas</a></li>
-                            {% endif %}
+                            <li><a href="{% url 'tocatas' %}">Tocatas</a></li>
+                            <li><a href="{% url 'artistas' %}">Artistas</a></li>
 
                             {% if user.is_authenticated %}
                               {% if usuario.es_artista %}

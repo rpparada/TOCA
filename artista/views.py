@@ -5,23 +5,21 @@ from datetime import datetime
 from .models import Artista
 from tocata.models import Tocata
 
-from home.views import getTocatasArtistasHeadIndex
+from home.utils import getDataHeadIndex
 
 from toca.parametros import parToca, parTocatas
 
 # Create your views here.
 def artistas(request):
 
-    tocatas, artistas, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+    usuario, numitemscarro = getDataHeadIndex(request)
 
     artistas_vista = Artista.objects.filter(estado=parToca['disponible'])
 
     for art in artistas_vista:
-        art.cats = art.estilos.split() 
+        art.cats = art.estilos.split()
 
     context = {
-        'tocatas_h': tocatas,
-        'artistas_h': artistas,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
         'artistas': artistas_vista
@@ -32,7 +30,7 @@ def artistas(request):
 def artista(request, artista_id):
 
     artista = get_object_or_404(Artista, pk=artista_id)
-    tocatas, artistas, usuario, numitemscarro = getTocatasArtistasHeadIndex(request)
+    usuario, numitemscarro = getDataHeadIndex(request)
 
     tocatas_art = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado']])
     tocatas_art = tocatas_art.filter(artista=artista_id)
@@ -46,8 +44,6 @@ def artista(request, artista_id):
         tocata_art.asistentes_diff = tocata_art.asistentes_max - tocata_art.asistentes_total
 
     context = {
-        'tocatas_h': tocatas,
-        'artistas_h': artistas,
         'usuario': usuario,
         'numitemscarro': numitemscarro,
         'tocatas_art': tocatas_art,
