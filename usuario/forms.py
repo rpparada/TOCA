@@ -136,3 +136,29 @@ class ArtistaUserForm(UserCreationForm):
         widgets = {
             'username': forms.HiddenInput(),
         }
+
+class EditarCuentaUserForm(UserCreationForm):
+
+    email               = forms.EmailField(widget=forms.EmailInput(attrs={
+                                                                "class": "form-control",
+                                                                "placeholder": "Email",
+                                                                'readonly': 'readonly'
+                                                            }), label='Email'
+                                    )
+    first_name          = forms.CharField(widget=forms.TextInput(attrs={
+                                                                'id': 'primercampo',
+                                                                'class': 'form-control',
+                                                                'placeholder': 'Nombre'
+                                                            }), label='Nombre'
+                                        )
+    last_name           = forms.CharField(widget=forms.TextInput(attrs={
+                                                                'class': 'form-control',
+                                                                'placeholder': 'Apellido'
+                                                            }), label='Apellido'
+                                        )
+
+    class Meta:
+        model = User
+        fields = ('email',
+                'first_name',
+                'last_name')

@@ -19,7 +19,8 @@ from .forms import (
         UserForm,
         UsuarioArtistaForm,
         ArtistaUserForm,
-        IngresarForm
+        IngresarForm,
+        EditarCuentaUserForm
         )
 
 from home.utils import getDataHeadIndex
@@ -202,6 +203,7 @@ def salir(request):
             return HttpResponseRedirect(next)
         else:
             return redirect('index')
+
 
 @login_required(login_url='index')
 def cuenta(request):
