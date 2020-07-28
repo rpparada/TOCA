@@ -204,38 +204,20 @@ def salir(request):
         else:
             return redirect('index')
 
-
 @login_required(login_url='index')
-def cuenta(request):
+def CuentaUserView(request):
+
+    form = EditarCuentaUserForm(request.POST or None, instance=request.user)
+
+    if form.is_valid():
+        user = form.save(commit=False)
+        user.save()
 
     usuario, numitemscarro = getDataHeadIndex(request)
     context = {
-        'usuario': usuario,
+        'form': form,
         'numitemscarro': numitemscarro,
     }
-    return render(request, 'usuario/cuenta.html', context)
-
-@login_required(login_url='index')
-def actualizar(request):
-
-    usuario, numitemscarro = getDataHeadIndex(request)
-
-    context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
-    }
-
-    if request.method == 'POST':
-        nombre = request.POST['nombre']
-        apellido = request.POST['apellido']
-
-        usuario = request.user
-
-        usuario.first_name = nombre
-        usuario.last_name = apellido
-        usuario.save()
-        messages.success(request,'Actualizacion Existosa')
-
     return render(request, 'usuario/cuenta.html', context)
 
 @login_required(login_url='index')
@@ -296,6 +278,7 @@ def cuentaArt(request):
         'usuario_art_form': usuario_art_form,
     }
     return render(request, 'usuario/cuentaart.html', context)
+
 
 @login_required(login_url='index')
 def cambioContra(request):
