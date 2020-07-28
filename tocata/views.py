@@ -110,7 +110,7 @@ def tocatas(request):
     return render(request, 'tocata/tocatas.html', context)
 
 class TocataDetailView(DetailView):
-    queryset = Tocata.objects.all()
+    #queryset = Tocata.objects.all()
     template_name = 'tocata/tocata.html'
 
     def get_context_data(self, *args, **kwargs):

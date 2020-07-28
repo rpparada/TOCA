@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save
+from django.db.models import Q
 
 from django_resized import ResizedImageField
 
@@ -11,6 +12,12 @@ from toca.parametros import parToca, parTocatas, parLugaresToc, parTocatasAbiert
 from .utils  import unique_slug_generator
 
 # Create your models here.
+
+class TocataManager(models.Manager):
+
+    def disponible(self):
+        return self.get_queryset().filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
+
 class Tocata(models.Model):
 
     artista             = models.ForeignKey(Artista, on_delete=models.DO_NOTHING)
@@ -35,6 +42,8 @@ class Tocata(models.Model):
 
     fecha_actu          = models.DateTimeField(auto_now=True)
     fecha_crea          = models.DateTimeField(auto_now_add=True)
+
+    objects             = TocataManager()
 
     def get_absolute_url(self):
         return "/tocatas/{slug}".format(slug=self.slug)

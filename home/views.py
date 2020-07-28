@@ -22,7 +22,8 @@ def index(request):
 
     usuario, numitemscarro = getDataHeadIndex(request)
 
-    tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
+    #tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
+    tocatas = Tocata.objects.disponible()
     tocatas = tocatas.filter(fecha__gte=datetime.today()).order_by('-fecha_crea')[:parToca['muestraTocatas']]
     for tocata in tocatas:
         diff = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)

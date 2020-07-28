@@ -26,7 +26,7 @@ urlpatterns = [
     path('tocatas/', include('tocata.urls')),
     path('usuarios/', include('usuario.urls')),
     path('cobro/', include('cobro.urls')),
-    path('busqueda_test/', include('busqueda.urls')),
+    path('busqueda/', include('busqueda.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
