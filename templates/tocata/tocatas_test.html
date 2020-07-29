@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} | TOCATAS{% endblock %}
+{% block content %}
+{% include 'partials/_alerts.html' %}
+
+{% if object_list %}
+<!-- Shop products -->
+<section id="page-content">
+    <div class="container">
+      <form id="ordenfiltro" action="{% url 'tocatas_test' %}" method="POST">
+        {% csrf_token %}
+        <div class="row m-b-20">
+            <div class="col-lg-5 p-t-10 m-b-20">
+                <h3 class="m-b-20">A Monochromatic Spring ’15</h3>
+            </div>
+            <div class="col-lg-3">
+                <div class="order-select">
+                    <h6>Ordenar por:</h6>
+                        <select class="form-control" name="orden" onchange="changeorden()">
+                            <option value="fecha" {% if orden == 'fecha' %} selected="selected" {% endif %}>Fecha Evento</option>
+                            <option value="costo" {% if orden == 'costo' %} selected="selected" {% endif %}>Precio</option>
+                            <option value="nombre" {% if orden == 'nombre' %} selected="selected" {% endif %}>Nombre Tocarta</option>
+                            <option value="artista__nombre" {% if orden == 'artista__nombre' %} selected="selected" {% endif %}>Nombre Artista</option>
+                        </select>
+                </div>
+            </div>
+            <div class="col-lg-1">
+                <div class="order-select">
+                    <h6> -- ↑ ↓ -- </h6>
+                        <select class="form-control" name="direccion" onchange="changefiltro()">
+                            <option value="asc" {% if direccion == 'asc' %} selected="selected" {% endif %}>ASC</option>
+                            <option value="des" {% if direccion == 'des' %} selected="selected" {% endif %}>DES</option>
+                        </select>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="order-select">
+                    <h6>Filtrar por:</h6>
+                        <select class="form-control" name="filtro" onchange="changefiltro()">
+                            <option value="todas" {% if filtro == 'todas' %} selected="selected" {% endif %}>Todas</option>
+                            <option value="cerradas" {% if filtro == 'cerradas' %} selected="selected" {% endif %}>Con lugar definido</option>
+                            <option value="abiertas" {% if filtro == 'abiertas' %} selected="selected" {% endif %}>Buscando donde tocar</option>
+                        </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-1">
+                  <h6> <br> </h6>
+                  <button type="submit" class="btn btn-sm">Aplica</button>
+                </div>
+            </div>
+          </div>
+        </form>
+
+        <!--Product list-->
+        <div class="shop">
+            <div class="grid-layout grid-3-columns" data-item="grid-item">
+              {% for obj in object_list %}
+                {% if obj.tipo == 'cerrada' %}
+                  {% include 'snippets/gridtocata.html' with instance=obj %}
+                {% else %}
+                  {% include 'snippets/gridtocataabierta.html' with instance=obj %}
+                {% endif %}
+              {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if page_obj.has_other_pages %}
+            <ul class="pagination">
+              {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+              {% else %}
+                <li class="page-item disabled"><a class="page-link">Previous</a></li>
+              {% endif %}
+
+              {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                  <li class="page-item active"><a class="page-link">{{i}}</a></li>
+                {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
+                {% endif %}
+              {% endfor %}
+
+              {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+              {% else %}
+                <li class="page-item disabled"><a class="page-link">Next</a></li>
+              {% endif %}
+            </ul>
+            {% endif %}
+            <!-- end: Pagination -->
+        </div>
+        <!--End: Product list-->
+    </div>
+</section>
+<!-- end: Shop products -->
+{% endif %}
+
+<!-- DELIVERY INFO -->
+<section class="background-grey p-t-40 p-b-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="icon-box effect small clean">
+                    <div class="icon">
+                        <a href="#"><i class="fa fa-gift"></i></a>
+                    </div>
+                    <h3>Free shipping on orders $60+</h3>
+                    <p>Order more than 60$ and you will get free shippining Worldwide. More info.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="icon-box effect small clean">
+                    <div class="icon">
+                        <a href="#"><i class="fa fa-plane"></i></a>
+                    </div>
+                    <h3>Worldwide delivery</h3>
+                    <p>We deliver to the following countries: USA, Canada, Europe, Australia</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="icon-box effect small clean">
+                    <div class="icon">
+                        <a href="#"><i class="fa fa-history"></i></a>
+                    </div>
+                    <h3>60 days money back guranty!</h3>
+                    <p>Not happy with our product, feel free to return it, we will refund 100% your money!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end: DELIVERY INFO -->
+
+{% endblock %}
