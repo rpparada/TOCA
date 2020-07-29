@@ -10,7 +10,7 @@ from operator import attrgetter
 from tocata.models import Tocata, TocataAbierta
 from artista.models import Artista
 from usuario.models import Usuario
-from home.models import Testimonios
+from home.models import Testimonio
 from cobro.models import Carro
 
 from .utils import getDataHeadIndex
@@ -45,7 +45,7 @@ def index(request):
     tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
     tocatasabiertas = tocatasabiertas.filter(fecha__gte=datetime.today()).order_by('-fecha_crea')[:parToca['muestraTocatas']]
 
-    testimonios = Testimonios.objects.filter(estado=parToca['disponible'])
+    testimonios = Testimonio.objects.filter(estado=parToca['disponible'])
     testimonios_art = testimonios.filter(objetivo=parToca['artistas'])[:3]
     testimonios_usu = testimonios.filter(objetivo=parToca['usuarios'])[:3]
 

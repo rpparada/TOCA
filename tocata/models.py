@@ -13,10 +13,32 @@ from .utils  import unique_slug_generator
 
 # Create your models here.
 
-class TocataManager(models.Manager):
+# Tocatas
+class TocataQuerySet(models.query.QuerySet):
 
     def disponible(self):
-        return self.get_queryset().filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
+        return self.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
+
+    def busqueda(self, consulta):
+        lookups = (Q(nombre__icontains=consulta) |
+                    Q(descripción__icontains=consulta) |
+                    Q(artista__nombre__icontains=consulta) |
+                    Q(artista__estilos__icontains=consulta) |
+                    Q(artista__habilidades__icontains=consulta) |
+                    Q(artista__descripción__icontains=consulta)
+                    )
+        return self.filter(lookups).distinct()
+
+class TocataManager(models.Manager):
+
+    def get_queryset(self):
+        return TocataQuerySet(self.model, using=self._db)
+
+    def disponible(self):
+        return self.get_queryset().disponible()
+
+    def busqueda(self, consulta):
+        return self.get_queryset().disponible().busqueda(consulta)
 
 class Tocata(models.Model):
 
@@ -57,6 +79,34 @@ def tocata_pre_save_receiver(sender, instance, *args, **kwargs):
 
 pre_save.connect(tocata_pre_save_receiver, sender=Tocata)
 
+
+# Tocatas Abiertas
+class TocataAbiertaQuerySet(models.query.QuerySet):
+
+    def disponible(self):
+        return self.filter(estado__in=[parToca['publicado'],])
+
+    def busqueda(self, consulta):
+        lookups = (Q(nombre__icontains=consulta) |
+                    Q(descripción__icontains=consulta) |
+                    Q(artista__nombre__icontains=consulta) |
+                    Q(artista__estilos__icontains=consulta) |
+                    Q(artista__habilidades__icontains=consulta) |
+                    Q(artista__descripción__icontains=consulta)
+                    )
+        return self.filter(lookups).distinct()
+
+class TocataAbiertaManager(models.Manager):
+
+    def get_queryset(self):
+        return TocataAbiertaQuerySet(self.model, using=self._db)
+
+    def disponible(self):
+        return self.get_queryset().disponible()
+
+    def busqueda(self, consulta):
+        return self.get_queryset().disponible().busqueda(consulta)
+
 class TocataAbierta(models.Model):
 
     artista             = models.ForeignKey(Artista, on_delete=models.DO_NOTHING)
@@ -79,6 +129,8 @@ class TocataAbierta(models.Model):
     fecha_actu          = models.DateTimeField(auto_now=True)
     fecha_crea          = models.DateTimeField(auto_now_add=True)
 
+    objects             = TocataAbiertaManager()
+
     def get_absolute_url(self):
         return "/tocatas/tocataabierta/{slug}".format(slug=self.slug)
 
@@ -91,6 +143,7 @@ def tocataabierta_pre_save_receiver(sender, instance, *args, **kwargs):
 
 pre_save.connect(tocataabierta_pre_save_receiver, sender=TocataAbierta)
 
+# Lugares Tocata
 class LugaresTocata(models.Model):
 
     tocataabierta       = models.ForeignKey(TocataAbierta, on_delete=models.DO_NOTHING)
