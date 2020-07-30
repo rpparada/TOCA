@@ -26,7 +26,7 @@ class ArtistaManager(models.Manager):
 class Artista(models.Model):
 
     nombre              = models.CharField(max_length=200)
-    slug                = models.SlugField(unique=True)
+    slug                = models.SlugField(blank=True, unique=True)
     usuario             = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
     foto_1920_1280      = models.ImageField(upload_to='fotos/artistas/', blank=True)
     foto_525_350        = models.ImageField(upload_to='fotos/artistas/', blank=True)
@@ -52,6 +52,7 @@ class Artista(models.Model):
         return "/artistas/{slug}".format(slug=self.slug)
 
 def artista_pre_save_receiver(sender, instance, *args, **kwargs):
+    print('aqui')
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
 
@@ -76,7 +77,7 @@ class EstiloManager(models.Manager):
 class Estilo(models.Model):
 
     nombre              = models.CharField(max_length=200)
-    slug                = models.SlugField(unique=True)
+    slug                = models.SlugField(blank=True, unique=True)
     activo              = models.BooleanField(default=True)
 
     fecha_crea          = models.DateTimeField(auto_now_add=True)
@@ -97,7 +98,7 @@ pre_save.connect(estilo_pre_save_receiver, sender=Estilo)
 class Cualidad(models.Model):
 
     nombre              = models.CharField(max_length=200)
-    slug                = models.SlugField(unique=True)
+    slug                = models.SlugField(blank=True, unique=True)
     activo              = models.BooleanField(default=True)
 
     fecha_crea          = models.DateTimeField(auto_now_add=True)

@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, ListView
+from django.http import Http404
 
 from datetime import datetime
 
@@ -12,6 +13,7 @@ from toca.parametros import parToca, parTocatas
 
 # Create your views here.
 class ArtistasListView(ListView):
+
     queryset = Artista.objects.disponible()
     paginate_by = parToca['artistas_pag']
     template_name = 'artista/artistas.html'
@@ -45,8 +47,7 @@ class ArtistaDetailView(DetailView):
 
         return context
 
-    def get_object(self, queryset=None):
-
+    def get_object(self, *args, **kwargs):
         request = self.request
         slug = self.kwargs.get('slug')
         try:

@@ -31,14 +31,14 @@ from toca.parametros import parToca, parTocatas, parTocatasAbiertas
 class TocataListView(ListView):
 
     queryset = Tocata.objects.disponible()
-    #paginate_by = parToca['tocatas_pag']
-    paginate_by = 2
-    template_name = 'tocata/tocatas_test.html'
+    paginate_by = parToca['tocatas_pag']
+    template_name = 'tocata/tocatas.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super(TocataListView, self).get_context_data(*args, **kwargs)
 
         usuario, numitemscarro = getDataHeadIndex(self.request)
+
         context['usuario'] = usuario
         context['numitemscarro'] = numitemscarro
 
@@ -84,7 +84,6 @@ class TocataListView(ListView):
             result_list = sorted(chain(tocatas, tocatasabiertas,), key=attrgetter(orden), reverse=True)
 
         return result_list
-
 
 def tocatas(request):
 

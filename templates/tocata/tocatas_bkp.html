@@ -5,11 +5,11 @@
 {% block content %}
 {% include 'partials/_alerts.html' %}
 
-{% if object_list %}
+{% if tocatas_vista %}
 <!-- Shop products -->
 <section id="page-content">
     <div class="container">
-      <form id="ordenfiltro" action="{% url 'tocatas_test' %}" method="POST">
+      <form id="ordenfiltro" action="{% url 'tocatas' %}" method="POST">
         {% csrf_token %}
         <div class="row m-b-20">
             <div class="col-lg-5 p-t-10 m-b-20">
@@ -57,34 +57,34 @@
         <!--Product list-->
         <div class="shop">
             <div class="grid-layout grid-3-columns" data-item="grid-item">
-              {% for obj in object_list %}
-                {% if obj.tipo == 'cerrada' %}
-                  {% include 'snippets/gridtocata.html' with instance=obj %}
+              {% for tocata_vista in tocatas_vista %}
+                {% if tocata_vista.tipo == 'cerrada' %}
+                  {% include 'snippets/gridtocata.html' with instance=tocata_vista %}
                 {% else %}
-                  {% include 'snippets/gridtocataabierta.html' with instance=obj %}
+                  {% include 'snippets/gridtocataabierta.html' with instance=tocata_vista %}
                 {% endif %}
               {% endfor %}
             </div>
 
             <!-- Pagination -->
-            {% if page_obj.has_other_pages %}
+            {% if tocatas_vista.has_other_pages %}
             <ul class="pagination">
-              {% if page_obj.has_previous %}
-                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+              {% if tocatas_vista.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ tocatas_vista.previous_page_number }}">Previous</a></li>
               {% else %}
                 <li class="page-item disabled"><a class="page-link">Previous</a></li>
               {% endif %}
 
-              {% for i in page_obj.paginator.page_range %}
-                {% if page_obj.number == i %}
+              {% for i in tocatas_vista.paginator.page_range %}
+                {% if tocatas_vista.number == i %}
                   <li class="page-item active"><a class="page-link">{{i}}</a></li>
                 {% else %}
                   <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
                 {% endif %}
               {% endfor %}
 
-              {% if page_obj.has_next %}
-                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+              {% if tocatas_vista.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ tocatas_vista.next_page_number }}">Next</a></li>
               {% else %}
                 <li class="page-item disabled"><a class="page-link">Next</a></li>
               {% endif %}

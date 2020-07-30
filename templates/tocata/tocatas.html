@@ -5,7 +5,7 @@
 {% block content %}
 {% include 'partials/_alerts.html' %}
 
-{% if tocatas_vista %}
+{% if object_list %}
 <!-- Shop products -->
 <section id="page-content">
     <div class="container">
@@ -57,39 +57,17 @@
         <!--Product list-->
         <div class="shop">
             <div class="grid-layout grid-3-columns" data-item="grid-item">
-              {% for tocata_vista in tocatas_vista %}
-                {% if tocata_vista.tipo == 'cerrada' %}
-                  {% include 'snippets/gridtocata.html' with instance=tocata_vista %}
+              {% for obj in object_list %}
+                {% if obj.tipo == 'cerrada' %}
+                  {% include 'snippets/gridtocata.html' with instance=obj %}
                 {% else %}
-                  {% include 'snippets/gridtocataabierta.html' with instance=tocata_vista %}
+                  {% include 'snippets/gridtocataabierta.html' with instance=obj %}
                 {% endif %}
               {% endfor %}
             </div>
 
             <!-- Pagination -->
-            {% if tocatas_vista.has_other_pages %}
-            <ul class="pagination">
-              {% if tocatas_vista.has_previous %}
-                <li class="page-item"><a class="page-link" href="?page={{ tocatas_vista.previous_page_number }}">Previous</a></li>
-              {% else %}
-                <li class="page-item disabled"><a class="page-link">Previous</a></li>
-              {% endif %}
-
-              {% for i in tocatas_vista.paginator.page_range %}
-                {% if tocatas_vista.number == i %}
-                  <li class="page-item active"><a class="page-link">{{i}}</a></li>
-                {% else %}
-                  <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
-                {% endif %}
-              {% endfor %}
-
-              {% if tocatas_vista.has_next %}
-                <li class="page-item"><a class="page-link" href="?page={{ tocatas_vista.next_page_number }}">Next</a></li>
-              {% else %}
-                <li class="page-item disabled"><a class="page-link">Next</a></li>
-              {% endif %}
-            </ul>
-            {% endif %}
+            {% include 'snippets/page.html' with instance=page_obj %}
             <!-- end: Pagination -->
         </div>
         <!--End: Product list-->
@@ -97,41 +75,5 @@
 </section>
 <!-- end: Shop products -->
 {% endif %}
-
-<!-- DELIVERY INFO -->
-<section class="background-grey p-t-40 p-b-0">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="icon-box effect small clean">
-                    <div class="icon">
-                        <a href="#"><i class="fa fa-gift"></i></a>
-                    </div>
-                    <h3>Free shipping on orders $60+</h3>
-                    <p>Order more than 60$ and you will get free shippining Worldwide. More info.</p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="icon-box effect small clean">
-                    <div class="icon">
-                        <a href="#"><i class="fa fa-plane"></i></a>
-                    </div>
-                    <h3>Worldwide delivery</h3>
-                    <p>We deliver to the following countries: USA, Canada, Europe, Australia</p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="icon-box effect small clean">
-                    <div class="icon">
-                        <a href="#"><i class="fa fa-history"></i></a>
-                    </div>
-                    <h3>60 days money back guranty!</h3>
-                    <p>Not happy with our product, feel free to return it, we will refund 100% your money!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- end: DELIVERY INFO -->
 
 {% endblock %}
