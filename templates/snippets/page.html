@@ -1,0 +1,25 @@
+<!-- Pagination -->
+{% if instance.has_other_pages %}
+<ul class="pagination">
+  {% if instance.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page={{ instance.previous_page_number }}">Previo</a></li>
+  {% else %}
+    <li class="page-item disabled"><a class="page-link">Previo</a></li>
+  {% endif %}
+
+  {% for i in instance.paginator.page_range %}
+    {% if instance.number == i %}
+      <li class="page-item active"><a class="page-link">{{i}}</a></li>
+    {% else %}
+      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
+    {% endif %}
+  {% endfor %}
+
+  {% if instance.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ instance.next_page_number }}">Siguente</a></li>
+  {% else %}
+    <li class="page-item disabled"><a class="page-link">Siguente</a></li>
+  {% endif %}
+</ul>
+{% endif %}
+<!-- end: Pagination -->

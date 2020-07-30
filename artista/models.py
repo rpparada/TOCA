@@ -57,6 +57,22 @@ def artista_pre_save_receiver(sender, instance, *args, **kwargs):
 
 pre_save.connect(artista_pre_save_receiver, sender=Artista)
 
+# Estilo
+class EstiloQuerySet(models.query.QuerySet):
+    def activo(self):
+        return self.filter(activo=True)
+
+class EstiloManager(models.Manager):
+
+    def get_queryset(self):
+        return EstiloQuerySet(self.model, using=self._db)
+
+    def activo(self):
+        qs = self.get_queryset().activo()
+        if qs:
+            return qs
+        return None
+
 class Estilo(models.Model):
 
     nombre              = models.CharField(max_length=200)
@@ -65,6 +81,8 @@ class Estilo(models.Model):
 
     fecha_crea          = models.DateTimeField(auto_now_add=True)
     fecha_actua         = models.DateTimeField(auto_now=True)
+
+    objects             = EstiloManager()
 
     def __str__(self):
         return self.nombre
@@ -75,6 +93,7 @@ def estilo_pre_save_receiver(sender, instance, *args, **kwargs):
 
 pre_save.connect(estilo_pre_save_receiver, sender=Estilo)
 
+# Cualidad
 class Cualidad(models.Model):
 
     nombre              = models.CharField(max_length=200)

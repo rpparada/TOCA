@@ -13,12 +13,14 @@
         <!-- Portfolio Filter -->
         <nav class="grid-filter gf-outline" data-layout="#portfolio">
             <ul>
+              {% if estilos %}
                 <li class="active"><a href="#" data-category="*">Todos</a></li>
-                <li><a href="#" data-category=".ct-jazz">Jazz</a></li>
-                <li><a href="#" data-category=".ct-folclore">Folclore</a></li>
-                <li><a href="#" data-category=".ct-cumbia">Cumbia</a></li>
+                {% for estilo in estilos %}
+                  <li><a href="#" data-category=".ct-{{estilo}}">{{estilo|title}}</a></li>
+                {% endfor %}
+              {% endif %}
             </ul>
-            <div class="grid-active-title">Show All</div>
+            <div class="grid-active-title">Todos</div>
         </nav>
         <!-- end: Portfolio Filter -->
 
@@ -31,6 +33,10 @@
             <!-- end: portfolio item -->
         </div>
         <!-- end: Portfolio -->
+        <br>
+        <!-- Pagination -->
+        {% include 'snippets/page.html' with instance=page_obj %}
+        <!-- end: Pagination -->
     </div>
 </section>
 <!-- end: Content -->
