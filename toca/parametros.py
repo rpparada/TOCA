@@ -31,7 +31,7 @@ parToca = {
     'borrado': 'BO',
     # Paginacion tocatas_vista
     'tocatas_pag': 6,
-    'tocatas_art': 6,
+    'artistas_pag': 6,
     'bancoDefecto': '012',
     'tipoCuentaDefecto': '001',
     'prefijoCelChile': '(+56) 9 ',

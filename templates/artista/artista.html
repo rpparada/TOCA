@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
@@ -6,12 +5,20 @@
 {% block content %}
 
 <!-- SECTION FULLSCREEN -->
-<section class="parallax text-light halfscreen" data-bg-parallax="{{ artista.foto1.url }}">
+<section class="parallax text-light halfscreen" data-bg-parallax="{{ artista.foto_1920_1280.url }}">
     <div class="container">
         <div class="container-fullscreen">
             <div class="text-middle text-center text-right">
                 <h1 class="text-uppercase text-medium" data-animate="fadeInDown" data-animate-delay="100">{{ artista.nombre }}</h1>
-                <p class="lead" data-animate="fadeInDown" data-animate-delay="300">{{ artista.habilidades }}</p>
+                <p class="lead" data-animate="fadeInDown" data-animate-delay="300">
+                  {% if artista.cualidades %}
+                    {% for cualidad in artista.cualidades.all %}
+                      {{ cualidad.nombre|title }}
+                    {% endfor %}
+                  {% else %}
+                    hola
+                  {% endif %}
+                </p>
             </div>
         </div>
     </div>
@@ -22,32 +29,38 @@
         <div class="row  m-b-50">
             <div class="col-lg-3">
                 <div class="heading-text heading-section">
-                    <h2>{{ artista.nombre|upper }}</h2>
+                    <h2>{{ artista.nombre|title }}</h2>
+                </div>
+                <div class="align-center">
+                  {% if artista.link_facebook %}
+                    <a class="btn btn-xs btn-slide btn-light" href="{{ artista.link_facebook }}" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Facebook</span></a>
+                  {% endif %}
+                  {% if artista.link_twitter %}
+                    <a class="btn btn-xs btn-slide btn-light" href="{{ artista.link_twitter }}" target="_blank" data-width="100">
+                        <i class="fab fa-twitter"></i>
+                        <span>Twitter</span></a>
+                  {% endif %}
+                  {% if artista.link_instagram %}
+                    <a class="btn btn-xs btn-slide btn-light" href="{{ artista.link_instagram }}" target="_blank" data-width="118">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span></a>
+                  {% endif %}
                 </div>
             </div>
             <div class="col-lg-9">
                 <div class="row">
-                    <div class="col-lg-6">{{ artista.descripción }}</div>
-                    <!--
-                    <div class="col-lg-6">Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel dolor.
-                        The most happiest time of the day!. Morbi sagittis, sem quis lacinia faucibus, orci
-                        ipsum gravida tortor, vel interdum mi sapien ut justo. Nulla varius consequat magna, id
-                        molestie ipsum volutpat quis. A true story, that never been told!. Fusce id mi diam, non
-                        ornare orci. Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel dolor.
-                        Pellentesque ipsum erat, facilisis ut venenatis eu, sodales vel dolor.
-                        <br>
-                        <br>The most happiest time of the day!. Morbi sagittis, sem quis lacinia faucibus, orci
-                        ipsum gravida tortor, vel interdum mi sapien ut justo. Nulla varius consequat magna, id
-                        molestie ipsum volut.</div>
-                      -->
+                    <div class="col-lg-12">{{ artista.descripción|linebreaks }}</div>
                 </div>
             </div>
         </div>
+
     </div>
 </section>
 
 <!-- Shop products -->
-{% if tocatas_art %}
+{% if tocatas %}
 <section class="background-grey">
     <div class="container">
 
@@ -61,31 +74,8 @@
         <!--Product list-->
         <div class="shop">
             <div class="grid-layout grid-3-columns" data-item="grid-item">
-              {% for tocata_art in tocatas_art %}
-                <div class="grid-item">
-                    <div class="product">
-                        <div class="product-image">
-                            <a href="{% url 'tocata' tocata_art.id %}"><img alt="Shop product image!" src="{{ tocata_art.flayer_380_507.url }}">
-                            </a>
-                            {% if tocata_art.nuevo == 'SI' %}
-                              <span class="product-new">NUEVA</span>
-                            {% endif %}
-                            {% if tocata_art.lugar_def == 'AB' %}
-                              <span class="product-sale-off">Abierta</span>
-                            {% endif %}
-                        </div>
-                        <div class="product-description">
-                            <div class="product-category">{{ tocata_art.artista.nombre|upper }}, {{ tocata_art.lugar.region }}, {{ tocata_art.lugar.comuna }}</div>
-                            <div class="product-title">
-                                <h3><a href="{% url 'tocata' tocata_art.id %}">{{ tocata_art.nombre|truncatechars:20 }}</a></h3>
-                            </div>
-                            <div class="product-price"><ins>$ {{ tocata_art.costo|intcomma }}</ins>
-                            </div>
-                            <div class="product-reviews"><a>Aun quedan {{ tocata_art.asistentes_diff|intcomma }} entradas a la venta</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              {% for tocata in tocatas %}
+                {% include 'snippets/gridtocata.html' with instance=tocata %}
               {% endfor %}
             </div>
         </div>
@@ -95,7 +85,6 @@
 {% else %}
 <section class="background-grey">
     <div class="container">
-
       <div class="col-lg-8 m-b-100 center">
           <div class="heading-text heading-section text-center">
               <h2>Actualmente {{artista.nombre}} no tiene Tocatas Intimas vigentes.</h2>

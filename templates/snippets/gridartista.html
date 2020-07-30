@@ -1,0 +1,22 @@
+{% load humanize %}
+<div class="portfolio-item img-zoom {% for estilo in instance.estilos.all %} ct-{{estilo}} {% endfor %}">
+    <div class="portfolio-item-wrap">
+        <div class="portfolio-image">
+            <a href="{{ instance.get_absolute_url }}"><img src="{{ instance.foto_525_350.url }}" alt=""></a>
+        </div>
+        <div class="portfolio-description">
+            <a href="{{ instance.get_absolute_url }}">
+                <h3>{{ instance.nombre }}</h3>
+                <span>
+                  {% if instance.cualidades %}
+                    {% for cualidad in instance.cualidades.all %}
+                      {{ cualidad.nombre|title }}
+                    {% endfor %}
+                  {% else %}
+                    hola
+                  {% endif %}
+                  </span>
+            </a>
+        </div>
+    </div>
+</div>

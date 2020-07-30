@@ -6,7 +6,7 @@
 <!-- Alertas -->
 {% include 'partials/_alerts.html' %}
 
-{% if artistas %}
+{% if object_list %}
 <!-- Content -->
 <section id="page-content">
     <div class="container">
@@ -25,20 +25,8 @@
         <!-- Portfolio -->
         <div id="portfolio" class="grid-layout portfolio-2-columns" data-margin="0">
             <!-- portfolio item -->
-            {% for artista in artistas %}
-            <div class="portfolio-item img-zoom {% for cat in artista.cats %} ct-{{cat}} {% endfor %}">
-                <div class="portfolio-item-wrap">
-                    <div class="portfolio-image">
-                        <a href="{% url 'artista' artista.id %}"><img src="{{ artista.foto1.url }}" alt=""></a>
-                    </div>
-                    <div class="portfolio-description">
-                        <a href="{% url 'artista' artista.id %}">
-                            <h3>{{ artista.nombre }}</h3>
-                            <span>{{ artista.habilidades }}</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            {% for obj in object_list %}
+                {% include 'snippets/gridartista.html' with instance=obj %}
             {% endfor %}
             <!-- end: portfolio item -->
         </div>

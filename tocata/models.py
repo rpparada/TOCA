@@ -29,6 +29,9 @@ class TocataQuerySet(models.query.QuerySet):
                     )
         return self.filter(lookups).distinct()
 
+    def tocataartista(self, artista):
+        return self.filter(artista=artista)
+
 class TocataManager(models.Manager):
 
     def get_queryset(self):
@@ -39,6 +42,12 @@ class TocataManager(models.Manager):
 
     def busqueda(self, consulta):
         return self.get_queryset().disponible().busqueda(consulta)
+
+    def tocataartistadisponibles(self, artista):
+        qs = self.get_queryset().disponible().tocataartista(artista)
+        if qs:
+            return qs
+        return None
 
 class Tocata(models.Model):
 

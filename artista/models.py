@@ -1,22 +1,35 @@
 from django.db import models
-from datetime import datetime
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save
-
-from django_resized import ResizedImageField
 
 from toca.parametros import parToca, parArtistas
 from tocata.utils  import unique_slug_generator
 
 # Create your models here.
+
+# Artistas
+class ArtistaQuerySet(models.query.QuerySet):
+    def disponible(self):
+        return self.filter(estado=parToca['disponible'])
+
+class ArtistaManager(models.Manager):
+
+    def get_queryset(self):
+        return ArtistaQuerySet(self.model, using=self._db)
+
+    def disponible(self):
+        qs = self.get_queryset().disponible()
+        if qs:
+            return qs
+        return None
+
 class Artista(models.Model):
 
     nombre              = models.CharField(max_length=200)
     slug                = models.SlugField(unique=True)
     usuario             = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
-    foto_1920_1280      = models.ImageField(upload_to='fotos/artistas/%Y/%m/%d/', blank=True)
-    foto_525_350        = ResizedImageField(size=[525, 350],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'])
-    foto_380_507        = ResizedImageField(size=[525, 350],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'])
+    foto_1920_1280      = models.ImageField(upload_to='fotos/artistas/', blank=True)
+    foto_525_350        = models.ImageField(upload_to='fotos/artistas/', blank=True)
     descripción         = models.TextField(blank=True)
     cualidades          = models.ManyToManyField('Cualidad', blank=True)
     estilos             = models.ManyToManyField('Estilo', blank=True)
@@ -29,6 +42,8 @@ class Artista(models.Model):
     estado              = models.CharField(max_length=2, choices=parArtistas['estado_tipos'],default=parToca['disponible'])
     fecha_crea          = models.DateTimeField(auto_now_add=True)
     fecha_actua         = models.DateTimeField(auto_now=True)
+
+    objects             = ArtistaManager()
 
     def __str__(self):
         return self.nombre

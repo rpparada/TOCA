@@ -63,41 +63,19 @@ class TocataListView(ListView):
             tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
 
             for tocata in tocatas:
-                dif = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)
-                if dif.days <= parToca['diasNuevoTocata']:
-                    tocata.nuevo = 'SI'
-                else:
-                    tocata.nuevo = 'NO'
-                tocata.asistentes_dif = tocata.asistentes_max - tocata.asistentes_total
                 tocata.tipo = 'cerrada'
 
             for tocataabierta in tocatasabiertas:
-                dif = datetime.today() - tocataabierta.fecha_crea.replace(tzinfo=None)
-                if dif.days <= parToca['diasNuevoTocata']:
-                    tocataabierta.nuevo = 'SI'
-                else:
-                    tocataabierta.nuevo = 'NO'
                 tocataabierta.tipo = 'abierta'
 
         elif filtro == 'cerradas':
             tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
             for tocata in tocatas:
-                dif = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)
-                if dif.days <= parToca['diasNuevoTocata']:
-                    tocata.nuevo = 'SI'
-                else:
-                    tocata.nuevo = 'NO'
-                tocata.asistentes_dif = tocata.asistentes_max - tocata.asistentes_total
                 tocata.tipo = 'cerrada'
 
         elif filtro == 'abiertas':
             tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
             for tocataabierta in tocatasabiertas:
-                dif = datetime.today() - tocataabierta.fecha_crea.replace(tzinfo=None)
-                if dif.days <= parToca['diasNuevoTocata']:
-                    tocataabierta.nuevo = 'SI'
-                else:
-                    tocataabierta.nuevo = 'NO'
                 tocataabierta.tipo = 'abierta'
 
         if direccion == 'asc':
@@ -128,41 +106,19 @@ def tocatas(request):
         tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
 
         for tocata in tocatas:
-            dif = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)
-            if dif.days <= parToca['diasNuevoTocata']:
-                tocata.nuevo = 'SI'
-            else:
-                tocata.nuevo = 'NO'
-            tocata.asistentes_dif = tocata.asistentes_max - tocata.asistentes_total
             tocata.tipo = 'cerrada'
 
         for tocataabierta in tocatasabiertas:
-            dif = datetime.today() - tocataabierta.fecha_crea.replace(tzinfo=None)
-            if dif.days <= parToca['diasNuevoTocata']:
-                tocataabierta.nuevo = 'SI'
-            else:
-                tocataabierta.nuevo = 'NO'
             tocataabierta.tipo = 'abierta'
 
     elif filtro == 'cerradas':
         tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
         for tocata in tocatas:
-            dif = datetime.today() - tocata.fecha_crea.replace(tzinfo=None)
-            if dif.days <= parToca['diasNuevoTocata']:
-                tocata.nuevo = 'SI'
-            else:
-                tocata.nuevo = 'NO'
-            tocata.asistentes_dif = tocata.asistentes_max - tocata.asistentes_total
             tocata.tipo = 'cerrada'
 
     elif filtro == 'abiertas':
         tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
         for tocataabierta in tocatasabiertas:
-            dif = datetime.today() - tocataabierta.fecha_crea.replace(tzinfo=None)
-            if dif.days <= parToca['diasNuevoTocata']:
-                tocataabierta.nuevo = 'SI'
-            else:
-                tocataabierta.nuevo = 'NO'
             tocataabierta.tipo = 'abierta'
 
     if direccion == 'asc':
@@ -192,7 +148,7 @@ def tocatas(request):
     return render(request, 'tocata/tocatas.html', context)
 
 class TocataDetailView(DetailView):
-    #queryset = Tocata.objects.all()
+
     template_name = 'tocata/tocata.html'
 
     def get_context_data(self, *args, **kwargs):
@@ -218,7 +174,6 @@ class TocataDetailView(DetailView):
             tocata = tocatas.first()
         except:
             raise Http404('Error Desconocido')
-        tocata.asistentes_dif = tocata.asistentes_max - tocata.asistentes_total
 
         return tocata
 
