@@ -20,7 +20,6 @@ from home.utils import getDataHeadIndex
 from toca.parametros import parToca, parTocatas, parTocatasAbiertas
 
 # Create your views here.
-
 class TocataListView(ListView):
 
     queryset = Tocata.objects.disponible()
@@ -195,11 +194,13 @@ def creartocatacerrada(request):
         nuevaTocata.comuna = nuevaTocata.lugar.comuna
 
         nuevaTocata.usuario = request.user
-        nuevaTocata.artista = Artista.objects.get(usuario=request.user)
-
+        artista = Artista.objects.get(usuario=request.user)
+        nuevaTocata.artista = artista
         nuevaTocata.asistentes_max = nuevaTocata.lugar.capacidad
 
         nuevaTocata.save()
+
+        nuevaTocata.estilos.set(artista.estilos.all())
 
         messages.success(request, 'Tocata creada exitosamente')
         return redirect('mistocatas')
@@ -232,8 +233,11 @@ def creartocataabierta(request):
 
         nuevaTocata.estado = parToca['publicado']
         nuevaTocata.usuario = request.user
-        nuevaTocata.artista = Artista.objects.get(usuario=request.user)
+        artista = Artista.objects.get(usuario=request.user)
+        nuevaTocata.artista = artista
         nuevaTocata.save()
+
+        nuevaTocata.estilos.set(artista.estilos.all())
 
         messages.success(request, 'Tocata Abierta creada')
         return redirect('mistocatas')
@@ -435,6 +439,8 @@ def seleccionarpropuestas(request, tocata_id, lugar_id):
             estado=parToca['publicado'],
         )
         tocata.save()
+
+        tocata.estilos.set(tocataabierta.artista.estilos.all())
 
         tocataabierta.tocata = tocata
         tocataabierta.save()

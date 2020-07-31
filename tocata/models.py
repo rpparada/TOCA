@@ -5,7 +5,7 @@ from django.db.models import Q
 
 from django_resized import ResizedImageField
 
-from artista.models import Artista
+from artista.models import Artista, Estilo
 from lugar.models import Lugar, Region, Comuna
 
 from toca.parametros import parToca, parTocatas, parLugaresToc, parTocatasAbiertas
@@ -22,7 +22,8 @@ class TocataQuerySet(models.query.QuerySet):
     def busqueda(self, consulta):
         lookups = (Q(nombre__icontains=consulta) |
                     Q(descripción__icontains=consulta) |
-                    Q(artista__nombre__icontains=consulta)
+                    Q(artista__nombre__icontains=consulta) |
+                    Q(estilos__nombre__icontains=consulta)
                     )
         return self.filter(lookups).distinct()
 
@@ -66,6 +67,7 @@ class Tocata(models.Model):
     flayer_1920_1280    = ResizedImageField(size=[1920, 1280],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_1920_1280.jpg')
     flayer_380_507      = ResizedImageField(size=[380, 507],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_380_507.jpg')
     evaluacion          = models.IntegerField(choices=parToca['valoresEvaluacion'],default=parToca['defaultEvaluacion'])
+    estilos             = models.ManyToManyField(Estilo, blank=True)
     estado              = models.CharField(max_length=2, choices=parTocatas['estado_tipos'],default=parToca['publicado'])
 
     fecha_actu          = models.DateTimeField(auto_now=True)
@@ -95,7 +97,8 @@ class TocataAbiertaQuerySet(models.query.QuerySet):
     def busqueda(self, consulta):
         lookups = (Q(nombre__icontains=consulta) |
                     Q(descripción__icontains=consulta) |
-                    Q(artista__nombre__icontains=consulta)
+                    Q(artista__nombre__icontains=consulta) |
+                    Q(estilos__nombre__icontains=consulta) 
                     )
         return self.filter(lookups).distinct()
 
@@ -127,6 +130,7 @@ class TocataAbierta(models.Model):
     flayer_1920_1280    = ResizedImageField(size=[1920, 1280],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_1920_1280.jpg')
     flayer_380_507      = ResizedImageField(size=[380, 507],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_380_507.jpg')
     tocata              = models.ForeignKey(Tocata, on_delete=models.DO_NOTHING, null=True, blank=True)
+    estilos             = models.ManyToManyField(Estilo, blank=True)
     estado              = models.CharField(max_length=2, choices=parTocatasAbiertas['estado_tipos'],default=parToca['publicado'])
 
     fecha_actu          = models.DateTimeField(auto_now=True)
