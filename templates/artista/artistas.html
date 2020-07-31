@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load estilotag %}
 {% block title %} | ARTISTAS{% endblock %}
 {% block content %}
 <!-- Alertas -->
@@ -16,7 +17,7 @@
               {% if estilos %}
                 <li class="active"><a href="#" data-category="*">Todos</a></li>
                 {% for estilo in estilos %}
-                  <li><a href="#" data-category=".ct-{{estilo}}">{{estilo|title}}</a></li>
+                  <li><a href="#" data-category=".ct-{{estilo}}">{{estilo|replacewithspace:"_"}}</a></li>
                 {% endfor %}
               {% endif %}
             </ul>

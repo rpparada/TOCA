@@ -1,19 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db.models import Q
-from django.core.mail import send_mail
 from django.contrib import messages
-from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, ListView
 
 from django.http import Http404
 
-from datetime import datetime
 from itertools import chain
 from operator import attrgetter
-
-import operator
 
 from .forms import TocataForm, LugaresTocataForm, TocataAbiertaForm
 
@@ -39,42 +32,44 @@ class TocataListView(ListView):
 
         usuario, numitemscarro = getDataHeadIndex(self.request)
 
+        orden = self.request.GET.get('orden','fecha')
+        filtro = self.request.GET.get('filtro','todas')
+        direccion = self.request.GET.get('direccion','asc')
+
         context['usuario'] = usuario
         context['numitemscarro'] = numitemscarro
+
+        context['orden'] = orden
+        context['filtro'] = filtro
+        context['direccion'] = direccion
 
         return context
 
     def get_queryset(self):
         queryset = super(TocataListView, self).get_queryset()
 
-        orden = 'fecha'
-        filtro = 'todas'
-        direccion = 'asc'
-        if self.request.method == 'POST':
-            orden = request.POST.get('orden')
-            filtro = request.POST.get('filtro')
-            direccion = request.POST.get('direccion')
+        orden = self.request.GET.get('orden','fecha')
+        filtro = self.request.GET.get('filtro','todas')
+        direccion = self.request.GET.get('direccion','asc')
 
         tocatas = Tocata.objects.none()
         tocatasabiertas = TocataAbierta.objects.none()
 
         if filtro == 'todas':
-            tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
-            tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
-
+            tocatas = Tocata.objects.disponible()
             for tocata in tocatas:
                 tocata.tipo = 'cerrada'
-
+            tocatasabiertas = TocataAbierta.objects.disponible()
             for tocataabierta in tocatasabiertas:
                 tocataabierta.tipo = 'abierta'
 
         elif filtro == 'cerradas':
-            tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
+            tocatas = Tocata.objects.disponible()
             for tocata in tocatas:
                 tocata.tipo = 'cerrada'
 
         elif filtro == 'abiertas':
-            tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
+            tocatasabiertas = TocataAbierta.objects.disponible()
             for tocataabierta in tocatasabiertas:
                 tocataabierta.tipo = 'abierta'
 
@@ -84,67 +79,6 @@ class TocataListView(ListView):
             result_list = sorted(chain(tocatas, tocatasabiertas,), key=attrgetter(orden), reverse=True)
 
         return result_list
-
-def tocatas(request):
-
-    usuario, numitemscarro = getDataHeadIndex(request)
-
-    orden = 'fecha'
-    filtro = 'todas'
-    direccion = 'asc'
-    if request.method == 'POST':
-        orden = request.POST.get('orden')
-        filtro = request.POST.get('filtro')
-        direccion = request.POST.get('direccion')
-
-    tocatas = Tocata.objects.none()
-    tocatasabiertas = TocataAbierta.objects.none()
-
-    if filtro == 'todas':
-        tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
-        tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
-
-        for tocata in tocatas:
-            tocata.tipo = 'cerrada'
-
-        for tocataabierta in tocatasabiertas:
-            tocataabierta.tipo = 'abierta'
-
-    elif filtro == 'cerradas':
-        tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
-        for tocata in tocatas:
-            tocata.tipo = 'cerrada'
-
-    elif filtro == 'abiertas':
-        tocatasabiertas = TocataAbierta.objects.filter(estado__in=[parToca['publicado'],])
-        for tocataabierta in tocatasabiertas:
-            tocataabierta.tipo = 'abierta'
-
-    if direccion == 'asc':
-        result_list = sorted(chain(tocatas, tocatasabiertas,), key=attrgetter(orden), reverse=False)
-    else:
-        result_list = sorted(chain(tocatas, tocatasabiertas,), key=attrgetter(orden), reverse=True)
-
-    paginador = Paginator(result_list, parToca['tocatas_pag'])
-    pagina = request.GET.get('page')
-
-    try:
-        pagina_tocatas = paginador.page(pagina)
-    except PageNotAnInteger:
-        pagina_tocatas = paginador.page(1)
-    except EmptyPage:
-        pagina_tocatas = paginador.page(paginador.num_pages)
-
-    context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
-        'tocatas_vista': pagina_tocatas,
-        'orden': orden,
-        'filtro': filtro,
-        'direccion': direccion,
-    }
-
-    return render(request, 'tocata/tocatas.html', context)
 
 class TocataDetailView(DetailView):
 

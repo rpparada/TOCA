@@ -1,19 +1,19 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
-{% block title %} | TOCATAS{% endblock %}
+{% block title %} | BUSQUEDA{% endblock %}
 {% block content %}
 {% include 'partials/_alerts.html' %}
-
 
 <!-- Shop products -->
 <section id="page-content">
     <div class="container">
-      <form action="{% url 'tocatas' %}" method="GET">
+      <form action="{% url 'busqueda' %}" method="GET">
         <div class="row m-b-20">
             <div class="col-lg-5 p-t-10 m-b-20">
-                <h3 class="m-b-20">A Monochromatic Spring ’15</h3>
+                <h3 class="m-b-20">Resultado: "{{ query }}"</h3>
             </div>
+            <input hidden name="q" type="text" value="{{ query }}"/>
             <div class="col-lg-3">
                 <div class="order-select">
                     <h6>Ordenar por:</h6>
@@ -52,8 +52,9 @@
             </div>
           </div>
         </form>
-        {% if object_list %}
+
         <!--Product list-->
+        {% if object_list %}
         <div class="shop">
             <div class="grid-layout grid-3-columns" data-item="grid-item">
               {% for obj in object_list %}
@@ -69,8 +70,12 @@
             {% include 'snippets/page.html' with instance=page_obj %}
             <!-- end: Pagination -->
         </div>
-        <!--End: Product list-->
+        {% else %}
+        <div class="col-lg-5 p-t-10 m-b-20">
+            <h3 class="m-b-20">No encontramos nada: "{{ query }}"</h3>
+        </div>
         {% endif %}
+        <!--End: Product list-->
     </div>
 </section>
 <!-- end: Shop products -->

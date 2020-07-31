@@ -22,10 +22,7 @@ class TocataQuerySet(models.query.QuerySet):
     def busqueda(self, consulta):
         lookups = (Q(nombre__icontains=consulta) |
                     Q(descripción__icontains=consulta) |
-                    Q(artista__nombre__icontains=consulta) |
-                    Q(artista__estilos__icontains=consulta) |
-                    Q(artista__habilidades__icontains=consulta) |
-                    Q(artista__descripción__icontains=consulta)
+                    Q(artista__nombre__icontains=consulta)
                     )
         return self.filter(lookups).distinct()
 
@@ -98,10 +95,7 @@ class TocataAbiertaQuerySet(models.query.QuerySet):
     def busqueda(self, consulta):
         lookups = (Q(nombre__icontains=consulta) |
                     Q(descripción__icontains=consulta) |
-                    Q(artista__nombre__icontains=consulta) |
-                    Q(artista__estilos__icontains=consulta) |
-                    Q(artista__habilidades__icontains=consulta) |
-                    Q(artista__descripción__icontains=consulta)
+                    Q(artista__nombre__icontains=consulta)
                     )
         return self.filter(lookups).distinct()
 
