@@ -14,6 +14,7 @@ from .models import Tocata, LugaresTocata, TocataAbierta
 from artista.models import Artista
 from lugar.models import Lugar, Comuna, Region
 from usuario.models import UsuarioArtista, Usuario
+from carro.models import CarroCompra
 
 from home.utils import getDataHeadIndex
 
@@ -86,9 +87,11 @@ class TocataDetailView(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(TocataDetailView, self).get_context_data(*args, **kwargs)
         usuario, numitemscarro = getDataHeadIndex(self.request)
+        carro_obj, nuevo_carro = CarroCompra.objects.nuevo_or_entrega(self.request)
 
         context['usuario'] = usuario
         context['numitemscarro'] = numitemscarro
+        context['carro'] = carro_obj
 
         return context
 

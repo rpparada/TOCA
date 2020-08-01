@@ -6,41 +6,7 @@
 {% include 'partials/_alerts.html' %}
 
 <!--Modal seleccion -->
-<div class="modal fade" id="modalag{{object.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-          <form action="{% url 'agregaracarro' object.id %}" method="POST">
-            {% csrf_token %}
-            <div class="modal-header">
-                <h4 class="modal-title" id="modal-label">Agregar a Carro</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                      <p>¿Cuantas Entradas Quieres (máximo 2 por persona)?</p>
-                      <p hidden id="mensajerror"></p>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-4 text-sm-right">Número Entradas</label>
-                    <div class="col-sm-8">
-                      <select name="numeroentradas">
-                          <option value="1">1 Entrada</option>
-                          <option value="2">2 Entradas</option>
-                      </select>
-                    </div>
-                </div>
-                <input type="hidden" name="next" value="{{ request.path }}">
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-b">Agregar</button>
-              <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
-            </div>
-          </form>
-        </div>
-    </div>
-</div>
+{% include 'snippets/actualizacarro.html' with tocata=object carr=carro %}
 <!-- end: Modal -->
 
 <!-- SECTION IMAGE FULLSCREEN -->

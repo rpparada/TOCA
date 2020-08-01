@@ -19,8 +19,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 
-from carro import views
-
 urlpatterns = [
     path('', include('home.urls')),
     path('artistas/', include('artista.urls')),
@@ -29,8 +27,9 @@ urlpatterns = [
     path('usuarios/', include('usuario.urls')),
     path('cobro/', include('cobro.urls')),
     path('busqueda/', include('busqueda.urls')),
+    path('carro/', include('carro.urls')),
     path('admin/', admin.site.urls),
-    path('carro/', views.carro_home, name='carro')
+    #path('carro/', views.carro_home, name='carro')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

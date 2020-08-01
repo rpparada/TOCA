@@ -79,7 +79,7 @@ class Tocata(models.Model):
         return "/tocatas/{slug}".format(slug=self.slug)
 
     def __str__(self):
-        return self.nombre
+        return str(self.id)+' '+self.nombre
 
 def tocata_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
@@ -98,7 +98,7 @@ class TocataAbiertaQuerySet(models.query.QuerySet):
         lookups = (Q(nombre__icontains=consulta) |
                     Q(descripción__icontains=consulta) |
                     Q(artista__nombre__icontains=consulta) |
-                    Q(estilos__nombre__icontains=consulta) 
+                    Q(estilos__nombre__icontains=consulta)
                     )
         return self.filter(lookups).distinct()
 
