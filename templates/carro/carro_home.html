@@ -1,1 +1,115 @@
-<h1>Carro</h1>
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load thumbnail %}
+{% block title %} | MIS TOCATAS{% endblock %}
+{% block content %}
+{% include 'partials/_alerts.html' %}
+
+{% if carro.tocata.exists %}
+<!-- SHOP CART -->
+<section id="shop-cart">
+    <div class="container">
+        <div class="shop-cart">
+            <div class="table table-sm table-striped table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="cart-product-remove"></th>
+                            <th class="cart-product-thumbnail">Tocata</th>
+                            <th class="cart-product-name">Descripción</th>
+                            <th class="cart-product-price">Precio Unitario</th>
+                            <th class="cart-product-quantity">Cantidad</th>
+                            <th class="cart-product-subtotal">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tocata in carro.tocata.all %}
+                        <tr>
+                          <td class="cart-product-remove">
+                              <a href=""><i class="fa fa-times"></i></a>
+                          </td>
+                            <td class="cart-product-thumbnail">
+                                <a href="{{ tocata.get_absolute_url }}">
+                                    <img src="{{ tocata.flayer_1920_1280.url }}" alt="{{ item.tocata.nombre }}">
+                                </a>
+                                <div class="cart-product-thumbnail-name">{{ tocata.nombre }}</div>
+                            </td>
+                            <td class="cart-product-description">
+                                <p><span>{{ tocata.artista.nombre }}</span>
+                                    <span>{{ tocata.region }}</span>
+                                    <span>{{ tocata.comuna }}</span>
+                                    <span>{{ tocata.fecha }} {{ tocata.hora }}</span>
+                                </p>
+                            </td>
+                            <td class="cart-product-price">
+                                <span class="amount">${{ tocata.costo|floatformat|intcomma }}</span>
+                            </td>
+                            <td class="cart-product-quantity">
+                                <span>1</span>
+                            </td>
+                            <td class="cart-product-subtotal">
+                                <span class="amount">${{ tocata.costo|floatformat|intcomma }}</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <hr class="space">
+                <div class="col-lg-6 p-r-10 ">
+                    <div class="table-responsive">
+                        <h4>Cart Subtotal</h4>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td class="cart-product-name">
+                                        <strong>Subtotal Carro</strong>
+                                    </td>
+                                    <td class="cart-product-name text-right">
+                                        <span class="amount">${{ carro.total|floatformat|intcomma }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="cart-product-name">
+                                        <strong>Email Ticket </strong>
+                                    </td>
+                                    <td class="cart-product-name  text-right">
+                                        <span class="amount">$0</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="cart-product-name">
+                                        <strong>Total</strong>
+                                    </td>
+                                    <td class="cart-product-name text-right">
+                                        <span class="amount color lead"><strong>${{ carro.total|floatformat|intcomma }}</strong></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <a href="{% url 'comprar' %}" class="btn icon-left float-right"><span>Comprar</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end: SHOP CART -->
+{% else %}
+<!-- SHOP CART EMPTY -->
+<section id="shop-cart">
+    <div class="container">
+        <div class="p-t-10 m-b-20 text-center">
+            <div class="heading-text heading-line text-center">
+                <h4>Actualmente no tienes nada en tu canasta de compra.</h4>
+            </div>
+            <a class="btn icon-left" href="{% url 'tocatas' %}"><span>Volver a Tocatas</span></a>
+        </div>
+    </div>
+</section>
+<!-- end: SHOP CART EMPTY -->
+{% endif %}
+
+{% endblock %}

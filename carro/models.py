@@ -26,7 +26,6 @@ class CarroCompraManager(models.Manager):
 
         return carro_obj, nuevo_obj
 
-
     def nuevo(self, user=None):
         user_obj = None
         if user is not None:
