@@ -6,8 +6,6 @@ from operator import attrgetter
 
 from tocata.models import Tocata, TocataAbierta
 
-from home.utils import getDataHeadIndex
-
 from toca.parametros import parToca
 
 # Create your views here.
@@ -19,14 +17,9 @@ class BusquedaTocataView(ListView):
         context = super(BusquedaTocataView, self).get_context_data(*args, **kwargs)
         context['query'] = self.request.GET.get('q')
 
-        usuario, numitemscarro = getDataHeadIndex(self.request)
-
         orden = self.request.GET.get('orden','fecha')
         filtro = self.request.GET.get('filtro','todas')
         direccion = self.request.GET.get('direccion','asc')
-
-        context['usuario'] = usuario
-        context['numitemscarro'] = numitemscarro
 
         context['orden'] = orden
         context['filtro'] = filtro

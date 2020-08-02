@@ -13,14 +13,10 @@ from usuario.models import Usuario
 from home.models import Testimonio
 from cobro.models import Carro
 
-from .utils import getDataHeadIndex
-
 from toca.parametros import parToca
 
 # Create your views here.
 def index(request):
-
-    usuario, numitemscarro = getDataHeadIndex(request)
 
     #tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
     tocatas = Tocata.objects.disponible()
@@ -50,9 +46,6 @@ def index(request):
     testimonios_usu = testimonios.filter(objetivo=parToca['usuarios'])[:3]
 
     context = {
-        # Cabecera
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         # Tocatas y Tocatas Abiertas nuevas
         'tocatas': tocatas,
         'tocatasabiertas': tocatasabiertas,
@@ -66,8 +59,6 @@ def index(request):
     return render(request, 'home/index.html', context)
 
 def busqueda(request):
-
-    usuario, numitemscarro = getDataHeadIndex(request)
 
     orden = 'fecha'
     filtro = 'todas'
@@ -166,8 +157,6 @@ def busqueda(request):
         orden = orden[1:]
 
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'resultado': pagina_search,
         'valores': busqueda,
         'orden': orden,

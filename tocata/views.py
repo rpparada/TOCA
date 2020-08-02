@@ -16,8 +16,6 @@ from lugar.models import Lugar, Comuna, Region
 from usuario.models import UsuarioArtista, Usuario
 from carro.models import CarroCompra
 
-from home.utils import getDataHeadIndex
-
 from toca.parametros import parToca, parTocatas, parTocatasAbiertas
 
 # Create your views here.
@@ -30,14 +28,9 @@ class TocataListView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(TocataListView, self).get_context_data(*args, **kwargs)
 
-        usuario, numitemscarro = getDataHeadIndex(self.request)
-
         orden = self.request.GET.get('orden','fecha')
         filtro = self.request.GET.get('filtro','todas')
         direccion = self.request.GET.get('direccion','asc')
-
-        context['usuario'] = usuario
-        context['numitemscarro'] = numitemscarro
 
         context['orden'] = orden
         context['filtro'] = filtro
@@ -86,11 +79,8 @@ class TocataDetailView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(TocataDetailView, self).get_context_data(*args, **kwargs)
-        usuario, numitemscarro = getDataHeadIndex(self.request)
         carro_obj, nuevo_carro = CarroCompra.objects.nuevo_or_entrega(self.request)
 
-        context['usuario'] = usuario
-        context['numitemscarro'] = numitemscarro
         context['carro'] = carro_obj
 
         return context
@@ -119,10 +109,6 @@ class TocataAbiertaDetailView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(TocataAbiertaDetailView, self).get_context_data(*args, **kwargs)
-        usuario, numitemscarro = getDataHeadIndex(self.request)
-
-        context['usuario'] = usuario
-        context['numitemscarro'] = numitemscarro
 
         return context
 
@@ -146,8 +132,6 @@ class TocataAbiertaDetailView(DetailView):
 @login_required(login_url='index')
 def mistocatas(request):
 
-    usuario, numitemscarro = getDataHeadIndex(request)
-
     artista = UsuarioArtista.objects.get(user=request.user)
     tocatascerradas = Tocata.objects.filter(artista=artista.artista).filter(estado__in=parTocatas['estado_tipos_vista'])
     tocatasabiertas = TocataAbierta.objects.filter(artista=artista.artista).filter(estado__in=parTocatasAbiertas['estado_tipos_vista'])
@@ -157,8 +141,6 @@ def mistocatas(request):
         tocataabierta.numeropropuestas  = LugaresTocata.objects.filter(tocataabierta=tocataabierta).filter(estado=parToca['pendiente']).count()
 
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'tocatascerradas': tocatascerradas,
         'tocatasabiertas': tocatasabiertas,
     }
@@ -211,11 +193,7 @@ def creartocatacerrada(request):
     #    print(form.errors.as_data())
     #    messages.error(request,'Error en form')
 
-    usuario, numitemscarro = getDataHeadIndex(request)
-
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'form': form,
     }
 
@@ -248,11 +226,7 @@ def creartocataabierta(request):
     #    print(form.errors.as_data())
     #    messages.error(request,'Error en form')
 
-    usuario, numitemscarro = getDataHeadIndex(request)
-
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'form': form,
     }
 
@@ -261,12 +235,9 @@ def creartocataabierta(request):
 @login_required(login_url='index')
 def detallestocata(request, tocata_id):
 
-    usuario, numitemscarro = getDataHeadIndex(request)
     tocata = get_object_or_404(Tocata, pk=tocata_id)
 
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'tocata': tocata,
     }
 
@@ -275,12 +246,9 @@ def detallestocata(request, tocata_id):
 @login_required(login_url='index')
 def detallestocataabierta(request, tocata_id):
 
-    usuario, numitemscarro = getDataHeadIndex(request)
     tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
 
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'tocata': tocata,
     }
 
@@ -359,13 +327,10 @@ def proponerlugar(request, tocata_id):
             print(form.errors.as_data())
             messages.error(request,'Error en form')
 
-    usuario, numitemscarro = getDataHeadIndex(request)
     tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
     mislugares = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
 
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'mislugares': mislugares,
         'tocata': tocata,
     }
@@ -375,14 +340,10 @@ def proponerlugar(request, tocata_id):
 @login_required(login_url='index')
 def verpropuestas(request, tocata_id):
 
-    usuario, numitemscarro = getDataHeadIndex(request)
-
     tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
     listaLugares  = LugaresTocata.objects.filter(tocataabierta=tocata).filter(estado=parToca['pendiente'])
 
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'tocata': tocata,
         'listaLugares': listaLugares,
     }
@@ -450,8 +411,6 @@ def seleccionarpropuestas(request, tocata_id, lugar_id):
 
         messages.success(request, 'Lugar seleccionado con exito y Tocata publicada')
         return redirect('mistocatas')
-
-    usuario, numitemscarro = getDataHeadIndex(request)
 
     tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
     listaLugares  = LugaresTocata.objects.filter(tocataabierta=tocata).filter(estado=parToca['pendiente'])

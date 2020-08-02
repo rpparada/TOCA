@@ -46,7 +46,7 @@
                             <li><a href="{% url 'artistas' %}">Artistas</a></li>
 
                             {% if user.is_authenticated %}
-                              {% if usuario.es_artista %}
+                              {% if request.session.es_artista == 'S' %}
                                 <li class="dropdown"><a href="{% url 'mistocatas' %}">Mis Tocatas</a>
                                   <ul class="dropdown-menu">
                                     <li><a href="{% url 'mistocatas' %}">Mis Tocatas</a></li>

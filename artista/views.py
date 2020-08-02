@@ -7,8 +7,6 @@ from datetime import datetime
 from .models import Artista, Estilo
 from tocata.models import Tocata
 
-from home.utils import getDataHeadIndex
-
 from toca.parametros import parToca, parTocatas
 
 # Create your views here.
@@ -20,13 +18,7 @@ class ArtistasListView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ArtistasListView, self).get_context_data(*args, **kwargs)
-
-        usuario, numitemscarro = getDataHeadIndex(self.request)
-
         estilos = Estilo.objects.activo()
-
-        context['usuario'] = usuario
-        context['numitemscarro'] = numitemscarro
         context['estilos'] = estilos
 
         return context
@@ -37,12 +29,7 @@ class ArtistaDetailView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ArtistaDetailView, self).get_context_data(*args, **kwargs)
-        usuario, numitemscarro = getDataHeadIndex(self.request)
-
         tocatas = Tocata.objects.tocataartistadisponibles(context['object'])
-
-        context['usuario'] = usuario
-        context['numitemscarro'] = numitemscarro
         context['tocatas'] = tocatas
 
         return context

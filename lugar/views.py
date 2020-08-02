@@ -8,8 +8,6 @@ from .models import Lugar, Region, Provincia, Comuna
 from .forms import LugarForm, RegionForm, ComunaForm
 from tocata.models import Tocata, LugaresTocata
 
-from home.utils import getDataHeadIndex
-
 from toca.parametros import parToca
 
 # Create your views here.
@@ -30,11 +28,7 @@ def agregarLugar(request):
         #print(form.errors.as_data())
         #messages.error(request,'Error en form')
 
-    usuario, numitemscarro = getDataHeadIndex(request)
-
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'form': form,
     }
     return render(request, 'lugar/agregarlugar.html', context)
@@ -53,7 +47,6 @@ def actualizarLugar(request, lugar_id):
 @login_required(login_url='index')
 def misLugares(request):
 
-    usuario, numitemscarro = getDataHeadIndex(request)
     mislugares = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
     tocataslugar = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
 
@@ -66,8 +59,6 @@ def misLugares(request):
             milugar.borra = 'SI'
 
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'mislugares': mislugares,
     }
 
@@ -76,14 +67,10 @@ def misLugares(request):
 @login_required(login_url='index')
 def mispropuestas(request):
 
-    usuario, numitemscarro = getDataHeadIndex(request)
-
     mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
     mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
 
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'mispropuestas': mispropuestas,
     }
 
@@ -100,14 +87,10 @@ def cancelarpropuesta(request, propuesta_id):
         else:
             messages.success(request, 'Solo puede cancelar un propuesta cuando esta pendiente')
 
-    usuario, numitemscarro = getDataHeadIndex(request)
-
     mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
     mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
 
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'mispropuestas': mispropuestas,
     }
 
@@ -130,14 +113,10 @@ def cancelarpropuestaelegida(request, propuesta_id):
 
         messages.success(request, 'Solo puede cancelar un propuesta cuando esta pendiente')
 
-
-    usuario, numitemscarro = getDataHeadIndex(request)
     mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
     mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
 
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'mispropuestas': mispropuestas,
     }
 
@@ -154,13 +133,10 @@ def borrarpropuesta(request, propuesta_id):
         else:
             messages.success(request, 'No puedes borrar un propuesta mintras tenga tocatas activas')
 
-    usuario, numitemscarro = getDataHeadIndex(request)
     mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
     mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
 
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'mispropuestas': mispropuestas,
     }
 

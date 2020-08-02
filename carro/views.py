@@ -3,12 +3,9 @@ from django.shortcuts import render, redirect
 from .models import CarroCompra
 from tocata.models import Tocata
 
-from home.utils import getDataHeadIndex
-
 # Create your views here.
 def carro_home(request):
 
-    usuario, numitemscarro = getDataHeadIndex(request)
     carro_obj, nuevo_carro = CarroCompra.objects.nuevo_or_entrega(request)
 
     context = {

@@ -23,8 +23,6 @@ from .forms import (
         EditarCuentaUserForm
         )
 
-from home.utils import getDataHeadIndex
-
 from .tokens import account_activation_token, art_activation_token
 
 from toca.parametros import parToca
@@ -175,6 +173,12 @@ def ingresar(request):
 
         if usuario is not None:
             auth.login(request, usuario)
+
+            if Usuario.objects.get(user=usuario).es_artista:
+                request.session['es_artista'] = 'S'
+            else:
+                request.session['es_artista'] = 'N'
+
             messages.success(request,'Ingreso Existos')
 
             if next:
@@ -198,6 +202,7 @@ def salir(request):
     if request.method == 'POST':
         next = request.POST.get('next', '/')
         auth.logout(request)
+        request.session['es_artista'] = 'N'
         messages.success(request,'Salida Existosa')
         if next:
             return HttpResponseRedirect(next)
@@ -213,7 +218,6 @@ def CuentaUserView(request):
         user = form.save(commit=False)
         user.save()
 
-    usuario, numitemscarro = getDataHeadIndex(request)
     context = {
         'form': form,
         'numitemscarro': numitemscarro,
@@ -251,13 +255,10 @@ def actualizarArt(request):
 
         messages.success(request,'Actualizacion Existosa')
 
-    usuario, numitemscarro = getDataHeadIndex(request)
     usuario_art = UsuarioArtista.objects.filter(user=request.user)[0]
     usuario_art_form = UsuarioArtistaForm(request)
 
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'usuario_art': usuario_art,
         'usuario_art_form': usuario_art_form,
     }
@@ -267,13 +268,10 @@ def actualizarArt(request):
 @login_required(login_url='index')
 def cuentaArt(request):
 
-    usuario, numitemscarro = getDataHeadIndex(request)
     usuario_art = UsuarioArtista.objects.filter(user=request.user)[0]
     usuario_art_form = UsuarioArtistaForm()
 
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'usuario_art': usuario_art,
         'usuario_art_form': usuario_art_form,
     }
