@@ -3,7 +3,7 @@ from django.contrib import messages, auth
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode, is_safe_url
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
@@ -164,8 +164,10 @@ def ingresar(request):
     form = IngresarForm(request.POST or None)
 
     if form.is_valid():
-        next = request.POST.get('next', '/')
-
+        next_ = request.GET.get('next')
+        next_post = request.POST.get('next')
+        redirect_path = next_ or next_post or None
+        
         nombreusuario = form.cleaned_data.get('nombreusuario')
         contra = form.cleaned_data.get('contra')
 
@@ -178,15 +180,12 @@ def ingresar(request):
                 request.session['es_artista'] = 'S'
             else:
                 request.session['es_artista'] = 'N'
-
             messages.success(request,'Ingreso Existos')
 
-            if next:
-                return HttpResponseRedirect(next)
-
+            if is_safe_url(redirect_path, request.get_host()):
+                return redirect(redirect_path)
             else:
                 return redirect('index')
-
         else:
             messages.error(request,'Error en Usuario y/o Contraseña')
 

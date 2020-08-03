@@ -7,7 +7,7 @@
 
 {% include 'partials/_alerts.html' %}
 
-{% if usuario.es_artista %}
+{% if request.session.es_artista == 'S' %}
 <section id="page-content">
     <div class="container">
         <div class="row">

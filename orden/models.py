@@ -1,6 +1,8 @@
 from django.db import models
 from django.db.models.signals import pre_save, post_save
 
+import math
+
 from carro.models import CarroCompra
 
 from toca.utils import unique_orden_id_generator
@@ -28,7 +30,7 @@ class OrdenCompra(models.Model):
     def actualiza_total(self):
         carro_total = self.carro.total
         envio_total = self.envio
-        nuevo_total =carro_total + envio_total
+        nuevo_total = math.fsum([carro_total, envio_total])
         self.total = nuevo_total
         self.save()
         return nuevo_total

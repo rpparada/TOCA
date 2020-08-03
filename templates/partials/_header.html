@@ -27,7 +27,7 @@
             <div class="header-extras">
                 <ul>
                     <li><a id="btn-search" href="#"> <i class="icon-search"></i></a> </li>
-                    <li><a href="{% url 'carro' %}"> <i class="icon-shopping-cart"></i></a></li> [ {{ request.session.carro_tocatas }} ]
+                    <li><a href="{% url 'carro' %}"> <i class="icon-shopping-cart"></i></a></li> [ {% if request.session.carro_tocatas %}{{ request.session.carro_tocatas }} {% else %} 0 {% endif %} ]
                 </ul>
             </div>
             <!--end: Header Extras-->

@@ -9,7 +9,7 @@
 <!-- SHOP CHECKOUT -->
 <section id="shop-checkout">
     <div class="container">
-      <form action="{% url 'procesarorden' orden.id %}" method="POST">
+      <form action="{% url 'procesarorden' object.id %}" method="POST">
         <div class="shop-cart">
             {% csrf_token %}
             <div class="row">
@@ -50,7 +50,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-6">
-                    <h4 class="upper">Orden número: {{ orden.id }}</h4>
+                    <h4 class="upper"> número: {{ object.orden_id }}</h4>
                     <div class="table table-sm table-striped table-responsive table table-bordered table-responsive">
                         <table class="table m-b-0">
                             <thead>
@@ -62,23 +62,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                              {% for item in ordentocata %}
+                              {% for item in object.carro.tocata.all %}
                                 <tr>
                                     <td class="cart-product-thumbnail">
-                                        <div class="cart-product-thumbnail-name">{{ item.tocata.artista.nombre }}</div>
+                                        <div class="cart-product-thumbnail-name">{{ item.artista.nombre }}</div>
                                     </td>
                                     <td class="cart-product-description">
-                                        <p><span>{{ item.tocata.nombre }}</span>
-                                            <span>{{ item.tocata.region }}</span>
-                                            <span>{{ item.tocata.comuna }}</span>
-                                            <span>{{ item.tocata.fecha }} {{ item.tocata.hora }}</span>
+                                        <p><span>{{ item.nombre }}</span>
+                                            <span>{{ item.region }}</span>
+                                            <span>{{ item.comuna }}</span>
+                                            <span>{{ item.fecha }} {{ item.hora }}</span>
                                         </p>
                                     </td>
                                     <td class="cart-product-quantity">
                                         <span>{{ item.cantidad }}</span>
                                     </td>
                                     <td class="cart-product-subtotal">
-                                        <span class="amount">${{ item.total|intcomma }} (${{ item.tocata.costo|intcomma }})</span>
+                                        <span class="amount">${{ item.costo|intcomma }}</span>
                                     </td>
                                 </tr>
                               {% endfor %}
@@ -98,7 +98,7 @@
                                                 <strong>Subtotal Orden</strong>
                                             </td>
                                             <td class="cart-product-name text-right">
-                                                <span class="amount">$ {{ orden.totalapagar|intcomma }}</span>
+                                                <span class="amount">$ {{ object.carro.total|intcomma }}</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -114,7 +114,7 @@
                                                 <strong>Total</strong>
                                             </td>
                                             <td class="cart-product-name text-right">
-                                                <span class="amount color lead"><strong>$ {{ orden.totalapagar|intcomma }}</strong></span>
+                                                <span class="amount color lead"><strong>$ {{ object.total|intcomma }}</strong></span>
                                             </td>
                                         </tr>
                                     </tbody>

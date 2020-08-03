@@ -40,8 +40,8 @@ def checkout_home(request):
     if nuevo_carro or carro_obj.tocata.count() == 0:
         return redirect('carro')
     else:
-        orden_obj, nueva_orden = OrdenCompra.objects.nuevo_or_entrega(carro=carro_obj)
+        orden_obj, nueva_orden = OrdenCompra.objects.get_or_create(carro=carro_obj)
         context = {
-            'objects': orden_obj
+            'object': orden_obj
         }
         return render(request, 'carro/checkout.html', context)

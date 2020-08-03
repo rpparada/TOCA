@@ -7,8 +7,7 @@
 
 {% include 'partials/_alerts.html' %}
 
-{% if user.is_authenticated %}
-{% if usuario.es_artista %}
+{% if request.session.es_artista == 'S' %}
 <section id="page-content">
     <div class="container">
         <div class="row">
@@ -81,15 +80,6 @@
 
             </div>
         </div>
-    </div>
-</section>
-{% endif %}
-{% else %}
-<section id="page-content">
-    <div class="container">
-      <div data-animate="fadeInUp" class="text-center">
-          <a href="{% url 'ingresar' %}?next={{request.path|urlencode}}" class="btn">INGRESA A TU CUENTA</a>
-      </div>
     </div>
 </section>
 {% endif %}

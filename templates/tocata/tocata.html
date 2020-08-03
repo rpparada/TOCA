@@ -22,14 +22,8 @@
             <p class="lead">Mobile World Congress (MWC) is the world’s largest annual gathering for the mobile industry, organised by the GSMA, and held in the Mobile World Capital: Barcelona, Spain.
 
             </p>
-            {% if user.is_authenticated %}
-              {% if object.estado == 'PU' %}
-              <a href="" data-target="#modalag{{object.id}}" data-toggle="modal" class="btn">COMPRA TU ENTREDA</a>
-              {% endif %}
-            {% else %}
-              {% if object.estado == 'PU' %}
-              <a href="{% url 'ingresar' %}?next={{request.path|urlencode}}" class="btn">INGRESA PARA COMPRAR</a>
-              {% endif %}
+            {% if object.estado == 'PU' %}
+            <a href="" data-target="#modalag{{object.id}}" data-toggle="modal" class="btn">COMPRA TU ENTREDA</a>
             {% endif %}
         </div>
     </div>
