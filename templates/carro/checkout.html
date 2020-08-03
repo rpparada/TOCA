@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load thumbnail %}
+{% block title %} | MIS TOCATAS{% endblock %}
+{% block content %}
+{% include 'partials/_alerts.html' %}
+
+<!-- SHOP CHECKOUT -->
+<section id="shop-checkout">
+    <div class="container">
+      <form action="{% url 'procesarorden' orden.id %}" method="POST">
+        <div class="shop-cart">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-6 no-padding">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4 class="upper">Boleta y Entrada(s) seran enviadas al siguiente Email:</h4>
+                        </div>
+                        <div class="col-lg-12 form-group">
+                            <label class="sr-only">Email</label>
+                            <input type="email" class="form-control" placeholder="Email" value="{{user.email}}" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4 class="upper"><a href="#collapseFour" data-toggle="collapse" class="collapsed" aria-expanded="false"> Enviar a otro Email: <i class="icon-arrow-down-circle"></i></a></h4>
+                        </div>
+                        <div class="col-lg-12">
+                            <div style="height: 0px;" aria-expanded="false" id="collapseFour" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="sep-top-xs">
+                                        <div class="row">
+                                            <div class="col-lg-12 form-group">
+                                                <label class="sr-only">Email</label>
+                                                <input type="email" class="form-control" placeholder="Email" value="" name="altemail">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="seperator"><i class="fa fa-credit-card"></i>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h4 class="upper">Orden número: {{ orden.id }}</h4>
+                    <div class="table table-sm table-striped table-responsive table table-bordered table-responsive">
+                        <table class="table m-b-0">
+                            <thead>
+                                <tr>
+                                    <th class="cart-product-thumbnail">Artista</th>
+                                    <th class="cart-product-name">Descripción</th>
+                                    <th class="cart-product-name">Cantidad</th>
+                                    <th class="cart-product-subtotal">Total (Unidad)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              {% for item in ordentocata %}
+                                <tr>
+                                    <td class="cart-product-thumbnail">
+                                        <div class="cart-product-thumbnail-name">{{ item.tocata.artista.nombre }}</div>
+                                    </td>
+                                    <td class="cart-product-description">
+                                        <p><span>{{ item.tocata.nombre }}</span>
+                                            <span>{{ item.tocata.region }}</span>
+                                            <span>{{ item.tocata.comuna }}</span>
+                                            <span>{{ item.tocata.fecha }} {{ item.tocata.hora }}</span>
+                                        </p>
+                                    </td>
+                                    <td class="cart-product-quantity">
+                                        <span>{{ item.cantidad }}</span>
+                                    </td>
+                                    <td class="cart-product-subtotal">
+                                        <span class="amount">${{ item.total|intcomma }} (${{ item.tocata.costo|intcomma }})</span>
+                                    </td>
+                                </tr>
+                              {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <h4>Total Orden</h4>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="cart-product-name">
+                                                <strong>Subtotal Orden</strong>
+                                            </td>
+                                            <td class="cart-product-name text-right">
+                                                <span class="amount">$ {{ orden.totalapagar|intcomma }}</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cart-product-name">
+                                                <strong>Email Ticket </strong>
+                                            </td>
+                                            <td class="cart-product-name  text-right">
+                                                <span class="amount">$ 0</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cart-product-name">
+                                                <strong>Total</strong>
+                                            </td>
+                                            <td class="cart-product-name text-right">
+                                                <span class="amount color lead"><strong>$ {{ orden.totalapagar|intcomma }}</strong></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <h4 class="upper">Método de Pago</h4>
+                            <div class="list-group">
+                              <input type="radio" name="RadioInputName" value="Value1" id="Radio1"/>
+                              <label class="list-group-item" for="Radio1"><img width="90" alt="Webpay" src="{% static 'images/iconos/webpay.png' %}"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <button type="submit" class="btn icon-left float-right mt-3">Pagar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </form>
+    </div>
+</section>
+<!-- end: SHOP CHECKOUT -->
+
+<!-- DELIVERY INFO -->
+<section class="p-t-40 p-b-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="icon-box effect small clean">
+                    <div class="icon">
+                        <a href="#"><i class="fa fa-gift"></i></a>
+                    </div>
+                    <h3>Free shipping on orders $60+</h3>
+                    <p>Order more than 60$ and you will get free shippining Worldwide. More info.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="icon-box effect small clean">
+                    <div class="icon">
+                        <a href="#"><i class="fa fa-plane"></i></a>
+                    </div>
+                    <h3>Worldwide delivery</h3>
+                    <p>We deliver to the following countries: USA, Canada, Europe, Australia</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="icon-box effect small clean">
+                    <div class="icon">
+                        <a href="#"><i class="fa fa-history"></i></a>
+                    </div>
+                    <h3>60 days money back guranty!</h3>
+                    <p>Not happy with our product, feel free to return it, we will refund 100% your money!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end: DELIVERY INFO -->
+
+{% endblock %}

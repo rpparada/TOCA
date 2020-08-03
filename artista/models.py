@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import pre_save
 
 from toca.parametros import parToca, parArtistas
-from tocata.utils  import unique_slug_generator
+from toca.utils  import unique_slug_generator
 
 # Create your models here.
 

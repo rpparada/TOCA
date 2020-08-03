@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'tocata',
     'home',
     'busqueda',
-    'carro'
+    'carro',
+    'orden'
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (

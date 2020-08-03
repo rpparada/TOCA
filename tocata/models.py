@@ -9,7 +9,7 @@ from artista.models import Artista, Estilo
 from lugar.models import Lugar, Region, Comuna
 
 from toca.parametros import parToca, parTocatas, parLugaresToc, parTocatasAbiertas
-from .utils  import unique_slug_generator
+from toca.utils  import unique_slug_generator
 
 # Create your models here.
 

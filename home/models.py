@@ -5,7 +5,7 @@ from artista.models import Artista
 
 from toca.parametros import parToca, parTestimonios
 
-from tocata.utils  import unique_slug_generator
+from toca.utils  import unique_slug_generator
 
 # Create your models here.
 
