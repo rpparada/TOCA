@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'home',
     'busqueda',
     'carro',
-    'orden'
+    'orden',
+    'facturacion',
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
