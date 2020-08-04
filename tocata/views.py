@@ -416,8 +416,6 @@ def seleccionarpropuestas(request, tocata_id, lugar_id):
     listaLugares  = LugaresTocata.objects.filter(tocataabierta=tocata).filter(estado=parToca['pendiente'])
 
     context = {
-        'usuario': usuario,
-        'numitemscarro': numitemscarro,
         'tocata': tocata,
         'listaLugares': listaLugares,
     }

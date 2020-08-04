@@ -167,7 +167,7 @@ def ingresar(request):
         next_ = request.GET.get('next')
         next_post = request.POST.get('next')
         redirect_path = next_ or next_post or None
-        
+
         nombreusuario = form.cleaned_data.get('nombreusuario')
         contra = form.cleaned_data.get('contra')
 
@@ -219,7 +219,6 @@ def CuentaUserView(request):
 
     context = {
         'form': form,
-        'numitemscarro': numitemscarro,
     }
     return render(request, 'usuario/cuenta.html', context)
 
