@@ -1,0 +1,19 @@
+<form method="POST" action="{% url 'ingresar' %}">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% if next_url %}
+    <input type="hidden" name="next" value="{{ next_url }}">
+    {% else %}
+    <input type="hidden" name="next" value="{{ request.GET.next }}">
+    {% endif %}
+    <div class="form-group">
+        {{ form.nombreusuario }}
+    </div>
+    <div class="form-group">
+        {{ form.contra }}
+    </div>
+    <div class="text-left form-group">
+        <button type="submit" class="btn">Ingresar</button>
+        <a href="{% url 'index' %}" class="btn btn-danger m-l-10">Anular</a>
+    </div>
+</form>

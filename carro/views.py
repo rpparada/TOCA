@@ -3,6 +3,9 @@ from django.shortcuts import render, redirect
 from .models import CarroCompra
 from orden.models import OrdenCompra
 from tocata.models import Tocata
+from facturacion.models import FacturacionProfile
+
+from usuario.forms import IngresarForm
 
 # Create your views here.
 def carro_home(request):
@@ -41,7 +44,16 @@ def checkout_home(request):
         return redirect('carro')
     else:
         orden_obj, nueva_orden = OrdenCompra.objects.get_or_create(carro=carro_obj)
-        context = {
-            'object': orden_obj
-        }
-        return render(request, 'carro/checkout.html', context)
+
+    user = request.user
+    fact_profile = None
+    ingreso_form = IngresarForm()
+    if user.is_authenticated:
+        fact_profile, fact_profile_created = FacturacionProfile.objects.get_or_create(usuario=user, email=user.email)
+
+    context = {
+        'object': orden_obj,
+        'fact_profile': fact_profile,
+        'form': ingreso_form
+    }
+    return render(request, 'carro/checkout.html', context)
