@@ -1,4 +1,23 @@
 {% load static %}
+{% url 'index' as index_url %}
+{% url 'busqueda' as busqueda_url %}
+{% url 'carro' as carro_url %}
+{% url 'tocatas' as tocatas_url %}
+{% url 'artistas' as artistas_url %}
+{% url 'mistocatas' as mistocatas_url %}
+{% url 'creartocata' as creartocata_url %}
+{% url 'creartocatacerrada' as creartocatacerrada_url %}
+{% url 'creartocataabierta' as creartocataabierta_url %}
+{% url 'mislugares' as mislugares_url %}
+{% url 'agregarlugar' as agregarlugar_url %}
+{% url 'mispropuestas' as mispropuestas_url %}
+{% url 'cuentaart' as cuentaart_url %}
+{% url 'miscompras' as miscompras_url %}
+{% url 'cambiocontra' as cambiocontra_url %}
+{% url 'salir' as salir_url %}
+{% url 'cuenta' as cuenta_url %}
+{% url 'ingresar' as ingresar_url %}
+{% url 'registrar' as registrar_url %}
 
 <!-- Header -->
 <header id="header" data-transparent="false" data-fullwidth="true" class="dark submenu-light">
@@ -7,7 +26,7 @@
 
             <!--Logo-->
             <div id="logo">
-                <a href="{% url 'index' %}">
+                <a href="{{ index_url }}">
                   <img src="{% static 'images/iconos/logo_rojo_negro_indexrojo.png' %}" class="logo-default">
                   <img src="{% static 'images/iconos/logo_rojo_negro_indexblanco.png' %}" class="logo-dark">
                 </a>
@@ -16,7 +35,7 @@
 
             <!-- Search -->
             <div id="search"><a id="btn-search-close" class="btn-search-close" aria-label="Close search form"><i class="icon-x"></i></a>
-                <form class="search-form" action="{% url 'busqueda' %}" method="get">
+                <form class="search-form" action="{{ busqueda_url  }}" method="get">
                     <input id="busquedacolortext" class="form-control" name="q" type="text" value="{{ request.GET.q }}" placeholder="Type & Search..." />
                     <span class="text-muted">Start typing & press "Enter" or "ESC" to close</span>
                 </form>
@@ -27,7 +46,7 @@
             <div class="header-extras">
                 <ul>
                     <li><a id="btn-search" href="#"> <i class="icon-search"></i></a> </li>
-                    <li><a href="{% url 'carro' %}"> <i class="icon-shopping-cart"></i></a></li> [ {% if request.session.carro_tocatas %}{{ request.session.carro_tocatas }} {% else %} 0 {% endif %} ]
+                    <li><a href="{{ carro_url }}"> <i class="icon-shopping-cart"></i></a></li> [ {% if request.session.carro_tocatas %}{{ request.session.carro_tocatas }} {% else %} 0 {% endif %} ]
                 </ul>
             </div>
             <!--end: Header Extras-->
@@ -41,41 +60,41 @@
                 <div class="container">
                     <nav>
                         <ul>
-                            <li><a href="{% url 'index' %}">Home</a></li>
-                            <li><a href="{% url 'tocatas' %}">Tocatas</a></li>
-                            <li><a href="{% url 'artistas' %}">Artistas</a></li>
+                            <li><a href="{{ index_url }}">Home</a></li>
+                            <li><a href="{{ tocatas_url }}">Tocatas</a></li>
+                            <li><a href="{{ artistas_url }}">Artistas</a></li>
 
                             {% if user.is_authenticated %}
                               {% if request.session.es_artista == 'S' %}
-                                <li class="dropdown"><a href="{% url 'mistocatas' %}">Mis Tocatas</a>
+                                <li class="dropdown"><a href="{{ mistocatas_url }}">Mis Tocatas</a>
                                   <ul class="dropdown-menu">
-                                    <li><a href="{% url 'mistocatas' %}">Mis Tocatas</a></li>
-                                    <li class="dropdown-submenu"><a href="{% url 'creartocata' %}">Crea Tocata</a>
+                                    <li><a href="{{ mistocatas_url }}">Mis Tocatas</a></li>
+                                    <li class="dropdown-submenu"><a href="{{ creartocata_url }}">Crea Tocata</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="{% url 'creartocatacerrada' %}">Tocata Cerrada</a></li>
-                                            <li><a href="{% url 'creartocataabierta' %}">Tocata Abierta</a></li>
+                                            <li><a href="{{ creartocatacerrada_url }}">Tocata Cerrada</a></li>
+                                            <li><a href="{{ creartocataabierta_url }}">Tocata Abierta</a></li>
                                         </ul>
                                     </li>
                                   </ul>
                                 </li>
-                                <li class="dropdown"><a href="{% url 'mislugares' %}">Mis Lugares</a>
+                                <li class="dropdown"><a href="{{ mislugares_url }}">Mis Lugares</a>
                                   <ul class="dropdown-menu">
-                                    <li><a href="{% url 'mislugares' %}">Mis Lugares</a></li>
-                                    <li><a href="{% url 'agregarlugar' %}">Agregar Lugar</a></li>
-                                    <li><a href="{% url 'mispropuestas' %}">Mis Propuesta</a></li>
+                                    <li><a href="{{ mislugares_url }}">Mis Lugares</a></li>
+                                    <li><a href="{{ agregarlugar_url }}">Agregar Lugar</a></li>
+                                    <li><a href="{{ mispropuestas_url }}">Mis Propuesta</a></li>
                                   </ul>
                                 </li>
                                 {% if user.first_name %}
-                                <li class="dropdown"><a href="{% url 'cuentaart' %}">Hola, {{ user.first_name }}</a>
+                                <li class="dropdown"><a href="{{ cuentaart_url }}">Hola, {{ user.first_name }}</a>
                                 {% else %}
-                                <li class="dropdown"><a href="{% url 'cuentaart' %}">Hola, {{ user.username }}</a>
+                                <li class="dropdown"><a href="{{ cuentaart_url }}">Hola, {{ user.username }}</a>
                                 {% endif %}
                                   <ul class="dropdown-menu">
-                                    <li><a href="{% url 'cuentaart' %}">Editar Cuenta</a></li>
-                                    <li><a href="{% url 'miscompras' %}">Mis Compras</a></li>
-                                    <li><a href="{% url 'cambiocontra' %}">Cambiar Contraseña</a></li>
+                                    <li><a href="{{ cuentaart_url }}">Editar Cuenta</a></li>
+                                    <li><a href="{{ miscompras_url }}">Mis Compras</a></li>
+                                    <li><a href="{{ cambiocontra_url }}">Cambiar Contraseña</a></li>
                                     <li><a href="javascript:{document.getElementById('salir').submit()}">Salir</a>
-                                      <form class="" id="salir" action="{% url 'salir' %}" method="POST">
+                                      <form class="" id="salir" action="{{ salir_url }}" method="POST">
                                         {% csrf_token %}
                                         <input type="hidden" name="next" value="{{request.path|urlencode}}">
                                         <input type="hidden">
@@ -84,22 +103,22 @@
                                   </ul>
                               </li>
                               {% else %}
-                                <li class="dropdown"><a href="{% url 'mislugares' %}">Mis Lugares</a>
+                                <li class="dropdown"><a href="{{ mislugares_url }}">Mis Lugares</a>
                                   <ul class="dropdown-menu">
-                                    <li><a href="{% url 'mislugares' %}">Mis Lugares</a></li>
-                                    <li><a href="{% url 'agregarlugar' %}">Agregar Lugar</a></li>
-                                    <li><a href="{% url 'mispropuestas' %}">Mis Propuesta</a></li>
+                                    <li><a href="{{ mislugares_url }}">Mis Lugares</a></li>
+                                    <li><a href="{{ agregarlugar_url }}">Agregar Lugar</a></li>
+                                    <li><a href="{{ mispropuestas_url }}">Mis Propuesta</a></li>
                                   </ul>
                                 </li>
                                 {% if user.first_name %}
-                                <li class="dropdown"><a href="{% url 'cuenta' %}">Hola, {{ user.first_name }}</a>
+                                <li class="dropdown"><a href="{{ cuenta_url }}">Hola, {{ user.first_name }}</a>
                                 {% else %}
-                                <li class="dropdown"><a href="{% url 'cuenta' %}">Hola, {{ user.username }}</a>
+                                <li class="dropdown"><a href="{{ cuenta_url }}">Hola, {{ user.username }}</a>
                                 {% endif %}
                                   <ul class="dropdown-menu">
-                                    <li><a href="{% url 'cuenta' %}">Editar Cuenta</a></li>
-                                    <li><a href="{% url 'cambiocontra' %}">Cambiar Contraseña</a></li>
-                                    <li><a href="{% url 'miscompras' %}">Mis Compras</a></li>
+                                    <li><a href="{{ cuenta_url }}">Editar Cuenta</a></li>
+                                    <li><a href="{{ cambiocontra_url }}">Cambiar Contraseña</a></li>
+                                    <li><a href="{{ miscompras_url }}">Mis Compras</a></li>
                                     {% if request.user.is_staff %}
                                     <li class="dropdown-submenu"><a href="#">Menu Admin</a>
                                         <ul class="dropdown-menu">
@@ -108,7 +127,7 @@
                                     </li>
                                     {% endif %}
                                     <li><a href="javascript:{document.getElementById('salir').submit()}">Salir</a>
-                                      <form class="" id="salir" action="{% url 'salir' %}" method="POST">
+                                      <form class="" id="salir" action="{{ salir_url }}" method="POST">
                                         {% csrf_token %}
                                         <input type="hidden" name="next" value="{{request.path|urlencode}}">
                                         <input type="hidden">
@@ -118,10 +137,10 @@
                                 </li>
                               {% endif %}
                             {% else %}
-                            <li class="dropdown"><a href="{% url 'ingresar' %}?next={{request.path|urlencode}}">Usuario</a>
+                            <li class="dropdown"><a href="{{ ingresar_url }}?next={{request.path|urlencode}}">Usuario</a>
                                 <ul class="dropdown-menu">
-                                  <li><a href="{% url 'ingresar' %}?next={{request.path|urlencode}}">Ingresa</a></li>
-                                  <li><a href="{% url 'registrar' %}">Registrate</a></li>
+                                  <li><a href="{{ ingresar_url }}?next={{request.path|urlencode}}">Ingresa</a></li>
+                                  <li><a href="{{ registrar_url }}">Registrate</a></li>
                                 </ul>
                             </li>
                             {% endif %}
