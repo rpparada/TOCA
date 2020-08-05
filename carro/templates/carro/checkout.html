@@ -6,6 +6,7 @@
 {% block content %}
 {% include 'partials/_alerts.html' %}
 
+{{ object.orden_id }}
 {% if not fact_profile %}
 <!-- SHOP CHECKOUT -->
 <section id="shop-checkout">
@@ -18,7 +19,6 @@
 <!-- SHOP CHECKOUT -->
 <section id="shop-checkout">
     <div class="container">
-      <form action="{% url 'procesarorden' object.id %}" method="POST">
         <div class="shop-cart">
             {% csrf_token %}
             <div class="row">
@@ -144,7 +144,6 @@
                 </div>
             </div>
         </div>
-      </form>
     </div>
 </section>
 <!-- end: SHOP CHECKOUT -->

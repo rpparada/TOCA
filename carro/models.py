@@ -9,9 +9,8 @@ from tocata.models import Tocata
 # Carro Comprar
 class CarroCompraManager(models.Manager):
 
-    def nuevo_or_entrega(self, request):
-
-        carro_id =request.session.get("carro_id", None)
+    def new_or_get(self, request):
+        carro_id =request.session.get('carro_id', None)
         qs = self.get_queryset().filter(id=carro_id)
         if qs.count() == 1:
             nuevo_obj = False

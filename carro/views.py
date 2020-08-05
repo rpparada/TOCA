@@ -5,12 +5,14 @@ from orden.models import OrdenCompra
 from tocata.models import Tocata
 from facturacion.models import FacturacionProfile
 
+from direccion.forms import DireccionForm
+
 from usuario.forms import IngresarForm
 
 # Create your views here.
 def carro_home(request):
 
-    carro_obj, nuevo_carro = CarroCompra.objects.nuevo_or_entrega(request)
+    carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
 
     context = {
         'carro': carro_obj
@@ -27,7 +29,7 @@ def carro_actualizar(request):
             # Mensaje de Error al usuario
             return redirect('carro')
 
-        carro_obj, nuevo_carro = CarroCompra.objects.nuevo_or_entrega(request)
+        carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
         if tocata in carro_obj.tocata.all():
             carro_obj.tocata.remove(tocata)
         else:
@@ -38,22 +40,25 @@ def carro_actualizar(request):
     return redirect('carro')
 
 def checkout_home(request):
-    carro_obj, nuevo_carro = CarroCompra.objects.nuevo_or_entrega(request)
+    carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
     orden_obj = None
     if nuevo_carro or carro_obj.tocata.count() == 0:
         return redirect('carro')
-    else:
-        orden_obj, nueva_orden = OrdenCompra.objects.get_or_create(carro=carro_obj)
 
-    user = request.user
-    fact_profile = None
     ingreso_form = IngresarForm()
-    if user.is_authenticated:
-        fact_profile, fact_profile_created = FacturacionProfile.objects.get_or_create(usuario=user, email=user.email)
+    direccion_form = DireccionForm()
+    facturacion_form = DireccionForm()
+
+    fact_profile, fact_profile_created = FacturacionProfile.objects.new_or_get(request)
+
+    if fact_profile is not None:
+        orden_obj, orden_obj_created = OrdenCompra.objects.new_or_get(fact_profile, carro_obj)
 
     context = {
         'object': orden_obj,
         'fact_profile': fact_profile,
-        'form': ingreso_form
+        'form': ingreso_form,
+        'direccion_form': direccion_form,
+        'facturacion_form': facturacion_form
     }
     return render(request, 'carro/checkout.html', context)

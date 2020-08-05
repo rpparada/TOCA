@@ -46,7 +46,7 @@
             <div class="header-extras">
                 <ul>
                     <li><a id="btn-search" href="#"> <i class="icon-search"></i></a> </li>
-                    <li><a href="{{ carro_url }}"> <i class="icon-shopping-cart"></i></a></li> [ {% if request.session.carro_tocatas %}{{ request.session.carro_tocatas }} {% else %} 0 {% endif %} ]
+                    <li><a href="{{ carro_url }}"> <i class="icon-shopping-cart"></i></a></li> [ {{ request.session.carro_tocatas }} ]
                 </ul>
             </div>
             <!--end: Header Extras-->
@@ -93,13 +93,7 @@
                                     <li><a href="{{ cuentaart_url }}">Editar Cuenta</a></li>
                                     <li><a href="{{ miscompras_url }}">Mis Compras</a></li>
                                     <li><a href="{{ cambiocontra_url }}">Cambiar Contraseña</a></li>
-                                    <li><a href="javascript:{document.getElementById('salir').submit()}">Salir</a>
-                                      <form class="" id="salir" action="{{ salir_url }}" method="POST">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="next" value="{{request.path|urlencode}}">
-                                        <input type="hidden">
-                                      </form>
-                                    </li>
+                                    <li><a href="{{ salir_url }}">Salir</a></li>
                                   </ul>
                               </li>
                               {% else %}
@@ -126,13 +120,7 @@
                                         </ul>
                                     </li>
                                     {% endif %}
-                                    <li><a href="javascript:{document.getElementById('salir').submit()}">Salir</a>
-                                      <form class="" id="salir" action="{{ salir_url }}" method="POST">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="next" value="{{request.path|urlencode}}">
-                                        <input type="hidden">
-                                      </form>
-                                    </li>
+                                    <li><a href="{{ salir_url }}">Salir</a></li>
                                   </ul>
                                 </li>
                               {% endif %}

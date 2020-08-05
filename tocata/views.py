@@ -79,7 +79,7 @@ class TocataDetailView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(TocataDetailView, self).get_context_data(*args, **kwargs)
-        carro_obj, nuevo_carro = CarroCompra.objects.nuevo_or_entrega(self.request)
+        carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(self.request)
 
         context['carro'] = carro_obj
 

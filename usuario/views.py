@@ -195,19 +195,6 @@ def ingresar(request):
 
     return render(request, 'usuario/ingresar.html', context)
 
-
-def salir(request):
-
-    if request.method == 'POST':
-        next = request.POST.get('next', '/')
-        auth.logout(request)
-        request.session['es_artista'] = 'N'
-        messages.success(request,'Salida Existosa')
-        if next:
-            return HttpResponseRedirect(next)
-        else:
-            return redirect('index')
-
 @login_required(login_url='index')
 def CuentaUserView(request):
 

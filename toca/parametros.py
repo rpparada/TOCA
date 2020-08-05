@@ -182,3 +182,10 @@ mediodepago = {
         (parToca['webpay'],'Webpay'),
     ]
 }
+
+parDireccion = {
+    'tipo_direccion': [
+        ('facturacion', 'Facturacion'),
+        ('envio', 'Envio')
+    ]
+}

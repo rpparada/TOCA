@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'carro',
     'orden',
     'facturacion',
+    'direccion'
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -76,6 +77,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
+
+LOGOUT_REDIRECT_URL = 'index'
 
 ROOT_URLCONF = 'toca.urls'
 
