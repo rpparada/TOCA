@@ -4,6 +4,7 @@ from .models import CarroCompra
 from orden.models import OrdenCompra
 from tocata.models import Tocata
 from facturacion.models import FacturacionProfile
+from lugar.models import Region, Comuna
 
 from direccion.forms import DireccionForm
 
@@ -64,8 +65,6 @@ def checkout_home(request):
     return render(request, 'carro/checkout.html', context)
 
 def carga_comunas_agregar(request):
-
-    print('aqui')
 
     region_id = request.GET.get('region')
     comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
