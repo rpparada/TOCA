@@ -11,16 +11,14 @@ from toca.parametros import parToca, parCarro, parOrden, mediodepago
 
 # Create your models here.
 
-
 # Orden Compra
-
 class OrdenCompraManager(models.Manager):
 
     def new_or_get(self, fact_profile, carro_obj):
         created = False
         qs = self.get_queryset().filter(facturacion_profile=fact_profile, carro=carro_obj, activo=True)
-        if qs.count() == 1: 
-            obj = orden_qs.first()
+        if qs.count() == 1:
+            obj = qs.first()
         else:
             obj = self.model.objects.create(facturacion_profile=fact_profile, carro=carro_obj)
             created = True

@@ -6,12 +6,11 @@
 {% block content %}
 {% include 'partials/_alerts.html' %}
 
-{{ object.orden_id }}
 {% if not fact_profile %}
 <!-- SHOP CHECKOUT -->
 <section id="shop-checkout">
     <div class="container">
-      {% include 'snippets/ingresoform.html' with form=form next_url=request.build_absolute_uri %}
+      {% include 'snippets/ingresoform.html' with form=ingreso_form next_url=request.build_absolute_uri %}
     </div>
 </section>
 <!-- end: SHOP CHECKOUT -->
@@ -20,77 +19,83 @@
 <section id="shop-checkout">
     <div class="container">
         <div class="shop-cart">
-            {% csrf_token %}
-            <div class="row">
-                <div class="col-lg-6 no-padding">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h4 class="upper">Boleta y Entrada(s) seran enviadas al siguiente Email:</h4>
-                        </div>
-                        <div class="col-lg-12 form-group">
-                            <label class="sr-only">Email</label>
-                            <input type="email" class="form-control" placeholder="Email" value="{{user.email}}" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h4 class="upper"><a href="#collapseFour" data-toggle="collapse" class="collapsed" aria-expanded="false"> Enviar a otro Email: <i class="icon-arrow-down-circle"></i></a></h4>
-                        </div>
-                        <div class="col-lg-12">
-                            <div style="height: 0px;" aria-expanded="false" id="collapseFour" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <div class="sep-top-xs">
-                                        <div class="row">
-                                            <div class="col-lg-12 form-group">
-                                                <label class="sr-only">Email</label>
-                                                <input type="email" class="form-control" placeholder="Email" value="" name="altemail">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% include 'snippets/form.html' with form=direccion_form next_url=request.build_absolute_uri %}
+
             <div class="seperator"><i class="fa fa-credit-card"></i>
             </div>
             <div class="row">
                 <div class="col-lg-6">
-                    <h4 class="upper"> número: {{ object.orden_id }}</h4>
+                    <h4 class="upper">Tu Orden: {{ object.orden_id }}</h4>
                     <div class="table table-sm table-striped table-responsive table table-bordered table-responsive">
                         <table class="table m-b-0">
                             <thead>
                                 <tr>
-                                    <th class="cart-product-thumbnail">Artista</th>
-                                    <th class="cart-product-name">Descripción</th>
-                                    <th class="cart-product-name">Cantidad</th>
-                                    <th class="cart-product-subtotal">Total (Unidad)</th>
+                                    <th class="cart-product-thumbnail">Product</th>
+                                    <th class="cart-product-name">Description</th>
+                                    <th class="cart-product-subtotal">Total</th>
                                 </tr>
                             </thead>
                             <tbody>
-                              {% for item in object.carro.tocata.all %}
                                 <tr>
                                     <td class="cart-product-thumbnail">
-                                        <div class="cart-product-thumbnail-name">{{ item.artista.nombre }}</div>
+                                        <div class="cart-product-thumbnail-name">Bolt Sweatshirt</div>
                                     </td>
                                     <td class="cart-product-description">
-                                        <p><span>{{ item.nombre }}</span>
-                                            <span>{{ item.region }}</span>
-                                            <span>{{ item.comuna }}</span>
-                                            <span>{{ item.fecha }} {{ item.hora }}</span>
+                                        <p><span>Bolt Sweatshirt</span>
+                                            <span>Size: M</span>
+                                            <span>Color: Blue</span>
+                                            <span>Gender: Women</span>
                                         </p>
                                     </td>
-                                    <td class="cart-product-quantity">
-                                        <span>{{ item.cantidad }}</span>
-                                    </td>
                                     <td class="cart-product-subtotal">
-                                        <span class="amount">${{ item.costo|intcomma }}</span>
+                                        <span class="amount">$20.00</span>
                                     </td>
                                 </tr>
-                              {% endfor %}
+                                <tr>
+                                    <td class="cart-product-thumbnail">
+                                        <div class="cart-product-thumbnail-name">Consume Tshirt</div>
+                                    </td>
+                                    <td class="cart-product-description">
+                                        <p><span>Consume Tshirt</span>
+                                            <span>Size: S</span>
+                                            <span>Color: Blue</span>
+                                            <span>Gender: Women</span>
+                                        </p>
+                                    </td>
+                                    <td class="cart-product-subtotal">
+                                        <span class="amount">$18.99</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="cart-product-thumbnail">
+                                        <div class="cart-product-thumbnail-name">Logo Tshirt</div>
+                                    </td>
+                                    <td class="cart-product-description">
+                                        <p><span>Logo Tshirt</span>
+                                            <span>Size: L</span>
+                                            <span>Color: Grey</span>
+                                            <span>Gender: Man</span>
+                                        </p>
+                                    </td>
+                                    <td class="cart-product-subtotal">
+                                        <span class="amount">$18.00</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="cart-product-thumbnail">
+                                        <div class="cart-product-thumbnail-name">Grey Sweatshirt</div>
+                                    </td>
+                                    <td class="cart-product-description">
+                                        <p><span>Grey Sweatshirt</span>
+                                            <span>Size: L</span>
+                                            <span>Color: Grey</span>
+                                            <span>Gender: Man</span>
+                                        </p>
+                                    </td>
+                                    <td class="cart-product-subtotal">
+                                        <span class="amount">$68.97</span>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -99,23 +104,31 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="table-responsive">
-                                <h4>Total Orden</h4>
+                                <h4>Order Total</h4>
                                 <table class="table">
                                     <tbody>
                                         <tr>
                                             <td class="cart-product-name">
-                                                <strong>Subtotal Orden</strong>
+                                                <strong>Order Subtotal</strong>
                                             </td>
                                             <td class="cart-product-name text-right">
-                                                <span class="amount">$ {{ object.carro.total|intcomma }}</span>
+                                                <span class="amount">$125.96</span>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="cart-product-name">
-                                                <strong>Email Ticket </strong>
+                                                <strong>Shipping</strong>
                                             </td>
                                             <td class="cart-product-name  text-right">
-                                                <span class="amount">$ 0</span>
+                                                <span class="amount">Free Shipping</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cart-product-name">
+                                                <strong>Coupon</strong>
+                                            </td>
+                                            <td class="cart-product-name  text-right">
+                                                <span class="amount">-20%</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -123,7 +136,7 @@
                                                 <strong>Total</strong>
                                             </td>
                                             <td class="cart-product-name text-right">
-                                                <span class="amount color lead"><strong>$ {{ object.total|intcomma }}</strong></span>
+                                                <span class="amount color lead"><strong>$100.76</strong></span>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -131,14 +144,19 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <h4 class="upper">Método de Pago</h4>
+                            <h4 class="upper">Payment Method</h4>
                             <div class="list-group">
-                              <input type="radio" name="RadioInputName" value="Value1" id="Radio1"/>
-                              <label class="list-group-item" for="Radio1"><img width="90" alt="Webpay" src="{% static 'images/iconos/webpay.png' %}"></label>
+                                <input type="radio" name="RadioInputName" value="Value1" id="Radio1" />
+                                <label class="list-group-item" for="Radio1">Direct Bank Transfer</label>
+                                <input type="radio" name="RadioInputName" value="Value2" id="Radio2" />
+                                <label class="list-group-item" for="Radio2">Cheque Payment</label>
+                                <input type="radio" name="RadioInputName" value="Value3" id="Radio3" />
+                                <label class="list-group-item" for="Radio3"><img width="90" alt="paypal" src="images/shop/paypal-logo.png"></label>
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <button type="submit" class="btn icon-left float-right mt-3">Pagar</button>
+                            <a class="btn icon-left float-right mt-3" href="#"><span>Proceed to
+                                    PayPal</span></a>
                         </div>
                     </div>
                 </div>

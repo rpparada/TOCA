@@ -16,7 +16,7 @@ $('.close').click(function () {
 // Acciones cuando paguinas cargan
 $(document).ready(function (){
 
-  if (window.location.pathname === "/lugares/agregarlugar"){
+  if (window.location.pathname === "/lugares/agregarlugar" || window.location.pathname === "/carro/checkout"){
     // Agregar Lugar
     // Define posibles comunas de acuerdo a region seleccionada
     // Habilita campos de acuerdo con el tipo de tocata
@@ -72,7 +72,7 @@ $(document).ready(function (){
 
 // Define posibles comunas de acuerdo a region seleccionada
 $("#id_region").change(function () {
-  if (window.location.pathname === "/lugares/agregarlugar"){
+  if (window.location.pathname === "/lugares/agregarlugar" || window.location.pathname === "/carro/checkout" ){
     var url = $("#formtocheck").attr("data-ciudad-url-agregar");
     var regionId = $(this).val();
     $.ajax({

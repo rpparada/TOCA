@@ -47,7 +47,7 @@ def checkout_home(request):
 
     ingreso_form = IngresarForm()
     direccion_form = DireccionForm()
-    facturacion_form = DireccionForm()
+    facturacion_direccion_form = DireccionForm()
 
     fact_profile, fact_profile_created = FacturacionProfile.objects.new_or_get(request)
 
@@ -57,8 +57,36 @@ def checkout_home(request):
     context = {
         'object': orden_obj,
         'fact_profile': fact_profile,
-        'form': ingreso_form,
+        'ingreso_form': ingreso_form,
         'direccion_form': direccion_form,
-        'facturacion_form': facturacion_form
+        'facturacion_direccion_form': facturacion_direccion_form
     }
     return render(request, 'carro/checkout.html', context)
+
+def carga_comunas_agregar(request):
+
+    region_id = request.GET.get('region')
+    comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
+    context = {
+        'comunas_reg': comunas,
+    }
+    return render(request, 'direccion/comuna_dropdown_list_options_agregar.html', context)
+
+def carga_comunas_actualizar(request):
+
+    region_id = request.GET.get('region')
+    comuna_id = request.GET.get('comuna')
+    comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
+
+    if comuna_id.isdigit():
+        context = {
+            'comunas_reg': comunas,
+            'comuna_id': int(comuna_id),
+        }
+    else:
+        context = {
+            'comunas_reg': comunas,
+            'comuna_id': comunas.first(),
+        }
+
+    return render(request, 'direccion/comuna_dropdown_list_options_actualizar.html', context)
