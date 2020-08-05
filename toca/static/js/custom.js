@@ -23,6 +23,8 @@ $(document).ready(function (){
     var url = $("#formtocheck").attr("data-ciudad-url-agregar");
     var regionId = $("#id_region").val();
 
+    console.log("aqui");
+
     $.ajax({
       url: url,
       data: {

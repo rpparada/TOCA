@@ -65,6 +65,8 @@ def checkout_home(request):
 
 def carga_comunas_agregar(request):
 
+    print('aqui')
+
     region_id = request.GET.get('region')
     comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
     context = {
