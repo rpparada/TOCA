@@ -66,6 +66,15 @@ def checkout_home(request):
         if direccion_envio_id or direccion_facturacion_id:
             orden_obj.save()
 
+    if request.method == 'POST':
+        is_done = orden_obj.check_done()
+        if is_done:
+            orden_obj.mark_pagado()
+            request.session['carro_tocatas'] = 0
+            del request.session['carro_id']
+            return redirect('compraexitosa')
+
+
     context = {
         'object': orden_obj,
         'fact_profile': fact_profile,

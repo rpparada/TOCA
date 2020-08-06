@@ -17,7 +17,7 @@ class OrdenCompraManager(models.Manager):
 
     def new_or_get(self, fact_profile, carro_obj):
         created = False
-        qs = self.get_queryset().filter(facturacion_profile=fact_profile, carro=carro_obj, activo=True)
+        qs = self.get_queryset().filter(facturacion_profile=fact_profile, carro=carro_obj, activo=True, estado=parToca['pendiente'])
         if qs.count() == 1:
             obj = qs.first()
         else:
@@ -52,6 +52,21 @@ class OrdenCompra(models.Model):
         self.total = nuevo_total
         self.save()
         return nuevo_total
+
+    def check_done(self):
+        facturacion_profile = self.facturacion_profile
+        direccion_envio = self.direccion_envio
+        direccion_facturacion = self.direccion_facturacion
+        total = self.total
+        if facturacion_profile and direccion_envio and direccion_facturacion and total > 0:
+            return True
+        return False
+
+    def mark_pagado(self):
+        if self.check_done():
+            self.estado = parToca['pagado']
+            self.save()
+        return self.estado
 
 def pre_save_ordencompra_receiver(sender, instance, *args, **kwargs):
     if not instance.orden_id:
