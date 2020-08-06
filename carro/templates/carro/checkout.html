@@ -19,7 +19,13 @@
 <section id="shop-checkout">
     <div class="container">
         <div class="shop-cart">
-            {% include 'snippets/form.html' with form=direccion_form next_url=request.build_absolute_uri %}
+            {% url 'checkout_direccion_create_view' as checkout_direccion_create_view_url %}
+            {% if not object.direccion_envio %}
+
+              {% include 'snippets/form.html' with form=direccion_form tipo_dir='envio' next_url=request.build_absolute_uri action_url=checkout_direccion_create_view_url %}
+            {% elif not object.direccion_facturacion %}
+              {% include 'snippets/form.html' with form=direccion_form tipo_dir='facturacion' next_url=request.build_absolute_uri action_url=checkout_direccion_create_view_url %}
+            {% else %}
 
             <div class="seperator"><i class="fa fa-credit-card"></i>
             </div>
@@ -161,6 +167,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 </section>

@@ -5,6 +5,7 @@ import math
 
 from carro.models import CarroCompra
 from facturacion.models import FacturacionProfile
+from direccion.models import Direccion
 
 from toca.utils import unique_orden_id_generator
 from toca.parametros import parToca, parCarro, parOrden, mediodepago
@@ -26,18 +27,20 @@ class OrdenCompraManager(models.Manager):
 
 class OrdenCompra(models.Model):
 
-    orden_id            = models.CharField(max_length=120, blank=True)
-    facturacion_profile = models.ForeignKey(FacturacionProfile, null=True, blank=True, on_delete=models.CASCADE)
-    carro               = models.ForeignKey(CarroCompra, on_delete=models.DO_NOTHING)
-    total               = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
-    envio               = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
-    activo              = models.BooleanField(default=True)
+    orden_id                = models.CharField(max_length=120, blank=True)
+    facturacion_profile     = models.ForeignKey(FacturacionProfile, null=True, blank=True, on_delete=models.CASCADE)
+    direccion_envio         = models.ForeignKey(Direccion, related_name='direccion_envio', null=True, blank=True, on_delete=models.CASCADE)
+    direccion_facturacion   = models.ForeignKey(Direccion, related_name='direccion_facturacion', null=True, blank=True, on_delete=models.CASCADE)
+    carro                   = models.ForeignKey(CarroCompra, on_delete=models.DO_NOTHING)
+    total                   = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
+    envio                   = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
+    activo                  = models.BooleanField(default=True)
 
-    estado              = models.CharField(max_length=2, choices=parOrden['estado_orden'],default=parToca['pendiente'])
-    fecha_actu          = models.DateTimeField(auto_now=True)
-    fecha_crea          = models.DateTimeField(auto_now_add=True)
+    estado                  = models.CharField(max_length=2, choices=parOrden['estado_orden'],default=parToca['pendiente'])
+    fecha_actu              = models.DateTimeField(auto_now=True)
+    fecha_crea              = models.DateTimeField(auto_now_add=True)
 
-    objects             = OrdenCompraManager()
+    objects                 = OrdenCompraManager()
 
     def __str__(self):
         return self.orden_id

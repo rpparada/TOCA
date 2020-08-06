@@ -5,6 +5,7 @@ from orden.models import OrdenCompra
 from tocata.models import Tocata
 from facturacion.models import FacturacionProfile
 from lugar.models import Region, Comuna
+from direccion.models import Direccion
 
 from direccion.forms import DireccionForm
 
@@ -48,19 +49,28 @@ def checkout_home(request):
 
     ingreso_form = IngresarForm()
     direccion_form = DireccionForm()
-    facturacion_direccion_form = DireccionForm()
+
+    direccion_envio_id = request.session.get('direccion_envio_id', None)
+    direccion_facturacion_id = request.session.get('direccion_facturacion_id', None)
 
     fact_profile, fact_profile_created = FacturacionProfile.objects.new_or_get(request)
 
     if fact_profile is not None:
         orden_obj, orden_obj_created = OrdenCompra.objects.new_or_get(fact_profile, carro_obj)
+        if direccion_envio_id:
+            orden_obj.direccion_envio = Direccion.objects.get(id=direccion_envio_id)
+            del request.session['direccion_envio_id']
+        if direccion_facturacion_id:
+            orden_obj.direccion_facturacion = Direccion.objects.get(id=direccion_facturacion_id)
+            del request.session['direccion_facturacion_id']
+        if direccion_envio_id or direccion_facturacion_id:
+            orden_obj.save()
 
     context = {
         'object': orden_obj,
         'fact_profile': fact_profile,
         'ingreso_form': ingreso_form,
         'direccion_form': direccion_form,
-        'facturacion_direccion_form': facturacion_direccion_form
     }
     return render(request, 'carro/checkout.html', context)
 

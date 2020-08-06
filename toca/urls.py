@@ -28,6 +28,7 @@ urlpatterns = [
     path('cobro/', include('cobro.urls')),
     path('busqueda/', include('busqueda.urls')),
     path('carro/', include('carro.urls')),
+    path('direccion/', include('direccion.urls')),
     path('admin/', admin.site.urls),
     #path('carro/', views.carro_home, name='carro')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
