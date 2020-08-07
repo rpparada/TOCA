@@ -1,0 +1,24 @@
+<div class="col-lg-12">
+  <h4>Usar Direcciones Previas</h4>
+</div>
+<form action="{{ action_url }}" method="POST" class="sep-top-md">
+  {% csrf_token %}
+  {% if next_url %}
+  <input hidden type="text" name="next" value="{{ next_url }}">
+  {% endif %}
+  {% if tipo_dir %}
+  <input hidden type="text" name="tipo_dir" value="{{ tipo_dir }}">
+  {% endif %}
+
+  {% for direccion in direcciones %}
+  <div class="form-check">
+      <input class="form-check-input" name="dir_envio" id="direccion-{{ direccion.id }}" value="{{ direccion.id }}" type="radio">
+      <label class="form-check-label" for="direccion-{{ direccion.id }}">
+          {{ direccion.nombre_calle }}
+      </label><br>
+  </div>
+  {% endfor %}
+  <div class="col-lg-6 form-group">
+    <button type="submit" name="button" class="btn icon-left float-left mt-3">Seleccionar</button>
+  </div>
+</form>

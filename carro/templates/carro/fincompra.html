@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load thumbnail %}
+{% block title %} | MIS TOCATAS{% endblock %}
+{% block content %}
+{% include 'partials/_alerts.html' %}
+
+<!-- SHOP CHECKOUT COMPLETED -->
+<section id="shop-checkout-completed">
+    <div class="container">
+        <div class="p-t-10 m-b-20 text-center">
+            <div class="text-center">
+                <h3>Felicitaciones! Tu compra se ha completado con exito.</h3>
+                <p>Este es el numero de orden de tu compra:. Puedes
+                    <a href="" class="text-underline">
+                        <mark>ver tu orden</mark>
+                    </a> en la pagina de tu cuenta.</p>
+            </div>
+            <a href="{% url 'tocatas' %}" class="btn icon-left m-r-10"><span>Seguir Comprando</span></a><a class="btn icon-left" href="#"><span>Mis Compras</span></a>
+        </div>
+    </div>
+</section>
+<!-- end: SHOP CHECKOUT COMPLETED -->
+
+<!-- DELIVERY INFO -->
+<section class="p-t-40 p-b-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="icon-box effect small clean">
+                    <div class="icon">
+                        <a href="#"><i class="fa fa-gift"></i></a>
+                    </div>
+                    <h3>Free shipping on orders $60+</h3>
+                    <p>Order more than 60$ and you will get free shippining Worldwide. More info.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="icon-box effect small clean">
+                    <div class="icon">
+                        <a href="#"><i class="fa fa-plane"></i></a>
+                    </div>
+                    <h3>Worldwide delivery</h3>
+                    <p>We deliver to the following countries: USA, Canada, Europe, Australia</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="icon-box effect small clean">
+                    <div class="icon">
+                        <a href="#"><i class="fa fa-history"></i></a>
+                    </div>
+                    <h3>60 days money back guranty!</h3>
+                    <p>Not happy with our product, feel free to return it, we will refund 100% your money!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

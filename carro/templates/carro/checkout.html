@@ -21,10 +21,29 @@
         <div class="shop-cart">
             {% url 'checkout_direccion_create_view' as checkout_direccion_create_view_url %}
             {% if not object.direccion_envio %}
-
-              {% include 'snippets/form.html' with form=direccion_form tipo_dir='envio' next_url=request.build_absolute_uri action_url=checkout_direccion_create_view_url %}
+            <div class="row">
+                <div class="col-lg-6">
+                  {% include 'snippets/form.html' with form=direccion_form tipo_dir='envio' next_url=request.build_absolute_uri action_url=checkout_direccion_create_view_url %}
+                </div>
+                {% if direccion_qs.exists %}
+                <div class="col-lg-6">
+                  {% url 'checkout_direccion_reuse_view' as checkout_direccion_reuse_view_url %}
+                  {% include 'snippets/direcciones.html' with direcciones=direccion_qs tipo_dir='envio' next_url=request.build_absolute_uri action_url=checkout_direccion_reuse_view_url %}
+                </div>
+                {% endif %}
+            </div>
             {% elif not object.direccion_facturacion %}
-              {% include 'snippets/form.html' with form=direccion_form tipo_dir='facturacion' next_url=request.build_absolute_uri action_url=checkout_direccion_create_view_url %}
+            <div class="row">
+              <div class="col-lg-6">
+                {% include 'snippets/form.html' with form=direccion_form tipo_dir='facturacion' next_url=request.build_absolute_uri action_url=checkout_direccion_create_view_url %}
+              </div>
+              {% if direccion_qs.exists %}
+              <div class="col-lg-6">
+                {% url 'checkout_direccion_reuse_view' as checkout_direccion_reuse_view_url %}
+                {% include 'snippets/direcciones.html' with direcciones=direccion_qs tipo_dir='facturacion' next_url=request.build_absolute_uri action_url=checkout_direccion_reuse_view_url %}
+              </div>
+              {% endif %}
+            </div>
             {% else %}
 
             <div class="seperator"><i class="fa fa-credit-card"></i>
@@ -32,6 +51,12 @@
             <div class="row">
                 <div class="col-lg-6">
                     <h4 class="upper">Tu Orden: {{ object.orden_id }}</h4>
+                    <p>direccion_envio: {{object.direccion_envio.get_address }}</p>
+                    <p>direccion_facturacion: {{object.direccion_facturacion.get_address }}</p>
+                    <p>total: {{object.total }}</p>
+                    <p>envio: {{ object.envio }}</p>
+                    <p>total carro: {{ object.carro.total }}</p>
+                    <p>items {% for item in object.carro.tocata.all %}{{item}}{% if not forloop.ladst %},{% endif %}{% endfor %}</p>
                     <div class="table table-sm table-striped table-responsive table table-bordered table-responsive">
                         <table class="table m-b-0">
                             <thead>

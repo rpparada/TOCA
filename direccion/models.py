@@ -22,3 +22,11 @@ class Direccion(models.Model):
 
     def __str__(self):
         return str(self.facturacion_profile)
+
+    def get_address(self):
+        return '{nombre}\n{numero}\n{region}\n{comuna}'.format(
+            nombre = self.nombre_calle,
+            numero = self.numero,
+            region = self.region,
+            comuna = self.comuna
+        )

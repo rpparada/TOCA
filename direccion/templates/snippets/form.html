@@ -1,46 +1,45 @@
 <form id="formtocheck" action="{% if action_url %}{{action_url}}{% endif %}" method="POST" class="sep-top-md" data-ciudad-url-agregar="{% url 'ajax_load_comunas_agregar_test' %}">
   {% csrf_token %}
-    <div class="row">
-      <!-- Billing & Shipping Address -->
-        <div class="col-lg-6 no-padding">
-            <div class="row">
-                {% if next_url %}
-                <input hidden type="text" name="next" value="{{ next_url }}">
-                {% endif %}
-                {% if tipo_dir %}
-                <input hidden type="text" name="tipo_dir" value="{{ tipo_dir }}">
-                {% endif %}
-                <div class="col-lg-12">
-                    <h4 class="upper">Billing & Shipping Address</h4>
-                </div>
-                <div class="col-lg-8 form-group">
-                    <label class="sr-only">{{ form.nombre_calle.label }}</label>
-                    {{ form.nombre_calle }}
-                </div>
-                <div class="col-lg-4 form-group">
-                    <label class="sr-only">{{ form.numero.label }}</label>
-                    {{ form.numero }}
-                </div>
-                <div class="col-lg-6 form-group">
-                    <label class="sr-only">{{ form.region.label }}</label>
-                    {{ form.region }}
-                </div>
-                <div class="col-lg-6 form-group">
-                    <label class="sr-only">{{ form.comuna.label }}</label>
-                    {{ form.comuna }}
-                </div>
-                <div class="col-lg-6 form-group">
-                    <label class="sr-only">{{ form.departamento.label }}</label>
-                    {{ form.departamento }}
-                </div>
-                <div class="col-lg-6 form-group">
-                    <label class="sr-only">{{ form.otros.label }}</label>
-                    {{ form.otros }}
-                </div>
-                <div class="col-lg-6 form-group">
-                  <button type="submit" name="button" class="btn icon-left float-left mt-3">Agregar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+  <div class="row">
+      <div class="col-lg-12">
+          {% if tipo_dir == 'envio' %}
+          <h4 class="upper">Envio</h4>
+          {% elif tipo_dir == 'facturacion' %}
+          <h4 class="upper">Facturacion</h4>
+          {% endif %}
+      </div>
+      {% if next_url %}
+      <input hidden type="text" name="next" value="{{ next_url }}">
+      {% endif %}
+      {% if tipo_dir %}
+      <input hidden type="text" name="tipo_dir" value="{{ tipo_dir }}">
+      {% endif %}
+      <div class="col-lg-8 form-group">
+          <label class="sr-only">{{ form.nombre_calle.label }}</label>
+          {{ form.nombre_calle }}
+      </div>
+      <div class="col-lg-4 form-group">
+          <label class="sr-only">{{ form.numero.label }}</label>
+          {{ form.numero }}
+      </div>
+      <div class="col-lg-6 form-group">
+          <label class="sr-only">{{ form.region.label }}</label>
+          {{ form.region }}
+      </div>
+      <div class="col-lg-6 form-group">
+          <label class="sr-only">{{ form.comuna.label }}</label>
+          {{ form.comuna }}
+      </div>
+      <div class="col-lg-6 form-group">
+          <label class="sr-only">{{ form.departamento.label }}</label>
+          {{ form.departamento }}
+      </div>
+      <div class="col-lg-6 form-group">
+          <label class="sr-only">{{ form.otros.label }}</label>
+          {{ form.otros }}
+      </div>
+      <div class="col-lg-6 form-group">
+        <button type="submit" name="button" class="btn icon-left float-left mt-3">Agregar</button>
+      </div>
+  </div>
 </form>

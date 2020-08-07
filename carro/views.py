@@ -55,7 +55,10 @@ def checkout_home(request):
 
     fact_profile, fact_profile_created = FacturacionProfile.objects.new_or_get(request)
 
+    direccion_qs = None
     if fact_profile is not None:
+        if request.user.is_authenticated:
+            direccion_qs = Direccion.objects.filter(facturacion_profile=fact_profile)
         orden_obj, orden_obj_created = OrdenCompra.objects.new_or_get(fact_profile, carro_obj)
         if direccion_envio_id:
             orden_obj.direccion_envio = Direccion.objects.get(id=direccion_envio_id)
@@ -72,16 +75,20 @@ def checkout_home(request):
             orden_obj.mark_pagado()
             request.session['carro_tocatas'] = 0
             del request.session['carro_id']
-            return redirect('compraexitosa')
-
+            return redirect('checkout_complete')
 
     context = {
         'object': orden_obj,
         'fact_profile': fact_profile,
         'ingreso_form': ingreso_form,
         'direccion_form': direccion_form,
+        'direccion_qs': direccion_qs,
     }
     return render(request, 'carro/checkout.html', context)
+
+def checkout_complete_view(request):
+    return render(request, 'carro/fincompra.html', {})
+
 
 def carga_comunas_agregar(request):
 
