@@ -45,6 +45,40 @@
   <script src="{% static 'js/functions.js' %}"></script>
   <script src="{% static 'js/custom.js' %}"></script>
 
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var tocataForm = $(".form-tocata-ajax");
+      tocataForm.submit(function(event){
+        event.preventDefault();
+        var thisForm = $(this);
+        var actionEndpoint = thisForm.attr("action");
+        var httpMethod = thisForm.attr("method");
+        var formData = thisForm.serialize();
+
+        $.ajax({
+          url: actionEndpoint,
+          method: httpMethod,
+          data: formData,
+          success: function(data){
+            var submitSpan = thisForm.find(".submit-span")
+            if (data.added){
+              submitSpan.html("<button type='submit' class='btn btn-b'>Quitar del Carro</button>")
+            } else {
+              submitSpan.html("<button type='submit' class='btn btn-b'>Agregar al Carro</button>")
+            }
+            var navbarcarro = $(".navbar-carro-numitems")
+            navbarcarro.text(data.carroNumItem)
+          },
+          error: function(errorData){
+            console.log("error");
+            console.log(errorData);
+          }
+        })
+
+      })
+    })
+  </script>
+
 
 </body>
 </html>

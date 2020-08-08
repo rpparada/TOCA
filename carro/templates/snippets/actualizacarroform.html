@@ -1,0 +1,11 @@
+<form class="form-tocata-ajax" action="{% url 'actualizarcarro' %}" method="POST" class="form">
+  {% csrf_token %}
+  <input type="hidden" name="tocata_id" value="{{ tocata.id }}">
+  <span class="submit-span">
+    {% if tocata in carro.tocata.all %}
+      <button type="submit" class="btn btn-b">Quitar del Carro</button>
+    {% else %}
+      <button type="submit" class="btn btn-b">Agregar al Carro</button>
+    {% endif %}
+  </span>
+</form>

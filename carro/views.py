@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 
 from .models import CarroCompra
 from orden.models import OrdenCompra
@@ -30,14 +31,23 @@ def carro_actualizar(request):
         except Tocata.DoesNotExist:
             # Mensaje de Error al usuario
             return redirect('carro')
-
         carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
         if tocata in carro_obj.tocata.all():
             carro_obj.tocata.remove(tocata)
+            added = False
         else:
             carro_obj.tocata.add(tocata)
+            added = True
 
         request.session['carro_tocatas'] = carro_obj.tocata.count()
+
+        if request.is_ajax():
+            json_data = {
+                'added': added,
+                'removed': not added,
+                'carroNumItem': carro_obj.tocata.count()
+            }
+            return JsonResponse(json_data)
 
     return redirect('carro')
 

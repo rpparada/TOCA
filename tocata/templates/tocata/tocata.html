@@ -5,9 +5,7 @@
 {% block content %}
 {% include 'partials/_alerts.html' %}
 
-<!--Modal seleccion -->
-{% include 'snippets/actualizacarro.html' with tocata=object carr=carro %}
-<!-- end: Modal -->
+
 
 <!-- SECTION IMAGE FULLSCREEN -->
 <section class="text-center fullscreen p-t-200 p-b-100 text-light" data-bg-image="{{ object.flayer_1920_1280.url }}">
@@ -19,11 +17,9 @@
         </div>
         <div class="countdown medium rectangle countdown-light m-b-40" data-countdown="{{ object.fecha|date:"Y/m/d"}} {{ object.hora|date:"H:i:s" }}" data-animate="fadeInUp"></div>
         <div data-animate-delay="600" data-animate="fadeInUp">
-            <p class="lead">Mobile World Congress (MWC) is the world’s largest annual gathering for the mobile industry, organised by the GSMA, and held in the Mobile World Capital: Barcelona, Spain.
-
-            </p>
+            <p class="lead">{{ object.descripción }}</p>
             {% if object.estado == 'PU' %}
-            <a href="" data-target="#modalag{{object.id}}" data-toggle="modal" class="btn">COMPRA TU ENTREDA</a>
+            {% include 'snippets/actualizacarroform.html' with carr=carro %}
             {% endif %}
         </div>
     </div>
