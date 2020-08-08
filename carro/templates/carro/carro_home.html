@@ -7,12 +7,13 @@
 {% include 'partials/_alerts.html' %}
 
 {% if carro.tocata.exists %}
+
 <!-- SHOP CART -->
 <section id="shop-cart">
     <div class="container">
         <div class="shop-cart">
             <div class="table table-sm table-striped table-responsive">
-                <table class="table">
+                <table class="table carro-table">
                     <thead>
                         <tr>
                             <th class="cart-product-remove"></th>
@@ -23,12 +24,12 @@
                             <th class="cart-product-subtotal">Total</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="carro-body">
                         {% for tocata in carro.tocata.all %}
                         <tr>
-                          <td class="cart-product-remove">
-                              <a href=""><i class="fa fa-times"></i></a>
-                          </td>
+                            <td class="cart-product-remove">
+                              {% include 'snippets/actualizacarroform.html' with carr=carro %}
+                            </td>
                             <td class="cart-product-thumbnail">
                                 <a href="{{ tocata.get_absolute_url }}">
                                     <img src="{{ tocata.flayer_1920_1280.url }}" alt="{{ item.tocata.nombre }}">

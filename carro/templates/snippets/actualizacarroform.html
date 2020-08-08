@@ -1,4 +1,4 @@
-<form class="form-tocata-ajax" action="{% url 'actualizarcarro' %}" method="POST" class="form">
+<form class="form-tocata-ajax" action="{% url 'actualizarcarro' %}" data-endpoint="{% url 'actualizarcarro' %}" method="POST" class="form">
   {% csrf_token %}
   <input type="hidden" name="tocata_id" value="{{ tocata.id }}">
   <span class="submit-span">

@@ -51,7 +51,8 @@
       tocataForm.submit(function(event){
         event.preventDefault();
         var thisForm = $(this);
-        var actionEndpoint = thisForm.attr("action");
+        //var actionEndpoint = thisForm.attr("action");
+        var actionEndpoint = thisForm.attr("data-endpoint");
         var httpMethod = thisForm.attr("method");
         var formData = thisForm.serialize();
 
@@ -68,14 +69,37 @@
             }
             var navbarcarro = $(".navbar-carro-numitems")
             navbarcarro.text(data.carroNumItem)
+            if(window.location.href.indexOf("carro") != -1) {
+              actualizaCarro()
+            }
           },
           error: function(errorData){
             console.log("error");
             console.log(errorData);
           }
         })
-
       })
+
+      function actualizaCarro(){
+        var carroTable = $(".carro-table");
+        var carroBody = carroTable.find(".carro-body");
+
+        var updateCarroUrl = "/api/carro";
+        var updateCarroMethod = "GET";
+        var data = {};
+        $.ajax({
+          url: updateCarroUrl,
+          method: updateCarroMethod,
+          data: data,
+          success: function(data){
+            console.log("Success");
+          },
+          error: function(errorData){
+            console.log("Error");
+            console.log(errorData);
+          }
+        })
+      }
     })
   </script>
 
