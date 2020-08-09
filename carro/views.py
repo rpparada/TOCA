@@ -13,6 +13,21 @@ from direccion.forms import DireccionForm
 from usuario.forms import IngresarForm
 
 # Create your views here.
+def carro_detalle_api_view(request):
+
+    carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
+    tocatas = [{
+        'nombre': x.nombre,
+        'costo': x.costo
+    } for x in carro_obj.tocata.all()]
+
+    carro_data = {
+        'tocatas': tocatas,
+        'subtotal': carro_obj.subtotal,
+        'total': carro_obj.total
+    }
+    return JsonResponse(carro_data)
+
 def carro_home(request):
 
     carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)

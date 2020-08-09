@@ -82,9 +82,16 @@
 
       function actualizaCarro(){
         var carroTable = $(".carro-table");
-        var carroBody = carroTable.find(".carro-body");
+        var carroTableRes = $(".carro-table-res");
 
-        var updateCarroUrl = "/api/carro";
+        var carroBody = carroTable.find(".carro-body");
+        var tocataRows = carroBody.find(".carro-tocata")
+
+        var carroResumen = carroTableRes.find(".carro-resumen");
+
+        var currentUrl = window.location.href
+
+        var updateCarroUrl = "api/carro";
         var updateCarroMethod = "GET";
         var data = {};
         $.ajax({
@@ -93,6 +100,18 @@
           data: data,
           success: function(data){
             console.log("Success");
+            console.log(data);
+            if (data.tocatas.length > 0) {
+              tocataRows.html(" ")
+              $.each(data.tocatas, function(index, value){
+                carroBody.prepend("<td class=\"cart-product-remove\"></td><td class=\"cart-product-name\"><span>"+value.nombre+"</span></td><td class=\"cart-product-subtotal\"><span class=\"amount\">$"+value.costo+"</span></td>")
+              })
+              carroResumen.find(".carro-subtotal").text(data.subtotal)
+              carroResumen.find(".carro-total").text(data.total)
+            } else {
+              window.location.href = currentUrl
+            }
+
           },
           error: function(errorData){
             console.log("Error");

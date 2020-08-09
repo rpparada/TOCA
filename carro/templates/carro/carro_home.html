@@ -18,42 +18,23 @@
                         <tr>
                             <th class="cart-product-remove"></th>
                             <th class="cart-product-thumbnail">Tocata</th>
-                            <th class="cart-product-name">Descripción</th>
-                            <th class="cart-product-price">Precio Unitario</th>
-                            <th class="cart-product-quantity">Cantidad</th>
-                            <th class="cart-product-subtotal">Total</th>
+                            <th class="cart-product-subtotal">Precio</th>
                         </tr>
                     </thead>
                     <tbody class="carro-body">
-                        {% for tocata in carro.tocata.all %}
-                        <tr>
-                            <td class="cart-product-remove">
-                              {% include 'snippets/actualizacarroform.html' with carr=carro %}
-                            </td>
-                            <td class="cart-product-thumbnail">
-                                <a href="{{ tocata.get_absolute_url }}">
-                                    <img src="{{ tocata.flayer_1920_1280.url }}" alt="{{ item.tocata.nombre }}">
-                                </a>
-                                <div class="cart-product-thumbnail-name">{{ tocata.nombre }}</div>
-                            </td>
-                            <td class="cart-product-description">
-                                <p><span>{{ tocata.artista.nombre }}</span>
-                                    <span>{{ tocata.region }}</span>
-                                    <span>{{ tocata.comuna }}</span>
-                                    <span>{{ tocata.fecha }} {{ tocata.hora }}</span>
-                                </p>
-                            </td>
-                            <td class="cart-product-price">
-                                <span class="amount">${{ tocata.costo|floatformat|intcomma }}</span>
-                            </td>
-                            <td class="cart-product-quantity">
-                                <span>1</span>
-                            </td>
-                            <td class="cart-product-subtotal">
-                                <span class="amount">${{ tocata.costo|floatformat|intcomma }}</span>
-                            </td>
-                        </tr>
-                        {% endfor %}
+                          {% for tocata in carro.tocata.all %}
+                          <tr class="carro-tocata">
+                              <td class="cart-product-remove">
+                                {% include 'snippets/actualizacarroform.html' with carr=carro %}
+                              </td>
+                              <td class="cart-product-name">
+                                <span>{{ tocata.nombre }}</span>
+                              </td>
+                              <td class="cart-product-subtotal">
+                                  <span class="amount">${{ tocata.costo|floatformat|intcomma }}</span>
+                              </td>
+                          </tr>
+                          {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -62,14 +43,14 @@
                 <div class="col-lg-6 p-r-10 ">
                     <div class="table-responsive">
                         <h4>Cart Subtotal</h4>
-                        <table class="table">
-                            <tbody>
+                        <table class="table carro-table-res">
+                            <tbody class="carro-resumen">
                                 <tr>
                                     <td class="cart-product-name">
                                         <strong>Subtotal Carro</strong>
                                     </td>
                                     <td class="cart-product-name text-right">
-                                        <span class="amount">${{ carro.total|floatformat|intcomma }}</span>
+                                        <span class="amount">$<span class="carro-subtotal">{{ carro.total|floatformat|intcomma }}</span></span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -85,7 +66,7 @@
                                         <strong>Total</strong>
                                     </td>
                                     <td class="cart-product-name text-right">
-                                        <span class="amount color lead"><strong>${{ carro.total|floatformat|intcomma }}</strong></span>
+                                        <span class="amount color lead"><strong>$<span class="carro-total">{{ carro.total|floatformat|intcomma }}</span></strong></span>
                                     </td>
                                 </tr>
                             </tbody>
