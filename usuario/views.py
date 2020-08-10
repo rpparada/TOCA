@@ -84,6 +84,8 @@ def registrarArt(request):
         user = auth.authenticate(username=username, password=password)
         auth.login(request, user)
 
+        request.session['es_artista'] = 'S'
+
         messages.success(request, 'Artista registrado exitosamente')
         return redirect('index')
 
@@ -154,6 +156,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
+        request.session['es_artista'] = 'N'
 
         return render(request, 'usuario/activacion_cuenta_completa.html')
     else:
