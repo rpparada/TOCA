@@ -213,3 +213,107 @@ $("#formtocheck").submit(function(){
 
   return isFormValid;
 });
+
+$(document).ready(function(){
+
+  // Busqueda actomatica
+  var searchForm = $(".search-form");
+  var searchInput = searchForm.find("[name='q']");
+  var searchBtn = searchForm.find("[type='submit']")
+  var typingTimer;
+  var typingInterval = 500;
+  searchInput.keyup(function(event){
+    clearTimeout(typingTimer)
+    typingTimer = setTimeout(ejecutaBusqueda,typingInterval);
+  })
+  searchInput.keydown(function(event){
+    clearTimeout(typingTimer)
+  })
+
+  function ejecutaBusqueda(){
+    var query = searchInput.val();
+    window.location.href="/busqueda/?q="+query
+  }
+
+  // Agregar o quitar tocatas de carro y actualizar
+  var tocataForm = $(".form-tocata-ajax");
+  tocataForm.submit(function(event){
+    event.preventDefault();
+    var thisForm = $(this);
+    //var actionEndpoint = thisForm.attr("action");
+    var actionEndpoint = thisForm.attr("data-endpoint");
+    var httpMethod = thisForm.attr("method");
+    var formData = thisForm.serialize();
+
+    $.ajax({
+      url: actionEndpoint,
+      method: httpMethod,
+      data: formData,
+      success: function(data){
+        var submitSpan = thisForm.find(".submit-span")
+        if (data.added){
+          submitSpan.html("<button type='submit' class='btn btn-b'>Quitar del Carro</button>")
+        } else {
+          submitSpan.html("<button type='submit' class='btn btn-b'>Agregar al Carro</button>")
+        }
+        var navbarcarro = $(".navbar-carro-numitems")
+        navbarcarro.text(data.carroNumItem)
+        if(window.location.href.indexOf("carro") != -1) {
+          actualizaCarro()
+        }
+      },
+      error: function(errorData){
+        $.alert({
+          title: "TI Error",
+          content: "Algo paso",
+          theme: "modern"
+        })
+      }
+    })
+  })
+
+  function actualizaCarro(){
+    var carroTable = $(".carro-table");
+    var carroTableRes = $(".carro-table-res");
+
+    var carroBody = carroTable.find(".carro-body");
+    var tocataRows = carroBody.find(".carro-tocata")
+
+    var carroResumen = carroTableRes.find(".carro-resumen");
+
+    var currentUrl = window.location.href
+
+    var updateCarroUrl = "api/carro";
+    var updateCarroMethod = "GET";
+    var data = {};
+    $.ajax({
+      url: updateCarroUrl,
+      method: updateCarroMethod,
+      data: data,
+      success: function(data){
+        var formQuitarTocataCarro = $(".form-quitar-carro-home")
+        if (data.tocatas.length > 0) {
+          tocataRows.html(" ")
+          $.each(data.tocatas, function(index, value){
+            var nuevoCarroTocataQuitar = formQuitarTocataCarro.clone()
+            nuevoCarroTocataQuitar.css("display","block")
+            nuevoCarroTocataQuitar.find(".carro-tocata-id").val(value.id)
+            carroBody.prepend("<tr class=\"carro-tocata\"><td class=\"cart-product-remove\">"+nuevoCarroTocataQuitar.html()+"</td><td class=\"cart-product-name\"><span><a href='"+value.url+"'>"+value.nombre+"</a></span></td><td class=\"cart-product-subtotal\"><span class=\"amount\">$"+value.costo+"</span></td></tr>")
+          })
+          carroResumen.find(".carro-subtotal").text(data.subtotal)
+          carroResumen.find(".carro-total").text(data.total)
+        } else {
+          window.location.href = currentUrl
+        }
+
+      },
+      error: function(errorData){
+        $.alert({
+          title: "TI Error",
+          content: "Algo paso",
+          theme: "modern"
+        })
+      }
+    })
+  }
+})

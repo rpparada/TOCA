@@ -64,7 +64,8 @@ def carro_actualizar(request):
                 'removed': not added,
                 'carroNumItem': carro_obj.tocata.count()
             }
-            return JsonResponse(json_data)
+            #return JsonResponse({'Mensaje Error':'Error 400'}, status=400)
+            return JsonResponse(json_data, status=200)
 
     return redirect('carro')
 
