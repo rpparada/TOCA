@@ -25,10 +25,10 @@
                           {% for tocata in carro.tocata.all %}
                           <tr class="carro-tocata">
                               <td class="cart-product-remove">
-                                {% include 'snippets/actualizacarroform.html' with carr=carro %}
+                                {% include 'carro/snippets/quitartocatacarro.html' with tocata_id=tocata.id %}
                               </td>
                               <td class="cart-product-name">
-                                <span>{{ tocata.nombre }}</span>
+                                <span><a href="{{ tocata.get_absolute_url }}">{{ tocata.nombre }}</a></span>
                               </td>
                               <td class="cart-product-subtotal">
                                   <span class="amount">${{ tocata.costo|floatformat|intcomma }}</span>
@@ -78,6 +78,9 @@
         </div>
     </div>
 </section>
+<div class="form-quitar-carro-home" style="display:none">
+  {% include 'carro/snippets/quitartocatacarro.html' %}
+</div>
 <!-- end: SHOP CART -->
 {% else %}
 <!-- SHOP CART EMPTY -->

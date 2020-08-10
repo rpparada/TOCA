@@ -18,9 +18,7 @@
         <div class="countdown medium rectangle countdown-light m-b-40" data-countdown="{{ object.fecha|date:"Y/m/d"}} {{ object.hora|date:"H:i:s" }}" data-animate="fadeInUp"></div>
         <div data-animate-delay="600" data-animate="fadeInUp">
             <p class="lead">{{ object.descripción }}</p>
-            {% if object.estado == 'PU' %}
-            {% include 'snippets/actualizacarroform.html' with carr=carro %}
-            {% endif %}
+            {% include 'carro/snippets/actualizacarroform.html' with instace=tocata carro=carro %}
         </div>
     </div>
 

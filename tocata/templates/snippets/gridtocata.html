@@ -13,6 +13,7 @@
             </div>
             <div class="product-reviews">Cuando: {{ instance.fecha }} {{ instance.hora }}
             </div>
+              {% include 'carro/snippets/actualizacarroform.html' with instance=instance carro=carro %}
         </div>
     </div>
 </div>

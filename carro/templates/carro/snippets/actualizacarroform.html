@@ -1,8 +1,8 @@
 <form class="form-tocata-ajax" action="{% url 'actualizarcarro' %}" data-endpoint="{% url 'actualizarcarro' %}" method="POST" class="form">
   {% csrf_token %}
-  <input type="hidden" name="tocata_id" value="{{ tocata.id }}">
+  <input type="hidden" name="tocata_id" value="{{ instance.id }}">
   <span class="submit-span">
-    {% if tocata in carro.tocata.all %}
+    {% if instance in carro.tocata.all %}
       <button type="submit" class="btn btn-b">Quitar del Carro</button>
     {% else %}
       <button type="submit" class="btn btn-b">Agregar al Carro</button>

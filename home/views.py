@@ -12,6 +12,7 @@ from artista.models import Artista
 from usuario.models import Usuario
 from home.models import Testimonio
 from cobro.models import Carro
+from carro.models import CarroCompra
 
 from toca.parametros import parToca
 
@@ -45,12 +46,16 @@ def index(request):
     testimonios_art = testimonios.filter(objetivo=parToca['artistas'])[:3]
     testimonios_usu = testimonios.filter(objetivo=parToca['usuarios'])[:3]
 
+    carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
+
     context = {
         # Tocatas y Tocatas Abiertas nuevas
         'tocatas': tocatas,
         'tocatasabiertas': tocatasabiertas,
         # Artistas
         'artistas': artistas,
+        # Carro
+        'carro': carro_obj,
         # Testimonios
         'testimonios_art': testimonios_art,
         'testimonios_usu': testimonios_usu,

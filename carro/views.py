@@ -17,6 +17,8 @@ def carro_detalle_api_view(request):
 
     carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
     tocatas = [{
+        'id': x.id,
+        'url': x.get_absolute_url(),
         'nombre': x.nombre,
         'costo': x.costo
     } for x in carro_obj.tocata.all()]

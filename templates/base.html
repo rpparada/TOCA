@@ -120,12 +120,14 @@
           method: updateCarroMethod,
           data: data,
           success: function(data){
-            console.log("Success");
-            console.log(data);
+            var formQuitarTocataCarro = $(".form-quitar-carro-home")
             if (data.tocatas.length > 0) {
               tocataRows.html(" ")
               $.each(data.tocatas, function(index, value){
-                carroBody.prepend("<td class=\"cart-product-remove\"></td><td class=\"cart-product-name\"><span>"+value.nombre+"</span></td><td class=\"cart-product-subtotal\"><span class=\"amount\">$"+value.costo+"</span></td>")
+                var nuevoCarroTocataQuitar = formQuitarTocataCarro.clone()
+                nuevoCarroTocataQuitar.css("display","block")
+                nuevoCarroTocataQuitar.find(".carro-tocata-id").val(value.id)
+                carroBody.prepend("<tr class=\"carro-tocata\"><td class=\"cart-product-remove\">"+nuevoCarroTocataQuitar.html()+"</td><td class=\"cart-product-name\"><span><a href='"+value.url+"'>"+value.nombre+"</a></span></td><td class=\"cart-product-subtotal\"><span class=\"amount\">$"+value.costo+"</span></td></tr>")
               })
               carroResumen.find(".carro-subtotal").text(data.subtotal)
               carroResumen.find(".carro-total").text(data.total)

@@ -31,7 +31,9 @@ class TocataListView(ListView):
         orden = self.request.GET.get('orden','fecha')
         filtro = self.request.GET.get('filtro','todas')
         direccion = self.request.GET.get('direccion','asc')
+        carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(self.request)
 
+        context['carro'] = carro_obj
         context['orden'] = orden
         context['filtro'] = filtro
         context['direccion'] = direccion
