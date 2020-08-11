@@ -1,0 +1,12 @@
+python manage.py dumpdata artista --format json --indent 4 > artista/fixtures/artista.json
+python manage.py dumpdata busqueda --format json --indent 4 > busqueda/fixtures/busqueda.json
+python manage.py dumpdata carro --format json --indent 4 > carro/fixtures/carro.json
+python manage.py dumpdata cobro --format json --indent 4 > cobro/fixtures/cobro.json
+python manage.py dumpdata cuentas --format json --indent 4 > cuentas/fixtures/cuentas.json
+python manage.py dumpdata direccion --format json --indent 4 > direccion/fixtures/direccion.json
+python manage.py dumpdata facturacion --format json --indent 4 > facturacion/fixtures/facturacion.json
+python manage.py dumpdata home --format json --indent 4 > home/fixtures/home.json
+python manage.py dumpdata lugar --format json --indent 4 > lugar/fixtures/lugar.json
+python manage.py dumpdata orden --format json --indent 4 > orden/fixtures/orden.json
+python manage.py dumpdata tocata --format json --indent 4 > tocata/fixtures/tocata.json
+python manage.py dumpdata usuario --format json --indent 4 > usuario/fixtures/usuario.json

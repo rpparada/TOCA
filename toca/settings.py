@@ -68,7 +68,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
 )
 
-#AUTH_USER_MODEL = 'cuentas.User'
+AUTH_USER_MODEL = 'cuentas.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

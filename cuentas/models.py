@@ -17,8 +17,8 @@ class UserManager(BaseUserManager):
             email = self.normalize_email(email)
         )
         user_obj.set_password(password)
-        user_obj.is_staff = is_staff
-        user_obj.is_admin = is_admin
+        user_obj.staff = is_staff
+        user_obj.admin = is_admin
         user_obj.active = is_active
         user_obj.save(using=self._db)
         return user_obj
@@ -60,6 +60,12 @@ class User(AbstractBaseUser):
 
     def get_short_name(self):
         return self.email
+
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
 
     @property
     def is_staff(self):

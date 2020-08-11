@@ -1,0 +1,87 @@
+[
+{
+    "model": "orden.ordencompra",
+    "pk": 2,
+    "fields": {
+        "orden_id": "1YZNUC9ME0",
+        "facturacion_profile": null,
+        "direccion_envio": null,
+        "direccion_facturacion": null,
+        "carro": 2,
+        "total": "5010.00",
+        "envio": "0.00",
+        "activo": true,
+        "estado": "PE",
+        "fecha_actu": "2020-08-03T22:01:16.576Z",
+        "fecha_crea": "2020-08-03T22:01:16.562Z"
+    }
+},
+{
+    "model": "orden.ordencompra",
+    "pk": 3,
+    "fields": {
+        "orden_id": "6FON18D2C2",
+        "facturacion_profile": null,
+        "direccion_envio": null,
+        "direccion_facturacion": null,
+        "carro": 3,
+        "total": "5010.00",
+        "envio": "0.00",
+        "activo": true,
+        "estado": "PE",
+        "fecha_actu": "2020-08-03T22:21:23.563Z",
+        "fecha_crea": "2020-08-03T22:21:07.749Z"
+    }
+},
+{
+    "model": "orden.ordencompra",
+    "pk": 4,
+    "fields": {
+        "orden_id": "77DBN6H849",
+        "facturacion_profile": null,
+        "direccion_envio": null,
+        "direccion_facturacion": null,
+        "carro": 4,
+        "total": "5010.00",
+        "envio": "0.00",
+        "activo": true,
+        "estado": "PE",
+        "fecha_actu": "2020-08-03T22:38:10.270Z",
+        "fecha_crea": "2020-08-03T22:38:10.256Z"
+    }
+},
+{
+    "model": "orden.ordencompra",
+    "pk": 5,
+    "fields": {
+        "orden_id": "PGTNJIX5UH",
+        "facturacion_profile": null,
+        "direccion_envio": null,
+        "direccion_facturacion": null,
+        "carro": 5,
+        "total": "5010.00",
+        "envio": "0.00",
+        "activo": true,
+        "estado": "PE",
+        "fecha_actu": "2020-08-04T17:05:51.471Z",
+        "fecha_crea": "2020-08-03T22:38:32.913Z"
+    }
+},
+{
+    "model": "orden.ordencompra",
+    "pk": 6,
+    "fields": {
+        "orden_id": "8O828DWS1D",
+        "facturacion_profile": 2,
+        "direccion_envio": null,
+        "direccion_facturacion": null,
+        "carro": 7,
+        "total": "0.00",
+        "envio": "0.00",
+        "activo": true,
+        "estado": "PE",
+        "fecha_actu": "2020-08-10T14:46:16.435Z",
+        "fecha_crea": "2020-08-10T14:45:45.942Z"
+    }
+}
+]

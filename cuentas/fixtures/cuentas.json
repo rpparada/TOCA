@@ -1,0 +1,14 @@
+[
+{
+    "model": "cuentas.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$150000$mkb2vC1Sa8Ck$0WQhVvchJaQ4FoM6vCPZjVurMTPFyQ77X1LsHrOwgJs=",
+        "last_login": "2020-08-11T22:26:56.999Z",
+        "email": "rpparada@gmail.com",
+        "active": true,
+        "staff": true,
+        "admin": true
+    }
+}
+]
