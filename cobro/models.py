@@ -1,12 +1,13 @@
 from django.db import models
 
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from django.conf import settings
 
 from tocata.models import Tocata
 
 from toca.parametros import parToca, parCarro, parOrden, mediodepago
 
-
+User = settings.AUTH_USER_MODEL
 # Create your models here.
 class Orden(models.Model):
 

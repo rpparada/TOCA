@@ -1,0 +1,152 @@
+[
+{
+    "model": "tocata.tocata",
+    "pk": 22,
+    "fields": {
+        "artista": 4,
+        "usuario": 23,
+        "nombre": "NICOLE BUNOUT & SEBASTI\u00c1N LAY EN VIVO!!",
+        "slug": "nicole-bunout-sebastian-lay-en-vivo-nus5",
+        "lugar": 19,
+        "region": 13,
+        "comuna": 291,
+        "descripci\u00f3n": "LE DAMOS LA BIENVENIDA AL INVIERNO CON UN CONCIERTO DOBLE!! \r\n\r\nEl viernes 3 de julio a las 22\u00ba\u00ba hrs. en el Espacio Khuyay estar\u00e1 \r\nNicole Bunout compartiendo su disco \"Cris\u00e1lida\" en esta ocasi\u00f3n acompa\u00f1ada de Emmanuel Sowicz en guitarra,  \u00c1lvaro M. Carre\u00f1o en viol\u00edn y Sebasti\u00e1n G\u00f3mez Espinoza en contrabajo. Y Seba Lay mostrando material de sus \u00e1lbumes; \"Piedra sobre Piedra\", \"Volando por la vida\" y creaciones in\u00e9ditas.\r\n\r\nC\u00e1lidos sonidos.. en una c\u00e1lida noche para comenzar a invernar!!\r\nTodos invitados!!!\r\n\r\n(Entrada general $5.000)\r\nhttp://sebalay.com/\r\nhttp://nicolebunout.bandcamp.com",
+        "costo": "5000.00",
+        "fecha": "2020-08-08",
+        "hora": "22:00:00",
+        "asistentes_total": 0,
+        "asistentes_min": 20,
+        "asistentes_max": 30,
+        "flayer_original": "fotos/tocatas/2020/07/30/11407165_1104339922914883_4030845708491096408_n.jpg",
+        "flayer_1920_1280": "fotos/lugares/2020/07/30/11407165_1104339922914883_4030845708491096408_n.jpg",
+        "flayer_380_507": "fotos/lugares/2020/07/30/11407165_1104339922914883_4030845708491096408_n_MkNL3HT.jpg",
+        "evaluacion": 0,
+        "estado": "PU",
+        "fecha_actu": "2020-07-31T18:31:33.862Z",
+        "fecha_crea": "2020-07-30T02:14:41.767Z",
+        "estilos": [
+            3,
+            12,
+            17,
+            18
+        ]
+    }
+},
+{
+    "model": "tocata.tocata",
+    "pk": 23,
+    "fields": {
+        "artista": 5,
+        "usuario": 24,
+        "nombre": "San Antonio Puerto Sonoro",
+        "slug": "san-antonio-puerto-sonoro",
+        "lugar": 20,
+        "region": 5,
+        "comuna": 63,
+        "descripci\u00f3n": "San Antonio Puerto Sonoro",
+        "costo": "5000.00",
+        "fecha": "2020-09-27",
+        "hora": "21:00:00",
+        "asistentes_total": 0,
+        "asistentes_min": 50,
+        "asistentes_max": 100,
+        "flayer_original": "fotos/tocatas/2020/07/31/579810_5a7a6a58af3b4d838547f77464511f05_mv2.jpg",
+        "flayer_1920_1280": "fotos/lugares/2020/07/31/579810_5a7a6a58af3b4d838547f77464511f05_mv2.jpg",
+        "flayer_380_507": "fotos/lugares/2020/07/31/579810_5a7a6a58af3b4d838547f77464511f05_mv2_TC1O4rp.jpg",
+        "evaluacion": 0,
+        "estado": "PU",
+        "fecha_actu": "2020-07-31T18:30:58.842Z",
+        "fecha_crea": "2020-07-31T00:56:51.902Z",
+        "estilos": [
+            14,
+            18
+        ]
+    }
+},
+{
+    "model": "tocata.tocata",
+    "pk": 31,
+    "fields": {
+        "artista": 4,
+        "usuario": 23,
+        "nombre": "CICLO MUJERES NICOLE BUNOUT PAZ COURT",
+        "slug": "ciclo-mujeres-nicole-bunout-paz-court",
+        "lugar": 21,
+        "region": 13,
+        "comuna": 291,
+        "descripci\u00f3n": "Nicole Bunout\r\nNicole Bunout es una de las voces m\u00e1s finas de la escena musical chilena. Su mezcla de t\u00e9cnica, dulzura y poes\u00eda, generan una alquimia que hacen sentir al jazz y la m\u00fasica popular como un solo elemento que derriba fronteras. \r\n\r\nActualmente se encuentra promocionando los primeros adelantos de su pr\u00f3ximo \u00e1lbum a lanzarse durante el 2019, en donde canciones como \"Pies Descalzos\" y \"Verde porvenir\" van marcando una nueva hoja de ruta en su carrera.\r\n\r\nPaz Court\r\nVinculada al mundo del jazz desde los 14 a\u00f1os, Paz Court fue apadrinada por el bajista de jazz fusi\u00f3n Pablo Lecaros. \r\nHoy, con alrededor de 10 a\u00f1os de trayectoria en la m\u00fasica, se distingue en el medio musical chileno por su gran versatilidad. \r\n\r\nEntre sus m\u00e1s renombrados proyectos encontramos a Jazzimodo (2006-2012) junto al pianista Lautaro Quevedo, Tunacola (2009 - 2012), Richi Tunacola y Dj Caso. La artista cuenta con 6 discos y 2 EP editados, entre ellos su m\u00e1s reciente trabajo \"Veranito de San Juan\", su segundo disco solista de canciones propias y algunos covers, cargado de un pop sofisticado de ra\u00edz latinoamericana y una propuesta sonora/audiovisual atractiva siempre vinculada al mundo vintage.",
+        "costo": "6000.00",
+        "fecha": "2020-11-01",
+        "hora": "20:30:00",
+        "asistentes_total": 0,
+        "asistentes_min": 30,
+        "asistentes_max": 50,
+        "flayer_original": "fotos/tocatas/2020/07/31/unnamed_QfNRXSi.jpg",
+        "flayer_1920_1280": "fotos/lugares/2020/07/31/unnamed_TQXo0y6.jpg",
+        "flayer_380_507": "fotos/lugares/2020/07/31/unnamed_GrfdK5h.jpg",
+        "evaluacion": 0,
+        "estado": "PU",
+        "fecha_actu": "2020-07-31T18:28:09.813Z",
+        "fecha_crea": "2020-07-31T18:28:09.813Z",
+        "estilos": [
+            3,
+            12,
+            17,
+            18
+        ]
+    }
+},
+{
+    "model": "tocata.tocataabierta",
+    "pk": 12,
+    "fields": {
+        "artista": 4,
+        "usuario": 23,
+        "nombre": "Mujeres Intimas",
+        "slug": "mujeres-intimas",
+        "region": 5,
+        "comuna": 47,
+        "descripci\u00f3n": "Tocata intima en Vi\u00f1a de Mar",
+        "costo": "0.00",
+        "fecha": "2020-08-22",
+        "hora": "21:00:00",
+        "asistentes_min": 30,
+        "flayer_original": "fotos/tocatas/2020/07/31/88ac347444e6bf0fe044-400x400px_NICOLE_BUNOUT_2.jpg",
+        "flayer_1920_1280": "fotos/lugares/2020/07/31/88ac347444e6bf0fe044-400x400px_NICOLE_BUNOUT_2.jpg",
+        "flayer_380_507": "fotos/lugares/2020/07/31/88ac347444e6bf0fe044-400x400px_NICOLE_BUNOUT_2_MXqaubg.jpg",
+        "tocata": null,
+        "estado": "PU",
+        "fecha_actu": "2020-07-31T00:47:17.821Z",
+        "fecha_crea": "2020-07-31T00:47:17.821Z",
+        "estilos": []
+    }
+},
+{
+    "model": "tocata.tocataabierta",
+    "pk": 13,
+    "fields": {
+        "artista": 5,
+        "usuario": 24,
+        "nombre": "Julio Pi\u00f1a en Vivo",
+        "slug": "julio-pina-en-vivo",
+        "region": 13,
+        "comuna": 298,
+        "descripci\u00f3n": "Julio Pi\u00f1a en Vivo",
+        "costo": "0.00",
+        "fecha": "2020-11-01",
+        "hora": "18:00:00",
+        "asistentes_min": 30,
+        "flayer_original": "fotos/tocatas/2020/07/31/96064022_708041753270625_342566976410604599_n.jpg",
+        "flayer_1920_1280": "fotos/lugares/2020/07/31/96064022_708041753270625_342566976410604599_n.jpg",
+        "flayer_380_507": "fotos/lugares/2020/07/31/96064022_708041753270625_342566976410604599_n_1D04xKN.jpg",
+        "tocata": null,
+        "estado": "PU",
+        "fecha_actu": "2020-07-31T18:31:57.495Z",
+        "fecha_crea": "2020-07-31T00:59:15.797Z",
+        "estilos": [
+            14,
+            18
+        ]
+    }
+}
+]

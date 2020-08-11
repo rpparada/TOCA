@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     'carro',
     'orden',
     'facturacion',
-    'direccion'
+    'direccion',
+    'cuentas'
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -66,6 +67,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.request",
 )
+
+AUTH_USER_MODEL = 'cuentas.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

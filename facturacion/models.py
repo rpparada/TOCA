@@ -1,9 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from django.conf import settings
 from django.db.models.signals import post_save
 
 from toca.parametros import parToca, parTocatas, parLugaresToc, parTocatasAbiertas
 
+User = settings.AUTH_USER_MODEL
 # Create your models here.
 class FacturacionProfileManager(models.Manager):
 

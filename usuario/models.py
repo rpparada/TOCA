@@ -1,9 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from django.conf import settings
 
 from artista.models import Artista
 
 from toca.parametros import parUsuarioArtistas, parToca
+
+User = settings.AUTH_USER_MODEL
 
 # Create your models here.
 class Usuario(models.Model):

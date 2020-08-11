@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from django.conf import settings
 from django.db.models.signals import pre_save
 from django.db.models import Q
 
@@ -11,6 +12,7 @@ from lugar.models import Lugar, Region, Comuna
 from toca.parametros import parToca, parTocatas, parLugaresToc, parTocatasAbiertas
 from toca.utils  import unique_slug_generator
 
+User = settings.AUTH_USER_MODEL
 # Create your models here.
 
 # Tocatas

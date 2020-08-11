@@ -1,9 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from django.conf import settings
 from django.db.models.signals import m2m_changed, pre_save
 
 from tocata.models import Tocata
 
+User = settings.AUTH_USER_MODEL
 # Create your models here.
 
 # Carro Comprar

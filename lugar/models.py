@@ -1,9 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from django.conf import settings
 
 from toca.parametros import parLugares, parToca
 
+User = settings.AUTH_USER_MODEL
 # Create your models here.
+
 class Region(models.Model):
 
     codigo          = models.CharField(max_length=100)

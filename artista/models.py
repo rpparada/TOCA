@@ -1,10 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from django.conf import settings
 from django.db.models.signals import pre_save
 
 from toca.parametros import parToca, parArtistas
 from toca.utils  import unique_slug_generator
 
+User = settings.AUTH_USER_MODEL
 # Create your models here.
 
 # Artistas
