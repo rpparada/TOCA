@@ -10,3 +10,5 @@ python manage.py dumpdata lugar --format json --indent 4 > lugar/fixtures/lugar.
 python manage.py dumpdata orden --format json --indent 4 > orden/fixtures/orden.json
 python manage.py dumpdata tocata --format json --indent 4 > tocata/fixtures/tocata.json
 python manage.py dumpdata usuario --format json --indent 4 > usuario/fixtures/usuario.json
+
+python manage.py loaddata <archivo>
