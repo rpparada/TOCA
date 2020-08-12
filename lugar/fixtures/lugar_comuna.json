@@ -1,0 +1,3612 @@
+[
+{
+    "model": "lugar.comuna",
+    "pk": 1,
+    "fields": {
+        "provincia": 1,
+        "region": 1,
+        "codigo": "01101",
+        "nombre": "Iquique"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 2,
+    "fields": {
+        "provincia": 1,
+        "region": 1,
+        "codigo": "01107",
+        "nombre": "Alto Hospicio"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 3,
+    "fields": {
+        "provincia": 2,
+        "region": 1,
+        "codigo": "01401",
+        "nombre": "Pozo Almonte"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 4,
+    "fields": {
+        "provincia": 2,
+        "region": 1,
+        "codigo": "01402",
+        "nombre": "Cami\u00f1a"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 5,
+    "fields": {
+        "provincia": 2,
+        "region": 1,
+        "codigo": "01403",
+        "nombre": "Colchane"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 6,
+    "fields": {
+        "provincia": 2,
+        "region": 1,
+        "codigo": "01404",
+        "nombre": "Huara"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 7,
+    "fields": {
+        "provincia": 2,
+        "region": 1,
+        "codigo": "01405",
+        "nombre": "Pica"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 8,
+    "fields": {
+        "provincia": 3,
+        "region": 2,
+        "codigo": "02101",
+        "nombre": "Antofagasta"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 9,
+    "fields": {
+        "provincia": 3,
+        "region": 2,
+        "codigo": "02102",
+        "nombre": "Mejillones"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 10,
+    "fields": {
+        "provincia": 3,
+        "region": 2,
+        "codigo": "02103",
+        "nombre": "Sierra Gorda"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 11,
+    "fields": {
+        "provincia": 3,
+        "region": 2,
+        "codigo": "02104",
+        "nombre": "Taltal"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 12,
+    "fields": {
+        "provincia": 4,
+        "region": 2,
+        "codigo": "02201",
+        "nombre": "Calama"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 13,
+    "fields": {
+        "provincia": 4,
+        "region": 2,
+        "codigo": "02202",
+        "nombre": "Ollague"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 14,
+    "fields": {
+        "provincia": 4,
+        "region": 2,
+        "codigo": "02203",
+        "nombre": "San Pedro De Atacama"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 15,
+    "fields": {
+        "provincia": 5,
+        "region": 2,
+        "codigo": "02301",
+        "nombre": "Tocopilla"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 16,
+    "fields": {
+        "provincia": 5,
+        "region": 2,
+        "codigo": "02302",
+        "nombre": "Mar\u00eda Elena"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 17,
+    "fields": {
+        "provincia": 6,
+        "region": 3,
+        "codigo": "03101",
+        "nombre": "Copiap\u00f3"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 18,
+    "fields": {
+        "provincia": 6,
+        "region": 3,
+        "codigo": "03102",
+        "nombre": "Caldera"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 19,
+    "fields": {
+        "provincia": 6,
+        "region": 3,
+        "codigo": "03103",
+        "nombre": "Tierra Amarilla"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 20,
+    "fields": {
+        "provincia": 7,
+        "region": 3,
+        "codigo": "03201",
+        "nombre": "Cha\u00f1aral"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 21,
+    "fields": {
+        "provincia": 7,
+        "region": 3,
+        "codigo": "03202",
+        "nombre": "Diego De Almagro"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 22,
+    "fields": {
+        "provincia": 8,
+        "region": 3,
+        "codigo": "03301",
+        "nombre": "Vallenar"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 23,
+    "fields": {
+        "provincia": 8,
+        "region": 3,
+        "codigo": "03302",
+        "nombre": "Alto Del Carmen"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 24,
+    "fields": {
+        "provincia": 8,
+        "region": 3,
+        "codigo": "03303",
+        "nombre": "Freirina"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 25,
+    "fields": {
+        "provincia": 8,
+        "region": 3,
+        "codigo": "03304",
+        "nombre": "Huasco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 26,
+    "fields": {
+        "provincia": 9,
+        "region": 4,
+        "codigo": "04101",
+        "nombre": "La Serena"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 27,
+    "fields": {
+        "provincia": 9,
+        "region": 4,
+        "codigo": "04102",
+        "nombre": "Coquimbo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 28,
+    "fields": {
+        "provincia": 9,
+        "region": 4,
+        "codigo": "04103",
+        "nombre": "Andacollo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 29,
+    "fields": {
+        "provincia": 9,
+        "region": 4,
+        "codigo": "04104",
+        "nombre": "La Higuera"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 30,
+    "fields": {
+        "provincia": 9,
+        "region": 4,
+        "codigo": "04105",
+        "nombre": "Paiguano"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 31,
+    "fields": {
+        "provincia": 9,
+        "region": 4,
+        "codigo": "04106",
+        "nombre": "Vicu\u00f1a"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 32,
+    "fields": {
+        "provincia": 10,
+        "region": 4,
+        "codigo": "04201",
+        "nombre": "Illapel"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 33,
+    "fields": {
+        "provincia": 10,
+        "region": 4,
+        "codigo": "04202",
+        "nombre": "Canela"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 34,
+    "fields": {
+        "provincia": 10,
+        "region": 4,
+        "codigo": "04203",
+        "nombre": "Los Vilos"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 35,
+    "fields": {
+        "provincia": 10,
+        "region": 4,
+        "codigo": "04204",
+        "nombre": "Salamanca"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 36,
+    "fields": {
+        "provincia": 11,
+        "region": 4,
+        "codigo": "04301",
+        "nombre": "Ovalle"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 37,
+    "fields": {
+        "provincia": 11,
+        "region": 4,
+        "codigo": "04302",
+        "nombre": "Combarbal\u00e1"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 38,
+    "fields": {
+        "provincia": 11,
+        "region": 4,
+        "codigo": "04303",
+        "nombre": "Monte Patria"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 39,
+    "fields": {
+        "provincia": 11,
+        "region": 4,
+        "codigo": "04304",
+        "nombre": "Punitaqui"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 40,
+    "fields": {
+        "provincia": 11,
+        "region": 4,
+        "codigo": "04305",
+        "nombre": "R\u00edo Hurtado"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 41,
+    "fields": {
+        "provincia": 12,
+        "region": 5,
+        "codigo": "05101",
+        "nombre": "Valpara\u00edso"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 42,
+    "fields": {
+        "provincia": 12,
+        "region": 5,
+        "codigo": "05102",
+        "nombre": "Casablanca"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 43,
+    "fields": {
+        "provincia": 12,
+        "region": 5,
+        "codigo": "05103",
+        "nombre": "Conc\u00f3n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 44,
+    "fields": {
+        "provincia": 12,
+        "region": 5,
+        "codigo": "05104",
+        "nombre": "Juan Fern\u00e1ndez"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 45,
+    "fields": {
+        "provincia": 12,
+        "region": 5,
+        "codigo": "05105",
+        "nombre": "Puchuncav\u00ed"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 46,
+    "fields": {
+        "provincia": 12,
+        "region": 5,
+        "codigo": "05107",
+        "nombre": "Quintero"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 47,
+    "fields": {
+        "provincia": 12,
+        "region": 5,
+        "codigo": "05109",
+        "nombre": "Vi\u00f1a Del Mar"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 48,
+    "fields": {
+        "provincia": 13,
+        "region": 5,
+        "codigo": "05201",
+        "nombre": "Isla De Pascua"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 49,
+    "fields": {
+        "provincia": 14,
+        "region": 5,
+        "codigo": "05301",
+        "nombre": "Los Andes"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 50,
+    "fields": {
+        "provincia": 14,
+        "region": 5,
+        "codigo": "05302",
+        "nombre": "Calle Larga"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 51,
+    "fields": {
+        "provincia": 14,
+        "region": 5,
+        "codigo": "05303",
+        "nombre": "Rinconada"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 52,
+    "fields": {
+        "provincia": 14,
+        "region": 5,
+        "codigo": "05304",
+        "nombre": "San Esteban"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 53,
+    "fields": {
+        "provincia": 15,
+        "region": 5,
+        "codigo": "05401",
+        "nombre": "La Ligua"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 54,
+    "fields": {
+        "provincia": 15,
+        "region": 5,
+        "codigo": "05402",
+        "nombre": "Cabildo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 55,
+    "fields": {
+        "provincia": 15,
+        "region": 5,
+        "codigo": "05403",
+        "nombre": "Papudo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 56,
+    "fields": {
+        "provincia": 15,
+        "region": 5,
+        "codigo": "05404",
+        "nombre": "Petorca"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 57,
+    "fields": {
+        "provincia": 15,
+        "region": 5,
+        "codigo": "05405",
+        "nombre": "Zapallar"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 58,
+    "fields": {
+        "provincia": 16,
+        "region": 5,
+        "codigo": "05501",
+        "nombre": "Quillota"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 59,
+    "fields": {
+        "provincia": 16,
+        "region": 5,
+        "codigo": "05502",
+        "nombre": "Calera"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 60,
+    "fields": {
+        "provincia": 16,
+        "region": 5,
+        "codigo": "05503",
+        "nombre": "Hijuelas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 61,
+    "fields": {
+        "provincia": 16,
+        "region": 5,
+        "codigo": "05504",
+        "nombre": "La Cruz"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 62,
+    "fields": {
+        "provincia": 16,
+        "region": 5,
+        "codigo": "05506",
+        "nombre": "Nogales"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 63,
+    "fields": {
+        "provincia": 17,
+        "region": 5,
+        "codigo": "05601",
+        "nombre": "San Antonio"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 64,
+    "fields": {
+        "provincia": 17,
+        "region": 5,
+        "codigo": "05602",
+        "nombre": "Algarrobo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 65,
+    "fields": {
+        "provincia": 17,
+        "region": 5,
+        "codigo": "05603",
+        "nombre": "Cartagena"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 66,
+    "fields": {
+        "provincia": 17,
+        "region": 5,
+        "codigo": "05604",
+        "nombre": "El Quisco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 67,
+    "fields": {
+        "provincia": 17,
+        "region": 5,
+        "codigo": "05605",
+        "nombre": "El Tabo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 68,
+    "fields": {
+        "provincia": 17,
+        "region": 5,
+        "codigo": "05606",
+        "nombre": "Santo Domingo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 69,
+    "fields": {
+        "provincia": 18,
+        "region": 5,
+        "codigo": "05701",
+        "nombre": "San Felipe"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 70,
+    "fields": {
+        "provincia": 18,
+        "region": 5,
+        "codigo": "05702",
+        "nombre": "Catemu"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 71,
+    "fields": {
+        "provincia": 18,
+        "region": 5,
+        "codigo": "05703",
+        "nombre": "Llaillay"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 72,
+    "fields": {
+        "provincia": 18,
+        "region": 5,
+        "codigo": "05704",
+        "nombre": "Panquehue"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 73,
+    "fields": {
+        "provincia": 18,
+        "region": 5,
+        "codigo": "05705",
+        "nombre": "Putaendo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 74,
+    "fields": {
+        "provincia": 18,
+        "region": 5,
+        "codigo": "05706",
+        "nombre": "Santa Mar\u00eda"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 75,
+    "fields": {
+        "provincia": 19,
+        "region": 5,
+        "codigo": "05801",
+        "nombre": "Quilpu\u00e9"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 76,
+    "fields": {
+        "provincia": 19,
+        "region": 5,
+        "codigo": "05802",
+        "nombre": "Limache"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 77,
+    "fields": {
+        "provincia": 19,
+        "region": 5,
+        "codigo": "05803",
+        "nombre": "Olmu\u00e9"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 78,
+    "fields": {
+        "provincia": 19,
+        "region": 5,
+        "codigo": "05804",
+        "nombre": "Villa Alemana"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 79,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06101",
+        "nombre": "Rancagua"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 80,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06102",
+        "nombre": "Codegua"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 81,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06103",
+        "nombre": "Coinco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 82,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06104",
+        "nombre": "Coltauco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 83,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06105",
+        "nombre": "Do\u00f1ihue"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 84,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06106",
+        "nombre": "Graneros"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 85,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06107",
+        "nombre": "Las Cabras"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 86,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06108",
+        "nombre": "Machali"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 87,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06109",
+        "nombre": "Malloa"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 88,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06110",
+        "nombre": "Mostazal"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 89,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06111",
+        "nombre": "El Olivar"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 90,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06112",
+        "nombre": "Peumo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 91,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06113",
+        "nombre": "Pichidegua"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 92,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06114",
+        "nombre": "Quinta De Tilcoco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 93,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06115",
+        "nombre": "Rengo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 94,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06116",
+        "nombre": "Requinoa"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 95,
+    "fields": {
+        "provincia": 20,
+        "region": 6,
+        "codigo": "06117",
+        "nombre": "San Vicente"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 96,
+    "fields": {
+        "provincia": 21,
+        "region": 6,
+        "codigo": "06201",
+        "nombre": "Pichilemu"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 97,
+    "fields": {
+        "provincia": 21,
+        "region": 6,
+        "codigo": "06202",
+        "nombre": "La Estrella"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 98,
+    "fields": {
+        "provincia": 21,
+        "region": 6,
+        "codigo": "06203",
+        "nombre": "Litueche"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 99,
+    "fields": {
+        "provincia": 21,
+        "region": 6,
+        "codigo": "06204",
+        "nombre": "Marchihue"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 100,
+    "fields": {
+        "provincia": 21,
+        "region": 6,
+        "codigo": "06205",
+        "nombre": "Navidad"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 101,
+    "fields": {
+        "provincia": 21,
+        "region": 6,
+        "codigo": "06206",
+        "nombre": "Paredones"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 102,
+    "fields": {
+        "provincia": 22,
+        "region": 6,
+        "codigo": "06301",
+        "nombre": "San Fernando"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 103,
+    "fields": {
+        "provincia": 22,
+        "region": 6,
+        "codigo": "06302",
+        "nombre": "Ch\u00e9pica"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 104,
+    "fields": {
+        "provincia": 22,
+        "region": 6,
+        "codigo": "06303",
+        "nombre": "Chimbarongo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 105,
+    "fields": {
+        "provincia": 22,
+        "region": 6,
+        "codigo": "06304",
+        "nombre": "Lolol"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 106,
+    "fields": {
+        "provincia": 22,
+        "region": 6,
+        "codigo": "06305",
+        "nombre": "Nancagua"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 107,
+    "fields": {
+        "provincia": 22,
+        "region": 6,
+        "codigo": "06306",
+        "nombre": "Palmilla"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 108,
+    "fields": {
+        "provincia": 22,
+        "region": 6,
+        "codigo": "06307",
+        "nombre": "Peralillo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 109,
+    "fields": {
+        "provincia": 22,
+        "region": 6,
+        "codigo": "06308",
+        "nombre": "Placilla"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 110,
+    "fields": {
+        "provincia": 22,
+        "region": 6,
+        "codigo": "06309",
+        "nombre": "Pumanque"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 111,
+    "fields": {
+        "provincia": 22,
+        "region": 6,
+        "codigo": "06310",
+        "nombre": "Santa Cruz"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 112,
+    "fields": {
+        "provincia": 23,
+        "region": 7,
+        "codigo": "07101",
+        "nombre": "Talca"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 113,
+    "fields": {
+        "provincia": 23,
+        "region": 7,
+        "codigo": "07102",
+        "nombre": "Constituci\u00f3n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 114,
+    "fields": {
+        "provincia": 23,
+        "region": 7,
+        "codigo": "07103",
+        "nombre": "Curepto"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 115,
+    "fields": {
+        "provincia": 23,
+        "region": 7,
+        "codigo": "07104",
+        "nombre": "Empedrado"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 116,
+    "fields": {
+        "provincia": 23,
+        "region": 7,
+        "codigo": "07105",
+        "nombre": "Maule"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 117,
+    "fields": {
+        "provincia": 23,
+        "region": 7,
+        "codigo": "07106",
+        "nombre": "Pelarco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 118,
+    "fields": {
+        "provincia": 23,
+        "region": 7,
+        "codigo": "07107",
+        "nombre": "Pencahue"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 119,
+    "fields": {
+        "provincia": 23,
+        "region": 7,
+        "codigo": "07108",
+        "nombre": "R\u00edo Claro"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 120,
+    "fields": {
+        "provincia": 23,
+        "region": 7,
+        "codigo": "07109",
+        "nombre": "San Clemente"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 121,
+    "fields": {
+        "provincia": 23,
+        "region": 7,
+        "codigo": "07110",
+        "nombre": "San Rafael"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 122,
+    "fields": {
+        "provincia": 24,
+        "region": 7,
+        "codigo": "07201",
+        "nombre": "Cauquenes"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 123,
+    "fields": {
+        "provincia": 24,
+        "region": 7,
+        "codigo": "07202",
+        "nombre": "Chanco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 124,
+    "fields": {
+        "provincia": 24,
+        "region": 7,
+        "codigo": "07203",
+        "nombre": "Pelluhue"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 125,
+    "fields": {
+        "provincia": 25,
+        "region": 7,
+        "codigo": "07301",
+        "nombre": "Curic\u00f3"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 126,
+    "fields": {
+        "provincia": 25,
+        "region": 7,
+        "codigo": "07302",
+        "nombre": "Huala\u00f1e"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 127,
+    "fields": {
+        "provincia": 25,
+        "region": 7,
+        "codigo": "07303",
+        "nombre": "Licant\u00e9n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 128,
+    "fields": {
+        "provincia": 25,
+        "region": 7,
+        "codigo": "07304",
+        "nombre": "Molina"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 129,
+    "fields": {
+        "provincia": 25,
+        "region": 7,
+        "codigo": "07305",
+        "nombre": "Rauco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 130,
+    "fields": {
+        "provincia": 25,
+        "region": 7,
+        "codigo": "07306",
+        "nombre": "Romeral"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 131,
+    "fields": {
+        "provincia": 25,
+        "region": 7,
+        "codigo": "07307",
+        "nombre": "Sagrada Familia"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 132,
+    "fields": {
+        "provincia": 25,
+        "region": 7,
+        "codigo": "07308",
+        "nombre": "Teno"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 133,
+    "fields": {
+        "provincia": 25,
+        "region": 7,
+        "codigo": "07309",
+        "nombre": "Vichuqu\u00e9n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 134,
+    "fields": {
+        "provincia": 26,
+        "region": 7,
+        "codigo": "07401",
+        "nombre": "Linares"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 135,
+    "fields": {
+        "provincia": 26,
+        "region": 7,
+        "codigo": "07402",
+        "nombre": "Colb\u00fan"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 136,
+    "fields": {
+        "provincia": 26,
+        "region": 7,
+        "codigo": "07403",
+        "nombre": "Longav\u00ed"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 137,
+    "fields": {
+        "provincia": 26,
+        "region": 7,
+        "codigo": "07404",
+        "nombre": "Parral"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 138,
+    "fields": {
+        "provincia": 26,
+        "region": 7,
+        "codigo": "07405",
+        "nombre": "Retiro"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 139,
+    "fields": {
+        "provincia": 26,
+        "region": 7,
+        "codigo": "07406",
+        "nombre": "San Javier"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 140,
+    "fields": {
+        "provincia": 26,
+        "region": 7,
+        "codigo": "07407",
+        "nombre": "Villa Alegre"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 141,
+    "fields": {
+        "provincia": 26,
+        "region": 7,
+        "codigo": "07408",
+        "nombre": "Yerbas Buenas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 142,
+    "fields": {
+        "provincia": 27,
+        "region": 8,
+        "codigo": "08101",
+        "nombre": "Concepci\u00f3n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 143,
+    "fields": {
+        "provincia": 27,
+        "region": 8,
+        "codigo": "08102",
+        "nombre": "Coronel"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 144,
+    "fields": {
+        "provincia": 27,
+        "region": 8,
+        "codigo": "08103",
+        "nombre": "Chiguayante"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 145,
+    "fields": {
+        "provincia": 27,
+        "region": 8,
+        "codigo": "08104",
+        "nombre": "Florida"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 146,
+    "fields": {
+        "provincia": 27,
+        "region": 8,
+        "codigo": "08105",
+        "nombre": "Hualqui"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 147,
+    "fields": {
+        "provincia": 27,
+        "region": 8,
+        "codigo": "08106",
+        "nombre": "Lota"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 148,
+    "fields": {
+        "provincia": 27,
+        "region": 8,
+        "codigo": "08107",
+        "nombre": "Penco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 149,
+    "fields": {
+        "provincia": 27,
+        "region": 8,
+        "codigo": "08108",
+        "nombre": "San Pedro de la Paz"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 150,
+    "fields": {
+        "provincia": 27,
+        "region": 8,
+        "codigo": "08109",
+        "nombre": "Santa Juana"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 151,
+    "fields": {
+        "provincia": 27,
+        "region": 8,
+        "codigo": "08110",
+        "nombre": "Talcahuano"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 152,
+    "fields": {
+        "provincia": 27,
+        "region": 8,
+        "codigo": "08111",
+        "nombre": "Tom\u00e9"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 153,
+    "fields": {
+        "provincia": 27,
+        "region": 8,
+        "codigo": "08112",
+        "nombre": "Hualp\u00e9n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 154,
+    "fields": {
+        "provincia": 28,
+        "region": 8,
+        "codigo": "08201",
+        "nombre": "Lebu"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 155,
+    "fields": {
+        "provincia": 28,
+        "region": 8,
+        "codigo": "08202",
+        "nombre": "Arauco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 156,
+    "fields": {
+        "provincia": 28,
+        "region": 8,
+        "codigo": "08203",
+        "nombre": "Ca\u00f1ete"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 157,
+    "fields": {
+        "provincia": 28,
+        "region": 8,
+        "codigo": "08204",
+        "nombre": "Contulmo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 158,
+    "fields": {
+        "provincia": 28,
+        "region": 8,
+        "codigo": "08205",
+        "nombre": "Curanilahue"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 159,
+    "fields": {
+        "provincia": 28,
+        "region": 8,
+        "codigo": "08206",
+        "nombre": "Los Alamos"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 160,
+    "fields": {
+        "provincia": 28,
+        "region": 8,
+        "codigo": "08207",
+        "nombre": "Tirua"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 161,
+    "fields": {
+        "provincia": 29,
+        "region": 8,
+        "codigo": "08301",
+        "nombre": "Los Angeles"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 162,
+    "fields": {
+        "provincia": 29,
+        "region": 8,
+        "codigo": "08302",
+        "nombre": "Antuco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 163,
+    "fields": {
+        "provincia": 29,
+        "region": 8,
+        "codigo": "08303",
+        "nombre": "Cabrero"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 164,
+    "fields": {
+        "provincia": 29,
+        "region": 8,
+        "codigo": "08304",
+        "nombre": "Laja"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 165,
+    "fields": {
+        "provincia": 29,
+        "region": 8,
+        "codigo": "08305",
+        "nombre": "Mulch\u00e9n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 166,
+    "fields": {
+        "provincia": 29,
+        "region": 8,
+        "codigo": "08306",
+        "nombre": "Nacimiento"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 167,
+    "fields": {
+        "provincia": 29,
+        "region": 8,
+        "codigo": "08307",
+        "nombre": "Negrete"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 168,
+    "fields": {
+        "provincia": 29,
+        "region": 8,
+        "codigo": "08308",
+        "nombre": "Quilaco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 169,
+    "fields": {
+        "provincia": 29,
+        "region": 8,
+        "codigo": "08309",
+        "nombre": "Quilleco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 170,
+    "fields": {
+        "provincia": 29,
+        "region": 8,
+        "codigo": "08310",
+        "nombre": "San Rosendo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 171,
+    "fields": {
+        "provincia": 29,
+        "region": 8,
+        "codigo": "08311",
+        "nombre": "Santa B\u00e1rbara"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 172,
+    "fields": {
+        "provincia": 29,
+        "region": 8,
+        "codigo": "08312",
+        "nombre": "Tucapel"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 173,
+    "fields": {
+        "provincia": 29,
+        "region": 8,
+        "codigo": "08313",
+        "nombre": "Yumbel"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 174,
+    "fields": {
+        "provincia": 29,
+        "region": 8,
+        "codigo": "08314",
+        "nombre": "Alto Biob\u00edo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 175,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08401",
+        "nombre": "Chill\u00e1n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 176,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08402",
+        "nombre": "Bulnes"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 177,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08403",
+        "nombre": "Cobquecura"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 178,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08404",
+        "nombre": "Coelemu"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 179,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08405",
+        "nombre": "Coihueco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 180,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08406",
+        "nombre": "Chill\u00e1n Viejo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 181,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08407",
+        "nombre": "El Carmen"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 182,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08408",
+        "nombre": "Ninhue"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 183,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08409",
+        "nombre": "\u00d1iqu\u00e9n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 184,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08410",
+        "nombre": "Pemuco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 185,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08411",
+        "nombre": "Pinto"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 186,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08412",
+        "nombre": "Portezuelo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 187,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08413",
+        "nombre": "Quill\u00f3n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 188,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08414",
+        "nombre": "Quirihue"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 189,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08415",
+        "nombre": "Ranquil"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 190,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08416",
+        "nombre": "San Carlos"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 191,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08417",
+        "nombre": "San Fabi\u00e1n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 192,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08418",
+        "nombre": "San Ignacio"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 193,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08419",
+        "nombre": "San Nicol\u00e1s"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 194,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08420",
+        "nombre": "Treguaco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 195,
+    "fields": {
+        "provincia": 30,
+        "region": 8,
+        "codigo": "08421",
+        "nombre": "Yungay"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 196,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09101",
+        "nombre": "Temuco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 197,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09102",
+        "nombre": "Carahue"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 198,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09103",
+        "nombre": "Cunco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 199,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09104",
+        "nombre": "Curarrehue"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 200,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09105",
+        "nombre": "Freire"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 201,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09106",
+        "nombre": "Galvarino"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 202,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09107",
+        "nombre": "Gorbea"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 203,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09108",
+        "nombre": "Lautaro"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 204,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09109",
+        "nombre": "Loncoche"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 205,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09110",
+        "nombre": "Melipeuco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 206,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09111",
+        "nombre": "Nueva Imperial"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 207,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09112",
+        "nombre": "Padre Las Casas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 208,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09113",
+        "nombre": "Perquenco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 209,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09114",
+        "nombre": "Pitrufqu\u00e9n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 210,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09115",
+        "nombre": "Puc\u00f3n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 211,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09116",
+        "nombre": "Saavedra"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 212,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09117",
+        "nombre": "Teodoro Schmidt"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 213,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09118",
+        "nombre": "Tolt\u00e9n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 214,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09119",
+        "nombre": "Vilc\u00fan"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 215,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09120",
+        "nombre": "Villarrica"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 216,
+    "fields": {
+        "provincia": 31,
+        "region": 9,
+        "codigo": "09121",
+        "nombre": "Cholchol"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 217,
+    "fields": {
+        "provincia": 32,
+        "region": 9,
+        "codigo": "09201",
+        "nombre": "Angol"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 218,
+    "fields": {
+        "provincia": 32,
+        "region": 9,
+        "codigo": "09202",
+        "nombre": "Collipulli"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 219,
+    "fields": {
+        "provincia": 32,
+        "region": 9,
+        "codigo": "09203",
+        "nombre": "Curacaut\u00edn"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 220,
+    "fields": {
+        "provincia": 32,
+        "region": 9,
+        "codigo": "09204",
+        "nombre": "Ercilla"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 221,
+    "fields": {
+        "provincia": 32,
+        "region": 9,
+        "codigo": "09205",
+        "nombre": "Lonquimay"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 222,
+    "fields": {
+        "provincia": 32,
+        "region": 9,
+        "codigo": "09206",
+        "nombre": "Los Sauces"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 223,
+    "fields": {
+        "provincia": 32,
+        "region": 9,
+        "codigo": "09207",
+        "nombre": "Lumaco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 224,
+    "fields": {
+        "provincia": 32,
+        "region": 9,
+        "codigo": "09208",
+        "nombre": "Puren"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 225,
+    "fields": {
+        "provincia": 32,
+        "region": 9,
+        "codigo": "09209",
+        "nombre": "Renaico"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 226,
+    "fields": {
+        "provincia": 32,
+        "region": 9,
+        "codigo": "09210",
+        "nombre": "Traigu\u00e9n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 227,
+    "fields": {
+        "provincia": 32,
+        "region": 9,
+        "codigo": "09211",
+        "nombre": "Victoria"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 228,
+    "fields": {
+        "provincia": 33,
+        "region": 10,
+        "codigo": "10101",
+        "nombre": "Puerto Montt"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 229,
+    "fields": {
+        "provincia": 33,
+        "region": 10,
+        "codigo": "10102",
+        "nombre": "Calbuco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 230,
+    "fields": {
+        "provincia": 33,
+        "region": 10,
+        "codigo": "10103",
+        "nombre": "Cocham\u00f3"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 231,
+    "fields": {
+        "provincia": 33,
+        "region": 10,
+        "codigo": "10104",
+        "nombre": "Fresia"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 232,
+    "fields": {
+        "provincia": 33,
+        "region": 10,
+        "codigo": "10105",
+        "nombre": "Frutillar"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 233,
+    "fields": {
+        "provincia": 33,
+        "region": 10,
+        "codigo": "10106",
+        "nombre": "Los Muermos"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 234,
+    "fields": {
+        "provincia": 33,
+        "region": 10,
+        "codigo": "10107",
+        "nombre": "Llanquihue"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 235,
+    "fields": {
+        "provincia": 33,
+        "region": 10,
+        "codigo": "10108",
+        "nombre": "Maull\u00edn"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 236,
+    "fields": {
+        "provincia": 33,
+        "region": 10,
+        "codigo": "10109",
+        "nombre": "Puerto Varas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 237,
+    "fields": {
+        "provincia": 34,
+        "region": 10,
+        "codigo": "10201",
+        "nombre": "Castro"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 238,
+    "fields": {
+        "provincia": 34,
+        "region": 10,
+        "codigo": "10202",
+        "nombre": "Ancud"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 239,
+    "fields": {
+        "provincia": 34,
+        "region": 10,
+        "codigo": "10203",
+        "nombre": "Chonchi"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 240,
+    "fields": {
+        "provincia": 34,
+        "region": 10,
+        "codigo": "10204",
+        "nombre": "Curaco de Velez"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 241,
+    "fields": {
+        "provincia": 34,
+        "region": 10,
+        "codigo": "10205",
+        "nombre": "Dalcahue"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 242,
+    "fields": {
+        "provincia": 34,
+        "region": 10,
+        "codigo": "10206",
+        "nombre": "Puqueld\u00f3n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 243,
+    "fields": {
+        "provincia": 34,
+        "region": 10,
+        "codigo": "10207",
+        "nombre": "Queil\u00e9n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 244,
+    "fields": {
+        "provincia": 34,
+        "region": 10,
+        "codigo": "10208",
+        "nombre": "Quell\u00f3n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 245,
+    "fields": {
+        "provincia": 34,
+        "region": 10,
+        "codigo": "10209",
+        "nombre": "Quemchi"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 246,
+    "fields": {
+        "provincia": 34,
+        "region": 10,
+        "codigo": "10210",
+        "nombre": "Quinchao"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 247,
+    "fields": {
+        "provincia": 35,
+        "region": 10,
+        "codigo": "10301",
+        "nombre": "Osorno"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 248,
+    "fields": {
+        "provincia": 35,
+        "region": 10,
+        "codigo": "10302",
+        "nombre": "Puerto Octay"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 249,
+    "fields": {
+        "provincia": 35,
+        "region": 10,
+        "codigo": "10303",
+        "nombre": "Purranque"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 250,
+    "fields": {
+        "provincia": 35,
+        "region": 10,
+        "codigo": "10304",
+        "nombre": "Puyehue"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 251,
+    "fields": {
+        "provincia": 35,
+        "region": 10,
+        "codigo": "10305",
+        "nombre": "R\u00edo Negro"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 252,
+    "fields": {
+        "provincia": 35,
+        "region": 10,
+        "codigo": "10306",
+        "nombre": "San Juan de la Costa"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 253,
+    "fields": {
+        "provincia": 35,
+        "region": 10,
+        "codigo": "10307",
+        "nombre": "San Pablo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 254,
+    "fields": {
+        "provincia": 36,
+        "region": 10,
+        "codigo": "10401",
+        "nombre": "Chait\u00e9n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 255,
+    "fields": {
+        "provincia": 36,
+        "region": 10,
+        "codigo": "10402",
+        "nombre": "Futaleuf\u00fa"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 256,
+    "fields": {
+        "provincia": 36,
+        "region": 10,
+        "codigo": "10403",
+        "nombre": "Hualaihue"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 257,
+    "fields": {
+        "provincia": 36,
+        "region": 10,
+        "codigo": "10404",
+        "nombre": "Palena"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 258,
+    "fields": {
+        "provincia": 37,
+        "region": 11,
+        "codigo": "11101",
+        "nombre": "Coihayque"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 259,
+    "fields": {
+        "provincia": 37,
+        "region": 11,
+        "codigo": "11102",
+        "nombre": "Lago Verde"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 260,
+    "fields": {
+        "provincia": 38,
+        "region": 11,
+        "codigo": "11201",
+        "nombre": "Ais\u00e9n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 261,
+    "fields": {
+        "provincia": 38,
+        "region": 11,
+        "codigo": "11202",
+        "nombre": "Cisnes"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 262,
+    "fields": {
+        "provincia": 38,
+        "region": 11,
+        "codigo": "11203",
+        "nombre": "Guaitecas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 263,
+    "fields": {
+        "provincia": 39,
+        "region": 11,
+        "codigo": "11301",
+        "nombre": "Cochrane"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 264,
+    "fields": {
+        "provincia": 39,
+        "region": 11,
+        "codigo": "11302",
+        "nombre": "O'Higgins"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 265,
+    "fields": {
+        "provincia": 39,
+        "region": 11,
+        "codigo": "11303",
+        "nombre": "Tortel"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 266,
+    "fields": {
+        "provincia": 40,
+        "region": 11,
+        "codigo": "11401",
+        "nombre": "Chile Chico"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 267,
+    "fields": {
+        "provincia": 40,
+        "region": 11,
+        "codigo": "11402",
+        "nombre": "R\u00edo Ib\u00e1\u00f1ez"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 268,
+    "fields": {
+        "provincia": 41,
+        "region": 12,
+        "codigo": "12101",
+        "nombre": "Punta Arenas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 269,
+    "fields": {
+        "provincia": 41,
+        "region": 12,
+        "codigo": "12102",
+        "nombre": "Laguna Blanca"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 270,
+    "fields": {
+        "provincia": 41,
+        "region": 12,
+        "codigo": "12103",
+        "nombre": "R\u00edo Verde"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 271,
+    "fields": {
+        "provincia": 41,
+        "region": 12,
+        "codigo": "12104",
+        "nombre": "San Gregorio"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 272,
+    "fields": {
+        "provincia": 42,
+        "region": 12,
+        "codigo": "12201",
+        "nombre": "Cabo de Hornos"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 273,
+    "fields": {
+        "provincia": 42,
+        "region": 12,
+        "codigo": "12202",
+        "nombre": "Ant\u00e1rtica"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 274,
+    "fields": {
+        "provincia": 43,
+        "region": 12,
+        "codigo": "12301",
+        "nombre": "Porvenir"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 275,
+    "fields": {
+        "provincia": 43,
+        "region": 12,
+        "codigo": "12302",
+        "nombre": "Primavera"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 276,
+    "fields": {
+        "provincia": 43,
+        "region": 12,
+        "codigo": "12303",
+        "nombre": "Timaukel"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 277,
+    "fields": {
+        "provincia": 44,
+        "region": 12,
+        "codigo": "12401",
+        "nombre": "Natales"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 278,
+    "fields": {
+        "provincia": 44,
+        "region": 12,
+        "codigo": "12402",
+        "nombre": "Torres del Paine"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 279,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13101",
+        "nombre": "Santiago"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 280,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13102",
+        "nombre": "Cerrillos"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 281,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13103",
+        "nombre": "Cerro Navia"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 282,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13104",
+        "nombre": "Conchal\u00ed"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 283,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13105",
+        "nombre": "El Bosque"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 284,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13106",
+        "nombre": "Estaci\u00f3n Central"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 285,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13107",
+        "nombre": "Huechuraba"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 286,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13108",
+        "nombre": "Independencia"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 287,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13109",
+        "nombre": "La Cisterna"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 288,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13110",
+        "nombre": "La Florida"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 289,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13111",
+        "nombre": "La Granja"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 290,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13112",
+        "nombre": "La Pintana"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 291,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13113",
+        "nombre": "La Reina"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 292,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13114",
+        "nombre": "Las Condes"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 293,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13115",
+        "nombre": "Lo Barnechea"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 294,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13116",
+        "nombre": "Lo Espejo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 295,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13117",
+        "nombre": "Lo Prado"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 296,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13118",
+        "nombre": "Macul"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 297,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13119",
+        "nombre": "Maip\u00fa"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 298,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13120",
+        "nombre": "\u00d1u\u00f1oa"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 299,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13121",
+        "nombre": "Pedro Aguirre Cerda"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 300,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13122",
+        "nombre": "Pe\u00f1alol\u00e9n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 301,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13123",
+        "nombre": "Providencia"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 302,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13124",
+        "nombre": "Pudahuel"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 303,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13125",
+        "nombre": "Quilicura"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 304,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13126",
+        "nombre": "Quinta Normal"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 305,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13127",
+        "nombre": "Recoleta"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 306,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13128",
+        "nombre": "Renca"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 307,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13129",
+        "nombre": "San Joaqu\u00edn"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 308,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13130",
+        "nombre": "San Miguel"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 309,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13131",
+        "nombre": "San Ram\u00f3n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 310,
+    "fields": {
+        "provincia": 45,
+        "region": 13,
+        "codigo": "13132",
+        "nombre": "Vitacura"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 311,
+    "fields": {
+        "provincia": 46,
+        "region": 13,
+        "codigo": "13201",
+        "nombre": "Puente Alto"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 312,
+    "fields": {
+        "provincia": 46,
+        "region": 13,
+        "codigo": "13202",
+        "nombre": "Pirque"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 313,
+    "fields": {
+        "provincia": 46,
+        "region": 13,
+        "codigo": "13203",
+        "nombre": "San Jos\u00e9 De Maipo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 314,
+    "fields": {
+        "provincia": 47,
+        "region": 13,
+        "codigo": "13301",
+        "nombre": "Colina"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 315,
+    "fields": {
+        "provincia": 47,
+        "region": 13,
+        "codigo": "13302",
+        "nombre": "Lampa"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 316,
+    "fields": {
+        "provincia": 47,
+        "region": 13,
+        "codigo": "13303",
+        "nombre": "Tiltil"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 317,
+    "fields": {
+        "provincia": 48,
+        "region": 13,
+        "codigo": "13401",
+        "nombre": "San Bernardo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 318,
+    "fields": {
+        "provincia": 48,
+        "region": 13,
+        "codigo": "13402",
+        "nombre": "Buin"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 319,
+    "fields": {
+        "provincia": 48,
+        "region": 13,
+        "codigo": "13403",
+        "nombre": "Calera De Tango"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 320,
+    "fields": {
+        "provincia": 48,
+        "region": 13,
+        "codigo": "13404",
+        "nombre": "Paine"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 321,
+    "fields": {
+        "provincia": 49,
+        "region": 13,
+        "codigo": "13501",
+        "nombre": "Melipilla"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 322,
+    "fields": {
+        "provincia": 49,
+        "region": 13,
+        "codigo": "13502",
+        "nombre": "Alhu\u00e9"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 323,
+    "fields": {
+        "provincia": 49,
+        "region": 13,
+        "codigo": "13503",
+        "nombre": "Curacav\u00ed"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 324,
+    "fields": {
+        "provincia": 49,
+        "region": 13,
+        "codigo": "13504",
+        "nombre": "Mar\u00eda Pinto"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 325,
+    "fields": {
+        "provincia": 49,
+        "region": 13,
+        "codigo": "13505",
+        "nombre": "San Pedro"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 326,
+    "fields": {
+        "provincia": 50,
+        "region": 13,
+        "codigo": "13601",
+        "nombre": "Talagante"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 327,
+    "fields": {
+        "provincia": 50,
+        "region": 13,
+        "codigo": "13602",
+        "nombre": "El Monte"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 328,
+    "fields": {
+        "provincia": 50,
+        "region": 13,
+        "codigo": "13603",
+        "nombre": "Isla De Maipo"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 329,
+    "fields": {
+        "provincia": 50,
+        "region": 13,
+        "codigo": "13604",
+        "nombre": "Padre Hurtado"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 330,
+    "fields": {
+        "provincia": 50,
+        "region": 13,
+        "codigo": "13605",
+        "nombre": "Pe\u00f1aflor"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 331,
+    "fields": {
+        "provincia": 51,
+        "region": 14,
+        "codigo": "14101",
+        "nombre": "Valdivia"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 332,
+    "fields": {
+        "provincia": 51,
+        "region": 14,
+        "codigo": "14102",
+        "nombre": "Corral"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 333,
+    "fields": {
+        "provincia": 51,
+        "region": 14,
+        "codigo": "14103",
+        "nombre": "Lanco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 334,
+    "fields": {
+        "provincia": 51,
+        "region": 14,
+        "codigo": "14104",
+        "nombre": "Los Lagos"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 335,
+    "fields": {
+        "provincia": 51,
+        "region": 14,
+        "codigo": "14105",
+        "nombre": "M\u00e1fil"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 336,
+    "fields": {
+        "provincia": 51,
+        "region": 14,
+        "codigo": "14106",
+        "nombre": "Mariquina"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 337,
+    "fields": {
+        "provincia": 51,
+        "region": 14,
+        "codigo": "14107",
+        "nombre": "Paillaco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 338,
+    "fields": {
+        "provincia": 51,
+        "region": 14,
+        "codigo": "14108",
+        "nombre": "Panguipulli"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 339,
+    "fields": {
+        "provincia": 52,
+        "region": 14,
+        "codigo": "14201",
+        "nombre": "La Uni\u00f3n"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 340,
+    "fields": {
+        "provincia": 52,
+        "region": 14,
+        "codigo": "14202",
+        "nombre": "Futrono"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 341,
+    "fields": {
+        "provincia": 52,
+        "region": 14,
+        "codigo": "14203",
+        "nombre": "Lago Ranco"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 342,
+    "fields": {
+        "provincia": 52,
+        "region": 14,
+        "codigo": "14204",
+        "nombre": "R\u00edo Bueno"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 343,
+    "fields": {
+        "provincia": 53,
+        "region": 15,
+        "codigo": "15101",
+        "nombre": "Arica"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 344,
+    "fields": {
+        "provincia": 53,
+        "region": 15,
+        "codigo": "15102",
+        "nombre": "Camarones"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 345,
+    "fields": {
+        "provincia": 54,
+        "region": 15,
+        "codigo": "15201",
+        "nombre": "Putre"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 346,
+    "fields": {
+        "provincia": 54,
+        "region": 15,
+        "codigo": "15202",
+        "nombre": "General Lagos"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 347,
+    "fields": {
+        "provincia": null,
+        "region": 1,
+        "codigo": "01100",
+        "nombre": "Todas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 348,
+    "fields": {
+        "provincia": null,
+        "region": 2,
+        "codigo": "02100",
+        "nombre": "Todas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 349,
+    "fields": {
+        "provincia": null,
+        "region": 3,
+        "codigo": "03100",
+        "nombre": "Todas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 350,
+    "fields": {
+        "provincia": null,
+        "region": 4,
+        "codigo": "04100",
+        "nombre": "Todas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 351,
+    "fields": {
+        "provincia": null,
+        "region": 5,
+        "codigo": "05100",
+        "nombre": "Todas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 352,
+    "fields": {
+        "provincia": null,
+        "region": 6,
+        "codigo": "06100",
+        "nombre": "Todas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 353,
+    "fields": {
+        "provincia": null,
+        "region": 7,
+        "codigo": "07100",
+        "nombre": "Todas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 354,
+    "fields": {
+        "provincia": null,
+        "region": 8,
+        "codigo": "08100",
+        "nombre": "Todas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 355,
+    "fields": {
+        "provincia": null,
+        "region": 9,
+        "codigo": "09100",
+        "nombre": "Todas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 356,
+    "fields": {
+        "provincia": null,
+        "region": 10,
+        "codigo": "10100",
+        "nombre": "Todas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 357,
+    "fields": {
+        "provincia": null,
+        "region": 11,
+        "codigo": "11100",
+        "nombre": "Todas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 358,
+    "fields": {
+        "provincia": null,
+        "region": 12,
+        "codigo": "12100",
+        "nombre": "Todas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 359,
+    "fields": {
+        "provincia": null,
+        "region": 13,
+        "codigo": "13100",
+        "nombre": "Todas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 360,
+    "fields": {
+        "provincia": null,
+        "region": 14,
+        "codigo": "14100",
+        "nombre": "Todas"
+    }
+},
+{
+    "model": "lugar.comuna",
+    "pk": 361,
+    "fields": {
+        "provincia": null,
+        "region": 15,
+        "codigo": "15100",
+        "nombre": "Todas"
+    }
+}
+]
