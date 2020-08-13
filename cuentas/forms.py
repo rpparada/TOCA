@@ -7,7 +7,7 @@ User = get_user_model()
 
 class IngresarForm(forms.Form):
 
-    nombreusuario   = forms.EmailField(widget=forms.EmailInput(attrs={
+    email           = forms.EmailField(widget=forms.EmailInput(attrs={
                                                                 "id": "primercampo",
                                                                 "class": "form-control",
                                                                 "placeholder": "Email"
@@ -53,7 +53,8 @@ class RegistrarUserForm(forms.ModelForm):
     def save(self, commit=True):
         user = super(RegistrarUserForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
-        user.active = False
+        #user.active = False
+        # Aqui va el checkeo email
         if commit:
             user.save()
         return user
