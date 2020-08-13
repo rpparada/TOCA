@@ -7,6 +7,8 @@ from datetime import datetime
 from .models import Artista, Estilo
 from tocata.models import Tocata
 
+from analytics.mixins import ObjectViewedMixin
+
 from toca.parametros import parToca, parTocatas
 
 # Create your views here.
@@ -23,7 +25,7 @@ class ArtistasListView(ListView):
 
         return context
 
-class ArtistaDetailView(DetailView):
+class ArtistaDetailView(ObjectViewedMixin, DetailView):
 
     template_name = 'artista/artista.html'
 

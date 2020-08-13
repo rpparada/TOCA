@@ -57,7 +57,8 @@ INSTALLED_APPS = [
     'orden',
     'facturacion',
     'direccion',
-    'cuentas'
+    'cuentas',
+    'analytics'
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
