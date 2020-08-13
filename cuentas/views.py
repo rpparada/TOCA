@@ -6,6 +6,7 @@ from django.views.generic import CreateView, FormView
 from usuario.models import Usuario
 
 from .forms import IngresarForm, RegistrarUserForm
+from .signals import  user_logged_in
 
 # Create your views here.
 
@@ -25,6 +26,7 @@ class IngresarView(FormView):
         usuario = auth.authenticate(username=email, password=contra)
         if usuario is not None:
             auth.login(request, usuario)
+            user_logged_in.send(usuario.__class__, instance=usuario, request=request)
             #if Usuario.objects.get(user=usuario).es_artista:
             #    request.session['es_artista'] = 'S'
             #else:

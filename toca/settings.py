@@ -70,6 +70,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 AUTH_USER_MODEL = 'cuentas.User'
+FORCE_SESSION_TO_ONE = False
+FORCE_INACTIVE_USER_ENDSESSION = False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
