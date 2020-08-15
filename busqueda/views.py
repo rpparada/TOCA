@@ -4,7 +4,8 @@ from django.views.generic.list import ListView
 from itertools import chain
 from operator import attrgetter
 
-from tocata.models import Tocata, TocataAbierta
+from tocata.models import Tocata
+from tocataabierta.models import TocataAbierta
 
 from toca.parametros import parToca
 

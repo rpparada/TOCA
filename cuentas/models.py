@@ -43,7 +43,7 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser):
-    
+
     email           = models.EmailField(max_length=255, unique=True)
     nombre          = models.CharField(max_length=255, blank=True, null=True)
     apellido        = models.CharField(max_length=255, blank=True, null=True)

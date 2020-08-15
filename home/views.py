@@ -7,10 +7,11 @@ from datetime import datetime
 from itertools import chain
 from operator import attrgetter
 
-from tocata.models import Tocata, TocataAbierta
+from tocata.models import Tocata
+from tocataabierta.models import TocataAbierta
 from artista.models import Artista
 from usuario.models import Usuario
-from home.models import Testimonio
+from .models import Testimonio, DescripcionTocatasIntimas
 from cobro.models import Carro
 from carro.models import CarroCompra
 
@@ -18,6 +19,8 @@ from toca.parametros import parToca
 
 # Create your views here.
 def index(request):
+
+    descripciones = DescripcionTocatasIntimas.objects.get_descripcion(request)
 
     #tocatas = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
     tocatas = Tocata.objects.disponible()
@@ -59,6 +62,7 @@ def index(request):
         # Testimonios
         'testimonios_art': testimonios_art,
         'testimonios_usu': testimonios_usu,
+        'descripciones': descripciones,
     }
 
     return render(request, 'home/index.html', context)

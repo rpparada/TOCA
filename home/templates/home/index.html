@@ -28,105 +28,13 @@
 <!-- end: SECTION IMAGE FULLSCREEN -->
 
 <!-- Text Boxes -->
-{% if usuario.es_artista %}
 <section class="no-padding equalize" data-equalize-item=".text-box">
     <div class="row col-no-margin">
-        <!--Box 1-->
-        <div class="col-lg-3" style="background-color: #2F2F2F;">
-            <div class="text-box">
-                <a>
-                    <i class="fa fa-users"></i>
-                    <h3>Organizador de tus Tocatas</h3>
-                    <p>Tocatas Íntimas gestionará el cobro y asistencia de tus tocatas. Define quorum mínimo para confirmarla.</p>
-                </a>
-            </div>
-        </div>
-        <!--End: Box 1-->
-        <!--Box 2-->
-        <div class="col-lg-3" style="background-color: #383838;">
-            <div class="text-box">
-                <a>
-                    <i class="fa fa-search"></i>
-                    <h3>¿No Tienes Donde Tocar?</h3>
-                    <p>Publica tu tocata en la region y/o comuna que quieras; y deja que tus fanaticos te inviten a sus casas.</p>
-                </a>
-            </div>
-        </div>
-        <!--End: Box 2-->
-        <!--Box 3-->
-        <div class="col-lg-3" style="background-color: #313131;">
-            <div class="text-box">
-                <a>
-                    <i class="fa fa-money-bill-wave"></i>
-                    <h3>Recibe Todo lo Recaudado</h3>
-                    <p>Recibe la totalidad de lo recaudado sin descuentos ni cobros el mismo dia en que se realizará la tocata.</p>
-                </a>
-            </div>
-        </div>
-        <!--End: Box 3-->
-        <!--Box 4-->
-        <div class="col-lg-3" style="background-color: #383838;">
-            <div class="text-box">
-                <a>
-                    <i class="fa fa-smile"></i>
-                    <h3>Conectate con tus Fanáticos</h3>
-                    <p>Pasa un buen momento junto a tus seguidores compartiendo tu música y experiencias.</p>
-                </a>
-            </div>
-        </div>
-        <!--End: Box 4-->
+      {% for descripcion in descripciones %}
+        {% include 'home/snippets/descripcion.html' with instance=descripcion %}
+      {% endfor %}
     </div>
 </section>
-{% else %}
-<section class="no-padding equalize" data-equalize-item=".text-box">
-    <div class="row col-no-margin">
-        <!--Box 1-->
-        <div class="col-lg-3" style="background-color: #2F2F2F;">
-            <div class="text-box">
-                <a>
-                    <i class="fa fa-users"></i>
-                    <h3>Ambientes Íntimos</h3>
-                    <p>Disfrutas de tus artistas favoritos en un ambiente íntimo donde podrás escuchar sus canciones y compartir con ellos.</p>
-                </a>
-            </div>
-        </div>
-        <!--End: Box 1-->
-        <!--Box 2-->
-        <div class="col-lg-3" style="background-color: #383838;">
-            <div class="text-box">
-                <a>
-                    <i class="fa fa-home"></i>
-                    <h3>Tu Artista Favorito en tu Casa</h3>
-                    <p>Tocata en tu casa. Registra tu casa y proponle a los artistas que buscan donde tocar.</p>
-                </a>
-            </div>
-        </div>
-        <!--End: Box 2-->
-        <!--Box 3-->
-        <div class="col-lg-3" style="background-color: #313131;">
-            <div class="text-box">
-                <a>
-                    <i class="fa fa-money-bill-wave"></i>
-                    <h3>Compra tu Entrada en Linea</h3>
-                    <p>Para realizar las tocatas se debe completar el quorum mínimo definido por el artista. Compra tu entrada y si la tocata se suspende, te devolveremos el dinero.</p>
-                </a>
-            </div>
-        </div>
-        <!--End: Box 3-->
-        <!--Box 4-->
-        <div class="col-lg-3" style="background-color: #383838;">
-            <div class="text-box">
-                <a>
-                    <i class="fa fa-music"></i>
-                    <h3>Tocatas Íntimas</h3>
-                    <p>Son espacion donde se generan buenas conversaciones entre los asistences animadas por la musica en vivo.</p>
-                </a>
-            </div>
-        </div>
-        <!--End: Box 4-->
-    </div>
-</section>
-{% endif %}
 <!-- end: Text Boxes -->
 
 <!-- Shop products -->

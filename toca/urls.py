@@ -24,6 +24,7 @@ urlpatterns = [
     path('artistas/', include('artista.urls')),
     path('lugares/', include('lugar.urls')),
     path('tocatas/', include('tocata.urls')),
+    path('tocatasabiertas/', include('tocataabierta.urls')),
     path('usuarios/', include('usuario.urls')),
     path('cuentas/', include('cuentas.urls')),
     path('cobro/', include('cobro.urls')),

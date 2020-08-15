@@ -59,7 +59,8 @@ INSTALLED_APPS = [
     'direccion',
     'cuentas',
     'analytics',
-    'tocataabierta'
+    'tocataabierta',
+    'propuestaslugar'
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (

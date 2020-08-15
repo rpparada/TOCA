@@ -12,36 +12,34 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('lugar', '0001_initial'),
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('tocata', '0001_initial'),
         ('artista', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Tocata',
+            name='TocataAbierta',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('nombre', models.CharField(max_length=200)),
                 ('slug', models.SlugField(blank=True, unique=True)),
-                ('descripción', models.TextField(blank=True)),
-                ('costo', models.DecimalField(decimal_places=2, max_digits=10)),
+                ('descripción', models.TextField(blank=True, null=True)),
+                ('costo', models.DecimalField(decimal_places=2, default=0, max_digits=10)),
                 ('fecha', models.DateField()),
                 ('hora', models.TimeField()),
-                ('asistentes_total', models.IntegerField(default=0)),
                 ('asistentes_min', models.IntegerField()),
-                ('asistentes_max', models.IntegerField()),
                 ('flayer_original', models.ImageField(blank=True, default='fotos/defecto/imagen_original.jpg', upload_to='fotos/tocatas/%Y/%m/%d/')),
                 ('flayer_1920_1280', django_resized.forms.ResizedImageField(blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_1920_1280.jpg', force_format='JPEG', keep_meta=True, quality=75, size=[1920, 1280], upload_to='fotos/lugares/%Y/%m/%d/')),
                 ('flayer_380_507', django_resized.forms.ResizedImageField(blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_380_507.jpg', force_format='JPEG', keep_meta=True, quality=75, size=[380, 507], upload_to='fotos/lugares/%Y/%m/%d/')),
-                ('evaluacion', models.IntegerField(choices=[(0, 'No Evaluada'), (1, 'Muy Mala'), (2, 'Mala'), (3, 'Regular'), (4, 'Buena'), (5, 'Muy Buena')], default=0)),
-                ('estado', models.CharField(choices=[('PU', 'Publicado'), ('SU', 'Suspendido'), ('CN', 'Confirmado'), ('VE', 'Vendido'), ('CM', 'Completado'), ('BO', 'Borrado')], default='PU', max_length=2)),
+                ('estado', models.CharField(choices=[('publicado', 'Publicado'), ('suspendido', 'Suspendido'), ('confirmado', 'Confirmado'), ('borrado', 'Borrado')], default='publicado', max_length=2)),
                 ('fecha_actu', models.DateTimeField(auto_now=True)),
                 ('fecha_crea', models.DateTimeField(auto_now_add=True)),
                 ('artista', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='artista.Artista')),
                 ('comuna', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='lugar.Comuna')),
                 ('estilos', models.ManyToManyField(blank=True, to='artista.Estilo')),
-                ('lugar', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='lugar.Lugar')),
                 ('region', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='lugar.Region')),
+                ('tocata', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='tocata.Tocata')),
                 ('usuario', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL)),
             ],
         ),

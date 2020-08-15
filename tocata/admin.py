@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Tocata, LugaresTocata, TocataAbierta
+from .models import Tocata
 
 # Register your models here.
 
@@ -9,5 +9,3 @@ class TocataAdmin(admin.ModelAdmin):
         model = Tocata
 
 admin.site.register(Tocata, TocataAdmin)
-admin.site.register(LugaresTocata)
-admin.site.register(TocataAbierta)
