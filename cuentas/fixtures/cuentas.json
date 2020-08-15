@@ -3,12 +3,42 @@
     "model": "cuentas.user",
     "pk": 1,
     "fields": {
-        "password": "pbkdf2_sha256$150000$mkb2vC1Sa8Ck$0WQhVvchJaQ4FoM6vCPZjVurMTPFyQ77X1LsHrOwgJs=",
-        "last_login": "2020-08-11T22:26:56.999Z",
+        "password": "pbkdf2_sha256$150000$Wi5HWkHadg3Q$SCX5LDzUrqZt1EBfEVk64+i0qutNgtQja52iUol/MGI=",
+        "last_login": "2020-08-15T04:00:09.566Z",
         "email": "rpparada@gmail.com",
+        "nombre": null,
+        "apellido": null,
         "active": true,
         "staff": true,
         "admin": true
+    }
+},
+{
+    "model": "cuentas.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$150000$UB0NDvOSpp7E$YAwaskoolzxtwgQPvZGn8w1fllAiBZ3dN5emDXLDddc=",
+        "last_login": null,
+        "email": "juliopina@gmail.com",
+        "nombre": null,
+        "apellido": null,
+        "active": true,
+        "staff": false,
+        "admin": false
+    }
+},
+{
+    "model": "cuentas.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$150000$L0mniEW3llSQ$zSVcHLujYaYarMqZhQYwh2wRPwgTlds73W5uQlIX9Zo=",
+        "last_login": "2020-08-15T17:57:57.965Z",
+        "email": "nicolebunout@gmail.com",
+        "nombre": null,
+        "apellido": null,
+        "active": true,
+        "staff": false,
+        "admin": false
     }
 }
 ]

@@ -4220,7 +4220,7 @@
     "pk": 27,
     "fields": {
         "nombre": "SALA SCD VALPARA\u00cdSO",
-        "usuario": 24,
+        "usuario": 2,
         "nombre_calle": "Avenida Alemania",
         "numero": 6985,
         "region": 5,
@@ -4244,7 +4244,7 @@
     "pk": 28,
     "fields": {
         "nombre": "Centro Cultural San Antonio",
-        "usuario": 25,
+        "usuario": 3,
         "nombre_calle": "Antofagasta",
         "numero": 545,
         "region": 5,

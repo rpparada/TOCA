@@ -1,2 +1,106 @@
 [
+{
+    "model": "home.descripciontocatasintimas",
+    "pk": 1,
+    "fields": {
+        "titulo": "Organizador de tus Tocatas",
+        "descripcion": "Tocatas \u00cdntimas gestionar\u00e1 el cobro y asistencia de tus tocatas. Define quorum m\u00ednimo para confirmarla.",
+        "color": "#2F2F2F",
+        "icono": "fa fa-users",
+        "objetivo": "artistas",
+        "fecha_crea": "2020-08-15T01:58:01.733Z",
+        "fecha_actua": "2020-08-15T01:58:01.733Z"
+    }
+},
+{
+    "model": "home.descripciontocatasintimas",
+    "pk": 2,
+    "fields": {
+        "titulo": "\u00bfNo Tienes D\u00f3nde Tocar?",
+        "descripcion": "Publica tu tocata en la region y/o comuna que quieras; y deja que tus fanaticos te inviten a sus casas.",
+        "color": "#383838",
+        "icono": "fa fa-search",
+        "objetivo": "artistas",
+        "fecha_crea": "2020-08-15T01:58:34.220Z",
+        "fecha_actua": "2020-08-15T02:26:13.767Z"
+    }
+},
+{
+    "model": "home.descripciontocatasintimas",
+    "pk": 3,
+    "fields": {
+        "titulo": "Recibe Todo lo Recaudado",
+        "descripcion": "Recibe la totalidad de lo recaudado sin descuentos ni cobros el mismo dia en que se realizar\u00e1 la tocata.",
+        "color": "#313131",
+        "icono": "fa fa-money-bill-wav",
+        "objetivo": "artistas",
+        "fecha_crea": "2020-08-15T01:58:51.475Z",
+        "fecha_actua": "2020-08-15T02:26:19.301Z"
+    }
+},
+{
+    "model": "home.descripciontocatasintimas",
+    "pk": 4,
+    "fields": {
+        "titulo": "Con\u00e9ctate con tus Fan\u00e1ticos",
+        "descripcion": "Pasa un buen momento junto a tus seguidores compartiendo tu m\u00fasica y experiencias.",
+        "color": "#383838",
+        "icono": "fa fa-smile",
+        "objetivo": "artistas",
+        "fecha_crea": "2020-08-15T01:59:19.739Z",
+        "fecha_actua": "2020-08-15T02:26:33.762Z"
+    }
+},
+{
+    "model": "home.descripciontocatasintimas",
+    "pk": 5,
+    "fields": {
+        "titulo": "Ambientes \u00cdntimos",
+        "descripcion": "Disfrutas de tus artistas favoritos en un ambiente \u00edntimo donde podr\u00e1s escuchar sus canciones y compartir con ellos.",
+        "color": "#2F2F2F",
+        "icono": "fa fa-users",
+        "objetivo": "usuarios",
+        "fecha_crea": "2020-08-15T02:00:13.210Z",
+        "fecha_actua": "2020-08-15T02:26:55.468Z"
+    }
+},
+{
+    "model": "home.descripciontocatasintimas",
+    "pk": 6,
+    "fields": {
+        "titulo": "Tu Artista Favorito en tu Casa",
+        "descripcion": "Tocata en tu casa. Registra tu casa y proponle a los artistas que buscan donde tocar.",
+        "color": "#383838",
+        "icono": "fa fa-home",
+        "objetivo": "usuarios",
+        "fecha_crea": "2020-08-15T02:00:35.648Z",
+        "fecha_actua": "2020-08-15T02:27:01.155Z"
+    }
+},
+{
+    "model": "home.descripciontocatasintimas",
+    "pk": 7,
+    "fields": {
+        "titulo": "Compra tu Entrada en Linea",
+        "descripcion": "Para realizar las tocatas se debe completar el quorum m\u00ednimo definido por el artista. Compra tu entrada y si la tocata se suspende, te devolveremos el",
+        "color": "#313131",
+        "icono": "fa fa-money-bill-wave",
+        "objetivo": "usuarios",
+        "fecha_crea": "2020-08-15T02:00:57.680Z",
+        "fecha_actua": "2020-08-15T02:28:37.996Z"
+    }
+},
+{
+    "model": "home.descripciontocatasintimas",
+    "pk": 8,
+    "fields": {
+        "titulo": "Tocatas \u00cdntimas",
+        "descripcion": "Son espacion donde se generan buenas conversaciones entre los asistences animadas por la musica en vivo.",
+        "color": "#383838",
+        "icono": "fa fa-music",
+        "objetivo": "usuarios",
+        "fecha_crea": "2020-08-15T02:01:15.471Z",
+        "fecha_actua": "2020-08-15T02:27:24.993Z"
+    }
+}
 ]

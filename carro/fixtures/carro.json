@@ -3,12 +3,12 @@
     "model": "carro.carrocompra",
     "pk": 1,
     "fields": {
-        "usuario": null,
+        "usuario": 1,
         "cantidad": 0,
         "subtotal": "0.00",
         "total": "0.00",
-        "fecha_actu": "2020-07-31T22:14:30.493Z",
-        "fecha_crea": "2020-07-31T22:14:30.493Z",
+        "fecha_actu": "2020-08-15T02:17:55.681Z",
+        "fecha_crea": "2020-08-15T01:55:54.849Z",
         "tocata": []
     }
 },
@@ -16,98 +16,25 @@
     "model": "carro.carrocompra",
     "pk": 2,
     "fields": {
-        "usuario": 24,
+        "usuario": 1,
         "cantidad": 0,
-        "subtotal": "5000.00",
-        "total": "5010.00",
-        "fecha_actu": "2020-08-03T20:19:57.992Z",
-        "fecha_crea": "2020-08-03T20:18:28.132Z",
-        "tocata": [
-            17
-        ]
+        "subtotal": "0.00",
+        "total": "0.00",
+        "fecha_actu": "2020-08-15T02:56:05.483Z",
+        "fecha_crea": "2020-08-15T02:55:44.882Z",
+        "tocata": []
     }
 },
 {
     "model": "carro.carrocompra",
     "pk": 3,
     "fields": {
-        "usuario": 24,
-        "cantidad": 0,
-        "subtotal": "5000.00",
-        "total": "5010.00",
-        "fecha_actu": "2020-08-03T22:21:23.511Z",
-        "fecha_crea": "2020-08-03T22:19:33.356Z",
-        "tocata": [
-            17
-        ]
-    }
-},
-{
-    "model": "carro.carrocompra",
-    "pk": 4,
-    "fields": {
-        "usuario": 24,
-        "cantidad": 0,
-        "subtotal": "5000.00",
-        "total": "5010.00",
-        "fecha_actu": "2020-08-03T22:38:07.048Z",
-        "fecha_crea": "2020-08-03T22:38:00.270Z",
-        "tocata": [
-            17
-        ]
-    }
-},
-{
-    "model": "carro.carrocompra",
-    "pk": 5,
-    "fields": {
-        "usuario": 24,
-        "cantidad": 0,
-        "subtotal": "5000.00",
-        "total": "5010.00",
-        "fecha_actu": "2020-08-04T17:05:51.416Z",
-        "fecha_crea": "2020-08-03T22:38:21.427Z",
-        "tocata": [
-            17
-        ]
-    }
-},
-{
-    "model": "carro.carrocompra",
-    "pk": 6,
-    "fields": {
-        "usuario": null,
+        "usuario": 1,
         "cantidad": 0,
         "subtotal": "0.00",
         "total": "0.00",
-        "fecha_actu": "2020-08-04T17:06:26.721Z",
-        "fecha_crea": "2020-08-04T17:06:26.721Z",
-        "tocata": []
-    }
-},
-{
-    "model": "carro.carrocompra",
-    "pk": 7,
-    "fields": {
-        "usuario": 25,
-        "cantidad": 0,
-        "subtotal": "0.00",
-        "total": "0.00",
-        "fecha_actu": "2020-08-10T14:46:16.430Z",
-        "fecha_crea": "2020-08-10T14:45:10.805Z",
-        "tocata": []
-    }
-},
-{
-    "model": "carro.carrocompra",
-    "pk": 8,
-    "fields": {
-        "usuario": null,
-        "cantidad": 0,
-        "subtotal": "0.00",
-        "total": "0.00",
-        "fecha_actu": "2020-08-11T22:00:35.953Z",
-        "fecha_crea": "2020-08-10T14:46:36.826Z",
+        "fecha_actu": "2020-08-15T04:30:50.766Z",
+        "fecha_crea": "2020-08-15T03:10:25.256Z",
         "tocata": []
     }
 }

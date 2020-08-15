@@ -3,36 +3,36 @@
     "model": "facturacion.facturacionprofile",
     "pk": 1,
     "fields": {
-        "usuario": 24,
-        "email": "nicolebunout@gmail.com",
+        "usuario": 1,
+        "email": "rpparada@gmail.com",
         "activo": true,
         "estado": "PU",
-        "fecha_actu": "2020-08-04T17:05:51.524Z",
-        "fecha_crea": "2020-08-04T17:05:51.524Z"
+        "fecha_actu": "2020-08-15T01:54:48.147Z",
+        "fecha_crea": "2020-08-15T01:54:48.147Z"
     }
 },
 {
     "model": "facturacion.facturacionprofile",
     "pk": 2,
     "fields": {
-        "usuario": 25,
+        "usuario": 2,
         "email": "juliopina@gmail.com",
         "activo": true,
         "estado": "PU",
-        "fecha_actu": "2020-08-10T14:36:13.336Z",
-        "fecha_crea": "2020-08-10T14:36:13.336Z"
+        "fecha_actu": "2020-08-15T04:01:35.413Z",
+        "fecha_crea": "2020-08-15T04:01:35.413Z"
     }
 },
 {
     "model": "facturacion.facturacionprofile",
     "pk": 3,
     "fields": {
-        "usuario": 1,
-        "email": "rpparada@gmail.com",
+        "usuario": 3,
+        "email": "nicolebunout@gmail.com",
         "activo": true,
         "estado": "PU",
-        "fecha_actu": "2020-08-11T22:25:57.802Z",
-        "fecha_crea": "2020-08-11T22:25:57.802Z"
+        "fecha_actu": "2020-08-15T04:01:59.095Z",
+        "fecha_crea": "2020-08-15T04:01:59.095Z"
     }
 }
 ]
