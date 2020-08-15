@@ -16,6 +16,24 @@ TESTIMONIO_OBJETIVO_OPCIONES = (
     ('artistas','Artistas'),
     ('usuarios','Usuarios'),
 )
+
+class TestimonioQuerySet(models.QuerySet):
+    def solo_artistas(self):
+        return self.filter(objetivo='artistas')
+
+    def solo_usuarios(self):
+        return self.filter(objetivo='usuarios')
+
+class TestimonioManager(models.Manager):
+    def get_queryset(self):
+        return TestimonioQuerySet(self.model, using=self._db)
+
+    def get_testimonio(self, request):
+        tipo_usuario = request.session.get('es_artista', 'N')
+        if tipo_usuario == 'S':
+            return self.get_queryset().solo_artistas()
+        return self.get_queryset().solo_usuarios()
+
 class Testimonio(models.Model):
 
     artista             = models.ForeignKey(Artista, on_delete=models.DO_NOTHING)
@@ -26,6 +44,8 @@ class Testimonio(models.Model):
     estado              = models.CharField(max_length=20, choices=TESTIMONIO_ESTADO_OPCIONES,default='disponible')
     fecha_crea          = models.DateTimeField(auto_now_add=True)
     fecha_actua         = models.DateTimeField(auto_now=True)
+
+    objects             = TestimonioManager()
 
     def __str__(self):
         return str(self.artista)+'('+str(self.objetivo)+'): '+str(self.testimonio[:100])

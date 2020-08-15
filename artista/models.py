@@ -25,6 +25,13 @@ class ArtistaManager(models.Manager):
             return qs
         return None
 
+    def get_artistas_destacados(self, num_muestra):
+        # Por ahora el criterio de mejores tocatas solo contemplara la fecha de creacion
+        qs = self.get_queryset().disponible().order_by('-fecha_crea')[:num_muestra]
+        if qs:
+            return qs
+        return None
+
 class Artista(models.Model):
 
     nombre              = models.CharField(max_length=200)
@@ -54,7 +61,6 @@ class Artista(models.Model):
         return "/artistas/{slug}".format(slug=self.slug)
 
 def artista_pre_save_receiver(sender, instance, *args, **kwargs):
-    print('aqui')
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
 

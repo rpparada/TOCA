@@ -38,7 +38,7 @@
 <!-- end: Text Boxes -->
 
 <!-- Shop products -->
-{% if tocatas %}
+{% if tocata_list %}
 <section class="background-grey">
     <div class="container">
       <div class="col-lg-8 m-b-100 center">
@@ -50,8 +50,8 @@
       <!--Product list-->
       <div class="shop">
           <div class="grid-layout grid-3-columns" data-item="grid-item">
-            {% for tocata in tocatas %}
-              {% include 'snippets/gridtocata.html' with instance=tocata %}
+            {% for tocata in tocata_list %}
+              {% include 'tocata/snippets/gridtocata.html' with instance=tocata %}
             {% endfor %}
           </div>
       </div>
@@ -116,35 +116,14 @@
             <p>Algunos de los testimonios de nuestros artistas...</p>
         </div>
         <!-- end: Heading -->
-
         <!-- Testimonials -->
-        {% if usuario.es_artista %}
           <div class="carousel arrows-visibile testimonial testimonial-single" data-items="1" data-loop="true" data-autoplay="true" data-autoplay="3500" data-arrows="false">
               <!-- Testimonials item -->
-              {% for test_art in testimonios_art %}
-              <div class="testimonial-item">
-                  <img src="{{ test_art.foto.url }}" alt="">
-                  <p>{{ test_art.testimonio }}</p>
-                  <span>{{ test_art.artista.nombre }}</span>
-                  <span>{{ test_art.artista.habilidades }}</span>
-              </div>
+              {% for testimonio in testimonios %}
+                {% include 'home/snippets/testimonios.html' with instance=testimonio %}
               {% endfor %}
               <!-- end: Testimonials item-->
           </div>
-        {% else %}
-          <div class="carousel arrows-visibile testimonial testimonial-single" data-items="1" data-loop="true" data-autoplay="true" data-autoplay="3500" data-arrows="false">
-              <!-- Testimonials item -->
-              {% for test_usu in testimonios_usu %}
-              <div class="testimonial-item">
-                  <img src="{{ test_usu.foto.url }}" alt="">
-                  <p>{{ test_usu.testimonio }}</p>
-                  <span>{{ test_usu.artista.nombre }}</span>
-                  <span>{{ test_usu.artista.habilidades }}</span>
-              </div>
-              {% endfor %}
-              <!-- end: Testimonials item-->
-          </div>
-        {% endif %}
         <!-- end: Testimonials -->
     </div>
 </section>

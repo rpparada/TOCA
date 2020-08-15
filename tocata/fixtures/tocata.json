@@ -4,7 +4,7 @@
     "pk": 17,
     "fields": {
         "artista": 5,
-        "usuario": 24,
+        "usuario": 3,
         "nombre": "Lanzamiento del nuevo Single Pies Descalzos",
         "slug": "lanzamiento-del-nuevo-single-pies-descalzos",
         "lugar": 27,
@@ -37,7 +37,7 @@
     "pk": 18,
     "fields": {
         "artista": 6,
-        "usuario": 25,
+        "usuario": 2,
         "nombre": "Puerto Sonoro",
         "slug": "puerto-sonoro",
         "lugar": 28,
@@ -61,36 +61,6 @@
             12,
             13,
             19
-        ]
-    }
-},
-{
-    "model": "tocata.tocataabierta",
-    "pk": 14,
-    "fields": {
-        "artista": 5,
-        "usuario": 24,
-        "nombre": "CICLO MUJERES \u00cdNTIMAS",
-        "slug": "ciclo-mujeres-intimas",
-        "region": 13,
-        "comuna": 301,
-        "descripci\u00f3n": "Con su mezcla \u00fanica de t\u00e9cnica, dulzura y poes\u00eda, la cantautora chilena Nicole Bunout llegar\u00e1 al Teatro NESCAF\u00c9 de las Artes el 26 de julio, a las 20:30 horas, para realizar un concierto enmarcado en el exitoso Ciclo Mujeres \u00cdntimas.\r\n\r\nLa propuesta de Bunout se caracteriza por generar una alquimia que hace sentir al jazz -g\u00e9nero en el cual se inici\u00f3 hace m\u00e1s de una d\u00e9cada- y la m\u00fasica popular como un solo elemento, en el que las fronteras se derriten ante el b\u00e1lsamo de su voz.\r\n\r\nEn esta oportunidad, la artista repasar\u00e1 las canciones de Cris\u00e1lida (2014), su primer disco de estudio, y rendir\u00e1 homenaje a Violeta Parra en el centenario de su nacimiento y a otros \u201cgrandes cantores de nuestra tierra\u201d. Asimismo, presentar\u00e1 un adelanto de sus creaciones m\u00e1s recientes en lo que ella misma describe como \u201cun concierto especial\u201d.\r\n\r\nReconocida como una de la voces m\u00e1s finas de la escena musical chilena, Nicole Bunout estar\u00e1 acompa\u00f1ada en el escenario por un ensamble de cuerdas y m\u00fasicos invitados.",
-        "costo": "0.00",
-        "fecha": "2020-10-31",
-        "hora": "20:30:00",
-        "asistentes_min": 30,
-        "flayer_original": "fotos/tocatas/2020/08/03/NicoleBunout-17--850x564.jpg",
-        "flayer_1920_1280": "fotos/lugares/2020/08/03/NicoleBunout-17--850x564.jpg",
-        "flayer_380_507": "fotos/lugares/2020/08/03/NicoleBunout-17--850x564_1Pr4SBl.jpg",
-        "tocata": null,
-        "estado": "PU",
-        "fecha_actu": "2020-08-03T20:16:36.152Z",
-        "fecha_crea": "2020-08-03T20:16:36.152Z",
-        "estilos": [
-            10,
-            11,
-            13,
-            18
         ]
     }
 }

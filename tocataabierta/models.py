@@ -10,6 +10,8 @@ from tocata.models import Tocata
 
 from toca.utils  import unique_slug_generator
 
+from toca.parametros import parToca
+
 User = settings.AUTH_USER_MODEL
 # Create your models here.
 
@@ -44,6 +46,13 @@ class TocataAbiertaManager(models.Manager):
 
     def busqueda(self, consulta):
         return self.get_queryset().disponible().busqueda(consulta)
+
+    def get_mejores_tocatasabiertas(self, num_muestra):
+        # Por ahora el criterio de mejores tocatas solo contemplara la fecha de creacion
+        qs = self.get_queryset().disponible().order_by('-fecha_crea')[:num_muestra]
+        if qs:
+            return qs
+        return None
 
 class TocataAbierta(models.Model):
 

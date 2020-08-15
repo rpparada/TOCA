@@ -48,6 +48,13 @@ class TocataManager(models.Manager):
             return qs
         return None
 
+    def get_mejores_tocatas(self, num_muestra):
+        # Por ahora el criterio de mejores tocatas solo contemplara la fecha de creacion
+        qs = self.get_queryset().disponible().order_by('-fecha_crea')[:num_muestra]
+        if qs:
+            return qs
+        return None
+
 class Tocata(models.Model):
 
     artista             = models.ForeignKey(Artista, on_delete=models.DO_NOTHING)
