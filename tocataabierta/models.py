@@ -26,7 +26,7 @@ TOCATAABIERTA_ESTADO_OPCIONES = (
 class TocataAbiertaQuerySet(models.query.QuerySet):
 
     def disponible(self):
-        return self.filter(estado__in=[parToca['publicado'],])
+        return self.filter(estado='publicado')
 
     def busqueda(self, consulta):
         lookups = (Q(nombre__icontains=consulta) |
@@ -72,7 +72,7 @@ class TocataAbierta(models.Model):
     flayer_380_507      = ResizedImageField(size=[380, 507],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_380_507.jpg')
     tocata              = models.ForeignKey(Tocata, on_delete=models.DO_NOTHING, null=True, blank=True)
     estilos             = models.ManyToManyField(Estilo, blank=True)
-    estado              = models.CharField(max_length=2, choices=TOCATAABIERTA_ESTADO_OPCIONES,default='publicado')
+    estado              = models.CharField(max_length=20, choices=TOCATAABIERTA_ESTADO_OPCIONES,default='publicado')
 
     fecha_actu          = models.DateTimeField(auto_now=True)
     fecha_crea          = models.DateTimeField(auto_now_add=True)

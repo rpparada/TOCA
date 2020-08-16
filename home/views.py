@@ -31,6 +31,8 @@ class IndexListView(ListView):
         # Mejores Tocatas Abiertas
         tocatasabiertas = TocataAbierta.objects.get_mejores_tocatasabiertas(parToca['muestraTocatas'])
 
+        print(tocatasabiertas)
+
         # Artistas Destacados
         artistas = Artista.objects.get_artistas_destacados(parToca['muestraArtistas'])
 
