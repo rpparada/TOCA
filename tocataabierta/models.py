@@ -52,7 +52,7 @@ class TocataAbiertaManager(models.Manager):
         qs = self.get_queryset().disponible().order_by('-fecha_crea')[:num_muestra]
         if qs:
             return qs
-        return None
+        return self.none()
 
 class TocataAbierta(models.Model):
 

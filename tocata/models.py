@@ -46,14 +46,14 @@ class TocataManager(models.Manager):
         qs = self.get_queryset().disponible().tocataartista(artista)
         if qs:
             return qs
-        return None
+        return self.none()
 
     def get_mejores_tocatas(self, num_muestra):
         # Por ahora el criterio de mejores tocatas solo contemplara la fecha de creacion
         qs = self.get_queryset().disponible().order_by('-fecha_crea')[:num_muestra]
         if qs:
             return qs
-        return None
+        return self.none()
 
 class Tocata(models.Model):
 
