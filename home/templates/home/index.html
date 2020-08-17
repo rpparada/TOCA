@@ -3,7 +3,7 @@
 {% load humanize %}
 {% block title %} | HOME{% endblock %}
 {% block content %}
-
+{% url 'tocata:tocatas' as tocatas_url %}
 <!-- Alertas -->
 {% include 'partials/_alerts.html' %}
 
@@ -19,7 +19,7 @@
             {% else %}
             <p class="lead text-light " data-animate="fadeInUp" data-animate-delay="600">Disfruta de tus artistas favoritos en un ambiente íntimo.</p>
             <span data-animate="fadeInUp" data-animate-delay="900">
-                <a href="{% url 'tocatas' %}" class="btn">Mira nuestras Tocatas Intimas publicadas</a>
+                <a href="{{ tocatas_url }}" class="btn">Mira nuestras Tocatas Intimas publicadas</a>
             {% endif %}
             </span>
         </div>
@@ -82,10 +82,10 @@
         </div>
         <div class="carousel shop-products" data-margin="20" data-dots="false">
           {% for tocataabierta in tocatasabiertas %}
-            {% include 'tocata/snippets/gridtocataabierta.html' with instance=tocataabierta %}
+            {% include 'tocataabierta/snippets/gridtocataabierta.html' with instance=tocataabierta %}
           {% endfor %}
         </div>
-{% elif tocata_list.count > 0 %}
+{% elif tocatasabiertas.count > 0 %}
         <div class="heading-text heading-line text-center">
             <h4>ARTISTAS BUSCAN DÓNDE TOCAR</h4>
         </div>
@@ -93,7 +93,7 @@
 					<div class="row">
             {% for tocataabierta in tocatasabiertas %}
               <div class="col-lg-3">
-              {% include 'tocata/snippets/gridtocataabierta.html' with instance=tocataabierta %}
+              {% include 'tocataabierta/snippets/gridtocataabierta.html' with instance=tocataabierta %}
               </div>
             {% endfor %}
           </div>
@@ -101,7 +101,7 @@
 {% else %}
         <div class="heading-text heading-line text-center">
             <h4>ARTISTAS BUSCAN DÓNDE TOCAR</h4>
-            <p>Actualmente no tenemos Tocatas Intimas diponibles.</p>
+            <p>Actualmente no tenemos a ningún artista buscando donde tocar.</p>
         </div>
 {% endif %}
     </div>

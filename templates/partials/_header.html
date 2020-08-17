@@ -2,7 +2,8 @@
 {% url 'index' as index_url %}
 {% url 'busqueda' as busqueda_url %}
 {% url 'carro' as carro_url %}
-{% url 'tocatas' as tocatas_url %}
+{% url 'tocata:tocatas' as tocatas_url %}
+{% url 'tocataabierta:tocatasabiertas' as tocatasabiertas_url %}
 {% url 'artistas' as artistas_url %}
 {% url 'mistocatas' as mistocatas_url %}
 {% url 'creartocata' as creartocata_url %}
@@ -62,6 +63,7 @@
                         <ul>
                             <li><a href="{{ index_url }}">Home</a></li>
                             <li><a href="{{ tocatas_url }}">Tocatas</a></li>
+                            <li><a href="{{ tocatasabiertas_url }}">Ofrece tu Casa</a></li>
                             <li><a href="{{ artistas_url }}">Artistas</a></li>
 
                             {% if user.is_authenticated %}

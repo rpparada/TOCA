@@ -4,10 +4,42 @@ from django.views.generic import DetailView, ListView
 from django.contrib.auth.decorators import login_required
 
 from .models import TocataAbierta
+from carro.models import CarroCompra
 
 from .forms import TocataAbiertaForm
 
+from toca.parametros import parToca
+
 # Create your views here.
+class TocataAbiertaListView(ListView):
+
+    queryset = TocataAbierta.objects.disponible()
+    paginate_by = parToca['tocatas_pag']
+    template_name = 'tocataabierta/tocatasabiertas.html'
+    ordering = ['-fecha']
+
+    def get_ordering(self):
+        orden = self.request.GET.get('orden','fecha')
+        direccion = self.request.GET.get('direccion','asc')
+        if direccion == 'asc':
+            return orden
+        else:
+            return '-'+orden
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(TocataAbiertaListView, self).get_context_data(*args, **kwargs)
+
+        orden = self.request.GET.get('orden','fecha')
+        direccion = self.request.GET.get('direccion','asc')
+        carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(self.request)
+
+        context['carro'] = carro_obj
+        context['orden'] = orden
+        context['direccion'] = direccion
+
+        return context
+
+
 class TocataAbiertaDetailView(DetailView):
 
     queryset = TocataAbierta.objects.all()

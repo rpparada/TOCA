@@ -8,7 +8,6 @@ from itertools import chain
 from operator import attrgetter
 
 from .models import Tocata
-from tocataabierta.models import TocataAbierta
 from propuestaslugar.models import LugaresTocata
 from artista.models import Artista
 from lugar.models import Lugar, Comuna, Region
@@ -27,56 +26,28 @@ class TocataListView(ListView):
     queryset = Tocata.objects.disponible()
     paginate_by = parToca['tocatas_pag']
     template_name = 'tocata/tocatas.html'
+    ordering = ['-fecha']
+
+    def get_ordering(self):
+        orden = self.request.GET.get('orden','fecha')
+        direccion = self.request.GET.get('direccion','asc')
+        if direccion == 'asc':
+            return orden
+        else:
+            return '-'+orden
 
     def get_context_data(self, *args, **kwargs):
         context = super(TocataListView, self).get_context_data(*args, **kwargs)
 
         orden = self.request.GET.get('orden','fecha')
-        filtro = self.request.GET.get('filtro','todas')
         direccion = self.request.GET.get('direccion','asc')
         carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(self.request)
 
         context['carro'] = carro_obj
         context['orden'] = orden
-        context['filtro'] = filtro
         context['direccion'] = direccion
 
         return context
-
-    def get_queryset(self):
-        queryset = super(TocataListView, self).get_queryset()
-
-        orden = self.request.GET.get('orden','fecha')
-        filtro = self.request.GET.get('filtro','todas')
-        direccion = self.request.GET.get('direccion','asc')
-
-        tocatas = Tocata.objects.none()
-        tocatasabiertas = TocataAbierta.objects.none()
-
-        if filtro == 'todas':
-            tocatas = Tocata.objects.disponible()
-            for tocata in tocatas:
-                tocata.tipo = 'cerrada'
-            tocatasabiertas = TocataAbierta.objects.disponible()
-            for tocataabierta in tocatasabiertas:
-                tocataabierta.tipo = 'abierta'
-
-        elif filtro == 'cerradas':
-            tocatas = Tocata.objects.disponible()
-            for tocata in tocatas:
-                tocata.tipo = 'cerrada'
-
-        elif filtro == 'abiertas':
-            tocatasabiertas = TocataAbierta.objects.disponible()
-            for tocataabierta in tocatasabiertas:
-                tocataabierta.tipo = 'abierta'
-
-        if direccion == 'asc':
-            result_list = sorted(chain(tocatas, tocatasabiertas,), key=attrgetter(orden), reverse=False)
-        else:
-            result_list = sorted(chain(tocatas, tocatasabiertas,), key=attrgetter(orden), reverse=True)
-
-        return result_list
 
 class TocataDetailView(DetailView):
 
