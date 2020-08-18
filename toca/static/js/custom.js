@@ -217,23 +217,23 @@ $("#formtocheck").submit(function(){
 $(document).ready(function(){
 
   // Busqueda actomatica
-  var searchForm = $(".search-form");
-  var searchInput = searchForm.find("[name='q']");
-  var searchBtn = searchForm.find("[type='submit']")
-  var typingTimer;
-  var typingInterval = 500;
-  searchInput.keyup(function(event){
-    clearTimeout(typingTimer)
-    typingTimer = setTimeout(ejecutaBusqueda,typingInterval);
-  })
-  searchInput.keydown(function(event){
-    clearTimeout(typingTimer)
-  })
-
-  function ejecutaBusqueda(){
-    var query = searchInput.val();
-    window.location.href="/busqueda/?q="+query
-  }
+  // var searchForm = $(".search-form");
+  // var searchInput = searchForm.find("[name='q']");
+  // var searchBtn = searchForm.find("[type='submit']")
+  // var typingTimer;
+  // var typingInterval = 500;
+  // searchInput.keyup(function(event){
+  //   clearTimeout(typingTimer)
+  //   typingTimer = setTimeout(ejecutaBusqueda,typingInterval);
+  // })
+  // searchInput.keydown(function(event){
+  //   clearTimeout(typingTimer)
+  // })
+  //
+  // function ejecutaBusqueda(){
+  //   var query = searchInput.val();
+  //   window.location.href="/busqueda/?q="+query
+  // }
 
   // Agregar o quitar tocatas de carro y actualizar
   var tocataForm = $(".form-tocata-ajax");
@@ -316,4 +316,27 @@ $(document).ready(function(){
       }
     })
   }
+
+
+  // Controla cantidad de elemento a agregar en carro
+  var numItemCarro = $(".cart-product-quantity");
+  var botonmenos = numItemCarro.find(".minus");
+  var botonmas = numItemCarro.find(".plus");
+  var textCantidad = numItemCarro.find(".qty");
+
+  botonmas.click(function(event) {
+    var cantidadActual = parseInt(textCantidad.val());
+    if (cantidadActual < 2) {
+      textCantidad.val(cantidadActual+1);
+    }
+  });
+
+  botonmenos.click(function(event) {
+    var cantidadActual = parseInt(textCantidad.val());
+    if (cantidadActual > 1) {
+      textCantidad.val(cantidadActual-1);
+    }
+  });
+
+
 })

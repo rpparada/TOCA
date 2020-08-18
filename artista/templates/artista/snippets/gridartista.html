@@ -1,5 +1,6 @@
 {% load humanize %}
-<div class="portfolio-item img-zoom {% for estilo in instance.estilos.all %} ct-{{estilo}} {% endfor %}">
+{% load estilotag %}
+<div class="portfolio-item img-zoom {% for estilo in instance.estilos.all %} ct-{{estilo|replacespacewith:'-'}} {% endfor %}">
     <div class="portfolio-item-wrap">
         <div class="portfolio-image">
             <a href="{{ instance.get_absolute_url }}"><img src="{{ instance.foto_525_350.url }}" alt=""></a>

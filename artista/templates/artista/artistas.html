@@ -17,7 +17,7 @@
               {% if estilos %}
                 <li class="active"><a href="#" data-category="*">Todos</a></li>
                 {% for estilo in estilos %}
-                  <li><a href="#" data-category=".ct-{{estilo}}">{{estilo|replacewithspace:"_"}}</a></li>
+                  <li><a href="#" data-category=".ct-{{estilo|replacespacewith:'-'}}">{{estilo|replacewithspace:"_"}}</a></li>
                 {% endfor %}
               {% endif %}
             </ul>
