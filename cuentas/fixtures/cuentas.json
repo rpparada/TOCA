@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
         "password": "pbkdf2_sha256$150000$Wi5HWkHadg3Q$SCX5LDzUrqZt1EBfEVk64+i0qutNgtQja52iUol/MGI=",
-        "last_login": "2020-08-15T04:00:09.566Z",
+        "last_login": "2020-08-17T22:54:27.673Z",
         "email": "rpparada@gmail.com",
         "nombre": null,
         "apellido": null,

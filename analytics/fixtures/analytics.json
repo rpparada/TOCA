@@ -33,6 +33,127 @@
     }
 },
 {
+    "model": "analytics.objectviewed",
+    "pk": 4,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 13,
+        "object_id": 5,
+        "timestamp": "2020-08-16T20:10:50.629Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 5,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 13,
+        "object_id": 5,
+        "timestamp": "2020-08-16T20:53:46.311Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 6,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 13,
+        "object_id": 5,
+        "timestamp": "2020-08-16T21:34:31.678Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 7,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 13,
+        "object_id": 5,
+        "timestamp": "2020-08-16T22:00:42.425Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 8,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 13,
+        "object_id": 6,
+        "timestamp": "2020-08-16T22:03:09.471Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 9,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 13,
+        "object_id": 5,
+        "timestamp": "2020-08-17T22:55:02.657Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 10,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 13,
+        "object_id": 5,
+        "timestamp": "2020-08-17T22:55:33.328Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 11,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 13,
+        "object_id": 5,
+        "timestamp": "2020-08-17T22:55:53.133Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 12,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 13,
+        "object_id": 5,
+        "timestamp": "2020-08-17T22:56:20.849Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 13,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 13,
+        "object_id": 5,
+        "timestamp": "2020-08-17T22:56:35.516Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 14,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 13,
+        "object_id": 6,
+        "timestamp": "2020-08-17T23:03:21.562Z"
+    }
+},
+{
     "model": "analytics.usersession",
     "pk": 1,
     "fields": {

@@ -63,5 +63,103 @@
             19
         ]
     }
+},
+{
+    "model": "tocata.tocata",
+    "pk": 19,
+    "fields": {
+        "artista": 6,
+        "usuario": 2,
+        "nombre": "JULIO PI\u00d1A + ANARK\u00cdA TROPIKAL",
+        "slug": "julio-pina-anarkia-tropikal",
+        "lugar": 29,
+        "region": 5,
+        "comuna": 63,
+        "descripci\u00f3n": "S\u00c1BADO 29 DE DICIEMBRE DE 2018: JULIO PI\u00d1A + ANARK\u00cdA TROPIKAL EN EL BAR PIEDRA ROJA",
+        "costo": "5000.00",
+        "fecha": "2020-11-28",
+        "hora": "18:00:00",
+        "asistentes_total": 0,
+        "asistentes_min": 40,
+        "asistentes_max": 50,
+        "flayer_original": "fotos/tocatas/2020/08/16/30-49121560_2175812692680035_4725641765762105344_n.jpg",
+        "flayer_1920_1280": "fotos/lugares/2020/08/16/30-49121560_2175812692680035_4725641765762105344_n.jpg",
+        "flayer_380_507": "fotos/lugares/2020/08/16/30-49121560_2175812692680035_4725641765762105344_n_TrCT1X4.jpg",
+        "evaluacion": 0,
+        "estado": "PU",
+        "fecha_actu": "2020-08-16T21:23:06.536Z",
+        "fecha_crea": "2020-08-16T21:23:06.536Z",
+        "estilos": [
+            12,
+            13,
+            19
+        ]
+    }
+},
+{
+    "model": "tocata.tocata",
+    "pk": 20,
+    "fields": {
+        "artista": 5,
+        "usuario": 3,
+        "nombre": "Mujeres \u00cdntimas",
+        "slug": "mujeres-intimas",
+        "lugar": 30,
+        "region": 13,
+        "comuna": 301,
+        "descripci\u00f3n": "Prepara tus o\u00eddos porque en estas vacaciones de invierno podr\u00e1s disfrutar de tus bandas favoritas en peque\u00f1os conciertos en la Disquer\u00eda Chilena. Un local que, m\u00e1s que vender discos, es un punto de encuentro entre los m\u00fasicos chilenos y sus segudores.\r\n\r\nPara que vayas guardando las fechas:\r\n\r\nQuien abre este peque\u00f1o ciclo de conciertos es la artista nacional Nicole Bunout, que se presentar\u00e1 el viernes 21 de julio previo a su presentaci\u00f3n en el Teatro Nescaf\u00e9 de las Artes donde participar\u00e1 del ciclo \"Mujeres \u00cdntimas\".",
+        "costo": "7000.00",
+        "fecha": "2021-04-10",
+        "hora": "21:27:14",
+        "asistentes_total": 0,
+        "asistentes_min": 20,
+        "asistentes_max": 30,
+        "flayer_original": "fotos/tocatas/2020/08/16/nicole.jpg",
+        "flayer_1920_1280": "fotos/lugares/2020/08/16/nicole.jpg",
+        "flayer_380_507": "fotos/lugares/2020/08/16/nicole_0Hh3IMt.jpg",
+        "evaluacion": 0,
+        "estado": "PU",
+        "fecha_actu": "2020-08-16T21:27:44.528Z",
+        "fecha_crea": "2020-08-16T21:27:44.528Z",
+        "estilos": [
+            10,
+            11,
+            13,
+            18
+        ]
+    }
+},
+{
+    "model": "tocata.tocata",
+    "pk": 21,
+    "fields": {
+        "artista": 5,
+        "usuario": 3,
+        "nombre": "CICLO MUJERES: NICOLE BUNOUT + PAZ COURT",
+        "slug": "ciclo-mujeres-nicole-bunout-paz-court",
+        "lugar": 31,
+        "region": 13,
+        "comuna": 291,
+        "descripci\u00f3n": "Ciclo de Mujeres SCD: \"Nosotras, que nos queremos tanto\". Para mayor informaci\u00f3n ingresa a www.salasscd.cl",
+        "costo": "10000.00",
+        "fecha": "2021-01-09",
+        "hora": "21:31:34",
+        "asistentes_total": 0,
+        "asistentes_min": 30,
+        "asistentes_max": 40,
+        "flayer_original": "fotos/tocatas/2020/08/16/avatars-000031613843-1wco8g-t500x500.jpg",
+        "flayer_1920_1280": "fotos/lugares/2020/08/16/avatars-000031613843-1wco8g-t500x500.jpg",
+        "flayer_380_507": "fotos/lugares/2020/08/16/avatars-000031613843-1wco8g-t500x500_TWzxtxo.jpg",
+        "evaluacion": 0,
+        "estado": "PU",
+        "fecha_actu": "2020-08-16T21:33:11.263Z",
+        "fecha_crea": "2020-08-16T21:33:11.263Z",
+        "estilos": [
+            10,
+            11,
+            13,
+            18
+        ]
+    }
 }
 ]

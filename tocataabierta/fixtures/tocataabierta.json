@@ -1,2 +1,156 @@
 [
+{
+    "model": "tocataabierta.tocataabierta",
+    "pk": 3,
+    "fields": {
+        "artista": 6,
+        "usuario": 2,
+        "nombre": "Chile chile",
+        "slug": "chile-chile",
+        "region": 13,
+        "comuna": 279,
+        "descripci\u00f3n": "Chile chile",
+        "costo": "0.00",
+        "fecha": "2020-10-09",
+        "hora": "18:00:00",
+        "asistentes_min": 20,
+        "flayer_original": "fotos/tocatas/2020/08/17/23_04_JP2.jpg",
+        "flayer_1920_1280": "fotos/lugares/2020/08/17/23_04_JP2.jpg",
+        "flayer_380_507": "fotos/lugares/2020/08/17/23_04_JP2_CX4B6q2.jpg",
+        "tocata": null,
+        "estado": "publicado",
+        "fecha_actu": "2020-08-17T19:40:34.039Z",
+        "fecha_crea": "2020-08-17T19:40:34.039Z",
+        "estilos": [
+            12,
+            13,
+            16,
+            19
+        ]
+    }
+},
+{
+    "model": "tocataabierta.tocataabierta",
+    "pk": 4,
+    "fields": {
+        "artista": 6,
+        "usuario": 2,
+        "nombre": "Lorem Ipsum",
+        "slug": "lorem-ipsum",
+        "region": 4,
+        "comuna": 31,
+        "descripci\u00f3n": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "costo": "0.00",
+        "fecha": "2020-12-25",
+        "hora": "18:00:00",
+        "asistentes_min": 30,
+        "flayer_original": "fotos/tocatas/2020/08/17/maxresdefault.jpg",
+        "flayer_1920_1280": "fotos/lugares/2020/08/17/maxresdefault.jpg",
+        "flayer_380_507": "fotos/lugares/2020/08/17/maxresdefault_eWzGuIf.jpg",
+        "tocata": null,
+        "estado": "publicado",
+        "fecha_actu": "2020-08-17T19:42:07.342Z",
+        "fecha_crea": "2020-08-17T19:42:07.342Z",
+        "estilos": [
+            11,
+            12,
+            13,
+            16,
+            19
+        ]
+    }
+},
+{
+    "model": "tocataabierta.tocataabierta",
+    "pk": 5,
+    "fields": {
+        "artista": 5,
+        "usuario": 3,
+        "nombre": "Why do we use it?",
+        "slug": "why-do-we-use-it",
+        "region": 1,
+        "comuna": 4,
+        "descripci\u00f3n": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+        "costo": "0.00",
+        "fecha": "2020-09-19",
+        "hora": "12:00:00",
+        "asistentes_min": 20,
+        "flayer_original": "fotos/tocatas/2020/08/17/Nicole-bunout-1.jpg",
+        "flayer_1920_1280": "fotos/lugares/2020/08/17/Nicole-bunout-1.jpg",
+        "flayer_380_507": "fotos/lugares/2020/08/17/Nicole-bunout-1_IhEg9fG.jpg",
+        "tocata": null,
+        "estado": "publicado",
+        "fecha_actu": "2020-08-17T19:45:33.744Z",
+        "fecha_crea": "2020-08-17T19:45:33.744Z",
+        "estilos": [
+            10,
+            11,
+            13,
+            16,
+            18
+        ]
+    }
+},
+{
+    "model": "tocataabierta.tocataabierta",
+    "pk": 6,
+    "fields": {
+        "artista": 5,
+        "usuario": 3,
+        "nombre": "Where can I get some?",
+        "slug": "where-can-i-get-some",
+        "region": 10,
+        "comuna": 247,
+        "descripci\u00f3n": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.",
+        "costo": "0.00",
+        "fecha": "2020-11-21",
+        "hora": "00:00:00",
+        "asistentes_min": 20,
+        "flayer_original": "fotos/tocatas/2020/08/17/Nicole-Bunout-800x500_c.png",
+        "flayer_1920_1280": "fotos/lugares/2020/08/17/Nicole-Bunout-800x500_c.jpg",
+        "flayer_380_507": "fotos/lugares/2020/08/17/Nicole-Bunout-800x500_c_YbACg5L.jpg",
+        "tocata": null,
+        "estado": "publicado",
+        "fecha_actu": "2020-08-17T19:46:40.561Z",
+        "fecha_crea": "2020-08-17T19:46:40.561Z",
+        "estilos": [
+            10,
+            11,
+            13,
+            16,
+            18
+        ]
+    }
+},
+{
+    "model": "tocataabierta.tocataabierta",
+    "pk": 7,
+    "fields": {
+        "artista": 5,
+        "usuario": 3,
+        "nombre": "Where does it come from?",
+        "slug": "where-does-it-come-from",
+        "region": 13,
+        "comuna": 291,
+        "descripci\u00f3n": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.",
+        "costo": "10000.00",
+        "fecha": "2021-02-13",
+        "hora": "12:00:00",
+        "asistentes_min": 40,
+        "flayer_original": "fotos/tocatas/2020/08/17/unnamed.jpg",
+        "flayer_1920_1280": "fotos/lugares/2020/08/17/unnamed.jpg",
+        "flayer_380_507": "fotos/lugares/2020/08/17/unnamed_2ugdnLX.jpg",
+        "tocata": null,
+        "estado": "publicado",
+        "fecha_actu": "2020-08-17T19:47:43.543Z",
+        "fecha_crea": "2020-08-17T19:47:43.543Z",
+        "estilos": [
+            10,
+            11,
+            13,
+            16,
+            18
+        ]
+    }
+}
 ]

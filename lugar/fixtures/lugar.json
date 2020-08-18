@@ -4262,5 +4262,77 @@
         "fecha_crea": "2020-08-10T14:38:28.736Z",
         "fecha_actu": "2020-08-10T14:38:28.736Z"
     }
+},
+{
+    "model": "lugar.lugar",
+    "pk": 29,
+    "fields": {
+        "nombre": "Bar piedra Roja",
+        "usuario": 2,
+        "nombre_calle": "Chile",
+        "numero": 553,
+        "region": 5,
+        "provincia": null,
+        "comuna": 63,
+        "ciudad": "",
+        "pais": "Chile",
+        "codigo_postal": "",
+        "departamento": "",
+        "otros": "",
+        "descripci\u00f3n": "",
+        "capacidad": 50,
+        "evaluacion": 0,
+        "estado": "DI",
+        "fecha_crea": "2020-08-16T21:21:37.630Z",
+        "fecha_actu": "2020-08-16T21:21:37.630Z"
+    }
+},
+{
+    "model": "lugar.lugar",
+    "pk": 30,
+    "fields": {
+        "nombre": "Disquer\u00eda Chilena",
+        "usuario": 3,
+        "nombre_calle": "Av. Providencia",
+        "numero": 1478,
+        "region": 13,
+        "provincia": null,
+        "comuna": 301,
+        "ciudad": "",
+        "pais": "Chile",
+        "codigo_postal": "",
+        "departamento": "",
+        "otros": "",
+        "descripci\u00f3n": "Disquer\u00eda Chilena es un lugar destinado a la venta de m\u00fasica chilena, tenemos uno de los mayores cat\u00e1logos de artistas nacionales contemplando CDs, Vinilos, Cassettes, Dvds, entre otros formatos. \r\nNuestro local contempla un peque\u00f1o escenario en donde realizamos tocatas en formato ac\u00fastico, firma de discos y lanzamientos de m\u00fasicos tanto consagrados como independientes, aparte de ser locacion para el programa \u201cS\u00e9ptimo Vicio\u201d conducido por Gonzalo Fr\u00edas (alias Pelao Pi) del canal V\u00eda X y el programa \u201cPa\u00eds de M\u00fasicos\u201d de SCD.\r\nPero no s\u00f3lo nos quedamos con la m\u00fasica, pues nuestra tienda cuenta con una amplia oferta de tocadiscos. Complementamos lo musical con cuadros, peluches, manivelas musicales, poleras, tazones y todo el merchandising de tus bandas criollas favoritas. \r\nNuestro objetivo es generar el espacio que la cultura chilena tanto necesita.\r\nPara nuestros amigos de regiones tenemos despacho desde Arica a Punta Arenas!\r\n Ven a vivir la experiencia de @DisqueriaChilena",
+        "capacidad": 30,
+        "evaluacion": 0,
+        "estado": "DI",
+        "fecha_crea": "2020-08-16T21:26:42.318Z",
+        "fecha_actu": "2020-08-16T21:26:42.318Z"
+    }
+},
+{
+    "model": "lugar.lugar",
+    "pk": 31,
+    "fields": {
+        "nombre": "Sala SCD Ega\u00f1a",
+        "usuario": 3,
+        "nombre_calle": "Avenida Larra\u00edn",
+        "numero": 5862,
+        "region": 13,
+        "provincia": null,
+        "comuna": 291,
+        "ciudad": "",
+        "pais": "Chile",
+        "codigo_postal": "",
+        "departamento": "",
+        "otros": "",
+        "descripci\u00f3n": "El tercer recinto creado por la Sociedad Chilena del Derecho de Autor, se inaugura en agosto del 2016. Estas instalaciones se encuentran en la terraza del Mall Plaza Ega\u00f1a, un centro comercial ubicado en la comuna de La Reina, que adem\u00e1s alberga un complejo de cines y la Casa Maroto, donde actualmente funciona el Club de Jazz de Santiago.\r\n\r\nEsta nueva sala, conserva la idea de intimidad y cercan\u00eda con los m\u00fasicos de sus predecesoras \u2013Bellavista y Vespucio. Sin embargo, quiz\u00e1s la principal caracter\u00edstica arquitect\u00f3nica de este nuevo espacio cultural, es la curvatura de su estructura, que puede apreciarse desde la fachada. El escenario \u2013 tambi\u00e9n curvo \u2013 mide 5 metros de fondo por 12 metros de frente y est\u00e1 rodeado por las butacas.\r\n\r\nLa Sala SCD Plaza Ega\u00f1a posee una superficie de 340 metros cuadrados, distribuidos en 2 pisos. Su capacidad total es de 200 butacas (platea baja y alta). La sala est\u00e1 equipada con tecnolog\u00eda de punta, y cumple con los altos est\u00e1ndares de calidad que se espera de un espacio de nivel profesional: aire acondicionado, accesos especiales para discapacitados, camarines y bodegas.",
+        "capacidad": 40,
+        "evaluacion": 0,
+        "estado": "DI",
+        "fecha_crea": "2020-08-16T21:30:53.247Z",
+        "fecha_actu": "2020-08-16T21:30:53.247Z"
+    }
 }
 ]
