@@ -252,9 +252,9 @@ $(document).ready(function(){
       success: function(data){
         var submitSpan = thisForm.find(".submit-span")
         if (data.added){
-          submitSpan.html("<button type='submit' class='btn btn-b'>Quitar del Carro</button>")
+          submitSpan.html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Quitar</button>")
         } else {
-          submitSpan.html("<button type='submit' class='btn btn-b'>Agregar al Carro</button>")
+          submitSpan.html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Agregar</button>")
         }
         var navbarcarro = $(".navbar-carro-numitems")
         navbarcarro.text(data.carroNumItem)

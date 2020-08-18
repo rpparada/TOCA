@@ -3,9 +3,9 @@
   <input type="hidden" name="tocata_id" value="{{ instance.id }}">
   <span class="submit-span">
     {% if instance in carro.tocata.all %}
-      <button type="submit" class="btn btn-b">Quitar del Carro</button>
+      <button type="submit" class="btn"><i class="icon-shopping-cart"></i> Quitar</button>
     {% else %}
-      <button type="submit" class="btn btn-b">Agregar al Carro</button>
+      <button type="submit" class="btn"><i class="icon-shopping-cart"></i> Agregar</button>
     {% endif %}
   </span>
 </form>

@@ -3,9 +3,9 @@
 {% load humanize %}
 {% block title %} | TOCATAS{% endblock %}
 {% block content %}
-{% include 'partials/_alerts.html' %}
 
 {% url 'tocata:tocatas' as tocatas_url %}
+{% include 'partials/_alerts.html' %}
 
 <!-- Shop products -->
 <section id="page-content">

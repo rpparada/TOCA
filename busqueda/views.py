@@ -29,7 +29,6 @@ class BusquedaTocataView(ListView):
         return context
 
     def get_queryset(self, *args, **kwargs):
-        #queryset = super(BusquedaTocataView, self).get_queryset()
 
         method_dict = self.request.GET
         query = method_dict.get('q', None)

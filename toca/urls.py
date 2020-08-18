@@ -29,7 +29,7 @@ urlpatterns = [
     path('usuarios/', include('usuario.urls')),
     path('cuentas/', include('cuentas.urls')),
     path('cobro/', include('cobro.urls')),
-    path('busqueda/', include('busqueda.urls')),
+    path('busqueda/', include(('busqueda.urls','busqueda'), namespace='busqueda')),
     path('carro/', include('carro.urls')),
     path('direccion/', include('direccion.urls')),
     path('admin/', admin.site.urls),
