@@ -25,6 +25,7 @@ urlpatterns = [
     path('lugares/', include('lugar.urls')),
     path('tocatas/', include(('tocata.urls','tocata'), namespace='tocata')),
     path('ofrecetucasa/', include(('tocataabierta.urls','tocataabierta'), namespace='tocataabierta')),
+    path('propuestaslugar/', include(('propuestaslugar.urls','propuestaslugar'), namespace='propuestaslugar')),
     path('usuarios/', include('usuario.urls')),
     path('cuentas/', include('cuentas.urls')),
     path('cobro/', include('cobro.urls')),

@@ -43,7 +43,7 @@ class TocataAbiertaListView(ListView):
 class TocataAbiertaDetailView(DetailView):
 
     queryset = TocataAbierta.objects.all()
-    template_name = 'tocata/tocataabierta.html'
+    template_name = 'tocataabierta/tocataabierta.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super(TocataAbiertaDetailView, self).get_context_data(*args, **kwargs)

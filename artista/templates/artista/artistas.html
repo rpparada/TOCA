@@ -29,7 +29,7 @@
         <div id="portfolio" class="grid-layout portfolio-2-columns" data-margin="0">
             <!-- portfolio item -->
             {% for obj in object_list %}
-                {% include 'snippets/gridartista.html' with instance=obj %}
+                {% include 'artista/snippets/gridartista.html' with instance=obj %}
             {% endfor %}
             <!-- end: portfolio item -->
         </div>

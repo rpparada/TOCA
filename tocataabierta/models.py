@@ -80,7 +80,7 @@ class TocataAbierta(models.Model):
     objects             = TocataAbiertaManager()
 
     def get_absolute_url(self):
-        return "/tocatas/tocataabierta/{slug}".format(slug=self.slug)
+        return "/ofrecetucasa/{slug}".format(slug=self.slug)
 
     def __str__(self):
         return self.nombre
