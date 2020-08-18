@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.db.models.signals import pre_save
+from django.db.models import Q
 
 from django_resized import ResizedImageField
 

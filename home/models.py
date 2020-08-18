@@ -37,7 +37,7 @@ class TestimonioManager(models.Manager):
 class Testimonio(models.Model):
 
     artista             = models.ForeignKey(Artista, on_delete=models.DO_NOTHING)
-    slug                = models.SlugField(blank=True, unique=True)
+    #slug                = models.SlugField(blank=True, unique=True)
     testimonio          = models.CharField(max_length=120, blank=True)
     objetivo            = models.CharField(max_length=20, choices=TESTIMONIO_OBJETIVO_OPCIONES,default='usuarios')
 
@@ -50,11 +50,11 @@ class Testimonio(models.Model):
     def __str__(self):
         return str(self.artista)+'('+str(self.objetivo)+'): '+str(self.testimonio[:100])
 
-def testimonio_pre_save_receiver(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        instance.slug = unique_slug_generator(instance)
-
-pre_save.connect(testimonio_pre_save_receiver, sender=Testimonio)
+# def testimonio_pre_save_receiver(sender, instance, *args, **kwargs):
+#     if not instance.slug:
+#         instance.slug = unique_slug_generator(instance)
+#
+# pre_save.connect(testimonio_pre_save_receiver, sender=Testimonio)
 
 # Descripcion TocatasIntimas
 DESCRIPCION_OBJETIVO_OPCIONES = (

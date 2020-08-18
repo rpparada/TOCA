@@ -39,6 +39,7 @@ class Artista(models.Model):
     usuario             = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
     foto_1920_1280      = models.ImageField(upload_to='fotos/artistas/', blank=True)
     foto_525_350        = models.ImageField(upload_to='fotos/artistas/', blank=True)
+    foto_380_507        = models.ImageField(upload_to='fotos/artistas/', blank=True)
     descripción         = models.TextField(blank=True)
     cualidades          = models.ManyToManyField('Cualidad', blank=True)
     estilos             = models.ManyToManyField('Estilo', blank=True)

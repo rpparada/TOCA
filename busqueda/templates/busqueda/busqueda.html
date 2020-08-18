@@ -59,9 +59,9 @@
             <div class="grid-layout grid-3-columns" data-item="grid-item">
               {% for obj in object_list %}
                 {% if obj.tipo == 'cerrada' %}
-                  {% include 'snippets/gridtocata.html' with instance=obj %}
+                  {% include 'tocata/snippets/gridtocata.html' with instance=obj %}
                 {% else %}
-                  {% include 'snippets/gridtocataabierta.html' with instance=obj %}
+                  {% include 'tocataabierta/snippets/gridtocataabierta.html' with instance=obj %}
                 {% endif %}
               {% endfor %}
             </div>
