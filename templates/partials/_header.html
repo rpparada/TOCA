@@ -16,9 +16,9 @@
 {% url 'miscompras' as miscompras_url %}
 {% url 'cambiocontra' as cambiocontra_url %}
 {% url 'salir' as salir_url %}
-{% url 'cuenta' as cuenta_url %}
-{% url 'ingresar' as ingresar_url %}
-{% url 'registrar' as registrar_url %}
+{% url 'cuenta:cuenta' as cuenta_url %}
+{% url 'cuenta:ingresar' as ingresar_url %}
+{% url 'cuenta:registrar' as registrar_url %}
 
 <!-- Header -->
 <header id="header" data-transparent="false" data-fullwidth="true" class="dark submenu-light">
@@ -92,7 +92,7 @@
                                 <li class="dropdown"><a href="{{ cuentaart_url }}">Hola, {{ user.username }}</a>
                                 {% endif %}
                                   <ul class="dropdown-menu">
-                                    <li><a href="{{ cuentaart_url }}">Editar Cuenta</a></li>
+                                    <li><a href="{{ cuentaart_url }}">Cuenta</a></li>
                                     <li><a href="{{ miscompras_url }}">Mis Compras</a></li>
                                     <li><a href="{{ cambiocontra_url }}">Cambiar Contraseña</a></li>
                                     <li><a href="{{ salir_url }}">Salir</a></li>
@@ -106,13 +106,10 @@
                                     <li><a href="{{ mispropuestas_url }}">Mis Propuesta</a></li>
                                   </ul>
                                 </li>
-                                {% if user.first_name %}
-                                <li class="dropdown"><a href="{{ cuenta_url }}">Hola, {{ user.first_name }}</a>
-                                {% else %}
-                                <li class="dropdown"><a href="{{ cuenta_url }}">Hola, {{ user.username }}</a>
-                                {% endif %}
+
+                                <li class="dropdown"><a href="{{ cuenta_url }}">Hola, {{ user.email }}</a>
                                   <ul class="dropdown-menu">
-                                    <li><a href="{{ cuenta_url }}">Editar Cuenta</a></li>
+                                    <li><a href="{{ cuenta_url }}">Cuenta</a></li>
                                     <li><a href="{{ cambiocontra_url }}">Cambiar Contraseña</a></li>
                                     <li><a href="{{ miscompras_url }}">Mis Compras</a></li>
                                     {% if request.user.is_staff %}

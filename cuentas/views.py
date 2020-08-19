@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.utils.http import is_safe_url
-from django.views.generic import CreateView, FormView
+from django.views.generic import CreateView, FormView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from usuario.models import Usuario
 
@@ -9,6 +10,12 @@ from .forms import IngresarForm, RegistrarUserForm
 from .signals import  user_logged_in
 
 # Create your views here.
+class CuentaHomeView(LoginRequiredMixin, DetailView):
+
+    template_name = 'cuentas/cuenta.html'
+
+    def get_object(self):
+        return self.request.user
 
 class IngresarView(FormView):
     form_class = IngresarForm

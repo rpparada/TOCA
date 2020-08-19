@@ -3,6 +3,8 @@
 {% load humanize %}
 {% block title %} | INGRESAR{% endblock %}
 {% block content %}
+
+{% url 'cuenta:registrar' as registrar_url %}
 {% include 'partials/_alerts.html' %}
 
 <!-- Section -->
@@ -19,7 +21,7 @@
                     <h3>Ingresa a tu Cuenta</h3>
                     {% include 'cuentas/snippets/ingresoform.html' with form=form %}
                     <p class="small">¿Olvidates tu contraseña?<a href="{% url 'password_reset' %}"> Recuperar Contraseña</a></p>
-                    <p class="small">¿Quieres crear una cuenta?<a href="{% url 'registrar' %}"> Registrate</a></p>
+                    <p class="small">¿Quieres crear una cuenta?<a href="{{ registrar_url }}"> Registrate</a></p>
                 </div>
             </div>
         </div>

@@ -4,6 +4,7 @@
 {% block title %} | REGISTRAR{% endblock %}
 {% block content %}
 
+{% url 'cuenta:registrar' as registrar_url %}
 {% include 'partials/_alerts.html' %}
 
 <!-- Section -->
@@ -17,7 +18,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-6 center p-40 background-white b-r-6">
-                    <form id="formtocheck" class="form-transparent-grey" action="{% url 'registrar' %}" method="POST">
+                    <form id="formtocheck" class="form-transparent-grey" action="{{ registrar_url }}" method="POST">
                       {% csrf_token %}
                         <div class="row">
                             <div class="col-lg-12">

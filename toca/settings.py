@@ -72,6 +72,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 AUTH_USER_MODEL = 'cuentas.User'
+
+LOGIN_URL = '/cuenta/ingresar'
+LOGIN_URL_REDIRECT = '/'
+LOGOUT_URL = '/cuenta/salir'
+
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = False
 

@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('', include('home.urls')),
@@ -27,7 +28,8 @@ urlpatterns = [
     path('ofrecetucasa/', include(('tocataabierta.urls','tocataabierta'), namespace='tocataabierta')),
     path('propuestaslugar/', include(('propuestaslugar.urls','propuestaslugar'), namespace='propuestaslugar')),
     path('usuarios/', include('usuario.urls')),
-    path('cuentas/', include('cuentas.urls')),
+    path('cuentas/', RedirectView.as_view(url='/cuenta/')),
+    path('cuenta/', include(('cuentas.urls','cuentas'), namespace='cuenta')),
     path('cobro/', include('cobro.urls')),
     path('busqueda/', include(('busqueda.urls','busqueda'), namespace='busqueda')),
     path('carro/', include('carro.urls')),

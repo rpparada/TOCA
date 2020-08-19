@@ -1,4 +1,6 @@
-<form method="POST" action="{% url 'ingresar' %}">
+{% url 'cuentas:ingresar' as ingresar_url %}
+
+<form method="POST" action="{{ ingresar_url }}">
     {% csrf_token %}
     {{ form.non_field_errors }}
     {% if next_url %}
