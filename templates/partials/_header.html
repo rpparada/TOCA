@@ -15,7 +15,7 @@
 {% url 'cuentaart' as cuentaart_url %}
 {% url 'miscompras' as miscompras_url %}
 {% url 'cambiocontra' as cambiocontra_url %}
-{% url 'salir' as salir_url %}
+{% url 'cuenta:salir' as salir_url %}
 {% url 'cuenta:cuenta' as cuenta_url %}
 {% url 'cuenta:ingresar' as ingresar_url %}
 {% url 'cuenta:registrar' as registrar_url %}
@@ -115,7 +115,8 @@
                                     {% if request.user.is_staff %}
                                     <li class="dropdown-submenu"><a href="#">Menu Admin</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="{% url 'enviaform' %}">Envia Form Nuevo Artista</a></li>
+                                            <!-- <li><a href="enviaform">Envia Form Nuevo Artista</a></li> -->
+                                            <li><a href="#">Envia Form Nuevo Artista</a></li>
                                         </ul>
                                     </li>
                                     {% endif %}

@@ -2,6 +2,26 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import PasswordChangeForm
+
+class CuentaPasswordChangeForm(PasswordChangeForm):
+
+    old_password    = forms.CharField(widget=forms.PasswordInput(attrs={
+                                                                "id": "primercampo",
+                                                                "class": "form-control",
+                                                                "placeholder": "Contraseña Actual"
+                                                            }), label='Contraseña Actual'
+                                    )
+    new_password1   = forms.CharField(widget=forms.PasswordInput(attrs={
+                                                                "class": "form-control",
+                                                                "placeholder": "Nueva Contraseña"
+                                                            }), label='Nueva Contraseña'
+                                    )
+    new_password2   = forms.CharField(widget=forms.PasswordInput(attrs={
+                                                                "class": "form-control",
+                                                                "placeholder": "Repite Nueva Contraseña"
+                                                            }), label='Repite Nueva Contraseña'
+                                    )
 
 User = get_user_model()
 
