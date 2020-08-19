@@ -48,6 +48,7 @@ class User(AbstractBaseUser):
     nombre          = models.CharField(max_length=255, blank=True, null=True)
     apellido        = models.CharField(max_length=255, blank=True, null=True)
     active          = models.BooleanField(default=True)
+    is_active       = models.BooleanField(default=True)
     staff           = models.BooleanField(default=False)
     admin           = models.BooleanField(default=False)
 
@@ -84,6 +85,6 @@ class User(AbstractBaseUser):
     def is_admin(self):
         return self.admin
 
-    @property
-    def is_active(self):
-        return self.active
+    # @property
+    # def is_active(self):
+    #     return self.active

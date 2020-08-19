@@ -3,7 +3,7 @@
 from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
 
-from cuentas.forms import CuentaPasswordChangeForm
+from cuentas.forms import CuentaPasswordChangeForm, CuentaPasswordResetForm, CuentaSetPasswordForm
 
 urlpatterns  = [
     path('password/change/',
@@ -13,7 +13,7 @@ urlpatterns  = [
             auth_views.PasswordChangeDoneView.as_view(),
             name='password_change_done'),
     path('password/reset/',
-            auth_views.PasswordResetView.as_view(),
+            auth_views.PasswordResetView.as_view(form_class=CuentaPasswordResetForm),
             name='password_reset'),
     path('password/reset/done/',
             auth_views.PasswordResetDoneView.as_view(),
@@ -21,7 +21,7 @@ urlpatterns  = [
     re_path('password/reset/\
             (?P<uidb64>[0-9A-Za-z_\-]+)/\
             (?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-            auth_views.PasswordResetConfirmView.as_view(),
+            auth_views.PasswordResetConfirmView.as_view(form_class=CuentaSetPasswordForm),
             name='password_reset_confirm'),
     path('password/reset/complete/',
             auth_views.PasswordResetCompleteView.as_view(),
