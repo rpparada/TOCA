@@ -32,6 +32,10 @@ class IngresarView(FormView):
         contra = form.cleaned_data.get('contra')
         usuario = auth.authenticate(username=email, password=contra)
         if usuario is not None:
+            if not usuario.is_active:
+                messages.error(request,'Usuario Inactivo')
+                return super(IngresarView, self).form_invalid(form)
+
             auth.login(request, usuario)
             user_logged_in.send(usuario.__class__, instance=usuario, request=request)
             #if Usuario.objects.get(user=usuario).es_artista:
