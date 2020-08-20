@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, SetPasswordForm
 
+from .models import EmailActivation
+
 class CuentaSetPasswordForm(SetPasswordForm):
     new_password1   = forms.CharField(widget=forms.PasswordInput(attrs={
                                                                 "class": "form-control",
@@ -94,8 +96,10 @@ class RegistrarUserForm(forms.ModelForm):
     def save(self, commit=True):
         user = super(RegistrarUserForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
-        #user.active = False
-        # Aqui va el checkeo email
+        user.is_active = False
+        # obj = EmailActivation.objects.create(user=user)
+        # obj.send_activation()
+
         if commit:
             user.save()
         return user

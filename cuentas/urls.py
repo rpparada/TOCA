@@ -8,4 +8,5 @@ urlpatterns = [
     path('ingresar', views.IngresarView.as_view(), name='ingresar'),
     path('registrar', views.RegistrarView.as_view(), name='registrar'),
     path('salir', auth_views.LogoutView.as_view(), name='salir'),
+    re_path('email/confirm/(?P<key>[0-9A-Za-z]+)/$', views.CuentaEmailActivacionView.as_view(), name='email-activate')
 ]

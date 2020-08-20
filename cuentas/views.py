@@ -1,13 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.utils.http import is_safe_url
-from django.views.generic import CreateView, FormView, DetailView
+from django.views.generic import CreateView, FormView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 
-from usuario.models import Usuario
+#from usuario.models import Usuario
+
+from .models import EmailActivation
 
 from .forms import IngresarForm, RegistrarUserForm
-from .signals import  user_logged_in
+from .signals import user_logged_in
 
 # Create your views here.
 class CuentaHomeView(LoginRequiredMixin, DetailView):
@@ -16,6 +20,30 @@ class CuentaHomeView(LoginRequiredMixin, DetailView):
 
     def get_object(self):
         return self.request.user
+
+class CuentaEmailActivacionView(View):
+
+    def get(self, request, key, *args, **kwargs):
+        qs = EmailActivation.objects.filter(key__iexact=key)
+        confirm_qs = qs.confirmable()
+        if confirm_qs.count() == 1:
+            obj = confirm_qs.first()
+            obj.activate()
+            messages.success(request,'Email confirmado. Ya puedes ingresar')
+            return redirect('cuenta:ingresar')
+        else:
+            activated_qs = qs.filter(activated=True)
+            if activated_qs.exists():
+                reset_link = reverse['password_reset']
+                msg = '''Email ya ha sido confirmado
+                ¿Queres <a href="{link}">reiniciar tu contraseña</a>?
+                '''.format(link=reset_link)
+                messages.success(request,mark_safe(msg))
+                return redirect('cuenta:ingresar')
+        return render(request, 'registration/activation-error.html')
+
+    def post(self, request, *args, **kwargs):
+        pass
 
 class IngresarView(FormView):
     form_class = IngresarForm
@@ -52,4 +80,4 @@ class IngresarView(FormView):
 class RegistrarView(CreateView):
     form_class = RegistrarUserForm
     template_name = 'cuentas/registrar.html'
-    success_url = '/cuentas/ingresar'
+    success_url = '/cuenta/ingresar'
