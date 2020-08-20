@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
     BaseUserManager
 )
 
+from django.db.models import Q
 from django.core.mail import send_mail
 from django.template.loader import get_template
 from django.conf import settings
@@ -115,6 +116,14 @@ class EmailActivationManager(models.Manager):
 
     def confirmable(self):
         return self.get_queryset().confirmable()
+
+    def email_exists(self, email):
+        return self.get_queryset().filter(
+                Q(email=email) |
+                Q(user__email=email)
+            ).filter(
+                activated=False
+            )
 
 class EmailActivation(models.Model):
     user                = models.ForeignKey(User, on_delete=models.DO_NOTHING)

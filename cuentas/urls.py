@@ -9,6 +9,7 @@ urlpatterns = [
     path('registrar', views.RegistrarView.as_view(), name='registrar'),
     path('salir', auth_views.LogoutView.as_view(), name='salir'),
     re_path('email/confirm/(?P<key>[0-9A-Za-z]+)/$', views.CuentaEmailActivacionView.as_view(), name='email-activate'),
+    path('email/resent-activation/', views.CuentaEmailActivacionView.as_view(), name='resent-activation'),
     path('email/confirm/done', views.RegistrarDoneView.as_view(), name='registrar-done'),
 
 ]

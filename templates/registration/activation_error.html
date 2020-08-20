@@ -6,21 +6,50 @@
 
 {% include 'partials/_alerts.html' %}
 
+{% url 'index' as index_url %}
+
 <!-- Section -->
 <section class="fullscreen" data-bg-parallax="{% static 'images/fondos/guitar-3492302.jpg' %}">
     <div class="container">
         <div>
             <div class="text-center m-b-30">
-                <a href="{% url 'index' %}" class="logo">
+                <a href="{{ index_url }}" class="logo">
                     <img src="{% static 'images/iconos/logo_rojo_negro.png' %}" alt="Polo Logo">
                 </a>
             </div>
             <div class="row">
-              <div class="col-lg-6 center p-40 background-white b-r-6">
-                <p>
-                  Link Invalido vuelve a <a href="{% url 'index' %}">Tocata Intimas</a>.
+              <div class="col-lg-7 center p-40 background-white b-r-6">
+                {% if key %}
+                <p class="text-center">
+                  Link Invalido vuelve a <a href="{{ index_url }}">Tocata Intimas</a>.
                 </p>
+                {% else %}
+                <p class="text-center">
+                  Reactiva tu cuenta.
+                </p>
+                {% endif %}
               </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col-lg-7 center p-40 background-white b-r-6">
+                    <h2 class="text-center">¿Quieres activar tu cuenta?</h2>
+                    <form class="form-validation" method="post">
+                      {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="form-group">
+                            {{ form.email.errors }}
+                            <p class="center">Ingresa tu email para recibir un nuevo link de activacion.</p>
+                            <br>
+                            {{ form.email }}
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn">Recuperar</button>
+                            <a href="{{ index_url }}" class="btn btn-danger m-l-10">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

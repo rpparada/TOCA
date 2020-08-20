@@ -3,8 +3,29 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, SetPasswordForm
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 from .models import EmailActivation
+
+class ReactivateEmailForm(forms.Form):
+    email           = forms.EmailField(widget=forms.EmailInput(attrs={
+                                                                "id": "id_email",
+                                                                "class": "form-control",
+                                                                "placeholder": "Ingresa tu email...",
+                                                                "class": "form-control form-white placeholder"
+                                                            }), label='Email'
+                                    )
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        qs = EmailActivation.objects.email_exists(email)
+        if not qs.exists():
+            register_link = reverse('cuenta:registrar')
+            msg = '''Email no existe, ¿Te gustaria <a href="{link}">registrarte</a>?
+            '''.format(link=register_link)
+            raise forms.ValidationError(mark_safe(msg))
+        return email
 
 class CuentaSetPasswordForm(SetPasswordForm):
     new_password1   = forms.CharField(widget=forms.PasswordInput(attrs={
