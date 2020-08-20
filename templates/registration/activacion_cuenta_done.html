@@ -1,0 +1,35 @@
+{% extends "base-without-header.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} | CAMBIA CONTRASEÑA{% endblock %}
+{% block content %}
+
+{% include 'partials/_alerts.html' %}
+
+<!-- Section -->
+<section class="fullscreen" data-bg-parallax="{% static 'images/fondos/guitar-3492302.jpg' %}">
+    <div class="container">
+        <div>
+            <div class="text-center m-b-30">
+                <a href="{% url 'index' %}" class="logo">
+                    <img src="{% static 'images/iconos/logo_rojo_negro.png' %}" alt="Polo Logo">
+                </a>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 center p-40 background-white b-r-6">
+                <p>
+                  Te hemos enviando un correo electronico con las instrucciones para activar tu cuenta.
+                  Deberías recibirlo en unos minutos.
+                </p>
+                <p>
+                  Si no has recibido ningun correo electrónico, por favor asegurate de haber ingresado el correo electronico registrado en Tocatas Intimas,
+                  y tambien puedes revisar la carpeta de spam en tu casilla de correos.
+                </p>
+              </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end: Section -->
+
+{% endblock %}

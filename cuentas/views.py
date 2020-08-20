@@ -6,8 +6,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
-#from usuario.models import Usuario
-
 from .models import EmailActivation
 
 from .forms import IngresarForm, RegistrarUserForm
@@ -34,13 +32,13 @@ class CuentaEmailActivacionView(View):
         else:
             activated_qs = qs.filter(activated=True)
             if activated_qs.exists():
-                reset_link = reverse['password_reset']
+                reset_link = reverse('password_reset')
                 msg = '''Email ya ha sido confirmado
                 ¿Queres <a href="{link}">reiniciar tu contraseña</a>?
                 '''.format(link=reset_link)
                 messages.success(request,mark_safe(msg))
                 return redirect('cuenta:ingresar')
-        return render(request, 'registration/activation-error.html')
+        return render(request, 'registration/activation_error.html')
 
     def post(self, request, *args, **kwargs):
         pass
@@ -80,4 +78,9 @@ class IngresarView(FormView):
 class RegistrarView(CreateView):
     form_class = RegistrarUserForm
     template_name = 'cuentas/registrar.html'
-    success_url = '/cuenta/ingresar'
+    success_url = 'email/confirm/done'
+
+class RegistrarDoneView(View):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'registration/activacion_cuenta_done.html')
