@@ -96,6 +96,28 @@ class IngresarForm(forms.Form):
 
         email = data.get('email')
         contra = data.get('contra')
+
+        qs = User.objects.filter(email=email)
+        if qs.exists():
+            not_active = qs.filter(is_active=False)
+            if not_active.exists():
+                link = reverse('cuenta:resent-activation')
+                reconfirm_msg = '''Ve a <a href="{resend_link}">
+                reenviar email de conformacion</a>.
+                '''.format(resend_link=link)
+                confirm_email = EmailActivation.objects.filter(email=email)
+                is_confirmable = confirm_email.confirmable().exists()
+                if is_confirmable:
+                    msg1 = 'Por favor, revisa tu correo para validar tu cuenta o '+reconfirm_msg.lower()
+                    raise forms.ValidationError(mark_safe(msg1))
+                email_confirm_exists = EmailActivation.objects.email_exists(email).exists()
+                if email_confirm_exists:
+                    msg2 = 'Email no confirmado'+reconfirm_msg
+                    raise forms.ValidationError(mark_safe(msg2))
+                if not is_confirmable and not email_confirm_exists:
+                    raise forms.ValidationError('Este usuario esta inactivo')
+
+
         usuario = auth.authenticate(username=email, password=contra)
         if usuario is None:
             raise forms.ValidationError('Credenciales Invalidas')
