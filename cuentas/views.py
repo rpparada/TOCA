@@ -12,6 +12,8 @@ from .models import EmailActivation
 from .forms import IngresarForm, RegistrarUserForm, ReactivateEmailForm
 from .signals import user_logged_in
 
+from toca.mixins import NextUrlMixin, RequestFormAttachMixin
+
 # Create your views here.
 class CuentaHomeView(LoginRequiredMixin, DetailView):
 
@@ -75,37 +77,20 @@ class CuentaEmailActivacionView(FormMixin, View):
         }
         return render(request, 'registration/activation_error.html', context)
 
-class IngresarView(FormView):
+class IngresarView(NextUrlMixin, RequestFormAttachMixin, FormView):
     form_class = IngresarForm
     template_name = 'cuentas/ingresar.html'
     success_url = '/'
+    default_next = '/'
 
     def form_valid(self, form):
-        request = self.request
-        next_ = request.GET.get('next')
-        next_post = request.POST.get('next')
-        redirect_path = next_ or next_post or None
-
-        email = form.cleaned_data.get('email')
-        contra = form.cleaned_data.get('contra')
-        usuario = auth.authenticate(username=email, password=contra)
-        if usuario is not None:
-            if not usuario.is_active:
-                messages.error(request,'Usuario Inactivo')
-                return super(IngresarView, self).form_invalid(form)
-
-            auth.login(request, usuario)
-            user_logged_in.send(usuario.__class__, instance=usuario, request=request)
-            #if Usuario.objects.get(user=usuario).es_artista:
-            #    request.session['es_artista'] = 'S'
-            #else:
-            #    request.session['es_artista'] = 'N'
-            messages.success(request,'Ingreso Existos')
-            if is_safe_url(redirect_path, request.get_host()):
-                return redirect(redirect_path)
-            else:
-                return redirect('/')
-        return super(IngresarView, self).form_invalid(form)
+        #if Usuario.objects.get(user=usuario).es_artista:
+        #    request.session['es_artista'] = 'S'
+        #else:
+        #    request.session['es_artista'] = 'N'
+        #messages.success(request,'Ingreso Existos')
+        next_path = self.get_next_url()
+        return redirect(next_path)
 
 class RegistrarView(CreateView):
     form_class = RegistrarUserForm
