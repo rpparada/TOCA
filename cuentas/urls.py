@@ -2,6 +2,7 @@ from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
 
 from . import views
+from tocata.views import UserTocatasHistoryView
 
 urlpatterns = [
     path('', views.CuentaHomeView.as_view(), name='home'),
@@ -12,5 +13,6 @@ urlpatterns = [
     re_path('email/confirm/(?P<key>[0-9A-Za-z]+)/$', views.CuentaEmailActivacionView.as_view(), name='email-activate'),
     path('email/resent-activation/', views.CuentaEmailActivacionView.as_view(), name='resent-activation'),
     path('email/confirm/done', views.RegistrarDoneView.as_view(), name='registrar-done'),
+    path('historico/tocatas/', UserTocatasHistoryView.as_view(), name='historico-user-tocatas')
 
 ]

@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, ListView
 from django.http import Http404
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from itertools import chain
 from operator import attrgetter
@@ -18,9 +19,30 @@ from .forms import TocataForm
 from tocataabierta.forms import TocataAbiertaForm
 from propuestaslugar.forms import LugaresTocataForm
 
+from analytics.mixins import ObjectViewedMixin
+
 from toca.parametros import parToca, parTocatas, parTocatasAbiertas
 
 # Create your views here.
+class UserTocatasHistoryView(LoginRequiredMixin, ListView):
+
+    #template_name = 'tocata/tocatas.html'
+    template_name = 'tocata/historico-user-tocatas.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(UserTocatasHistoryView, self).get_context_data(*args, **kwargs)
+        carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(self.request)
+        context['carro'] = carro_obj
+
+        return context
+
+    def get_queryset(self, *args, **kwargs):
+        request = self.request
+        views = request.user.objectviewed_set.by_model(Tocata)
+        #views = request.user.objectviewed_set.by_model(Tocata, return_queryset=True)
+
+        return views
+
 class TocataListView(ListView):
 
     queryset = Tocata.objects.disponible()
@@ -49,7 +71,7 @@ class TocataListView(ListView):
 
         return context
 
-class TocataDetailView(DetailView):
+class TocataDetailView(ObjectViewedMixin, DetailView):
 
     template_name = 'tocata/tocata.html'
 
