@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.utils.http import is_safe_url
-from django.views.generic import CreateView, FormView, DetailView, View
+from django.views.generic import CreateView, FormView, DetailView, View, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -9,7 +9,7 @@ from django.views.generic.edit import FormMixin
 
 from .models import EmailActivation
 
-from .forms import IngresarForm, RegistrarUserForm, ReactivateEmailForm
+from .forms import IngresarForm, RegistrarUserForm, ReactivateEmailForm, UserDetailChangeViewForm, CuentaPasswordChangeForm
 from .signals import user_logged_in
 
 from toca.mixins import NextUrlMixin, RequestFormAttachMixin
@@ -17,7 +17,7 @@ from toca.mixins import NextUrlMixin, RequestFormAttachMixin
 # Create your views here.
 class CuentaHomeView(LoginRequiredMixin, DetailView):
 
-    template_name = 'cuentas/cuenta.html'
+    template_name = 'cuentas/home.html'
 
     def get_object(self):
         return self.request.user
@@ -101,3 +101,19 @@ class RegistrarDoneView(View):
 
     def get(self, request, *args, **kwargs):
         return render(request, 'registration/activacion_cuenta_done.html')
+
+class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
+
+    form_class = UserDetailChangeViewForm
+    template_name = 'cuentas/cuenta.html'
+
+    def get_object(self):
+        return self.request.user
+
+    def get_success_url(self):
+        return reverse('cuenta:home')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(UserDetailUpdateView, self).get_context_data(*args, **kwargs)
+        context['formContra'] = CuentaPasswordChangeForm(self.request.POST or None)
+        return context

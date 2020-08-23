@@ -14,9 +14,9 @@
 {% url 'mispropuestas' as mispropuestas_url %}
 {% url 'cuentaart' as cuentaart_url %}
 {% url 'miscompras' as miscompras_url %}
-{% url 'cambiocontra' as cambiocontra_url %}
+{% url 'password_change' as cambiocontra_url %}
 {% url 'cuenta:salir' as salir_url %}
-{% url 'cuenta:cuenta' as cuenta_url %}
+{% url 'cuenta:home' as home_url %}
 {% url 'cuenta:ingresar' as ingresar_url %}
 {% url 'cuenta:registrar' as registrar_url %}
 
@@ -79,6 +79,7 @@
                                     </li>
                                   </ul>
                                 </li>
+                              {% endif %}
                                 <li class="dropdown"><a href="{{ mislugares_url }}">Mis Lugares</a>
                                   <ul class="dropdown-menu">
                                     <li><a href="{{ mislugares_url }}">Mis Lugares</a></li>
@@ -86,30 +87,9 @@
                                     <li><a href="{{ mispropuestas_url }}">Mis Propuesta</a></li>
                                   </ul>
                                 </li>
-                                {% if user.first_name %}
-                                <li class="dropdown"><a href="{{ cuentaart_url }}">Hola, {{ user.first_name }}</a>
-                                {% else %}
-                                <li class="dropdown"><a href="{{ cuentaart_url }}">Hola, {{ user.username }}</a>
-                                {% endif %}
+                                <li class="dropdown"><a href="{{ home_url }}">Mi Cuenta [<small>{{ request.user }}</small>]</a>
                                   <ul class="dropdown-menu">
-                                    <li><a href="{{ cuentaart_url }}">Cuenta</a></li>
-                                    <li><a href="{{ miscompras_url }}">Mis Compras</a></li>
-                                    <li><a href="{{ cambiocontra_url }}">Cambiar Contraseña</a></li>
-                                    <li><a href="{{ salir_url }}">Salir</a></li>
-                                  </ul>
-                              </li>
-                              {% else %}
-                                <li class="dropdown"><a href="{{ mislugares_url }}">Mis Lugares</a>
-                                  <ul class="dropdown-menu">
-                                    <li><a href="{{ mislugares_url }}">Mis Lugares</a></li>
-                                    <li><a href="{{ agregarlugar_url }}">Agregar Lugar</a></li>
-                                    <li><a href="{{ mispropuestas_url }}">Mis Propuesta</a></li>
-                                  </ul>
-                                </li>
-
-                                <li class="dropdown"><a href="{{ cuenta_url }}">Hola, {{ user.email }}</a>
-                                  <ul class="dropdown-menu">
-                                    <li><a href="{{ cuenta_url }}">Cuenta</a></li>
+                                    <li><a href="{{ home_url }}">Cuenta</a></li>
                                     <li><a href="{{ cambiocontra_url }}">Cambiar Contraseña</a></li>
                                     <li><a href="{{ miscompras_url }}">Mis Compras</a></li>
                                     {% if request.user.is_staff %}
@@ -123,14 +103,13 @@
                                     <li><a href="{{ salir_url }}">Salir</a></li>
                                   </ul>
                                 </li>
-                              {% endif %}
                             {% else %}
-                            <li class="dropdown"><a href="{{ ingresar_url }}?next={{request.path|urlencode}}">Usuario</a>
-                                <ul class="dropdown-menu">
-                                  <li><a href="{{ ingresar_url }}?next={{request.path|urlencode}}">Ingresa</a></li>
-                                  <li><a href="{{ registrar_url }}">Registrate</a></li>
-                                </ul>
-                            </li>
+                              <li class="dropdown"><a href="{{ ingresar_url }}?next={{request.path|urlencode}}">Cuenta</a>
+                                  <ul class="dropdown-menu">
+                                    <li><a href="{{ ingresar_url }}?next={{request.path|urlencode}}">Ingresa</a></li>
+                                    <li><a href="{{ registrar_url }}">Registrate</a></li>
+                                  </ul>
+                              </li>
                             {% endif %}
                         </ul>
                     </nav>

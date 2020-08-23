@@ -27,7 +27,6 @@ urlpatterns = [
     path('tocatas/', include(('tocata.urls','tocata'), namespace='tocata')),
     path('ofrecetucasa/', include(('tocataabierta.urls','tocataabierta'), namespace='tocataabierta')),
     path('propuestaslugar/', include(('propuestaslugar.urls','propuestaslugar'), namespace='propuestaslugar')),
-    #path('usuarios/', include('usuario.urls')),
     path('cuentas/', RedirectView.as_view(url='/cuenta/')),
     path('cuentas/', include('cuentas.passwords.urls')),
     path('cuenta/', include(('cuentas.urls','cuentas'), namespace='cuenta')),
@@ -36,7 +35,6 @@ urlpatterns = [
     path('carro/', include('carro.urls')),
     path('direccion/', include('direccion.urls')),
     path('admin/', admin.site.urls),
-    #path('carro/', views.carro_home, name='carro')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
