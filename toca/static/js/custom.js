@@ -122,8 +122,12 @@ $(document).ready(function(){
 
   // Agregar o quitar tocatas de carro y actualizar
   var tocataForm = $(".form-tocata-ajax");
+  console.log(tocataForm);
   tocataForm.submit(function(event){
+    console.log("test1");
     event.preventDefault();
+    // event.stopPropagation();
+    console.log("test2");
     var thisForm = $(this);
     var actionEndpoint = thisForm.attr("data-endpoint");
     var httpMethod = thisForm.attr("method");
@@ -157,16 +161,7 @@ $(document).ready(function(){
   })
 
   function actualizaCarro(){
-    var carroTable = $(".carro-table");
-    var carroTableRes = $(".carro-table-res");
-
-    var carroBody = carroTable.find(".carro-body");
-    var tocataRows = carroBody.find(".carro-tocata")
-
-    var carroResumen = carroTableRes.find(".carro-resumen");
-
     var currentUrl = window.location.href
-
     var updateCarroUrl = "api/carro";
     var updateCarroMethod = "GET";
     var data = {};

@@ -38,7 +38,6 @@ def carro_detalle_api_body_view(request):
         'tocatas': carro_obj.tocata.all()
     }
 
-
     return render(request, 'carro/snippets/bodyitemcarro.html', context)
 
 def carro_home(request):
