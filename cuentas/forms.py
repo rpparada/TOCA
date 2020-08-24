@@ -77,7 +77,8 @@ class IngresarForm(forms.Form):
     email           = forms.EmailField(widget=forms.EmailInput(attrs={
                                                                 "id": "primercampo",
                                                                 "class": "form-control",
-                                                                "placeholder": "Email"
+                                                                "placeholder": "Email",
+                                                                "autofocus": True
                                                             }), label=''
                                     )
     contra          = forms.CharField(widget=forms.PasswordInput(attrs={

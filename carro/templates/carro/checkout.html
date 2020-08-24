@@ -23,24 +23,24 @@
             {% if not object.direccion_envio %}
             <div class="row">
                 <div class="col-lg-6">
-                  {% include 'snippets/form.html' with form=direccion_form tipo_dir='envio' next_url=request.build_absolute_uri action_url=checkout_direccion_create_view_url %}
+                  {% include 'direccion/snippets/form.html' with form=direccion_form tipo_dir='envio' next_url=request.build_absolute_uri action_url=checkout_direccion_create_view_url %}
                 </div>
                 {% if direccion_qs.exists %}
                 <div class="col-lg-6">
                   {% url 'checkout_direccion_reuse_view' as checkout_direccion_reuse_view_url %}
-                  {% include 'snippets/direcciones.html' with direcciones=direccion_qs tipo_dir='envio' next_url=request.build_absolute_uri action_url=checkout_direccion_reuse_view_url %}
+                  {% include 'direccion/snippets/direcciones.html' with direcciones=direccion_qs tipo_dir='envio' next_url=request.build_absolute_uri action_url=checkout_direccion_reuse_view_url %}
                 </div>
                 {% endif %}
             </div>
             {% elif not object.direccion_facturacion %}
             <div class="row">
               <div class="col-lg-6">
-                {% include 'snippets/form.html' with form=direccion_form tipo_dir='facturacion' next_url=request.build_absolute_uri action_url=checkout_direccion_create_view_url %}
+                {% include 'direccion/snippets/form.html' with form=direccion_form tipo_dir='facturacion' next_url=request.build_absolute_uri action_url=checkout_direccion_create_view_url %}
               </div>
               {% if direccion_qs.exists %}
               <div class="col-lg-6">
                 {% url 'checkout_direccion_reuse_view' as checkout_direccion_reuse_view_url %}
-                {% include 'snippets/direcciones.html' with direcciones=direccion_qs tipo_dir='facturacion' next_url=request.build_absolute_uri action_url=checkout_direccion_reuse_view_url %}
+                {% include 'direccion/snippets/direcciones.html' with direcciones=direccion_qs tipo_dir='facturacion' next_url=request.build_absolute_uri action_url=checkout_direccion_reuse_view_url %}
               </div>
               {% endif %}
             </div>

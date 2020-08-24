@@ -24,10 +24,8 @@
                             <th class="cart-product-subtotal">Total</th>
                         </tr>
                     </thead>
-                    <tbody>
-                      {% for tocata in carro.tocata.all %}
-                        {% include 'carro/snippets/itemcarro.html' with instance=tocata %}
-                      {% endfor %}
+                    <tbody class="bodycarroupdate">
+                      {% include 'carro/snippets/bodyitemcarro.html' with tocatas=carro.tocata.all %}
                     </tbody>
                 </table>
             </div>

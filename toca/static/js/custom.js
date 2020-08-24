@@ -118,129 +118,13 @@ $(document).on('change','#opcionesregion', function () {
   });
 });
 
-// Al cargar la pagina deja el foco en el primer campo del formulario
 $(document).ready(function(){
-  $( "#primercampo" ).focus();
-})
-
-// Valida campos formulario antes de enviarlo a servidor
-$("#formtocheck").submit(function(){
-
-  // verifica campos requeridos vacios
-  var isFormValid = true;
-  var setfocus = true
-  $(".requerido").each(function(){
-      if ($.trim($(this).val()).length == 0){
-          $(this).addClass("destacaerrorform");
-          isFormValid = false;
-          if (setfocus) {
-            $(this).focus();
-            setfocus = false;
-          }
-      }
-      else{
-          $(this).removeClass("destacaerrorform");
-      }
-  });
-
-  if (!isFormValid) {
-    $("#mensajerror").text("Completa los campos destacados");
-    $("#mensajerror").removeAttr('hidden');
-  };
-
-  // Valida que ambas contraseñas sen iguales
-  if (isFormValid){
-    var pass = $('input[name=password1]');
-    var repass = $('input[name=password2]');
-
-    if (pass.val() != repass.val()) {
-      pass.val('');
-      repass.val('');
-      pass.focus();
-
-      $("#mensajerror").text("Ambas contraseñas deben ser iguales");
-      $("#mensajerror").removeAttr('hidden');
-
-      isFormValid = false;
-    } else {
-      $("#mensajerror").empty();
-      $("#mensajerror").attr('hidden');
-    }
-  }
-
-
-  // verifica rut con digito verificador
-  if (isFormValid){
-    digver = $("#digitover").val();
-    rut = $("#rut").val();
-    if (digver && rut) {
-      var digver, rut, M, S, final;
-      M=0,S=1;
-
-      for (;rut;rut=Math.floor(rut/10)) {
-        S=(S+rut%10*(9-M++%6))%11;
-      }
-      final = S?S-1:'K';
-
-      if (final!=digver){
-        $("#digitover").addClass("destacaerrorform");
-        $("#rut").focus();
-        $("#mensajerror").text("Error en digito verificador");
-        $("#mensajerror").removeAttr('hidden');
-        isFormValid = false;
-      } else {
-        $("#mensajerror").empty();
-        $("#mensajerror").attr('hidden');
-      }
-    }
-  }
-
-  // validaciones formulario de tocatas
-  // asistentes_max tiene que ser mayor que asistentes_min
-  if (isFormValid) {
-    asis_min = $('input[name=asistentes_min]');
-
-    if (parseInt(asis_min.val()) <= 0) {
-      asis_min.focus();
-      $("#mensajerror").text("Asistencia Mínima debe ser mayor a 0.");
-      $("#mensajerror").removeAttr('hidden');
-      isFormValid = false;
-    } else {
-      $("#mensajerror").empty();
-      $("#mensajerror").attr('hidden');
-    }
-  }
-
-  return isFormValid;
-});
-
-$(document).ready(function(){
-
-  // Busqueda actomatica
-  // var searchForm = $(".search-form");
-  // var searchInput = searchForm.find("[name='q']");
-  // var searchBtn = searchForm.find("[type='submit']")
-  // var typingTimer;
-  // var typingInterval = 500;
-  // searchInput.keyup(function(event){
-  //   clearTimeout(typingTimer)
-  //   typingTimer = setTimeout(ejecutaBusqueda,typingInterval);
-  // })
-  // searchInput.keydown(function(event){
-  //   clearTimeout(typingTimer)
-  // })
-  //
-  // function ejecutaBusqueda(){
-  //   var query = searchInput.val();
-  //   window.location.href="/busqueda/?q="+query
-  // }
 
   // Agregar o quitar tocatas de carro y actualizar
   var tocataForm = $(".form-tocata-ajax");
   tocataForm.submit(function(event){
     event.preventDefault();
     var thisForm = $(this);
-    //var actionEndpoint = thisForm.attr("action");
     var actionEndpoint = thisForm.attr("data-endpoint");
     var httpMethod = thisForm.attr("method");
     var formData = thisForm.serialize();
@@ -291,21 +175,11 @@ $(document).ready(function(){
       method: updateCarroMethod,
       data: data,
       success: function(data){
-        var formQuitarTocataCarro = $(".form-quitar-carro-home")
-        if (data.tocatas.length > 0) {
-          tocataRows.html(" ")
-          $.each(data.tocatas, function(index, value){
-            var nuevoCarroTocataQuitar = formQuitarTocataCarro.clone()
-            nuevoCarroTocataQuitar.css("display","block")
-            nuevoCarroTocataQuitar.find(".carro-tocata-id").val(value.id)
-            carroBody.prepend("<tr class=\"carro-tocata\"><td class=\"cart-product-remove\">"+nuevoCarroTocataQuitar.html()+"</td><td class=\"cart-product-name\"><span><a href='"+value.url+"'>"+value.nombre+"</a></span></td><td class=\"cart-product-subtotal\"><span class=\"amount\">$"+value.costo+"</span></td></tr>")
-          })
-          carroResumen.find(".carro-subtotal").text(data.subtotal)
-          carroResumen.find(".carro-total").text(data.total)
+        if (!$.trim(data)){
+          window.location.href = currentUrl;
         } else {
-          window.location.href = currentUrl
+          $(".bodycarroupdate").html(data);
         }
-
       },
       error: function(errorData){
         $.alert({
@@ -316,7 +190,6 @@ $(document).ready(function(){
       }
     })
   }
-
 
   // Controla cantidad de elemento a agregar en carro
   var numItemCarro = $(".cart-product-quantity");
@@ -338,5 +211,22 @@ $(document).ready(function(){
     }
   });
 
-
+  // Busqueda actomatica
+  // var searchForm = $(".search-form");
+  // var searchInput = searchForm.find("[name='q']");
+  // var searchBtn = searchForm.find("[type='submit']")
+  // var typingTimer;
+  // var typingInterval = 500;
+  // searchInput.keyup(function(event){
+  //   clearTimeout(typingTimer)
+  //   typingTimer = setTimeout(ejecutaBusqueda,typingInterval);
+  // })
+  // searchInput.keydown(function(event){
+  //   clearTimeout(typingTimer)
+  // })
+  //
+  // function ejecutaBusqueda(){
+  //   var query = searchInput.val();
+  //   window.location.href="/busqueda/?q="+query
+  // }
 })

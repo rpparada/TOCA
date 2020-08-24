@@ -30,6 +30,17 @@ def carro_detalle_api_view(request):
     }
     return JsonResponse(carro_data)
 
+def carro_detalle_api_body_view(request):
+
+    carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
+
+    context = {
+        'tocatas': carro_obj.tocata.all()
+    }
+
+
+    return render(request, 'carro/snippets/bodyitemcarro.html', context)
+
 def carro_home(request):
 
     carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
@@ -41,6 +52,7 @@ def carro_home(request):
     return render(request, 'carro/carro_home.html', context)
 
 def carro_actualizar(request):
+
     tocata_id = request.POST.get('tocata_id')
     if tocata_id is not None:
         try:
@@ -66,7 +78,6 @@ def carro_actualizar(request):
             }
             #return JsonResponse({'Mensaje Error':'Error 400'}, status=400)
             return JsonResponse(json_data, status=200)
-
     return redirect('carro')
 
 def checkout_home(request):
