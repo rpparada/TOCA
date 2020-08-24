@@ -6,6 +6,7 @@
 {% block content %}
 
 {% url 'cuenta:cuenta' as cuenta_url %}
+{% url 'cuenta:home' as home_url %}
 
 {% include 'partials/_alerts.html' %}
 
@@ -55,7 +56,8 @@
                                         </div>
                                         <div class="mt-4">
                                             <button type="submit" class="btn btn-sm">Actualizar</button>
-                                            <button type="button" class="btn btn-secondary btn-sm">Cancel</button>
+                                            <a href="{{ home_url }}" class="btn btn-secondary btn-sm">Cancelar</a>
+                                            <!-- <button type="button" class="btn btn-secondary btn-sm">Cancel</button> -->
                                         </div>
                                       </form>
                                     </div>
@@ -90,7 +92,7 @@
                                         </div>
                                         <div class="mt-4">
                                             <button type="submit" class="btn btn-sm">Actualizar</button>
-                                            <button type="button" class="btn btn-secondary btn-sm">Cancel</button>
+                                            <a href="{{ home_url }}" class="btn btn-secondary btn-sm">Cancelar</a>
                                         </div>
                                       </form>
                                     </div>

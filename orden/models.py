@@ -11,9 +11,18 @@ from toca.utils import unique_orden_id_generator
 from toca.parametros import parToca, parCarro, parOrden, mediodepago
 
 # Create your models here.
-
 # Orden Compra
+class OrdenCompraQuerySet(models.query.QuerySet):
+    def by_request(self, request):
+        fact_profile, created = FacturacionProfile.objects.new_or_get(request)
+        return self.filter(facturacion_profile=fact_profile)
+
 class OrdenCompraManager(models.Manager):
+    def get_queryset(self):
+        return OrdenCompraQuerySet(self.model, using=self._db)
+
+    def by_request(self, request):
+        return self.get_queryset().by_request(request)
 
     def new_or_get(self, fact_profile, carro_obj):
         created = False
