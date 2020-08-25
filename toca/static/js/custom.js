@@ -202,7 +202,8 @@ $(document).ready(function(){
         if (!$.trim(data)){
           window.location.href = currentUrl;
         } else {
-          $(".bodycarroupdate").html(data);
+          //$(".bodycarroupdate").html(data);
+          $(".bodycarroupdate").replaceWith(data.html);
         }
       },
       error: function(errorData){

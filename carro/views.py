@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from django.template.loader import render_to_string
 
 from .models import CarroCompra
 from orden.models import OrdenCompra
@@ -33,12 +34,21 @@ def carro_detalle_api_view(request):
 def carro_detalle_api_body_view(request):
 
     carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
-
-    context = {
+    listatocatas = {
         'tocatas': carro_obj.tocata.all()
     }
 
-    return render(request, 'carro/snippets/bodyitemcarro.html', context)
+    string_render = render_to_string('carro/snippets/bodyitemcarro.html', listatocatas, request=request)
+
+    print(string_render)
+    
+    context = {
+        'html': string_render,
+        'subtotal': carro_obj.subtotal,
+        'total': carro_obj.total
+    }
+    #return render(request, 'carro/snippets/bodyitemcarro.html', context)
+    return JsonResponse(context)
 
 def carro_home(request):
 
