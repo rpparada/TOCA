@@ -39,7 +39,6 @@ class CarroCompra(models.Model):
 
     usuario             = models.ForeignKey(User, blank=True, null=True, on_delete=models.DO_NOTHING)
     tocata              = models.ManyToManyField(Tocata, blank=True)
-    cantidad            = models.IntegerField(default=0)
     subtotal            = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     total               = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
 
@@ -66,7 +65,7 @@ m2m_changed.connect(m2m_changed_carro_receiver, sender=CarroCompra.tocata.throug
 
 def pre_save_carro_receiver(sender, instance, *args, **kwargs):
     if instance.subtotal > 0:
-        instance.total = instance.subtotal + 10
+        instance.total = instance.subtotal
     else:
         instance.total = 0.00
 
