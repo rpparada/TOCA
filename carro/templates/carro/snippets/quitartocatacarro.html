@@ -1,4 +1,4 @@
-<form class="form-tocata-ajax" action="{% url 'actualizarcarro' %}" data-endpoint="{% url 'actualizarcarro' %}" method="POST" class="form">
+<form class="form-tocata-ajax-carro" action="{% url 'actualizarcarro' %}" data-endpoint="{% url 'actualizarcarro' %}" method="POST" class="form">
   {% csrf_token %}
   <input class="carro-tocata-id" type="hidden" name="tocata_id" value="{{ tocata_id }}">
   <button type="submit" class="fa fa-times" style="padding:0px;border:none;" ></button>

@@ -121,13 +121,10 @@ $(document).on('change','#opcionesregion', function () {
 $(document).ready(function(){
 
   // Agregar o quitar tocatas de carro y actualizar
-  var tocataForm = $(".form-tocata-ajax");
-  console.log(tocataForm);
-  tocataForm.submit(function(event){
-    console.log("test1");
+
+  var tablaCarro = $("#tablacarro")
+  tablaCarro.on("submit",".form-tocata-ajax-carro", function() {
     event.preventDefault();
-    // event.stopPropagation();
-    console.log("test2");
     var thisForm = $(this);
     var actionEndpoint = thisForm.attr("data-endpoint");
     var httpMethod = thisForm.attr("method");
@@ -149,6 +146,38 @@ $(document).ready(function(){
         if(window.location.href.indexOf("carro") != -1) {
           actualizaCarro()
         }
+      },
+      error: function(errorData){
+        $.alert({
+          title: "TI Error",
+          content: "Algo paso",
+          theme: "modern"
+        })
+      }
+    })
+  })
+
+  var tocataForm = $(".form-tocata-ajax");
+  tocataForm.submit(function(event){
+    event.preventDefault();
+    var thisForm = $(this);
+    var actionEndpoint = thisForm.attr("data-endpoint");
+    var httpMethod = thisForm.attr("method");
+    var formData = thisForm.serialize();
+
+    $.ajax({
+      url: actionEndpoint,
+      method: httpMethod,
+      data: formData,
+      success: function(data){
+        var submitSpan = thisForm.find(".submit-span")
+        if (data.added){
+          submitSpan.html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Quitar</button>")
+        } else {
+          submitSpan.html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Agregar</button>")
+        }
+        var navbarcarro = $(".navbar-carro-numitems")
+        navbarcarro.text(data.carroNumItem)
       },
       error: function(errorData){
         $.alert({
