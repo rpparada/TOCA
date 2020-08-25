@@ -199,11 +199,12 @@ $(document).ready(function(){
       method: updateCarroMethod,
       data: data,
       success: function(data){
-        if (!$.trim(data)){
-          window.location.href = currentUrl;
-        } else {
-          //$(".bodycarroupdate").html(data);
+        if (data.carroData) {
           $(".bodycarroupdate").replaceWith(data.html);
+          $(".carro-subtotal").text(data.subtotal)
+          $(".carro-total").text(data.total)
+        } else {
+          window.location.href = currentUrl;
         }
       },
       error: function(errorData){

@@ -34,21 +34,23 @@ def carro_detalle_api_view(request):
 def carro_detalle_api_body_view(request):
 
     carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
-    listatocatas = {
-        'tocatas': carro_obj.tocata.all()
-    }
 
-    string_render = render_to_string('carro/snippets/bodyitemcarro.html', listatocatas, request=request)
+    if carro_obj.tocata.all().count() > 0:
+        listatocatas = {
+            'tocatas': carro_obj.tocata.all()
+        }
+        string_render = render_to_string('carro/snippets/bodyitemcarro.html', listatocatas, request=request)
 
-    print(string_render)
-    
-    context = {
-        'html': string_render,
-        'subtotal': carro_obj.subtotal,
-        'total': carro_obj.total
-    }
-    #return render(request, 'carro/snippets/bodyitemcarro.html', context)
-    return JsonResponse(context)
+        context = {
+            'carroData': True,
+            'html': string_render,
+            'subtotal': '{0:,}'.format(int(carro_obj.subtotal)),
+            'total': '{0:,}'.format(int(carro_obj.total))
+        }
+
+        return JsonResponse(context)
+
+    return JsonResponse({'carroData': False})
 
 def carro_home(request):
 

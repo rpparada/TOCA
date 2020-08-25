@@ -24,9 +24,7 @@
                             <th class="cart-product-subtotal">Total</th>
                         </tr>
                     </thead>
-                    <tbody class="bodycarroupdate">
-                      {% include 'carro/snippets/bodyitemcarro.html' with tocatas=carro.tocata.all %}
-                    </tbody>
+                    {% include 'carro/snippets/bodyitemcarro.html' with tocatas=carro.tocata.all %}
                 </table>
             </div>
 
@@ -44,7 +42,7 @@
                                         <strong>Cart Subtotal</strong>
                                     </td>
                                     <td class="cart-product-name text-right">
-                                        <span class="amount">${{ carro.subtotal|floatformat|intcomma }}</span>
+                                        <span class="amount">$<span class="carro-subtotal">{{ carro.subtotal|floatformat|intcomma }}</span></span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -60,7 +58,7 @@
                                         <strong>Total</strong>
                                     </td>
                                     <td class="cart-product-name text-right">
-                                        <span class="amount color lead"><strong>${{ carro.total|floatformat|intcomma }}</strong></span>
+                                        <span class="amount color lead"><strong>$<span class="carro-total">{{ carro.total|floatformat|intcomma }}</span></strong></span>
                                     </td>
                                 </tr>
                             </tbody>
