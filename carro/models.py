@@ -21,7 +21,7 @@ class CarroCompraManager(models.Manager):
                 carro_obj.usuario = request.user
                 carro_obj.save()
         else:
-            nuevo_obj = False
+            nuevo_obj = True
             carro_obj = CarroCompra.objects.nuevo(user=request.user)
             request.session['carro_id'] = carro_obj.id
 
@@ -70,3 +70,23 @@ def pre_save_carro_receiver(sender, instance, *args, **kwargs):
         instance.total = 0.00
 
 pre_save.connect(pre_save_carro_receiver, sender=CarroCompra)
+
+# Items Carro de Compra (Tocatas)
+ITEMCARRO_CANTIDAD_OPCIONES = (
+    (1,1),
+    (2,2)
+)
+
+class ItemCarroCompra(models.Model):
+
+    tocata              = models.OneToOneField(Tocata, null=True, blank=True, on_delete=models.CASCADE)
+    cantidad             = models.IntegerField(default=1, choices=ITEMCARRO_CANTIDAD_OPCIONES)
+    total               = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
+
+    def __str__(self):
+        return str(self.cantidad)+' - '+str(self.tocata)
+
+def pre_save_itemcarro_receiver(sender, instance, *args, **kwargs):
+    instance.total = instance.cantidad * instance.tocata.costo
+
+pre_save.connect(pre_save_itemcarro_receiver, sender=ItemCarroCompra)
