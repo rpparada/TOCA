@@ -26,20 +26,16 @@ from toca.parametros import parToca, parTocatas, parTocatasAbiertas
 # Create your views here.
 class UserTocatasHistoryView(LoginRequiredMixin, ListView):
 
-    #template_name = 'tocata/tocatas.html'
     template_name = 'tocata/historico-user-tocatas.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super(UserTocatasHistoryView, self).get_context_data(*args, **kwargs)
-        carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(self.request)
-        context['carro'] = carro_obj
 
         return context
 
     def get_queryset(self, *args, **kwargs):
         request = self.request
         views = request.user.objectviewed_set.by_model(Tocata)
-        #views = request.user.objectviewed_set.by_model(Tocata, return_queryset=True)
 
         return views
 
@@ -63,9 +59,7 @@ class TocataListView(ListView):
 
         orden = self.request.GET.get('orden','fecha')
         direccion = self.request.GET.get('direccion','asc')
-        carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(self.request)
 
-        context['carro'] = carro_obj
         context['orden'] = orden
         context['direccion'] = direccion
 
@@ -79,7 +73,7 @@ class TocataDetailView(ObjectViewedMixin, DetailView):
         context = super(TocataDetailView, self).get_context_data(*args, **kwargs)
         carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(self.request)
 
-        context['carro'] = carro_obj
+        context['carro'] = carro_obj.get_tocata_list()
 
         return context
 

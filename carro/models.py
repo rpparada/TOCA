@@ -55,10 +55,21 @@ class CarroCompra(models.Model):
         created = False
         for item in self.item.all():
             if tocata == item.tocata:
+                if item.cantidad != cantidad:
+                    item.cantidad = cantidad
+                    item.save()
                 return item, created
+
         item = ItemCarroCompra.objects.create(tocata=tocata, cantidad=cantidad)
         created = True
         return item, created
+
+    def get_tocata_list(self):
+        lista_tocata = []
+        for item in self.item.all():
+            lista_tocata.append(item.tocata)
+
+        return lista_tocata
 
 def m2m_changed_carro_receiver(sender, instance, action, *args, **kwargs):
 
@@ -84,13 +95,15 @@ pre_save.connect(pre_save_carro_receiver, sender=CarroCompra)
 # Items Carro de Compra (Tocatas)
 ITEMCARRO_CANTIDAD_OPCIONES = (
     (1,1),
-    (2,2)
+    (2,2),
+    (3,3),
+    (4,4)
 )
 
 class ItemCarroCompra(models.Model):
 
-    tocata              = models.OneToOneField(Tocata, null=True, blank=True, on_delete=models.CASCADE)
-    cantidad             = models.IntegerField(default=1, choices=ITEMCARRO_CANTIDAD_OPCIONES)
+    tocata              = models.ForeignKey(Tocata, null=True, on_delete=models.DO_NOTHING)
+    cantidad            = models.IntegerField(default=1, choices=ITEMCARRO_CANTIDAD_OPCIONES)
     total               = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
 
     def __str__(self):

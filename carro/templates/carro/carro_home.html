@@ -7,7 +7,7 @@
 
 {% include 'partials/_alerts.html' %}
 
-{% if carro.tocata.exists %}
+{% if carro.item.exists %}
 <!-- SHOP CART -->
 <section id="shop-cart">
     <div class="container">
@@ -24,7 +24,7 @@
                             <th class="cart-product-subtotal">Total</th>
                         </tr>
                     </thead>
-                    {% include 'carro/snippets/bodyitemcarro.html' with tocatas=carro.tocata.all %}
+                    {% include 'carro/snippets/bodyitemcarro.html' with tocatas=listatocatas %}
                 </table>
             </div>
 

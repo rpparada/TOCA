@@ -35,9 +35,9 @@ def carro_detalle_api_body_view(request):
 
     carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
 
-    if carro_obj.tocata.all().count() > 0:
+    if carro_obj.item.all().count() > 0:
         listatocatas = {
-            'tocatas': carro_obj.tocata.all()
+            'tocatas': carro_obj.get_tocata_list()
         }
         string_render = render_to_string('carro/snippets/bodyitemcarro.html', listatocatas, request=request)
 
@@ -57,7 +57,8 @@ def carro_home(request):
     carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
 
     context = {
-        'carro': carro_obj
+        'carro': carro_obj,
+        'listatocatas': carro_obj.get_tocata_list()
     }
 
     return render(request, 'carro/carro_home.html', context)
@@ -75,23 +76,21 @@ def carro_actualizar(request):
 
         item, created = carro_obj.get_or_create_item(tocata, cantidad=1)
 
-        print(item)
-        print(created)
-
-        if tocata in carro_obj.tocata.all():
-            carro_obj.tocata.remove(tocata)
-            added = False
-        else:
-            carro_obj.tocata.add(tocata)
+        if created:
+            carro_obj.item.add(item)
             added = True
+        else:
+            carro_obj.item.remove(item)
+            item.delete()
+            added = False
 
-        request.session['carro_tocatas'] = carro_obj.tocata.count()
+        request.session['carro_tocatas'] = carro_obj.item.count()
 
         if request.is_ajax():
             json_data = {
                 'added': added,
                 'removed': not added,
-                'carroNumItem': carro_obj.tocata.count()
+                'carroNumItem': carro_obj.item.count()
             }
             #return JsonResponse({'Mensaje Error':'Error 400'}, status=400)
             return JsonResponse(json_data, status=200)
