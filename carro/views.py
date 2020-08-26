@@ -37,7 +37,7 @@ def carro_detalle_api_body_view(request):
 
     if carro_obj.item.all().count() > 0:
         listatocatas = {
-            'tocatas': carro_obj.get_tocata_list()
+            'items': carro_obj.item.all()
         }
         string_render = render_to_string('carro/snippets/bodyitemcarro.html', listatocatas, request=request)
 
