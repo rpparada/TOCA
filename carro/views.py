@@ -72,6 +72,12 @@ def carro_actualizar(request):
             # Mensaje de Error al usuario
             return redirect('carro')
         carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
+
+        item, created = carro_obj.get_or_create_item(tocata, cantidad=1)
+
+        print(item)
+        print(created)
+
         if tocata in carro_obj.tocata.all():
             carro_obj.tocata.remove(tocata)
             added = False
