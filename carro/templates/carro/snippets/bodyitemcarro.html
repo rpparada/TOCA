@@ -1,35 +1,31 @@
 {% load humanize %}
 <tbody class="bodycarroupdate">
-  {% for instance in tocatas %}
+  {% for item in items %}
     <tr>
         <td class="cart-product-remove">
-            {% include 'carro/snippets/quitartocatacarro.html' with tocata_id=instance.id %}
+            {% include 'carro/snippets/quitartocatacarro.html' with tocata_id=item.tocata.id %}
         </td>
         <td class="cart-product-thumbnail">
-            <a href="{{ instance.get_absolute_url }}">
-                <img src="{{ instance.flayer_380_507.url }}" alt="{{ instance.nombre }}">
+            <a href="{{ item.tocata.get_absolute_url }}">
+                <img src="{{ item.tocata.flayer_380_507.url }}" alt="{{ item.tocata.nombre }}">
             </a>
-            <div class="cart-product-thumbnail-name">{{ instance.nombre }}</div>
+            <div class="cart-product-thumbnail-name">{{ item.tocata.nombre }}</div>
         </td>
         <td class="cart-product-description">
-            <p><span>{{ instance.lugar.region }}</span>
-                <span>{{ instance.lugar.comuna }}</span>
-                <span>{{ instance.fecha }}</span>
-                <span>{{ instance.hora }}</span>
+            <p><span>{{ item.tocata.lugar.region }}</span>
+                <span>{{ item.tocata.lugar.comuna }}</span>
+                <span>{{ item.tocata.fecha }}</span>
+                <span>{{ item.tocata.hora }}</span>
             </p>
         </td>
         <td class="cart-product-price">
-            <span class="amount">${{ instance.costo|floatformat|intcomma }}</span>
+            <span class="amount">${{ item.tocata.costo|floatformat|intcomma }}</span>
         </td>
         <td class="cart-product-quantity">
-            <div class="quantity">
-                <input type="button" class="minus" value="-">
-                <input type="text" class="qty" value="1" name="quantity">
-                <input type="button" class="plus" value="+">
-            </div>
+          {% include 'carro/snippets/cantidaditem.html' with instance=item %}
         </td>
         <td class="cart-product-subtotal">
-            <span class="amount">${{ instance.costo|floatformat|intcomma }}</span>
+            <span class="amount">${{ item.tocata.costo|floatformat|intcomma }}</span>
         </td>
     </tr>
   {% endfor %}

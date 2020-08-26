@@ -224,17 +224,17 @@ $(document).ready(function(){
   var textCantidad = numItemCarro.find(".qty");
 
   botonmas.click(function(event) {
-    var cantidadActual = parseInt(textCantidad.val());
-    if (cantidadActual < 2) {
-      textCantidad.val(cantidadActual+1);
-    }
+    // var cantidadActual = parseInt(textCantidad.val());
+    // if (cantidadActual < 2) {
+    //   textCantidad.val(cantidadActual+1);
+    // }
   });
 
   botonmenos.click(function(event) {
-    var cantidadActual = parseInt(textCantidad.val());
-    if (cantidadActual > 1) {
-      textCantidad.val(cantidadActual-1);
-    }
+    // var cantidadActual = parseInt(textCantidad.val());
+    // if (cantidadActual > 1) {
+    //   textCantidad.val(cantidadActual-1);
+    // }
   });
 
   // Busqueda actomatica

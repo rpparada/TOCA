@@ -24,7 +24,7 @@
                             <th class="cart-product-subtotal">Total</th>
                         </tr>
                     </thead>
-                    {% include 'carro/snippets/bodyitemcarro.html' with tocatas=listatocatas %}
+                    {% include 'carro/snippets/bodyitemcarro.html' with items=carro.item.all %}
                 </table>
             </div>
 

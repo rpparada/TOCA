@@ -51,16 +51,13 @@ class CarroCompra(models.Model):
     def __str__(self):
         return str(self.id)
 
-    def get_or_create_item(self, tocata, cantidad):
+    def get_or_create_item(self, tocata):
         created = False
         for item in self.item.all():
             if tocata == item.tocata:
-                if item.cantidad != cantidad:
-                    item.cantidad = cantidad
-                    item.save()
                 return item, created
 
-        item = ItemCarroCompra.objects.create(tocata=tocata, cantidad=cantidad)
+        item = ItemCarroCompra.objects.create(tocata=tocata)
         created = True
         return item, created
 

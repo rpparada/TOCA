@@ -57,8 +57,7 @@ def carro_home(request):
     carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
 
     context = {
-        'carro': carro_obj,
-        'listatocatas': carro_obj.get_tocata_list()
+        'carro': carro_obj
     }
 
     return render(request, 'carro/carro_home.html', context)
@@ -74,7 +73,7 @@ def carro_actualizar(request):
             return redirect('carro')
         carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
 
-        item, created = carro_obj.get_or_create_item(tocata, cantidad=1)
+        item, created = carro_obj.get_or_create_item(tocata)
 
         if created:
             carro_obj.item.add(item)

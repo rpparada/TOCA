@@ -72,8 +72,10 @@ class TocataDetailView(ObjectViewedMixin, DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(TocataDetailView, self).get_context_data(*args, **kwargs)
         carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(self.request)
+        item, created = carro_obj.get_or_create_item(context['object'])
 
-        context['carro'] = carro_obj.get_tocata_list()
+        context['item'] = item
+        context['listatocatascarro'] = carro_obj.get_tocata_list()
 
         return context
 

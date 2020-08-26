@@ -62,16 +62,12 @@
                         <div class="col-lg-9">
                             <h6>Selecciona Cantidad</h6>
                             <div class="cart-product-quantity">
-                                <div class="quantity m-l-5">
-                                    <input type="button" class="minus" value="-">
-                                    <input type="text" class="qty" value="1">
-                                    <input type="button" class="plus" value="+">
-                                </div>
+                              {% include 'carro/snippets/cantidaditem.html' with instance=item %}
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <h6>Agregar al Carro</h6>
-                            {% include 'carro/snippets/actualizacarroform.html' with instance=object carro=carro %}
+                            {% include 'carro/snippets/actualizacarroform.html' with instance=object carro=listatocatascarro %}
                         </div>
                     </div>
                 </div>
