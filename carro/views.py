@@ -93,13 +93,12 @@ def carro_actualizar_suma(request):
 
             if created:
                 carro_obj.item.add(item)
-                #added = True
                 request.session['carro_tocatas'] = carro_obj.item.count()
             else:
-                # Escribir aqui control de cantidad maxima
-                item.cantidad += 1
-                item.save()
-                #added = False
+                if item.cantidad < 4:
+                    item.cantidad += 1
+                    item.save()
+                    carro_obj.update_subtotal()
 
             if request.is_ajax():
                 json_data = {
@@ -132,6 +131,7 @@ def carro_actualizar_resta(request):
                 if item.cantidad > 1:
                     item.cantidad -= 1
                     item.save()
+                    carro_obj.update_subtotal()
                     #removed = False
                 else:
                     carro_obj.item.remove(item)

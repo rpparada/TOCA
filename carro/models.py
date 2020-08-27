@@ -75,6 +75,15 @@ class CarroCompra(models.Model):
 
         return lista_tocata
 
+    def update_subtotal(self):
+        items = self.item.all()
+        total = 0
+        for item in items:
+            total += item.total
+        if self.subtotal != total:
+            self.subtotal = total
+            self.save()
+
 def m2m_changed_carro_receiver(sender, instance, action, *args, **kwargs):
 
     if action == 'post_add' or action == 'post_remove' or action == 'post_clear':
