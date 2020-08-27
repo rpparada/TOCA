@@ -173,8 +173,10 @@ $(document).ready(function(){
         var submitSpan = thisForm.find(".submit-span")
         if (data.added){
           submitSpan.html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Quitar</button>")
+          $(".qty").val(1)
         } else {
           submitSpan.html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Agregar</button>")
+          $(".qty").val(0)
         }
         var navbarcarro = $(".navbar-carro-numitems")
         navbarcarro.text(data.carroNumItem)
