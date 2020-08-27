@@ -1,5 +1,5 @@
 <div class="quantity">
     <input type="button" class="minus" value="-">
-    <input type="text" class="qty" value="{{ instance.cantidad }}" disabled>
+    <input type="text" class="qty" value="{% if instance %}{{ instance.cantidad }}{% else %}0{% endif %}">
     <input type="button" class="plus" value="+">
 </div>

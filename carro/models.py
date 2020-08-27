@@ -38,7 +38,6 @@ class CarroCompraManager(models.Manager):
 class CarroCompra(models.Model):
 
     usuario             = models.ForeignKey(User, blank=True, null=True, on_delete=models.DO_NOTHING)
-    #tocata              = models.ManyToManyField(Tocata, blank=True)
     item                = models.ManyToManyField('ItemCarroCompra', blank=True)
     subtotal            = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     total               = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
@@ -60,6 +59,14 @@ class CarroCompra(models.Model):
         item = ItemCarroCompra.objects.create(tocata=tocata)
         created = True
         return item, created
+
+    def get_item(self, tocata):
+        item = None
+        for aux in self.item.all():
+            if tocata == aux.tocata:
+                return aux
+
+        return item
 
     def get_tocata_list(self):
         lista_tocata = []
@@ -102,6 +109,9 @@ class ItemCarroCompra(models.Model):
     tocata              = models.ForeignKey(Tocata, null=True, on_delete=models.DO_NOTHING)
     cantidad            = models.IntegerField(default=1, choices=ITEMCARRO_CANTIDAD_OPCIONES)
     total               = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
+
+    fecha_actu          = models.DateTimeField(auto_now=True)
+    fecha_crea          = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.cantidad)+' - '+str(self.tocata)

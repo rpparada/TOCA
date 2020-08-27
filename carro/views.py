@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from django.template.loader import render_to_string
 
-from .models import CarroCompra
+from .models import CarroCompra, ItemCarroCompra
 from orden.models import OrdenCompra
 from tocata.models import Tocata
 from facturacion.models import FacturacionProfile
@@ -71,8 +71,8 @@ def carro_actualizar(request):
         except Tocata.DoesNotExist:
             # Mensaje de Error al usuario
             return redirect('carro')
-        carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
 
+        carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
         item, created = carro_obj.get_or_create_item(tocata)
 
         if created:
