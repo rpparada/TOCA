@@ -91,24 +91,25 @@ def carro_actualizar_suma(request):
         carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
         item, created = carro_obj.get_or_create_item(tocata)
 
+        added = False
         if created:
             carro_obj.item.add(item)
-            request.session['carro_tocatas'] = carro_obj.item.count()
+            added = True
         else:
-            if item.cantidad < 4:
-                item.cantidad += 1
-                item.save()
+            if item.agrega_item():
                 carro_obj.update_subtotal()
 
         context = {
             'tocata': tocata,
-            'instance': item
+            'instance': item,
         }
         string_render = render_to_string('carro/snippets/cantidaditem.html', context, request=request)
+        request.session['carro_tocatas'] = carro_obj.item.count()
         if request.is_ajax():
             json_data = {
                 'html': string_render,
-                'carroNumItem': carro_obj.item.count()
+                'carroNumItem': carro_obj.item.count(),
+                'added': added
             }
             return JsonResponse(json_data, status=200)
     return redirect('carro:carro')
@@ -127,33 +128,29 @@ def carro_actualizar_resta(request):
         carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
         item, created = carro_obj.get_or_create_item(tocata)
 
+        removed = False
         if created:
-            # Esto no debiera pasar, manejar este posible error
             item.delete()
         else:
-            # Escribir aqui control de cantidad
-            if item.cantidad > 1:
-                item.cantidad -= 1
-                item.save()
+            if item.quita_item():
                 carro_obj.update_subtotal()
-                #removed = False
             else:
                 carro_obj.item.remove(item)
                 item.delete()
-                #removed = True
+                item = None
+                removed = True
 
         context = {
             'tocata': tocata,
-            'instance': item
+            'instance': item,
         }
         string_render = render_to_string('carro/snippets/cantidaditem.html', context, request=request)
-
+        request.session['carro_tocatas'] = carro_obj.item.count()
         if request.is_ajax():
             json_data = {
                 'html': string_render,
-                #'added': not removed,
-                #'removed': removed,
-                'carroNumItem': carro_obj.item.count()
+                'carroNumItem': carro_obj.item.count(),
+                'removed': removed
             }
             return JsonResponse(json_data, status=200)
     return redirect('carro:carro')

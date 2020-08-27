@@ -113,6 +113,8 @@ ITEMCARRO_CANTIDAD_OPCIONES = (
     (4,4)
 )
 
+ITEMCARRO_CANTIDAD_OPCIONES_MAX = len(ITEMCARRO_CANTIDAD_OPCIONES)
+
 class ItemCarroCompra(models.Model):
 
     tocata              = models.ForeignKey(Tocata, null=True, on_delete=models.DO_NOTHING)
@@ -124,6 +126,21 @@ class ItemCarroCompra(models.Model):
 
     def __str__(self):
         return str(self.cantidad)+' - '+str(self.tocata)
+
+    def agrega_item(self):
+        if self.cantidad < ITEMCARRO_CANTIDAD_OPCIONES_MAX:
+            self.cantidad += 1
+            self.save()
+            return True
+        return False
+
+    def quita_item(self):
+        if self.cantidad > 1:
+            self.cantidad -= 1
+            self.save()
+            return True
+        return False
+
 
 def pre_save_itemcarro_receiver(sender, instance, *args, **kwargs):
     instance.total = instance.cantidad * instance.tocata.costo

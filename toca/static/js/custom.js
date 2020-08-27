@@ -234,6 +234,11 @@ $(document).ready(function(){
       success: function(data){
         // actualizar boton de agregar y control de cantidad
         $(".quantity").replaceWith(data.html);
+        if (data.removed){
+          $(".submit-span").html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Agregar</button>")
+        }
+        var navbarcarro = $(".navbar-carro-numitems")
+        navbarcarro.text(data.carroNumItem)
       },
       error: function(errorData){
         $.alert({
@@ -261,6 +266,11 @@ $(document).ready(function(){
       success: function(data){
         // actualizar boton de agregar y control de cantidad
         $(".quantity").replaceWith(data.html);
+        if (data.added){
+          $(".submit-span").html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Quitar</button>")
+        }
+        var navbarcarro = $(".navbar-carro-numitems")
+        navbarcarro.text(data.carroNumItem)
       },
       error: function(errorData){
         $.alert({
