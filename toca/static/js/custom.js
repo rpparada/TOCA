@@ -227,14 +227,13 @@ $(document).ready(function(){
     var httpMethod = thisForm.attr("method");
     var formData = thisForm.serialize();
 
-    console.log("resta");
-
     $.ajax({
       url: actionEndpoint,
       method: httpMethod,
       data: formData,
       success: function(data){
-        console.log("resto ok");
+        // actualizar boton de agregar y control de cantidad
+        $(".quantity").replaceWith(data.html);
       },
       error: function(errorData){
         $.alert({
@@ -255,13 +254,13 @@ $(document).ready(function(){
     var httpMethod = thisForm.attr("method");
     var formData = thisForm.serialize();
 
-    console.log("suma");
     $.ajax({
       url: actionEndpoint,
       method: httpMethod,
       data: formData,
       success: function(data){
-        console.log("sumo ok");
+        // actualizar boton de agregar y control de cantidad
+        $(".quantity").replaceWith(data.html);
       },
       error: function(errorData){
         $.alert({

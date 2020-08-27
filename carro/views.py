@@ -80,72 +80,85 @@ def carro_actualizar(request):
 
 def carro_actualizar_suma(request):
 
-        tocata_id = request.POST.get('tocata_id')
-        if tocata_id is not None:
-            try:
-                tocata = Tocata.objects.get(id=tocata_id)
-            except Tocata.DoesNotExist:
-                # Mensaje de Error al usuario
-                return redirect('carro')
+    tocata_id = request.POST.get('tocata_id')
+    if tocata_id is not None:
+        try:
+            tocata = Tocata.objects.get(id=tocata_id)
+        except Tocata.DoesNotExist:
+            # Mensaje de Error al usuario
+            return redirect('carro')
 
-            carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
-            item, created = carro_obj.get_or_create_item(tocata)
+        carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
+        item, created = carro_obj.get_or_create_item(tocata)
 
-            if created:
-                carro_obj.item.add(item)
-                request.session['carro_tocatas'] = carro_obj.item.count()
-            else:
-                if item.cantidad < 4:
-                    item.cantidad += 1
-                    item.save()
-                    carro_obj.update_subtotal()
+        if created:
+            carro_obj.item.add(item)
+            request.session['carro_tocatas'] = carro_obj.item.count()
+        else:
+            if item.cantidad < 4:
+                item.cantidad += 1
+                item.save()
+                carro_obj.update_subtotal()
 
-            if request.is_ajax():
-                json_data = {
-                #    'added': added,
-                #    'removed': not added,
-                    'carroNumItem': carro_obj.item.count()
-                }
-                return JsonResponse(json_data, status=200)
-        return redirect('carro')
+        context = {
+            'tocata': tocata,
+            'instance': item
+        }
+        string_render = render_to_string('carro/snippets/cantidaditem.html', context, request=request)
+        print(string_render)
+        if request.is_ajax():
+            json_data = {
+                'html': string_render,
+                'carroNumItem': carro_obj.item.count()
+            }
+            return JsonResponse(json_data, status=200)
+    return redirect('carro')
 
 def carro_actualizar_resta(request):
 
-        tocata_id = request.POST.get('tocata_id')
+    tocata_id = request.POST.get('tocata_id')
 
-        if tocata_id is not None:
-            try:
-                tocata = Tocata.objects.get(id=tocata_id)
-            except Tocata.DoesNotExist:
-                # Mensaje de Error al usuario
-                return redirect('carro')
+    if tocata_id is not None:
+        try:
+            tocata = Tocata.objects.get(id=tocata_id)
+        except Tocata.DoesNotExist:
+            # Mensaje de Error al usuario
+            return redirect('carro')
 
-            carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
-            item, created = carro_obj.get_or_create_item(tocata)
+        carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
+        item, created = carro_obj.get_or_create_item(tocata)
 
-            if created:
-                # Esto no debiera pasar, manejar este posible error
-                item.delete()
+        if created:
+            # Esto no debiera pasar, manejar este posible error
+            item.delete()
+        else:
+            # Escribir aqui control de cantidad
+            if item.cantidad > 1:
+                item.cantidad -= 1
+                item.save()
+                carro_obj.update_subtotal()
+                #removed = False
             else:
-                # Escribir aqui control de cantidad
-                if item.cantidad > 1:
-                    item.cantidad -= 1
-                    item.save()
-                    carro_obj.update_subtotal()
-                    #removed = False
-                else:
-                    carro_obj.item.remove(item)
-                    item.delete()
-                    #removed = True
+                carro_obj.item.remove(item)
+                item.delete()
+                #removed = True
 
-            if request.is_ajax():
-                json_data = {
-                    #'added': not removed,
-                    #'removed': removed,
-                    'carroNumItem': carro_obj.item.count()
-                }
-                return JsonResponse(json_data, status=200)
-        return redirect('carro')
+        context = {
+            'tocata': tocata,
+            'instance': item
+        }
+        string_render = render_to_string('carro/snippets/cantidaditem.html', context, request=request)
+        print(string_render)
+
+        if request.is_ajax():
+            json_data = {
+                'html': string_render,
+                #'added': not removed,
+                #'removed': removed,
+                'carroNumItem': carro_obj.item.count()
+            }
+            return JsonResponse(json_data, status=200)
+    return redirect('carro')
 
 def checkout_home(request):
     carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
