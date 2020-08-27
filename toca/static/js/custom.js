@@ -218,24 +218,62 @@ $(document).ready(function(){
   }
 
   // Controla cantidad de elemento a agregar en carro
-  var numItemCarro = $(".cart-product-quantity");
-  var botonmenos = numItemCarro.find(".minus");
-  var botonmas = numItemCarro.find(".plus");
-  var textCantidad = numItemCarro.find(".qty");
+  var cambiaNumItems = $(".quantity")
+  cambiaNumItems.on("submit",".form-carro-resta-ajax", function() {
 
-  botonmas.click(function(event) {
-    // var cantidadActual = parseInt(textCantidad.val());
-    // if (cantidadActual < 2) {
-    //   textCantidad.val(cantidadActual+1);
-    // }
-  });
+    event.preventDefault();
+    var thisForm = $(this);
+    var actionEndpoint = thisForm.attr("data-endpoint");
+    var httpMethod = thisForm.attr("method");
+    var formData = thisForm.serialize();
 
-  botonmenos.click(function(event) {
-    // var cantidadActual = parseInt(textCantidad.val());
-    // if (cantidadActual > 1) {
-    //   textCantidad.val(cantidadActual-1);
-    // }
-  });
+    console.log("resta");
+
+    $.ajax({
+      url: actionEndpoint,
+      method: httpMethod,
+      data: formData,
+      success: function(data){
+        console.log("resto ok");
+      },
+      error: function(errorData){
+        $.alert({
+          title: "TI Error",
+          content: "Algo paso",
+          theme: "modern"
+        })
+      }
+    })
+
+  })
+
+  cambiaNumItems.on("submit",".form-carro-suma-ajax", function() {
+
+    event.preventDefault();
+    var thisForm = $(this);
+    var actionEndpoint = thisForm.attr("data-endpoint");
+    var httpMethod = thisForm.attr("method");
+    var formData = thisForm.serialize();
+
+    console.log("suma");
+    $.ajax({
+      url: actionEndpoint,
+      method: httpMethod,
+      data: formData,
+      success: function(data){
+        console.log("sumo ok");
+      },
+      error: function(errorData){
+        $.alert({
+          title: "TI Error",
+          content: "Algo paso",
+          theme: "modern"
+        })
+      }
+    })
+
+  })
+
 
   // Busqueda actomatica
   // var searchForm = $(".search-form");

@@ -22,7 +22,7 @@
             <span class="amount">${{ item.tocata.costo|floatformat|intcomma }}</span>
         </td>
         <td class="cart-product-quantity">
-          {% include 'carro/snippets/cantidaditem.html' with instance=item %}
+          {% include 'carro/snippets/cantidaditem.html' with instance=item tocata=item.tocata %}
         </td>
         <td class="cart-product-subtotal">
             <span class="amount">${{ item.total|floatformat|intcomma }}</span>

@@ -33,7 +33,7 @@ urlpatterns = [
     path('cobro/', include('cobro.urls')),
     path('busqueda/', include(('busqueda.urls','busqueda'), namespace='busqueda')),
     path('ordenes/', include(('orden.urls','ordenes'), namespace='ordenes')),
-    path('carro/', include('carro.urls')),
+    path('carro/', include(('carro.urls','carro'), namespace='carro')),
     path('direccion/', include('direccion.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

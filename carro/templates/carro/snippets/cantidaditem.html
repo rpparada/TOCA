@@ -1,5 +1,13 @@
 <div class="quantity">
-    <input type="button" class="minus" value="-">
+    <form class="form-carro-resta-ajax" data-endpoint="{% url 'carro:actualizarcarroresta' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="tocata_id" value="{{ tocata.id }}">
+      <input type="submit" class="minus" value="-">
+    </form>
     <input type="text" class="qty" value="{% if instance %}{{ instance.cantidad }}{% else %}0{% endif %}">
-    <input type="button" class="plus" value="+">
+    <form class="form-carro-suma-ajax" data-endpoint="{% url 'carro:actualizarcarrosuma' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="tocata_id" value="{{ tocata.id }}">
+      <input type="submit" class="plus" value="+">
+    </form>
 </div>

@@ -14,23 +14,6 @@ from direccion.forms import DireccionForm
 from usuario.forms import IngresarForm
 
 # Create your views here.
-def carro_detalle_api_view(request):
-
-    carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
-    tocatas = [{
-        'id': x.id,
-        'url': x.get_absolute_url(),
-        'nombre': x.nombre,
-        'costo': x.costo
-    } for x in carro_obj.tocata.all()]
-
-    carro_data = {
-        'tocatas': tocatas,
-        'subtotal': carro_obj.subtotal,
-        'total': carro_obj.total
-    }
-    return JsonResponse(carro_data)
-
 def carro_detalle_api_body_view(request):
 
     carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
@@ -94,6 +77,75 @@ def carro_actualizar(request):
             #return JsonResponse({'Mensaje Error':'Error 400'}, status=400)
             return JsonResponse(json_data, status=200)
     return redirect('carro')
+
+def carro_actualizar_suma(request):
+
+        tocata_id = request.POST.get('tocata_id')
+        if tocata_id is not None:
+            try:
+                tocata = Tocata.objects.get(id=tocata_id)
+            except Tocata.DoesNotExist:
+                # Mensaje de Error al usuario
+                return redirect('carro')
+
+            carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
+            item, created = carro_obj.get_or_create_item(tocata)
+
+            if created:
+                carro_obj.item.add(item)
+                #added = True
+                request.session['carro_tocatas'] = carro_obj.item.count()
+            else:
+                # Escribir aqui control de cantidad maxima
+                item.cantidad += 1
+                item.save()
+                #added = False
+
+            if request.is_ajax():
+                json_data = {
+                #    'added': added,
+                #    'removed': not added,
+                    'carroNumItem': carro_obj.item.count()
+                }
+                return JsonResponse(json_data, status=200)
+        return redirect('carro')
+
+def carro_actualizar_resta(request):
+
+        tocata_id = request.POST.get('tocata_id')
+
+        if tocata_id is not None:
+            try:
+                tocata = Tocata.objects.get(id=tocata_id)
+            except Tocata.DoesNotExist:
+                # Mensaje de Error al usuario
+                return redirect('carro')
+
+            carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
+            item, created = carro_obj.get_or_create_item(tocata)
+
+            if created:
+                # Esto no debiera pasar, manejar este posible error
+                item.delete()
+            else:
+                # Escribir aqui control de cantidad
+                if item.cantidad > 1:
+                    item.cantidad -= 1
+                    item.save()
+                    #removed = False
+                else:
+                    carro_obj.item.remove(item)
+                    item.delete()
+                    #removed = True
+
+            if request.is_ajax():
+                json_data = {
+                    #'added': not removed,
+                    #'removed': removed,
+                    'carroNumItem': carro_obj.item.count()
+                }
+                return JsonResponse(json_data, status=200)
+        return redirect('carro')
 
 def checkout_home(request):
     carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
