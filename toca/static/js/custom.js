@@ -218,7 +218,7 @@ $(document).ready(function(){
   }
 
   // Controla cantidad de elemento a agregar en carro
-  var cambiaNumItems = $(".quantity")
+  var cambiaNumItems = $(".cart-product-quantity")
   cambiaNumItems.on("submit",".form-carro-resta-ajax", function() {
 
     event.preventDefault();

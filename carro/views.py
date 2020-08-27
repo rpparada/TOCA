@@ -86,7 +86,7 @@ def carro_actualizar_suma(request):
             tocata = Tocata.objects.get(id=tocata_id)
         except Tocata.DoesNotExist:
             # Mensaje de Error al usuario
-            return redirect('carro')
+            return redirect('carro:carro')
 
         carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
         item, created = carro_obj.get_or_create_item(tocata)
@@ -105,14 +105,13 @@ def carro_actualizar_suma(request):
             'instance': item
         }
         string_render = render_to_string('carro/snippets/cantidaditem.html', context, request=request)
-        print(string_render)
         if request.is_ajax():
             json_data = {
                 'html': string_render,
                 'carroNumItem': carro_obj.item.count()
             }
             return JsonResponse(json_data, status=200)
-    return redirect('carro')
+    return redirect('carro:carro')
 
 def carro_actualizar_resta(request):
 
@@ -123,7 +122,7 @@ def carro_actualizar_resta(request):
             tocata = Tocata.objects.get(id=tocata_id)
         except Tocata.DoesNotExist:
             # Mensaje de Error al usuario
-            return redirect('carro')
+            return redirect('carro:carro')
 
         carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
         item, created = carro_obj.get_or_create_item(tocata)
@@ -148,7 +147,6 @@ def carro_actualizar_resta(request):
             'instance': item
         }
         string_render = render_to_string('carro/snippets/cantidaditem.html', context, request=request)
-        print(string_render)
 
         if request.is_ajax():
             json_data = {
@@ -158,7 +156,7 @@ def carro_actualizar_resta(request):
                 'carroNumItem': carro_obj.item.count()
             }
             return JsonResponse(json_data, status=200)
-    return redirect('carro')
+    return redirect('carro:carro')
 
 def checkout_home(request):
     carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
