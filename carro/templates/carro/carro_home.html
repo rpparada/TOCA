@@ -39,7 +39,7 @@
                             <tbody>
                                 <tr>
                                     <td class="cart-product-name">
-                                        <strong>Cart Subtotal</strong>
+                                        <strong>Subtotal</strong>
                                     </td>
                                     <td class="cart-product-name text-right">
                                         <span class="amount">$<span class="carro-subtotal">{{ carro.subtotal|floatformat|intcomma }}</span></span>
@@ -64,7 +64,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <a href="#" class="btn icon-left float-right"><span>Proceed to Checkout</span></a>
+                    <a href="{% url 'carro:checkout' %}" class="btn icon-left float-right"><span>Proceed to Checkout</span></a>
                 </div>
             </div>
         </div>
@@ -77,9 +77,9 @@
     <div class="container">
         <div class="p-t-10 m-b-20 text-center">
             <div class="heading-text heading-line text-center">
-                <h4>Your cart is currently empty.</h4>
+                <h4>Tu carro actualmente esta vacio.</h4>
             </div>
-            <a class="btn icon-left" href="#"><span>Return To Shop</span></a>
+            <a class="btn icon-left" href="{% url 'tocata:tocatas' %}"><span>Continua comprando</span></a>
         </div>
     </div>
 </section>

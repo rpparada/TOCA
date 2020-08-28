@@ -124,6 +124,9 @@ class ItemCarroCompra(models.Model):
     fecha_actu          = models.DateTimeField(auto_now=True)
     fecha_crea          = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['tocata__nombre']
+        
     def __str__(self):
         return str(self.cantidad)+' - '+str(self.tocata)
 

@@ -197,7 +197,7 @@ def carro_actualizar_resta(request):
 def checkout_home(request):
     carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
     orden_obj = None
-    if nuevo_carro or carro_obj.tocata.count() == 0:
+    if nuevo_carro or carro_obj.item.count() == 0:
         return redirect('carro')
 
     ingreso_form = IngresarForm()

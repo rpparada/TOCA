@@ -19,7 +19,7 @@
 <section id="shop-checkout">
     <div class="container">
         <div class="shop-cart">
-            {% url 'checkout_direccion_create_view' as checkout_direccion_create_view_url %}
+            {% url 'carro:checkout_direccion_create_view' as checkout_direccion_create_view_url %}
             {% if not object.direccion_envio %}
             <div class="row">
                 <div class="col-lg-6">
@@ -27,7 +27,7 @@
                 </div>
                 {% if direccion_qs.exists %}
                 <div class="col-lg-6">
-                  {% url 'checkout_direccion_reuse_view' as checkout_direccion_reuse_view_url %}
+                  {% url 'carro:checkout_direccion_reuse_view' as checkout_direccion_reuse_view_url %}
                   {% include 'direccion/snippets/direcciones.html' with direcciones=direccion_qs tipo_dir='envio' next_url=request.build_absolute_uri action_url=checkout_direccion_reuse_view_url %}
                 </div>
                 {% endif %}
@@ -39,7 +39,7 @@
               </div>
               {% if direccion_qs.exists %}
               <div class="col-lg-6">
-                {% url 'checkout_direccion_reuse_view' as checkout_direccion_reuse_view_url %}
+                {% url 'carro:checkout_direccion_reuse_view' as checkout_direccion_reuse_view_url %}
                 {% include 'direccion/snippets/direcciones.html' with direcciones=direccion_qs tipo_dir='facturacion' next_url=request.build_absolute_uri action_url=checkout_direccion_reuse_view_url %}
               </div>
               {% endif %}

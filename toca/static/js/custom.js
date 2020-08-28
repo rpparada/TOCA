@@ -311,10 +311,14 @@ $(document).ready(function(){
             $(".submit-span").html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Agregar</button>")
           }
         } else if (data.carroData) {
-          $(".bodycarroupdate").replaceWith(data.html);
-          $(".carro-subtotal").text(data.subtotal)
-          $(".carro-total").text(data.total)
-        } else
+          if (data.carroNumItem !== 0) {
+            $(".bodycarroupdate").replaceWith(data.html);
+            $(".carro-subtotal").text(data.subtotal)
+            $(".carro-total").text(data.total)
+          } else {
+            window.location.href = currentUrl;
+          }
+        }
         var navbarcarro = $(".navbar-carro-numitems")
         navbarcarro.text(data.carroNumItem)
       },
@@ -349,9 +353,13 @@ $(document).ready(function(){
             $(".submit-span").html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Quitar</button>")
           }
         } else if (data.carroData) {
-          $(".bodycarroupdate").replaceWith(data.html);
-          $(".carro-subtotal").text(data.subtotal)
-          $(".carro-total").text(data.total)
+          if (data.carroNumItem !== 0) {
+            $(".bodycarroupdate").replaceWith(data.html);
+            $(".carro-subtotal").text(data.subtotal)
+            $(".carro-total").text(data.total)
+          } else {
+            window.location.href = currentUrl;
+          }
         }
 
         var navbarcarro = $(".navbar-carro-numitems")
