@@ -2,12 +2,14 @@
     <form class="form-carro-resta-ajax" data-endpoint="{% url 'carro:actualizarcarroresta' %}" method="post">
       {% csrf_token %}
       <input type="hidden" name="tocata_id" value="{{ tocata.id }}">
+      <input type="hidden" name="origen" value="{{ origen }}">
       <input type="submit" class="minus" value="-" {% if not instance %}disabled{% endif %}>
     </form>
     <input type="text" class="qty" value="{% if instance %}{{ instance.cantidad }}{% else %}0{% endif %}">
     <form class="form-carro-suma-ajax" data-endpoint="{% url 'carro:actualizarcarrosuma' %}" method="post">
       {% csrf_token %}
       <input type="hidden" name="tocata_id" value="{{ tocata.id }}">
+      <input type="hidden" name="origen" value="{{ origen }}">
       <input type="submit" class="plus" value="+" {% if instance.cantidad == 4 %}disabled{% endif %}>
     </form>
 </div>

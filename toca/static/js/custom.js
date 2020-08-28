@@ -135,17 +135,9 @@ $(document).ready(function(){
       method: httpMethod,
       data: formData,
       success: function(data){
-        var submitSpan = thisForm.find(".submit-span")
-        if (data.added){
-          submitSpan.html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Quitar</button>")
-        } else {
-          submitSpan.html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Agregar</button>")
-        }
         var navbarcarro = $(".navbar-carro-numitems")
         navbarcarro.text(data.carroNumItem)
-        if(window.location.href.indexOf("carro") != -1) {
-          actualizaCarro()
-        }
+        actualizaCarro()
       },
       error: function(errorData){
         $.alert({
@@ -222,12 +214,13 @@ $(document).ready(function(){
   // Controla cantidad de elemento a agregar en carro
   var cambiaNumItems = $(".cart-product-quantity")
   cambiaNumItems.on("submit",".form-carro-resta-ajax", function() {
-
     event.preventDefault();
     var thisForm = $(this);
     var actionEndpoint = thisForm.attr("data-endpoint");
     var httpMethod = thisForm.attr("method");
     var formData = thisForm.serialize();
+
+    var currentUrl = window.location.href
 
     $.ajax({
       url: actionEndpoint,
@@ -235,9 +228,15 @@ $(document).ready(function(){
       data: formData,
       success: function(data){
         // actualizar boton de agregar y control de cantidad
-        $(".quantity").replaceWith(data.html);
-        if (data.removed){
-          $(".submit-span").html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Agregar</button>")
+        if (data.origenTocata) {
+          $(".quantity").replaceWith(data.html);
+          if (data.removed){
+            $(".submit-span").html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Agregar</button>")
+          }
+        } else if (data.carroData) {
+          $(".bodycarroupdate").replaceWith(data.html);
+          $(".carro-subtotal").text(data.subtotal)
+          $(".carro-total").text(data.total)
         }
         var navbarcarro = $(".navbar-carro-numitems")
         navbarcarro.text(data.carroNumItem)
@@ -250,16 +249,16 @@ $(document).ready(function(){
         })
       }
     })
-
   })
 
   cambiaNumItems.on("submit",".form-carro-suma-ajax", function() {
-
     event.preventDefault();
     var thisForm = $(this);
     var actionEndpoint = thisForm.attr("data-endpoint");
     var httpMethod = thisForm.attr("method");
     var formData = thisForm.serialize();
+
+    var currentUrl = window.location.href
 
     $.ajax({
       url: actionEndpoint,
@@ -267,10 +266,17 @@ $(document).ready(function(){
       data: formData,
       success: function(data){
         // actualizar boton de agregar y control de cantidad
-        $(".quantity").replaceWith(data.html);
-        if (data.added){
-          $(".submit-span").html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Quitar</button>")
+        if (data.origenTocata) {
+          $(".quantity").replaceWith(data.html);
+          if (data.added){
+            $(".submit-span").html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Quitar</button>")
+          }
+        } else if (data.carroData) {
+          $(".bodycarroupdate").replaceWith(data.html);
+          $(".carro-subtotal").text(data.subtotal)
+          $(".carro-total").text(data.total)
         }
+
         var navbarcarro = $(".navbar-carro-numitems")
         navbarcarro.text(data.carroNumItem)
       },
@@ -282,7 +288,83 @@ $(document).ready(function(){
         })
       }
     })
+  })
 
+  tablaCarro.on("submit",".form-carro-resta-ajax", function() {
+    event.preventDefault();
+    var thisForm = $(this);
+    var actionEndpoint = thisForm.attr("data-endpoint");
+    var httpMethod = thisForm.attr("method");
+    var formData = thisForm.serialize();
+
+    var currentUrl = window.location.href
+
+    $.ajax({
+      url: actionEndpoint,
+      method: httpMethod,
+      data: formData,
+      success: function(data){
+        // actualizar boton de agregar y control de cantidad
+        if (data.origenTocata) {
+          $(".quantity").replaceWith(data.html);
+          if (data.removed){
+            $(".submit-span").html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Agregar</button>")
+          }
+        } else if (data.carroData) {
+          $(".bodycarroupdate").replaceWith(data.html);
+          $(".carro-subtotal").text(data.subtotal)
+          $(".carro-total").text(data.total)
+        } else
+        var navbarcarro = $(".navbar-carro-numitems")
+        navbarcarro.text(data.carroNumItem)
+      },
+      error: function(errorData){
+        $.alert({
+          title: "TI Error",
+          content: "Algo paso",
+          theme: "modern"
+        })
+      }
+    })
+  })
+
+  tablaCarro.on("submit",".form-carro-suma-ajax", function() {
+    event.preventDefault();
+    var thisForm = $(this);
+    var actionEndpoint = thisForm.attr("data-endpoint");
+    var httpMethod = thisForm.attr("method");
+    var formData = thisForm.serialize();
+
+    var currentUrl = window.location.href
+
+    $.ajax({
+      url: actionEndpoint,
+      method: httpMethod,
+      data: formData,
+      success: function(data){
+        // actualizar boton de agregar y control de cantidad
+        if (data.origenTocata) {
+          $(".quantity").replaceWith(data.html);
+          if (data.added){
+            $(".submit-span").html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Quitar</button>")
+          }
+        } else if (data.carroData) {
+          $(".bodycarroupdate").replaceWith(data.html);
+          $(".carro-subtotal").text(data.subtotal)
+          $(".carro-total").text(data.total)
+        }
+
+        var navbarcarro = $(".navbar-carro-numitems")
+        navbarcarro.text(data.carroNumItem)
+      },
+      error: function(errorData){
+        $.alert({
+          title: "TI Error",
+          content: "Algo paso",
+          theme: "modern"
+        })
+      }
+    })
   })
 
 

@@ -81,6 +81,7 @@ def carro_actualizar(request):
 def carro_actualizar_suma(request):
 
     tocata_id = request.POST.get('tocata_id')
+    origen = request.POST.get('origen')
     if tocata_id is not None:
         try:
             tocata = Tocata.objects.get(id=tocata_id)
@@ -99,24 +100,44 @@ def carro_actualizar_suma(request):
             if item.agrega_item():
                 carro_obj.update_subtotal()
 
-        context = {
-            'tocata': tocata,
-            'instance': item,
-        }
-        string_render = render_to_string('carro/snippets/cantidaditem.html', context, request=request)
         request.session['carro_tocatas'] = carro_obj.item.count()
-        if request.is_ajax():
-            json_data = {
-                'html': string_render,
-                'carroNumItem': carro_obj.item.count(),
-                'added': added
+
+        if origen == 'tocata':
+            context = {
+                'tocata': tocata,
+                'instance': item,
+                'origen': origen
             }
-            return JsonResponse(json_data, status=200)
+            string_render = render_to_string('carro/snippets/cantidaditem.html', context, request=request)
+            if request.is_ajax():
+                json_data = {
+                    'origenTocata': True,
+                    'html': string_render,
+                    'added': added,
+                    'carroNumItem': carro_obj.item.count()
+                }
+                return JsonResponse(json_data, status=200)
+
+        elif origen == 'tablacarro':
+            listatocatas = {
+                'items': carro_obj.item.all()
+            }
+            string_render = render_to_string('carro/snippets/bodyitemcarro.html', listatocatas, request=request)
+            context = {
+                'carroData': True,
+                'html': string_render,
+                'subtotal': '{0:,}'.format(int(carro_obj.subtotal)),
+                'total': '{0:,}'.format(int(carro_obj.total)),
+                'carroNumItem': carro_obj.item.count()
+            }
+            return JsonResponse(context)
+
     return redirect('carro:carro')
 
 def carro_actualizar_resta(request):
 
     tocata_id = request.POST.get('tocata_id')
+    origen = request.POST.get('origen')
 
     if tocata_id is not None:
         try:
@@ -140,19 +161,37 @@ def carro_actualizar_resta(request):
                 item = None
                 removed = True
 
-        context = {
-            'tocata': tocata,
-            'instance': item,
-        }
-        string_render = render_to_string('carro/snippets/cantidaditem.html', context, request=request)
         request.session['carro_tocatas'] = carro_obj.item.count()
-        if request.is_ajax():
-            json_data = {
-                'html': string_render,
-                'carroNumItem': carro_obj.item.count(),
-                'removed': removed
+
+        if origen == 'tocata':
+            context = {
+                'tocata': tocata,
+                'instance': item,
+                'origen': origen
             }
-            return JsonResponse(json_data, status=200)
+            string_render = render_to_string('carro/snippets/cantidaditem.html', context, request=request)
+            if request.is_ajax():
+                json_data = {
+                    'origenTocata': True,
+                    'html': string_render,
+                    'removed': removed,
+                    'carroNumItem': carro_obj.item.count()
+                }
+                return JsonResponse(json_data, status=200)
+        elif origen == 'tablacarro':
+            listatocatas = {
+                'items': carro_obj.item.all()
+            }
+            string_render = render_to_string('carro/snippets/bodyitemcarro.html', listatocatas, request=request)
+            context = {
+                'carroData': True,
+                'html': string_render,
+                'subtotal': '{0:,}'.format(int(carro_obj.subtotal)),
+                'total': '{0:,}'.format(int(carro_obj.total)),
+                'carroNumItem': carro_obj.item.count()
+            }
+            return JsonResponse(context)
+
     return redirect('carro:carro')
 
 def checkout_home(request):
