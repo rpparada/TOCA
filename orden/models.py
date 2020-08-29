@@ -65,10 +65,11 @@ class OrdenCompra(models.Model):
 
     def check_done(self):
         facturacion_profile = self.facturacion_profile
-        direccion_envio = self.direccion_envio
-        direccion_facturacion = self.direccion_facturacion
+        #direccion_envio = self.direccion_envio
+        #direccion_facturacion = self.direccion_facturacion
         total = self.total
-        if facturacion_profile and direccion_envio and direccion_facturacion and total > 0:
+        #if facturacion_profile and direccion_envio and direccion_facturacion and total > 0:
+        if facturacion_profile and total > 0:
             return True
         return False
 

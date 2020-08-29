@@ -216,7 +216,7 @@ def checkout_home(request):
             orden_obj.mark_pagado()
             request.session['carro_tocatas'] = 0
             del request.session['carro_id']
-            return redirect('checkout_complete')
+            return redirect('carro:checkout_complete')
 
     context = {
         'email_adicional': email_adicional,
