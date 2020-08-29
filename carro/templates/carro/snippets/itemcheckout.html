@@ -1,0 +1,16 @@
+{% load humanize %}
+<tr>
+    <td class="cart-product-thumbnail">
+        <div class="cart-product-thumbnail-name">{{ instance.tocata.nombre }}</div>
+    </td>
+    <td class="cart-product-description">
+        <p><span>{{ instance.tocata.lugar.region }}</span>
+            <span>{{ instance.tocata.lugar.comuna }}</span>
+            <span>{{ instance.tocata.fecha }}</span>
+            <span>{{ instance.tocata.hora }}</span>
+        </p>
+    </td>
+    <td class="cart-product-subtotal">
+        <span class="amount">${{ item.total|floatformat|intcomma }}</span>
+    </td>
+</tr>

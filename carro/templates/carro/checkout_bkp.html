@@ -6,15 +6,6 @@
 {% block content %}
 {% include 'partials/_alerts.html' %}
 
-{% if not fact_profile %}
-<!-- SHOP CHECKOUT -->
-<section id="shop-checkout">
-    <div class="container">
-      {% include 'cuentas/snippets/ingresoform.html' with form=ingreso_form next_url=request.build_absolute_uri %}
-    </div>
-</section>
-<!-- end: SHOP CHECKOUT -->
-{% else %}
 <!-- SHOP CHECKOUT -->
 <section id="shop-checkout">
     <div class="container">

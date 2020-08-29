@@ -204,8 +204,27 @@ def checkout_home(request):
     if nuevo_carro or carro_obj.item.count() == 0:
         return redirect('carro')
 
+    ingreso_form = IngresarForm(request)
+    direccion_form = DireccionForm()
+
+    direccion_envio_id = request.session.get('direccion_envio_id', None)
+    direccion_facturacion_id = request.session.get('direccion_facturacion_id', None)
+
     fact_profile, fact_profile_created = FacturacionProfile.objects.new_or_get(request)
-    orden_obj, orden_obj_created = OrdenCompra.objects.new_or_get(fact_profile, carro_obj)
+
+    direccion_qs = None
+    if fact_profile is not None:
+        if request.user.is_authenticated:
+            direccion_qs = Direccion.objects.filter(facturacion_profile=fact_profile)
+        orden_obj, orden_obj_created = OrdenCompra.objects.new_or_get(fact_profile, carro_obj)
+        if direccion_envio_id:
+            orden_obj.direccion_envio = Direccion.objects.get(id=direccion_envio_id)
+            del request.session['direccion_envio_id']
+        if direccion_facturacion_id:
+            orden_obj.direccion_facturacion = Direccion.objects.get(id=direccion_facturacion_id)
+            del request.session['direccion_facturacion_id']
+        if direccion_envio_id or direccion_facturacion_id:
+            orden_obj.save()
 
     if request.method == 'POST':
         is_done = orden_obj.check_done()
@@ -217,6 +236,10 @@ def checkout_home(request):
 
     context = {
         'object': orden_obj,
+        'fact_profile': fact_profile,
+        'ingreso_form': ingreso_form,
+        'direccion_form': direccion_form,
+        'direccion_qs': direccion_qs,
     }
     return render(request, 'carro/checkout.html', context)
 
