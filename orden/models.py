@@ -40,6 +40,7 @@ class OrdenCompra(models.Model):
     facturacion_profile     = models.ForeignKey(FacturacionProfile, null=True, blank=True, on_delete=models.CASCADE)
     direccion_envio         = models.ForeignKey(Direccion, related_name='direccion_envio', null=True, blank=True, on_delete=models.CASCADE)
     direccion_facturacion   = models.ForeignKey(Direccion, related_name='direccion_facturacion', null=True, blank=True, on_delete=models.CASCADE)
+    email_adicional         = models.EmailField(null=True, blank=True)
     carro                   = models.ForeignKey(CarroCompra, on_delete=models.DO_NOTHING)
     total                   = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     envio                   = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)

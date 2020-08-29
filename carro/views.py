@@ -14,6 +14,7 @@ from direccion.models import Direccion
 from direccion.forms import DireccionForm
 
 from cuentas.forms import IngresarForm
+from orden.forms import AgregaEmailAdicional
 
 # Create your views here.
 def carro_detalle_api_body_view(request):
@@ -207,6 +208,8 @@ def checkout_home(request):
     fact_profile, fact_profile_created = FacturacionProfile.objects.new_or_get(request)
     orden_obj, orden_obj_created = OrdenCompra.objects.new_or_get(fact_profile, carro_obj)
 
+    email_adicional = AgregaEmailAdicional()
+
     if request.method == 'POST':
         is_done = orden_obj.check_done()
         if is_done:
@@ -216,7 +219,8 @@ def checkout_home(request):
             return redirect('checkout_complete')
 
     context = {
-        'object': orden_obj,
+        'email_adicional': email_adicional,
+        'object': orden_obj
     }
     return render(request, 'carro/checkout.html', context)
 
