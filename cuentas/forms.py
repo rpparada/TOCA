@@ -33,7 +33,8 @@ class ReactivateEmailForm(forms.Form):
 class CuentaSetPasswordForm(SetPasswordForm):
     new_password1   = forms.CharField(widget=forms.PasswordInput(attrs={
                                                                 "class": "form-control",
-                                                                "placeholder": "Nueva Contraseña"
+                                                                "placeholder": "Nueva Contraseña",
+                                                                "autofocus": True
                                                             }), label='Nueva Contraseña'
                                     )
     new_password2   = forms.CharField(widget=forms.PasswordInput(attrs={
@@ -56,7 +57,8 @@ class CuentaPasswordChangeForm(PasswordChangeForm):
     old_password    = forms.CharField(widget=forms.PasswordInput(attrs={
                                                                 "id": "primercampo",
                                                                 "class": "form-control",
-                                                                "placeholder": "Contraseña Actual"
+                                                                "placeholder": "Contraseña Actual",
+                                                                "autofocus": True
                                                             }), label='Contraseña Actual'
                                     )
     new_password1   = forms.CharField(widget=forms.PasswordInput(attrs={
@@ -75,7 +77,6 @@ User = get_user_model()
 class IngresarForm(forms.Form):
 
     email           = forms.EmailField(widget=forms.EmailInput(attrs={
-                                                                "id": "primercampo",
                                                                 "class": "form-control",
                                                                 "placeholder": "Email",
                                                                 "autofocus": True
@@ -117,7 +118,6 @@ class IngresarForm(forms.Form):
                     raise forms.ValidationError(mark_safe(msg2))
                 if not is_confirmable and not email_confirm_exists:
                     raise forms.ValidationError('Este usuario esta inactivo')
-
 
         usuario = auth.authenticate(username=email, password=contra)
         if usuario is None:
