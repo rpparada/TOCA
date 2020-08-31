@@ -291,9 +291,9 @@ def retornotbk(request):
         if transaction_detail["responseCode"] == 0:
 
             # Recuperar Orden
-            carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
-            fact_profile, fact_profile_created = FacturacionProfile.objects.new_or_get(request)
-            orden_obj, orden_obj_created = OrdenCompra.objects.new_or_get(fact_profile, carro_obj)
+            print(transaction['buyOrder'])
+            orden_obj = OrdenCompra.objects.by_orden_id(transaction['buyOrder'])
+            print(orden_obj.facturacion_profile)
             #orden = Orden.objects.get(pk=transaction['buyOrder'])
 
             # Guardar trasaccion TBK
@@ -321,9 +321,11 @@ def retornotbk(request):
             # Actualizar Orden
             # orden.estado = parToca['pagado']
             # orden.save()
-            orden_obj.mark_pagado()
+            print('marcar')
+            print(orden_obj.mark_pagado())
             request.session['carro_tocatas'] = 0
-            del request.session['carro_id']
+            #del request.session['carro_id']
+            request.session.pop('carro_id', None)
 
             # # Actualizar Carro y Tocatas
             # listacarro = Carro.objects.filter(orden=orden)
@@ -345,9 +347,7 @@ def retornotbk(request):
 
             # Recuperar Orden
             #orden = Orden.objects.get(pk=transaction['buyOrder'])
-            carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
-            fact_profile, fact_profile_created = FacturacionProfile.objects.new_or_get(request)
-            orden_obj, orden_obj_created = OrdenCompra.objects.new_or_get(fact_profile, carro_obj)
+            orden_obj = OrdenCompra.objects.by_orden_id(transaction['buyOrder'])
 
             # Guardar trasaccion TBK
             # ordentbk = OrdenTBK(

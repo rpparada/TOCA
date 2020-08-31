@@ -17,6 +17,13 @@ class OrdenCompraQuerySet(models.query.QuerySet):
         fact_profile, created = FacturacionProfile.objects.new_or_get(request)
         return self.filter(facturacion_profile=fact_profile)
 
+    def by_orden_id(self, orden_id):
+        qs = self.filter(orden_id=orden_id)
+        obj = None
+        if qs.count() == 1:
+            obj = qs.first()
+        return obj
+
 class OrdenCompraManager(models.Manager):
     def get_queryset(self):
         return OrdenCompraQuerySet(self.model, using=self._db)
@@ -33,6 +40,9 @@ class OrdenCompraManager(models.Manager):
             obj = self.model.objects.create(facturacion_profile=fact_profile, carro=carro_obj)
             created = True
         return obj, created
+
+    def by_orden_id(self, orden_id):
+        return self.get_queryset().by_orden_id(orden_id)
 
 class OrdenCompra(models.Model):
 
