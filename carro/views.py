@@ -211,6 +211,9 @@ def checkout_home(request):
     email_adicional = AgregaEmailAdicional()
 
     if request.method == 'POST':
+        email = request.POST.get('email')
+        orden_obj.email_adicional = email
+        orden_obj.save()
         is_done = orden_obj.check_done()
         if is_done:
             orden_obj.mark_pagado()
