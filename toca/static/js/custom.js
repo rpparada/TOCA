@@ -166,6 +166,9 @@ $(document).ready(function(){
         if (data.added){
           submitSpan.html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Quitar</button>")
           $(".qty").val(1)
+          // enable - and enable +
+          $(".minus").prop( "disabled", false );
+          $(".plus").prop( "disabled", false );
         } else {
           submitSpan.html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Agregar</button>")
           $(".qty").val(0)
