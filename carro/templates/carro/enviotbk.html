@@ -1,0 +1,7 @@
+<html>
+    <body onload="document.tbkform.submit()">
+        <form action="{{ transaction.url }}" name="tbkform" method="POST">
+            <input type="hidden" name="token_ws" value="{{ transaction.token }}" />
+        </form>
+    </body>
+</html>

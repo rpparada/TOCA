@@ -1,8 +1,12 @@
+import tbk
+import os
+
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from django.template.loader import render_to_string
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import CarroCompra, ItemCarroCompra
 from orden.models import OrdenCompra
@@ -15,6 +19,41 @@ from direccion.forms import DireccionForm
 
 from cuentas.forms import IngresarForm
 from orden.forms import AgregaEmailAdicional
+
+# Transbank conexion inicial (parametrizado para pruebas)
+CERTIFICATES_DIR = os.path.join('orden', "commerces")
+HOST = os.getenv("HOST", "http://127.0.0.1")
+PORT = os.getenv("PORT", 8000)
+BASE_URL = "{host}:{port}".format(host=HOST, port=PORT)
+NORMAL_COMMERCE_CODE = "597020000540"
+
+def load_commerce_data(commerce_code):
+    with open(
+        os.path.join(CERTIFICATES_DIR, commerce_code, commerce_code + ".key"), "r"
+    ) as file:
+        key_data = file.read()
+    with open(
+        os.path.join(CERTIFICATES_DIR, commerce_code, commerce_code + ".crt"), "r"
+    ) as file:
+        cert_data = file.read()
+    with open(os.path.join(CERTIFICATES_DIR, "tbk.pem"), "r") as file:
+        tbk_cert_data = file.read()
+
+    return {
+        'key_data': key_data,
+        'cert_data': cert_data,
+        'tbk_cert_data': tbk_cert_data,
+    }
+
+normal_commerce_data = load_commerce_data(NORMAL_COMMERCE_CODE)
+normal_commerce = tbk.commerce.Commerce(
+    commerce_code=NORMAL_COMMERCE_CODE,
+    key_data=normal_commerce_data["key_data"],
+    cert_data=normal_commerce_data["cert_data"],
+    tbk_cert_data=normal_commerce_data["tbk_cert_data"],
+    environment=tbk.environments.DEVELOPMENT,
+)
+webpay_service = tbk.services.WebpayService(normal_commerce)
 
 # Create your views here.
 def carro_detalle_api_body_view(request):
@@ -215,17 +254,175 @@ def checkout_home(request):
         orden_obj.email_adicional = email
         orden_obj.save()
         is_done = orden_obj.check_done()
+        # if is_done:
+        #     orden_obj.mark_pagado()
+        #     request.session['carro_tocatas'] = 0
+        #     del request.session['carro_id']
+        #     return redirect('carro:checkout_complete')
         if is_done:
-            orden_obj.mark_pagado()
-            request.session['carro_tocatas'] = 0
-            del request.session['carro_id']
-            return redirect('carro:checkout_complete')
+            transaction = webpay_service.init_transaction(
+                amount=orden_obj.total,
+                buy_order=orden_obj.orden_id,
+                return_url=BASE_URL + "/carro/retornotbk",
+                final_url=BASE_URL + "/carro/compraexitosa",
+                session_id=orden_obj.facturacion_profile.id,
+            )
+
+            context = {
+                'transaction': transaction,
+            }
+            return render(request, 'carro/enviotbk.html', context)
 
     context = {
         'email_adicional': email_adicional,
         'object': orden_obj
     }
     return render(request, 'carro/checkout.html', context)
+
+@csrf_exempt
+def retornotbk(request):
+
+    if request.method == 'POST':
+
+        token = request.POST.get('token_ws')
+        transaction = webpay_service.get_transaction_result(token)
+        transaction_detail = transaction["detailOutput"][0]
+        webpay_service.acknowledge_transaction(token)
+        if transaction_detail["responseCode"] == 0:
+
+            # Recuperar Orden
+            carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
+            fact_profile, fact_profile_created = FacturacionProfile.objects.new_or_get(request)
+            orden_obj, orden_obj_created = OrdenCompra.objects.new_or_get(fact_profile, carro_obj)
+            #orden = Orden.objects.get(pk=transaction['buyOrder'])
+
+            # Guardar trasaccion TBK
+            # ordentbk = OrdenTBK(
+            #     orden = orden,
+            #     token = token,
+            #     accountingDate = transaction['accountingDate'],
+            #     buyOrder = transaction['buyOrder'],
+            #     cardNumber = transaction['cardDetail']['cardNumber'],
+            #     cardExpirationDate = transaction['cardDetail']['cardExpirationDate'],
+            #     sharesAmount = transaction['detailOutput'][0]['sharesAmount'],
+            #     sharesNumber = transaction['detailOutput'][0]['sharesNumber'],
+            #     amount = transaction['detailOutput'][0]['amount'],
+            #     commerceCode = transaction['detailOutput'][0]['commerceCode'],
+            #     authorizationCode = transaction['detailOutput'][0]['authorizationCode'],
+            #     paymentTypeCode = transaction['detailOutput'][0]['paymentTypeCode'],
+            #     responseCode = transaction['detailOutput'][0]['responseCode'],
+            #     sessionId = transaction['sessionId'],
+            #     transactionDate = transaction['transactionDate'],
+            #     urlRedirection = transaction['urlRedirection'],
+            #     VCI = transaction['VCI']
+            # )
+            # ordentbk.save()
+
+            # Actualizar Orden
+            # orden.estado = parToca['pagado']
+            # orden.save()
+            orden_obj.mark_pagado()
+            request.session['carro_tocatas'] = 0
+            del request.session['carro_id']
+
+            # # Actualizar Carro y Tocatas
+            # listacarro = Carro.objects.filter(orden=orden)
+            # for item in listacarro:
+            #     item.estado = parToca['pagado']
+            #     item.save()
+            #     tocata = Tocata.objects.get(pk=item.tocata.pk)
+            #     tocata.asistentes_total += item.cantidad
+            #     tocata.save()
+
+            context = {
+                'transaction': transaction,
+                'transaction_detail': transaction_detail,
+                'token': token,
+            }
+            return render(request, 'carro/envioexitosotbk.html', context)
+
+        else:
+
+            # Recuperar Orden
+            #orden = Orden.objects.get(pk=transaction['buyOrder'])
+            carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
+            fact_profile, fact_profile_created = FacturacionProfile.objects.new_or_get(request)
+            orden_obj, orden_obj_created = OrdenCompra.objects.new_or_get(fact_profile, carro_obj)
+
+            # Guardar trasaccion TBK
+            # ordentbk = OrdenTBK(
+            #     orden = orden,
+            #     token = token,
+            #     accountingDate = transaction['accountingDate'],
+            #     buyOrder = transaction['buyOrder'],
+            #     cardNumber = transaction['cardDetail']['cardNumber'],
+            #     cardExpirationDate = transaction['cardDetail']['cardExpirationDate'],
+            #     sharesAmount = transaction['detailOutput'][0]['sharesAmount'],
+            #     sharesNumber = transaction['detailOutput'][0]['sharesNumber'],
+            #     amount = transaction['detailOutput'][0]['amount'],
+            #     commerceCode = transaction['detailOutput'][0]['commerceCode'],
+            #     authorizationCode = transaction['detailOutput'][0]['authorizationCode'],
+            #     paymentTypeCode = transaction['detailOutput'][0]['paymentTypeCode'],
+            #     responseCode = transaction['detailOutput'][0]['responseCode'],
+            #     sessionId = transaction['sessionId'],
+            #     transactionDate = transaction['transactionDate'],
+            #     urlRedirection = transaction['urlRedirection'],
+            #     VCI = transaction['VCI']
+            # )
+            # ordentbk.save()
+
+            context = {
+                'transaction': transaction,
+                'transaction_detail': transaction_detail,
+                'token': token,
+            }
+            return render(request, 'carro/errorenpago.html', context)
+
+@csrf_exempt
+def compraexitosa(request):
+
+    token = ''
+    if request.method == 'POST':
+        token = request.POST.get('token_ws')
+
+    context = {
+        'token': token,
+    }
+
+    return render(request, 'carro/compraexitosa.html', context)
+
+def finerrorcompra (request):
+
+    token = ''
+    orden = OrdenTBK.objects.none()
+    if request.method == 'POST':
+        token = request.POST.get('token_ws')
+        ordenTBK = OrdenTBK.objects.get(token=token)
+
+    context = {
+        'ordenTBK': ordenTBK,
+    }
+
+    return render(request, 'carro/finerrorcompra.html', context)
+
+
+def fincompra(request):
+
+    # token = ''
+    # orden = OrdenTBK.objects.none()
+
+    if request.method == 'POST':
+        carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
+        fact_profile, fact_profile_created = FacturacionProfile.objects.new_or_get(request)
+        orden_obj, orden_obj_created = OrdenCompra.objects.new_or_get(fact_profile, carro_obj)
+        # token = request.POST.get('token_ws')
+        # ordenTBK = OrdenTBK.objects.get(token=token)
+
+    context = {
+        'orden': orden_obj,
+    }
+
+    return render(request, 'carro/fincompra_old.html', context)
 
 def checkout_complete_view(request):
     return render(request, 'carro/fincompra.html', {})

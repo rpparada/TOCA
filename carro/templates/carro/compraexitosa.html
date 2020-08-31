@@ -1,0 +1,8 @@
+<html>
+    <body onload="document.tbkform.submit()">
+        <form action="{% url 'carro:fincompra' %}" name="tbkform" method="POST">
+          {% csrf_token %}
+            <input type="hidden" name="token_ws" value="{{ token }}" />
+        </form>
+    </body>
+</html>

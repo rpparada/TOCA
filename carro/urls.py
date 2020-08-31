@@ -7,6 +7,12 @@ urlpatterns = [
     path('actualizarcarro/suma/', views.carro_actualizar_suma, name='actualizarcarrosuma'),
     path('actualizarcarro/resta/', views.carro_actualizar_resta, name='actualizarcarroresta'),
     path('checkout/', views.checkout_home, name='checkout'),
+    
+    path('retornotbk', views.retornotbk, name='retornotbk'),
+    path('compraexitosa', views.compraexitosa, name='compraexitosa'),
+    path('fincompra', views.fincompra, name='fincompra'),
+    path('finerrorcompra', views.finerrorcompra, name='finerrorcompra'),
+
     path('checkout/fin', views.checkout_complete_view, name='checkout_complete'),
     #path('api/carro', views.carro_detalle_api_view, name='api-carro'),
     path('api/carro', views.carro_detalle_api_body_view, name='api-carro'),

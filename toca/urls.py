@@ -30,7 +30,7 @@ urlpatterns = [
     path('cuentas/', RedirectView.as_view(url='/cuenta/')),
     path('cuentas/', include('cuentas.passwords.urls')),
     path('cuenta/', include(('cuentas.urls','cuentas'), namespace='cuenta')),
-    path('cobro/', include('cobro.urls')),
+    #path('cobro/', include('cobro.urls')),
     path('busqueda/', include(('busqueda.urls','busqueda'), namespace='busqueda')),
     path('ordenes/', include(('orden.urls','ordenes'), namespace='ordenes')),
     path('carro/', include(('carro.urls','carro'), namespace='carro')),
