@@ -11,6 +11,7 @@ from toca.utils import unique_orden_id_generator
 from toca.parametros import parToca, parCarro, parOrden, mediodepago
 
 # Create your models here.
+
 # Orden Compra
 class OrdenCompraQuerySet(models.query.QuerySet):
     def by_request(self, request):
@@ -75,10 +76,7 @@ class OrdenCompra(models.Model):
 
     def check_done(self):
         facturacion_profile = self.facturacion_profile
-        #direccion_envio = self.direccion_envio
-        #direccion_facturacion = self.direccion_facturacion
         total = self.total
-        #if facturacion_profile and direccion_envio and direccion_facturacion and total > 0:
         if facturacion_profile and total > 0:
             return True
         return False
@@ -116,3 +114,52 @@ def post_save_orden(sender, instance, created, *args, **kwargs):
         instance.actualiza_total()
 
 post_save.connect(post_save_orden, sender=OrdenCompra)
+
+# Orden Transbank
+class OrdenTBKQuerySet(models.query.QuerySet):
+    def by_orden(self, orden):
+        return self.filter(orden=orden)
+
+class OrdenTBKManager(models.Manager):
+    def get_queryset(self):
+        return OrdenTBKQuerySet(self.model, using=self._db)
+
+    def by_orden(self, orden):
+        return self.get_queryset().by_orden(orden)
+
+    def new_or_get(self, orden):
+        created = False
+        qs = self.get_queryset().by_orden(orden)
+        if qs.count() == 1:
+            obj = qs.first()
+        else:
+            obj = self.objects.create(orden=orden)
+            created = True
+
+        return obj, created
+
+class OrdenTBK(models.Model):
+
+    orden                   = models.ForeignKey(OrdenCompra, on_delete=models.DO_NOTHING)
+
+    token                   = models.CharField(max_length=200, blank=True, null=True)
+    accountingDate          = models.CharField(max_length=200, blank=True, null=True)
+    buyOrder                = models.CharField(max_length=200, blank=True, null=True)
+    cardNumber              = models.CharField(max_length=200, blank=True, null=True)
+    cardExpirationDate      = models.CharField(max_length=200, blank=True, null=True)
+    sharesAmount            = models.CharField(max_length=200, blank=True, null=True)
+    sharesNumber            = models.CharField(max_length=200, blank=True, null=True)
+    amount                  = models.CharField(max_length=200, blank=True, null=True)
+    commerceCode            = models.CharField(max_length=200, blank=True, null=True)
+    authorizationCode       = models.CharField(max_length=200, blank=True, null=True)
+    paymentTypeCode         = models.CharField(max_length=200, blank=True, null=True)
+    responseCode            = models.CharField(max_length=200, blank=True, null=True)
+    sessionId               = models.CharField(max_length=200, blank=True, null=True)
+    transactionDate         = models.CharField(max_length=200, blank=True, null=True)
+    urlRedirection          = models.CharField(max_length=200, blank=True, null=True)
+    VCI                     = models.CharField(max_length=200, blank=True, null=True)
+
+    objects                 = OrdenTBKManager()
+
+    def __str__(self):
+        return str(self.orden.id)

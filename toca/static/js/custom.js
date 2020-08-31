@@ -169,6 +169,9 @@ $(document).ready(function(){
         } else {
           submitSpan.html("<button type='submit' class='btn'><i class='icon-shopping-cart'></i> Agregar</button>")
           $(".qty").val(0)
+          // disable - and enable +
+          $(".minus").prop( "disabled", true );
+          $(".plus").prop( "disabled", false );
         }
         var navbarcarro = $(".navbar-carro-numitems")
         navbarcarro.text(data.carroNumItem)

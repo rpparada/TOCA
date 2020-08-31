@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'sorl.thumbnail',
     # Nuestras aplicaciones
-    'cobro',
+    #'cobro',
     'artista',
     'lugar',
     'usuario',

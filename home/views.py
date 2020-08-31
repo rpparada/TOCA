@@ -13,7 +13,6 @@ from tocataabierta.models import TocataAbierta
 from artista.models import Artista
 from usuario.models import Usuario
 from .models import Testimonio, DescripcionTocatasIntimas
-from cobro.models import Carro
 from carro.models import CarroCompra
 
 from toca.parametros import parToca

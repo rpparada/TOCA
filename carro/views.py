@@ -9,14 +9,13 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import CarroCompra, ItemCarroCompra
-from orden.models import OrdenCompra
+from orden.models import OrdenCompra, OrdenTBK
 from tocata.models import Tocata
 from facturacion.models import FacturacionProfile
 from lugar.models import Region, Comuna
 from direccion.models import Direccion
 
 from direccion.forms import DireccionForm
-
 from cuentas.forms import IngresarForm
 from orden.forms import AgregaEmailAdicional
 
@@ -291,50 +290,31 @@ def retornotbk(request):
         if transaction_detail["responseCode"] == 0:
 
             # Recuperar Orden
-            print(transaction['buyOrder'])
             orden_obj = OrdenCompra.objects.by_orden_id(transaction['buyOrder'])
-            print(orden_obj.facturacion_profile)
-            #orden = Orden.objects.get(pk=transaction['buyOrder'])
-
-            # Guardar trasaccion TBK
-            # ordentbk = OrdenTBK(
-            #     orden = orden,
-            #     token = token,
-            #     accountingDate = transaction['accountingDate'],
-            #     buyOrder = transaction['buyOrder'],
-            #     cardNumber = transaction['cardDetail']['cardNumber'],
-            #     cardExpirationDate = transaction['cardDetail']['cardExpirationDate'],
-            #     sharesAmount = transaction['detailOutput'][0]['sharesAmount'],
-            #     sharesNumber = transaction['detailOutput'][0]['sharesNumber'],
-            #     amount = transaction['detailOutput'][0]['amount'],
-            #     commerceCode = transaction['detailOutput'][0]['commerceCode'],
-            #     authorizationCode = transaction['detailOutput'][0]['authorizationCode'],
-            #     paymentTypeCode = transaction['detailOutput'][0]['paymentTypeCode'],
-            #     responseCode = transaction['detailOutput'][0]['responseCode'],
-            #     sessionId = transaction['sessionId'],
-            #     transactionDate = transaction['transactionDate'],
-            #     urlRedirection = transaction['urlRedirection'],
-            #     VCI = transaction['VCI']
-            # )
-            # ordentbk.save()
+            ordenTBK = OrdenTBK.objects.create(
+                orden               = orden_obj,
+                token               = token,
+                accountingDate      = transaction['accountingDate'],
+                buyOrder            = transaction['buyOrder'],
+                cardNumber          = transaction['cardDetail']['cardNumber'],
+                cardExpirationDate  = transaction['cardDetail']['cardExpirationDate'],
+                sharesAmount        = transaction['detailOutput'][0]['sharesAmount'],
+                sharesNumber        = transaction['detailOutput'][0]['sharesNumber'],
+                amount              = transaction['detailOutput'][0]['amount'],
+                commerceCode        = transaction['detailOutput'][0]['commerceCode'],
+                authorizationCode   = transaction['detailOutput'][0]['authorizationCode'],
+                paymentTypeCode     = transaction['detailOutput'][0]['paymentTypeCode'],
+                responseCode        = transaction['detailOutput'][0]['responseCode'],
+                sessionId           = transaction['sessionId'],
+                transactionDate     = transaction['transactionDate'],
+                urlRedirection      = transaction['urlRedirection'],
+                VCI                 = transaction['VCI']
+            )
 
             # Actualizar Orden
-            # orden.estado = parToca['pagado']
-            # orden.save()
-            print('marcar')
-            print(orden_obj.mark_pagado())
+            orden_obj.mark_pagado()
             request.session['carro_tocatas'] = 0
-            #del request.session['carro_id']
             request.session.pop('carro_id', None)
-
-            # # Actualizar Carro y Tocatas
-            # listacarro = Carro.objects.filter(orden=orden)
-            # for item in listacarro:
-            #     item.estado = parToca['pagado']
-            #     item.save()
-            #     tocata = Tocata.objects.get(pk=item.tocata.pk)
-            #     tocata.asistentes_total += item.cantidad
-            #     tocata.save()
 
             context = {
                 'transaction': transaction,
@@ -346,30 +326,28 @@ def retornotbk(request):
         else:
 
             # Recuperar Orden
-            #orden = Orden.objects.get(pk=transaction['buyOrder'])
             orden_obj = OrdenCompra.objects.by_orden_id(transaction['buyOrder'])
 
             # Guardar trasaccion TBK
-            # ordentbk = OrdenTBK(
-            #     orden = orden,
-            #     token = token,
-            #     accountingDate = transaction['accountingDate'],
-            #     buyOrder = transaction['buyOrder'],
-            #     cardNumber = transaction['cardDetail']['cardNumber'],
-            #     cardExpirationDate = transaction['cardDetail']['cardExpirationDate'],
-            #     sharesAmount = transaction['detailOutput'][0]['sharesAmount'],
-            #     sharesNumber = transaction['detailOutput'][0]['sharesNumber'],
-            #     amount = transaction['detailOutput'][0]['amount'],
-            #     commerceCode = transaction['detailOutput'][0]['commerceCode'],
-            #     authorizationCode = transaction['detailOutput'][0]['authorizationCode'],
-            #     paymentTypeCode = transaction['detailOutput'][0]['paymentTypeCode'],
-            #     responseCode = transaction['detailOutput'][0]['responseCode'],
-            #     sessionId = transaction['sessionId'],
-            #     transactionDate = transaction['transactionDate'],
-            #     urlRedirection = transaction['urlRedirection'],
-            #     VCI = transaction['VCI']
-            # )
-            # ordentbk.save()
+            ordenTBK = OrdenTBK.objects.create(
+                orden               = orden_obj,
+                token               = token,
+                accountingDate      = transaction['accountingDate'],
+                buyOrder            = transaction['buyOrder'],
+                cardNumber          = transaction['cardDetail']['cardNumber'],
+                cardExpirationDate  = transaction['cardDetail']['cardExpirationDate'],
+                sharesAmount        = transaction['detailOutput'][0]['sharesAmount'],
+                sharesNumber        = transaction['detailOutput'][0]['sharesNumber'],
+                amount              = transaction['detailOutput'][0]['amount'],
+                commerceCode        = transaction['detailOutput'][0]['commerceCode'],
+                authorizationCode   = transaction['detailOutput'][0]['authorizationCode'],
+                paymentTypeCode     = transaction['detailOutput'][0]['paymentTypeCode'],
+                responseCode        = transaction['detailOutput'][0]['responseCode'],
+                sessionId           = transaction['sessionId'],
+                transactionDate     = transaction['transactionDate'],
+                urlRedirection      = transaction['urlRedirection'],
+                VCI                 = transaction['VCI']
+            )
 
             context = {
                 'transaction': transaction,
@@ -381,15 +359,40 @@ def retornotbk(request):
 @csrf_exempt
 def compraexitosa(request):
 
+    print(request.user)
+
     token = ''
     if request.method == 'POST':
         token = request.POST.get('token_ws')
+        print('request')
+        print(request.POST)
 
     context = {
         'token': token,
     }
 
     return render(request, 'carro/compraexitosa.html', context)
+
+def fincompra(request):
+
+    # token = ''
+    # orden = OrdenTBK.objects.none()
+
+    print(request.user)
+
+    if request.method == 'POST':
+        pass
+        # carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
+        # fact_profile, fact_profile_created = FacturacionProfile.objects.new_or_get(request)
+        # orden_obj, orden_obj_created = OrdenCompra.objects.new_or_get(fact_profile, carro_obj)
+        # token = request.POST.get('token_ws')
+        # ordenTBK = OrdenTBK.objects.get(token=token)
+
+    context = {
+        #'orden': orden_obj,
+    }
+
+    return render(request, 'carro/fincompra_old.html', context)
 
 def finerrorcompra (request):
 
@@ -405,53 +408,34 @@ def finerrorcompra (request):
 
     return render(request, 'carro/finerrorcompra.html', context)
 
-
-def fincompra(request):
-
-    # token = ''
-    # orden = OrdenTBK.objects.none()
-
-    if request.method == 'POST':
-        carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
-        fact_profile, fact_profile_created = FacturacionProfile.objects.new_or_get(request)
-        orden_obj, orden_obj_created = OrdenCompra.objects.new_or_get(fact_profile, carro_obj)
-        # token = request.POST.get('token_ws')
-        # ordenTBK = OrdenTBK.objects.get(token=token)
-
-    context = {
-        'orden': orden_obj,
-    }
-
-    return render(request, 'carro/fincompra_old.html', context)
-
 def checkout_complete_view(request):
     return render(request, 'carro/fincompra.html', {})
 
 
-def carga_comunas_agregar(request):
-
-    region_id = request.GET.get('region')
-    comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
-    context = {
-        'comunas_reg': comunas,
-    }
-    return render(request, 'direccion/comuna_dropdown_list_options_agregar.html', context)
-
-def carga_comunas_actualizar(request):
-
-    region_id = request.GET.get('region')
-    comuna_id = request.GET.get('comuna')
-    comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
-
-    if comuna_id.isdigit():
-        context = {
-            'comunas_reg': comunas,
-            'comuna_id': int(comuna_id),
-        }
-    else:
-        context = {
-            'comunas_reg': comunas,
-            'comuna_id': comunas.first(),
-        }
-
-    return render(request, 'direccion/comuna_dropdown_list_options_actualizar.html', context)
+# def carga_comunas_agregar(request):
+#
+#     region_id = request.GET.get('region')
+#     comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
+#     context = {
+#         'comunas_reg': comunas,
+#     }
+#     return render(request, 'direccion/comuna_dropdown_list_options_agregar.html', context)
+#
+# def carga_comunas_actualizar(request):
+#
+#     region_id = request.GET.get('region')
+#     comuna_id = request.GET.get('comuna')
+#     comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
+#
+#     if comuna_id.isdigit():
+#         context = {
+#             'comunas_reg': comunas,
+#             'comuna_id': int(comuna_id),
+#         }
+#     else:
+#         context = {
+#             'comunas_reg': comunas,
+#             'comuna_id': comunas.first(),
+#         }
+#
+#     return render(request, 'direccion/comuna_dropdown_list_options_actualizar.html', context)
