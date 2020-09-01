@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages, auth
 
 from .models import CarroCompra, ItemCarroCompra
-from orden.models import OrdenCompra, OrdenTBK
+from orden.models import OrdenCompra, Cobro
 from tocata.models import Tocata
 from facturacion.models import FacturacionProfile
 from lugar.models import Region, Comuna
@@ -288,12 +288,18 @@ def retornotbk(request):
         transaction = webpay_service.get_transaction_result(token)
         transaction_detail = transaction["detailOutput"][0]
         webpay_service.acknowledge_transaction(token)
+
         if transaction_detail["responseCode"] == 0:
+
+            print(transaction['transactionDate'])
+            print(transaction['urlRedirection'])
+            print(transaction['VCI'])
 
             # Recuperar Orden
             orden_obj = OrdenCompra.objects.by_orden_id(transaction['buyOrder'])
-            ordenTBK = OrdenTBK.objects.create(
+            cobro_obj = Cobro.objects.create(
                 orden               = orden_obj,
+                facturacion_profile = orden_obj.facturacion_profile,
                 token               = token,
                 accountingDate      = transaction['accountingDate'],
                 buyOrder            = transaction['buyOrder'],
@@ -309,7 +315,7 @@ def retornotbk(request):
                 sessionId           = transaction['sessionId'],
                 transactionDate     = transaction['transactionDate'],
                 urlRedirection      = transaction['urlRedirection'],
-                VCI                 = transaction['VCI']
+                vci                 = transaction['VCI'],
             )
 
             # Actualizar Orden
@@ -330,8 +336,9 @@ def retornotbk(request):
             orden_obj = OrdenCompra.objects.by_orden_id(transaction['buyOrder'])
 
             # Guardar trasaccion TBK
-            ordenTBK = OrdenTBK.objects.create(
+            cobro_obj = Cobro.objects.create(
                 orden               = orden_obj,
+                facturacion_profile = orden_obj.facturacion_profile,
                 token               = token,
                 accountingDate      = transaction['accountingDate'],
                 buyOrder            = transaction['buyOrder'],
@@ -347,7 +354,7 @@ def retornotbk(request):
                 sessionId           = transaction['sessionId'],
                 transactionDate     = transaction['transactionDate'],
                 urlRedirection      = transaction['urlRedirection'],
-                VCI                 = transaction['VCI']
+                vci                 = transaction['VCI']
             )
 
             context = {
@@ -376,7 +383,7 @@ def fincompra(request):
 
         # ¿Es esta la unica solucion? Investigar
         token = request.POST.get('token_ws')
-        qs = OrdenTBK.objects.select_related('orden__facturacion_profile__usuario').filter(token=token)
+        qs = Cobro.objects.select_related('orden__facturacion_profile__usuario').filter(token=token)
         user = qs[0].orden.facturacion_profile.usuario
         orden_obj = qs[0].orden
 
@@ -391,13 +398,13 @@ def fincompra(request):
 def finerrorcompra (request):
 
     token = ''
-    orden = OrdenTBK.objects.none()
+    cobro_obj = Cobro.objects.none()
     if request.method == 'POST':
         token = request.POST.get('token_ws')
-        ordenTBK = OrdenTBK.objects.get(token=token)
+        cobro_obj = Cobro.objects.get(token=token)
 
     context = {
-        'ordenTBK': ordenTBK,
+        'cobro': cobro_obj,
     }
 
     return render(request, 'carro/finerrorcompra.html', context)

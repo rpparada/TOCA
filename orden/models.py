@@ -115,17 +115,17 @@ def post_save_orden(sender, instance, created, *args, **kwargs):
 
 post_save.connect(post_save_orden, sender=OrdenCompra)
 
-# Orden Transbank
-class OrdenTBKQuerySet(models.query.QuerySet):
+# Cobro Transbank
+class CobroQuerySet(models.query.QuerySet):
     def by_orden(self, orden):
         return self.filter(orden=orden)
 
     def by_token(self, token):
         return self.filter(token=token)
 
-class OrdenTBKManager(models.Manager):
+class CobroManager(models.Manager):
     def get_queryset(self):
-        return OrdenTBKQuerySet(self.model, using=self._db)
+        return CobroQuerySet(self.model, using=self._db)
 
     def by_orden(self, orden):
         return self.get_queryset().by_orden(orden)
@@ -144,28 +144,29 @@ class OrdenTBKManager(models.Manager):
 
         return obj, created
 
-class OrdenTBK(models.Model):
+class Cobro(models.Model):
 
     orden                   = models.ForeignKey(OrdenCompra, on_delete=models.DO_NOTHING)
+    facturacion_profile     = models.ForeignKey(FacturacionProfile, null=True, blank=True, on_delete=models.CASCADE)
 
-    token                   = models.CharField(max_length=200, blank=True, null=True)
-    accountingDate          = models.CharField(max_length=200, blank=True, null=True)
-    buyOrder                = models.CharField(max_length=200, blank=True, null=True)
-    cardNumber              = models.CharField(max_length=200, blank=True, null=True)
-    cardExpirationDate      = models.CharField(max_length=200, blank=True, null=True)
-    sharesAmount            = models.CharField(max_length=200, blank=True, null=True)
-    sharesNumber            = models.CharField(max_length=200, blank=True, null=True)
-    amount                  = models.CharField(max_length=200, blank=True, null=True)
-    commerceCode            = models.CharField(max_length=200, blank=True, null=True)
-    authorizationCode       = models.CharField(max_length=200, blank=True, null=True)
-    paymentTypeCode         = models.CharField(max_length=200, blank=True, null=True)
-    responseCode            = models.CharField(max_length=200, blank=True, null=True)
-    sessionId               = models.CharField(max_length=200, blank=True, null=True)
-    transactionDate         = models.CharField(max_length=200, blank=True, null=True)
-    urlRedirection          = models.CharField(max_length=200, blank=True, null=True)
-    VCI                     = models.CharField(max_length=200, blank=True, null=True)
+    token                   = models.CharField(max_length=64, blank=True, null=True)
+    accountingDate          = models.CharField(max_length=4, blank=True, null=True)
+    buyOrder                = models.CharField(max_length=26, blank=True, null=True)
+    cardNumber              = models.CharField(max_length=16, blank=True, null=True)
+    cardExpirationDate      = models.CharField(max_length=4, blank=True, null=True)
+    sharesAmount            = models.CharField(max_length=10, blank=True, null=True)
+    sharesNumber            = models.CharField(max_length=2, blank=True, null=True)
+    amount                  = models.CharField(max_length=10, blank=True, null=True)
+    commerceCode            = models.CharField(max_length=12, blank=True, null=True)
+    authorizationCode       = models.CharField(max_length=6, blank=True, null=True)
+    paymentTypeCode         = models.CharField(max_length=3, blank=True, null=True)
+    responseCode            = models.CharField(max_length=2, blank=True, null=True)
+    sessionId               = models.CharField(max_length=61, blank=True, null=True)
+    transactionDate         = models.DateTimeField(blank=True, null=True)
+    urlRedirection          = models.CharField(max_length=256, blank=True, null=True)
+    vci                     = models.CharField(max_length=3, blank=True, null=True)
 
-    objects                 = OrdenTBKManager()
+    objects                 = CobroManager()
 
     def __str__(self):
         return str(self.orden.id)
