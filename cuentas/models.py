@@ -16,6 +16,7 @@ from django.urls import reverse
 from toca.utils import random_string_generator, unique_key_generator
 
 DEFAULT_ACTIVATION_DAYS = getattr(settings, 'DEFAULT_ACTIVATION_DAYS', 7)
+
 # Create your models here.
 #User
 class UserManager(BaseUserManager):
