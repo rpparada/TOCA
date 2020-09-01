@@ -7,6 +7,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages, auth
 
 from .models import CarroCompra, ItemCarroCompra
 from orden.models import OrdenCompra, OrdenTBK
@@ -359,13 +360,9 @@ def retornotbk(request):
 @csrf_exempt
 def compraexitosa(request):
 
-    print(request.user)
-
     token = ''
     if request.method == 'POST':
         token = request.POST.get('token_ws')
-        print('request')
-        print(request.POST)
 
     context = {
         'token': token,
@@ -375,21 +372,18 @@ def compraexitosa(request):
 
 def fincompra(request):
 
-    # token = ''
-    # orden = OrdenTBK.objects.none()
-
-    print(request.user)
-
     if request.method == 'POST':
-        pass
-        # carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
-        # fact_profile, fact_profile_created = FacturacionProfile.objects.new_or_get(request)
-        # orden_obj, orden_obj_created = OrdenCompra.objects.new_or_get(fact_profile, carro_obj)
-        # token = request.POST.get('token_ws')
-        # ordenTBK = OrdenTBK.objects.get(token=token)
+
+        # ¿Es esta la unica solucion? Investigar
+        token = request.POST.get('token_ws')
+        qs = OrdenTBK.objects.select_related('orden__facturacion_profile__usuario').filter(token=token)
+        user = qs[0].orden.facturacion_profile.usuario
+        orden_obj = qs[0].orden
+
+        auth.login(request, user)
 
     context = {
-        #'orden': orden_obj,
+        'orden': orden_obj,
     }
 
     return render(request, 'carro/fincompra_old.html', context)
@@ -410,32 +404,3 @@ def finerrorcompra (request):
 
 def checkout_complete_view(request):
     return render(request, 'carro/fincompra.html', {})
-
-
-# def carga_comunas_agregar(request):
-#
-#     region_id = request.GET.get('region')
-#     comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
-#     context = {
-#         'comunas_reg': comunas,
-#     }
-#     return render(request, 'direccion/comuna_dropdown_list_options_agregar.html', context)
-#
-# def carga_comunas_actualizar(request):
-#
-#     region_id = request.GET.get('region')
-#     comuna_id = request.GET.get('comuna')
-#     comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
-#
-#     if comuna_id.isdigit():
-#         context = {
-#             'comunas_reg': comunas,
-#             'comuna_id': int(comuna_id),
-#         }
-#     else:
-#         context = {
-#             'comunas_reg': comunas,
-#             'comuna_id': comunas.first(),
-#         }
-#
-#     return render(request, 'direccion/comuna_dropdown_list_options_actualizar.html', context)

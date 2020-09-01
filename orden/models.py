@@ -120,12 +120,18 @@ class OrdenTBKQuerySet(models.query.QuerySet):
     def by_orden(self, orden):
         return self.filter(orden=orden)
 
+    def by_token(self, token):
+        return self.filter(token=token)
+
 class OrdenTBKManager(models.Manager):
     def get_queryset(self):
         return OrdenTBKQuerySet(self.model, using=self._db)
 
     def by_orden(self, orden):
         return self.get_queryset().by_orden(orden)
+
+    def by_token(self, token):
+        return self.get_queryset().by_token(token)
 
     def new_or_get(self, orden):
         created = False

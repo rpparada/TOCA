@@ -14,8 +14,5 @@ urlpatterns = [
     path('finerrorcompra', views.finerrorcompra, name='finerrorcompra'),
 
     path('checkout/fin', views.checkout_complete_view, name='checkout_complete'),
-    #path('api/carro', views.carro_detalle_api_view, name='api-carro'),
     path('api/carro', views.carro_detalle_api_body_view, name='api-carro'),
-    # path('ajaxdir/load-comunas_agregar/', views.carga_comunas_agregar, name='ajax_load_comunas_agregar_test'),
-    # path('ajaxdir/load-comunas_actualizar/', views.carga_comunas_actualizar, name='ajax_load_comunas_actualizar_test'),
 ]
