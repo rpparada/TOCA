@@ -1,6 +1,3 @@
-import tbk
-import os
-
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from django.template.loader import render_to_string
@@ -20,40 +17,8 @@ from direccion.forms import DireccionForm
 from cuentas.forms import IngresarForm
 from orden.forms import AgregaEmailAdicional
 
-# Transbank conexion inicial (parametrizado para pruebas)
-CERTIFICATES_DIR = os.path.join('orden', "commerces")
-HOST = os.getenv("HOST", "http://127.0.0.1")
-PORT = os.getenv("PORT", 8000)
-BASE_URL = "{host}:{port}".format(host=HOST, port=PORT)
-NORMAL_COMMERCE_CODE = "597020000540"
+from toca.utils import inicia_transaccion, retorna_transaccion, confirmar_transaccion
 
-def load_commerce_data(commerce_code):
-    with open(
-        os.path.join(CERTIFICATES_DIR, commerce_code, commerce_code + ".key"), "r"
-    ) as file:
-        key_data = file.read()
-    with open(
-        os.path.join(CERTIFICATES_DIR, commerce_code, commerce_code + ".crt"), "r"
-    ) as file:
-        cert_data = file.read()
-    with open(os.path.join(CERTIFICATES_DIR, "tbk.pem"), "r") as file:
-        tbk_cert_data = file.read()
-
-    return {
-        'key_data': key_data,
-        'cert_data': cert_data,
-        'tbk_cert_data': tbk_cert_data,
-    }
-
-normal_commerce_data = load_commerce_data(NORMAL_COMMERCE_CODE)
-normal_commerce = tbk.commerce.Commerce(
-    commerce_code=NORMAL_COMMERCE_CODE,
-    key_data=normal_commerce_data["key_data"],
-    cert_data=normal_commerce_data["cert_data"],
-    tbk_cert_data=normal_commerce_data["tbk_cert_data"],
-    environment=tbk.environments.DEVELOPMENT,
-)
-webpay_service = tbk.services.WebpayService(normal_commerce)
 
 # Create your views here.
 def carro_detalle_api_body_view(request):
@@ -260,13 +225,8 @@ def checkout_home(request):
         #     del request.session['carro_id']
         #     return redirect('carro:checkout_complete')
         if is_done:
-            transaction = webpay_service.init_transaction(
-                amount=orden_obj.total,
-                buy_order=orden_obj.orden_id,
-                return_url=BASE_URL + "/carro/retornotbk",
-                final_url=BASE_URL + "/carro/compraexitosa",
-                session_id=orden_obj.facturacion_profile.id,
-            )
+
+            transaction = inicia_transaccion(orden_obj)
 
             context = {
                 'transaction': transaction,
@@ -285,38 +245,13 @@ def retornotbk(request):
     if request.method == 'POST':
 
         token = request.POST.get('token_ws')
-        transaction = webpay_service.get_transaction_result(token)
-        transaction_detail = transaction["detailOutput"][0]
-        webpay_service.acknowledge_transaction(token)
+        transaction, transaction_detail = retorna_transaccion(token)
+        confirmar_transaccion(token)
 
         if transaction_detail["responseCode"] == 0:
-
-            print(transaction['transactionDate'])
-            print(transaction['urlRedirection'])
-            print(transaction['VCI'])
-
             # Recuperar Orden
             orden_obj = OrdenCompra.objects.by_orden_id(transaction['buyOrder'])
-            cobro_obj = Cobro.objects.create(
-                orden               = orden_obj,
-                facturacion_profile = orden_obj.facturacion_profile,
-                token               = token,
-                accountingDate      = transaction['accountingDate'],
-                buyOrder            = transaction['buyOrder'],
-                cardNumber          = transaction['cardDetail']['cardNumber'],
-                cardExpirationDate  = transaction['cardDetail']['cardExpirationDate'],
-                sharesAmount        = transaction['detailOutput'][0]['sharesAmount'],
-                sharesNumber        = transaction['detailOutput'][0]['sharesNumber'],
-                amount              = transaction['detailOutput'][0]['amount'],
-                commerceCode        = transaction['detailOutput'][0]['commerceCode'],
-                authorizationCode   = transaction['detailOutput'][0]['authorizationCode'],
-                paymentTypeCode     = transaction['detailOutput'][0]['paymentTypeCode'],
-                responseCode        = transaction['detailOutput'][0]['responseCode'],
-                sessionId           = transaction['sessionId'],
-                transactionDate     = transaction['transactionDate'],
-                urlRedirection      = transaction['urlRedirection'],
-                vci                 = transaction['VCI'],
-            )
+            cobro_obj = orden_obj.guarda_cobro(transaction, token)
 
             # Actualizar Orden
             orden_obj.mark_pagado()
@@ -331,31 +266,11 @@ def retornotbk(request):
             return render(request, 'carro/envioexitosotbk.html', context)
 
         else:
-
             # Recuperar Orden
             orden_obj = OrdenCompra.objects.by_orden_id(transaction['buyOrder'])
 
             # Guardar trasaccion TBK
-            cobro_obj = Cobro.objects.create(
-                orden               = orden_obj,
-                facturacion_profile = orden_obj.facturacion_profile,
-                token               = token,
-                accountingDate      = transaction['accountingDate'],
-                buyOrder            = transaction['buyOrder'],
-                cardNumber          = transaction['cardDetail']['cardNumber'],
-                cardExpirationDate  = transaction['cardDetail']['cardExpirationDate'],
-                sharesAmount        = transaction['detailOutput'][0]['sharesAmount'],
-                sharesNumber        = transaction['detailOutput'][0]['sharesNumber'],
-                amount              = transaction['detailOutput'][0]['amount'],
-                commerceCode        = transaction['detailOutput'][0]['commerceCode'],
-                authorizationCode   = transaction['detailOutput'][0]['authorizationCode'],
-                paymentTypeCode     = transaction['detailOutput'][0]['paymentTypeCode'],
-                responseCode        = transaction['detailOutput'][0]['responseCode'],
-                sessionId           = transaction['sessionId'],
-                transactionDate     = transaction['transactionDate'],
-                urlRedirection      = transaction['urlRedirection'],
-                vci                 = transaction['VCI']
-            )
+            cobro_obj = orden_obj.guarda_cobro(transaction, token)
 
             context = {
                 'transaction': transaction,

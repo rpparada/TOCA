@@ -1,7 +1,9 @@
 from django.db import models
 from django.db.models.signals import pre_save, post_save
+from django.conf import settings
 
 import math
+
 
 from carro.models import CarroCompra
 from facturacion.models import FacturacionProfile
@@ -86,6 +88,30 @@ class OrdenCompra(models.Model):
             self.estado = parToca['pagado']
             self.save()
         return self.estado
+
+    def guarda_cobro(self, transaction, token):
+        cobro_obj = Cobro.objects.create(
+            orden               = self,
+            facturacion_profile = self.facturacion_profile,
+            token               = token,
+            accountingDate      = transaction['accountingDate'],
+            buyOrder            = transaction['buyOrder'],
+            cardNumber          = transaction['cardDetail']['cardNumber'],
+            cardExpirationDate  = transaction['cardDetail']['cardExpirationDate'],
+            sharesAmount        = transaction['detailOutput'][0]['sharesAmount'],
+            sharesNumber        = transaction['detailOutput'][0]['sharesNumber'],
+            amount              = transaction['detailOutput'][0]['amount'],
+            commerceCode        = transaction['detailOutput'][0]['commerceCode'],
+            authorizationCode   = transaction['detailOutput'][0]['authorizationCode'],
+            paymentTypeCode     = transaction['detailOutput'][0]['paymentTypeCode'],
+            responseCode        = transaction['detailOutput'][0]['responseCode'],
+            sessionId           = transaction['sessionId'],
+            transactionDate     = transaction['transactionDate'],
+            urlRedirection      = transaction['urlRedirection'],
+            vci                 = transaction['VCI'],
+        )
+
+        return cobro_obj
 
 def pre_save_ordencompra_receiver(sender, instance, *args, **kwargs):
     if not instance.orden_id:
