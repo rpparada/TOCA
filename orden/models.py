@@ -215,6 +215,7 @@ CONTROLCOBRO_ESTADO_OPCIONES = (
     ('errorTransaccion','errorTransaccion'),
     ('rechazoEmisor','rechazoEmisor'),
     ('rechazoPosibleFraude','rechazoPosibleFraude'),
+    ('desconocido','desconocido'),
 )
 
 class ControlCobroQuerySet(models.query.QuerySet):
@@ -252,3 +253,11 @@ class ControlCobro(models.Model):
 
     def __str__(self):
         return self.token
+
+    def actualizar_estado(self, estado):
+        self.estado = estado
+        self.save()
+
+    def agregar_orden(self, orden):
+        self.orden = orden
+        self.save()

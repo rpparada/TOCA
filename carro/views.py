@@ -258,16 +258,20 @@ def retornotbk(request):
         # los sistemas del comercio, ya que este método se puede invocar una
         # única vez por transacción.
         token = request.POST.get('token_ws')
-        control_obj = ControlCobro.objects.new_or_get(token=token)
+        control_obj, created = ControlCobro.objects.new_or_get(token=token)
 
         # 12. Comercio recibe el resultado de la invocación del método
         # getTransactionResult().
         transaction, transaction_detail = retorna_transaccion(token)
 
         if transaction_detail["responseCode"] == 0:
+            control_obj.actualizar_estado('getTransactionResult')
 
             # Recuperar Orden
             orden_obj = OrdenCompra.objects.by_orden_id(transaction['buyOrder'])
+            control_obj.agregar_orden(orden_obj)
+
+            # Almacena cobro Transbank
             cobro_obj = orden_obj.guarda_cobro(transaction, token)
 
             # 13. Para que el comercio informe a Webpay que el resultado de la
@@ -283,9 +287,12 @@ def retornotbk(request):
             # is REVERSED)(272). Esta excepción debe ser manejada para no entregar
             # el producto o servicio en caso que ocurra.
             confirmar_transaccion(token)
+            control_obj.actualizar_estado('acknowledgeTransaction')
 
             # Actualizar Orden
             orden_obj.mark_pagado()
+
+            # Limpia Session Carro
             request.session['carro_tocatas'] = 0
             request.session.pop('carro_id', None)
 
@@ -307,11 +314,27 @@ def retornotbk(request):
             return render(request, 'carro/envioexitosotbk.html', context)
 
         else:
+            if transaction_detail["responseCode"] == -1:
+                control_obj.actualizar_estado('rechazoTransaccion_1');
+            elif transaction_detail["responseCode"] == -2:
+                control_obj.actualizar_estado('rechazoTransaccion_2');
+            elif transaction_detail["responseCode"] == -3:
+                control_obj.actualizar_estado('errorTransaccion');
+            elif transaction_detail["responseCode"] == -4:
+                control_obj.actualizar_estado('rechazoEmisor');
+            elif transaction_detail["responseCode"] == -5:
+                control_obj.actualizar_estado('rechazoPosibleFraude');
+            else:
+                control_obj.actualizar_estado('desconocido');
+
             # Recuperar Orden
             orden_obj = OrdenCompra.objects.by_orden_id(transaction['buyOrder'])
+            control_obj.agregar_orden(orden_obj)
 
-            # Guardar trasaccion TBK
+            # Almacena cobro Transbank
             cobro_obj = orden_obj.guarda_cobro(transaction, token)
+
+            request.session['carro_tocatas'] = carro_obj.item.count()
 
             context = {
                 #'cobro': cobro_obj,
