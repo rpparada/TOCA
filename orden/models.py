@@ -1,11 +1,12 @@
 from django.db import models
 from django.db.models.signals import pre_save, post_save
 from django.conf import settings
+User = settings.AUTH_USER_MODEL
 
 import math
 
 
-from carro.models import CarroCompra
+from carro.models import CarroCompra, ItemCarroCompra
 from facturacion.models import FacturacionProfile
 from direccion.models import Direccion
 
@@ -77,16 +78,35 @@ class OrdenCompra(models.Model):
         return nuevo_total
 
     def check_done(self):
+
+        # Agregar verificacion de venta de entradas disponibles (todas las entradas vendidas) si no las hay, quitar tocata de carro)
+        # Que significa disponibles:
+        # 1. Comprar antes de la fecha y hora del evento
+        # 2. Si aun quedan entradas disponibles
+        # 3. Verificar estado de tocata
+        # 4. ....
         facturacion_profile = self.facturacion_profile
         total = self.total
         if facturacion_profile and total > 0:
             return True
         return False
 
+    def actualiza_compras(self):
+        for item in self.carro.item.all():
+            obj, created = EntradasCompradas.objects.get_or_create(
+                        orden = self,
+                        facturacion_profile = self.facturacion_profile,
+                        item = item
+            )
+        return EntradasCompradas.objects.filter(orden=self).count()
+
     def mark_pagado(self):
-        if self.check_done():
-            self.estado = parToca['pagado']
-            self.save()
+        if self.estado != parToca['pagado']:
+            if self.check_done():
+                self.estado = parToca['pagado']
+                self.save()
+                self.actualiza_compras()
+
         return self.estado
 
     def guarda_cobro(self, transaction, token):
@@ -112,6 +132,11 @@ class OrdenCompra(models.Model):
         )
 
         return cobro_obj
+
+    def sumar_asistentes_total(self):
+        for item in self.carro.item.all():
+            item.tocata.asistentes_total += item.cantidad
+            item.tocata.save()
 
 def pre_save_ordencompra_receiver(sender, instance, *args, **kwargs):
     if not instance.orden_id:
@@ -216,6 +241,7 @@ CONTROLCOBRO_ESTADO_OPCIONES = (
     ('rechazoEmisor','rechazoEmisor'),
     ('rechazoPosibleFraude','rechazoPosibleFraude'),
     ('desconocido','desconocido'),
+    ('exitoso','existoso'),
 )
 
 class ControlCobroQuerySet(models.query.QuerySet):
@@ -261,3 +287,38 @@ class ControlCobro(models.Model):
     def agregar_orden(self, orden):
         self.orden = orden
         self.save()
+
+# Entradas Conmpradas
+class EntradasCompradasQuerySet(models.query.QuerySet):
+    def activas(self):
+        return self.filter(rembolsado=False)
+
+    def by_request(self, request):
+        fact_profile, created = FacturacionProfile.objects.new_or_get(request)
+        return self.filter(facturacion_profile=fact_profile)
+
+
+class EntradasCompradasManager(models.Manager):
+    def get_queryset(self):
+        return EntradasCompradasQuerySet(self.model, self._db)
+
+    def all(self):
+        return self.get_queryset().activas()
+
+    def by_request(self, request):
+        return self.get_queryset().by_request(request)
+
+class EntradasCompradas(models.Model):
+
+    orden                   = models.ForeignKey(OrdenCompra, on_delete=models.CASCADE)
+    facturacion_profile     = models.ForeignKey(FacturacionProfile, on_delete=models.CASCADE)
+    item                    = models.ForeignKey(ItemCarroCompra, on_delete=models.CASCADE)
+    rembolsado              = models.BooleanField(default=False)
+
+    fecha_actu              = models.DateTimeField(auto_now=True)
+    fecha_crea              = models.DateTimeField(auto_now_add=True)
+
+    objects                 = EntradasCompradasManager()
+
+    def __str__(self):
+        return str(self.item.cantidad)+' '+str(self.item.tocata.nombre)

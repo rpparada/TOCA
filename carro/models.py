@@ -126,7 +126,7 @@ class ItemCarroCompra(models.Model):
 
     class Meta:
         ordering = ['tocata__nombre']
-        
+
     def __str__(self):
         return str(self.cantidad)+' - '+str(self.tocata)
 
@@ -143,7 +143,6 @@ class ItemCarroCompra(models.Model):
             self.save()
             return True
         return False
-
 
 def pre_save_itemcarro_receiver(sender, instance, *args, **kwargs):
     instance.total = instance.cantidad * instance.tocata.costo

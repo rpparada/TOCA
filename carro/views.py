@@ -230,7 +230,7 @@ def checkout_home(request):
             context = {
                 'transaction': transaction,
             }
-            return render(request, 'carro/enviotbk.html', context)
+            return render(request, 'carro/snippets/enviotbk.html', context)
 
     context = {
         'email_adicional': email_adicional,
@@ -296,6 +296,9 @@ def retornotbk(request):
             request.session['carro_tocatas'] = 0
             request.session.pop('carro_id', None)
 
+            # Sumar numero de entradas compradas a tocata
+            orden_obj.sumar_asistentes_total()
+
             context = {
                 'transaction': transaction,
                 'transaction_detail': transaction_detail,
@@ -311,7 +314,7 @@ def retornotbk(request):
             # a Webpay se hace utilizando como destino la URL informada por el
             # método getTransactionResult()enviando por método POST el token de
             # la transacción en la variable token_ws.
-            return render(request, 'carro/envioexitosotbk.html', context)
+            return render(request, 'carro/snippets/envioexitosotbk.html', context)
 
         else:
             if transaction_detail["responseCode"] == -1:
@@ -334,10 +337,14 @@ def retornotbk(request):
             # Almacena cobro Transbank
             cobro_obj = orden_obj.guarda_cobro(transaction, token)
 
-            request.session['carro_tocatas'] = carro_obj.item.count()
+            # Recupera usurio (es esta la mejor opcion?)
+            user = orden_obj.facturacion_profile.usuario
+            auth.login(request, user)
+
+            request.session['carro_tocatas'] = orden_obj.carro.item.count()
 
             context = {
-                #'cobro': cobro_obj,
+                'orden': orden_obj,
             }
             return render(request, 'carro/comprafracasada.html', context)
 
@@ -357,11 +364,14 @@ def compraexitosa(request):
     # 18. Sitio del comercio despliega página final de pago
     if request.method == 'POST':
 
-        # ¿Es esta la unica solucion? Investigar
         token = request.POST.get('token_ws')
-        qs = Cobro.objects.select_related('orden__facturacion_profile__usuario').filter(token=token)
-        user = qs[0].orden.facturacion_profile.usuario
-        orden_obj = qs[0].orden
+        control_obj, created = ControlCobro.objects.new_or_get(token=token)
+        control_obj.actualizar_estado('exitoso');
+
+        orden_obj = control_obj.orden
+        
+        # Recupera usurio (es esta la mejor opcion?)
+        user =  orden_obj.facturacion_profile.usuario
 
         auth.login(request, user)
 

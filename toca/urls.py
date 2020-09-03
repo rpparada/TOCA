@@ -20,6 +20,8 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
 
+from orden.views import LibreriaView
+
 urlpatterns = [
     path('', include('home.urls')),
     path('artistas/', include('artista.urls')),
@@ -33,6 +35,7 @@ urlpatterns = [
     #path('cobro/', include('cobro.urls')),
     path('busqueda/', include(('busqueda.urls','busqueda'), namespace='busqueda')),
     path('ordenes/', include(('orden.urls','ordenes'), namespace='ordenes')),
+    path('libreria/', LibreriaView.as_view(), name='libreria'),
     path('carro/', include(('carro.urls','carro'), namespace='carro')),
     path('direccion/', include('direccion.urls')),
     path('admin/', admin.site.urls),

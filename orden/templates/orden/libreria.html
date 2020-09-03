@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} | TOCATAS{% endblock %}
+{% block content %}
+
+{% include 'partials/_alerts.html' %}
+
+<!-- Page Content -->
+<section id="page-content" class="no-sidebar">
+    <div class="container">
+        <!-- DataTable -->
+        <div class="row mb-5">
+            <div class="col-lg-6">
+                <h4>Alternative pagination</h4>
+            </div>
+            <div class="col-lg-6 text-right">
+                <button type="button" class="btn btn-light"><i class="icon-plus"></i> Add Record</button>
+                <div class="p-dropdown ml-3 float-right">
+                    <a class="title btn btn-light"><i class="icon-sliders"></i> Options</a>
+                    <div class="p-dropdown-content">
+                        <ul>
+                            <li><a href="#"><i class="icon-refresh-cw"></i>Update Records</a></li>
+                            <li><a href="#"><i class="icon-edit"></i>Edit</a></li>
+                            <li><a href="#"><i class="icon-x"></i>Delete</a></li>
+                            <li>
+                                <hr>
+                            </li>
+                            <li><a href="#"><i class="icon-life-buoy"></i>Documentation</a></li>
+                            <li><a href="#"><i class="icon-mail"></i>Email Support Team</a></li>
+                            <li><a href="#"><i class="icon-alert-triangle"></i>Report an issue</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-lg-12">
+                <table id="datatable" class="table table-bordered table-hover" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name Tocata</th>
+                            <th>Artista</th>
+                            <th>Comuna</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for object in object_list %}
+                        <tr>
+                            <td>{{ object.item.tocata.nombre }}</td>
+                            <td>{{ object.item.tocata.artista.nombre }}</td>
+                            <td>{{ object.item.tocata.comuna }}</td>
+                            <td>{{ object.item.tocata.fecha }}</td>
+                            <td>{{ object.item.tocata.hora }}</td>
+                            <td>{{ object.item.cantidad }}</td>
+                            <td>${{ object.item.tocata.costo|floatformat|intcomma }}</td>
+                            <td> <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Edit"><i class="icon-edit"></i></a>
+                                <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Delete"><i class="icon-trash-2"></i></a>
+                                <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Settings"><i class="icon-settings"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+        </div>
+        <!-- end: DataTable -->
+
+        <!-- Pagination -->
+        {% include 'snippets/page.html' with instance=page_obj %}
+        <!-- end: Pagination -->
+    </div>
+</section>
+<!-- end: Page Content -->
+
+
+{% endblock %}
