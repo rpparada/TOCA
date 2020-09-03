@@ -1,132 +1,451 @@
 [
 {
     "model": "carro.carrocompra",
-    "pk": 1,
+    "pk": 67,
     "fields": {
         "usuario": 1,
-        "cantidad": 0,
-        "subtotal": "0.00",
-        "total": "0.00",
-        "fecha_actu": "2020-08-15T02:17:55.681Z",
-        "fecha_crea": "2020-08-15T01:55:54.849Z",
-        "tocata": []
+        "subtotal": "15000.00",
+        "total": "15000.00",
+        "fecha_actu": "2020-09-01T22:16:41.966Z",
+        "fecha_crea": "2020-09-01T22:16:39.567Z",
+        "item": [
+            340
+        ]
     }
 },
 {
     "model": "carro.carrocompra",
-    "pk": 2,
+    "pk": 68,
     "fields": {
         "usuario": 1,
-        "cantidad": 0,
-        "subtotal": "0.00",
-        "total": "0.00",
-        "fecha_actu": "2020-08-15T02:56:05.483Z",
-        "fecha_crea": "2020-08-15T02:55:44.882Z",
-        "tocata": []
+        "subtotal": "8000.00",
+        "total": "8000.00",
+        "fecha_actu": "2020-09-01T22:40:48.648Z",
+        "fecha_crea": "2020-09-01T22:40:46.957Z",
+        "item": [
+            341
+        ]
     }
 },
 {
     "model": "carro.carrocompra",
-    "pk": 3,
+    "pk": 69,
     "fields": {
         "usuario": 1,
-        "cantidad": 0,
-        "subtotal": "0.00",
-        "total": "0.00",
-        "fecha_actu": "2020-08-15T04:30:50.766Z",
-        "fecha_crea": "2020-08-15T03:10:25.256Z",
-        "tocata": []
+        "subtotal": "10000.00",
+        "total": "10000.00",
+        "fecha_actu": "2020-09-01T22:43:32.501Z",
+        "fecha_crea": "2020-09-01T22:43:31.115Z",
+        "item": [
+            342
+        ]
     }
 },
 {
     "model": "carro.carrocompra",
-    "pk": 4,
+    "pk": 70,
     "fields": {
         "usuario": 1,
-        "cantidad": 0,
-        "subtotal": "0.00",
-        "total": "0.00",
-        "fecha_actu": "2020-08-16T21:08:48.589Z",
-        "fecha_crea": "2020-08-16T19:52:41.573Z",
-        "tocata": []
+        "subtotal": "21000.00",
+        "total": "21000.00",
+        "fecha_actu": "2020-09-01T22:44:48.697Z",
+        "fecha_crea": "2020-09-01T22:44:46.773Z",
+        "item": [
+            343
+        ]
     }
 },
 {
     "model": "carro.carrocompra",
-    "pk": 5,
-    "fields": {
-        "usuario": null,
-        "cantidad": 0,
-        "subtotal": "0.00",
-        "total": "0.00",
-        "fecha_actu": "2020-08-17T16:00:46.249Z",
-        "fecha_crea": "2020-08-17T16:00:46.249Z",
-        "tocata": []
-    }
-},
-{
-    "model": "carro.carrocompra",
-    "pk": 6,
-    "fields": {
-        "usuario": null,
-        "cantidad": 0,
-        "subtotal": "0.00",
-        "total": "0.00",
-        "fecha_actu": "2020-08-17T16:01:47.166Z",
-        "fecha_crea": "2020-08-17T16:01:47.166Z",
-        "tocata": []
-    }
-},
-{
-    "model": "carro.carrocompra",
-    "pk": 7,
-    "fields": {
-        "usuario": null,
-        "cantidad": 0,
-        "subtotal": "0.00",
-        "total": "0.00",
-        "fecha_actu": "2020-08-17T16:16:31.687Z",
-        "fecha_crea": "2020-08-17T16:16:31.687Z",
-        "tocata": []
-    }
-},
-{
-    "model": "carro.carrocompra",
-    "pk": 8,
+    "pk": 71,
     "fields": {
         "usuario": 1,
-        "cantidad": 0,
-        "subtotal": "0.00",
-        "total": "0.00",
-        "fecha_actu": "2020-08-17T19:20:51.201Z",
-        "fecha_crea": "2020-08-17T16:18:01.040Z",
-        "tocata": []
+        "subtotal": "5000.00",
+        "total": "5000.00",
+        "fecha_actu": "2020-09-01T22:46:11.823Z",
+        "fecha_crea": "2020-09-01T22:46:10.277Z",
+        "item": [
+            344
+        ]
     }
 },
 {
     "model": "carro.carrocompra",
-    "pk": 9,
+    "pk": 72,
     "fields": {
-        "usuario": null,
-        "cantidad": 0,
-        "subtotal": "0.00",
-        "total": "0.00",
-        "fecha_actu": "2020-08-17T20:01:19.994Z",
-        "fecha_crea": "2020-08-17T20:01:19.994Z",
-        "tocata": []
+        "usuario": 1,
+        "subtotal": "15000.00",
+        "total": "15000.00",
+        "fecha_actu": "2020-09-01T22:48:24.694Z",
+        "fecha_crea": "2020-09-01T22:47:15.779Z",
+        "item": [
+            346,
+            345
+        ]
     }
 },
 {
     "model": "carro.carrocompra",
-    "pk": 10,
+    "pk": 73,
     "fields": {
-        "usuario": null,
-        "cantidad": 0,
-        "subtotal": "0.00",
-        "total": "0.00",
-        "fecha_actu": "2020-08-17T20:01:20.024Z",
-        "fecha_crea": "2020-08-17T20:01:20.024Z",
-        "tocata": []
+        "usuario": 1,
+        "subtotal": "4000.00",
+        "total": "4000.00",
+        "fecha_actu": "2020-09-01T22:52:30.873Z",
+        "fecha_crea": "2020-09-01T22:52:29.057Z",
+        "item": [
+            347
+        ]
+    }
+},
+{
+    "model": "carro.carrocompra",
+    "pk": 74,
+    "fields": {
+        "usuario": 1,
+        "subtotal": "5000.00",
+        "total": "5000.00",
+        "fecha_actu": "2020-09-01T22:57:10.009Z",
+        "fecha_crea": "2020-09-01T22:57:07.763Z",
+        "item": [
+            348
+        ]
+    }
+},
+{
+    "model": "carro.carrocompra",
+    "pk": 75,
+    "fields": {
+        "usuario": 1,
+        "subtotal": "7000.00",
+        "total": "7000.00",
+        "fecha_actu": "2020-09-02T16:23:06.980Z",
+        "fecha_crea": "2020-09-02T16:22:51.315Z",
+        "item": [
+            349
+        ]
+    }
+},
+{
+    "model": "carro.carrocompra",
+    "pk": 76,
+    "fields": {
+        "usuario": 1,
+        "subtotal": "28000.00",
+        "total": "28000.00",
+        "fecha_actu": "2020-09-02T17:02:48.877Z",
+        "fecha_crea": "2020-09-02T17:02:43.987Z",
+        "item": [
+            351
+        ]
+    }
+},
+{
+    "model": "carro.carrocompra",
+    "pk": 77,
+    "fields": {
+        "usuario": 1,
+        "subtotal": "4000.00",
+        "total": "4000.00",
+        "fecha_actu": "2020-09-02T17:44:54.442Z",
+        "fecha_crea": "2020-09-02T17:44:43.198Z",
+        "item": [
+            352
+        ]
+    }
+},
+{
+    "model": "carro.carrocompra",
+    "pk": 78,
+    "fields": {
+        "usuario": 1,
+        "subtotal": "5000.00",
+        "total": "5000.00",
+        "fecha_actu": "2020-09-02T17:52:49.592Z",
+        "fecha_crea": "2020-09-02T17:52:47.881Z",
+        "item": [
+            353
+        ]
+    }
+},
+{
+    "model": "carro.carrocompra",
+    "pk": 79,
+    "fields": {
+        "usuario": 1,
+        "subtotal": "28000.00",
+        "total": "28000.00",
+        "fecha_actu": "2020-09-02T18:00:02.582Z",
+        "fecha_crea": "2020-09-02T17:59:54.678Z",
+        "item": [
+            356
+        ]
+    }
+},
+{
+    "model": "carro.carrocompra",
+    "pk": 80,
+    "fields": {
+        "usuario": 1,
+        "subtotal": "5000.00",
+        "total": "5000.00",
+        "fecha_actu": "2020-09-02T18:13:45.241Z",
+        "fecha_crea": "2020-09-02T18:13:43.876Z",
+        "item": [
+            357
+        ]
+    }
+},
+{
+    "model": "carro.carrocompra",
+    "pk": 81,
+    "fields": {
+        "usuario": 1,
+        "subtotal": "5000.00",
+        "total": "5000.00",
+        "fecha_actu": "2020-09-02T23:14:06.626Z",
+        "fecha_crea": "2020-09-02T23:14:05.205Z",
+        "item": [
+            358
+        ]
+    }
+},
+{
+    "model": "carro.carrocompra",
+    "pk": 82,
+    "fields": {
+        "usuario": 1,
+        "subtotal": "9000.00",
+        "total": "9000.00",
+        "fecha_actu": "2020-09-02T23:24:47.064Z",
+        "fecha_crea": "2020-09-02T23:15:18.105Z",
+        "item": [
+            359,
+            360
+        ]
+    }
+},
+{
+    "model": "carro.carrocompra",
+    "pk": 83,
+    "fields": {
+        "usuario": 1,
+        "subtotal": "5000.00",
+        "total": "5000.00",
+        "fecha_actu": "2020-09-02T23:52:16.167Z",
+        "fecha_crea": "2020-09-02T23:52:14.631Z",
+        "item": [
+            361
+        ]
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 340,
+    "fields": {
+        "tocata": 17,
+        "cantidad": 3,
+        "total": "15000.00",
+        "fecha_actu": "2020-09-01T22:16:41.960Z",
+        "fecha_crea": "2020-09-01T22:16:40.858Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 341,
+    "fields": {
+        "tocata": 18,
+        "cantidad": 2,
+        "total": "8000.00",
+        "fecha_actu": "2020-09-01T22:40:48.645Z",
+        "fecha_crea": "2020-09-01T22:40:48.262Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 342,
+    "fields": {
+        "tocata": 21,
+        "cantidad": 1,
+        "total": "10000.00",
+        "fecha_actu": "2020-09-01T22:43:32.495Z",
+        "fecha_crea": "2020-09-01T22:43:32.495Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 343,
+    "fields": {
+        "tocata": 20,
+        "cantidad": 3,
+        "total": "21000.00",
+        "fecha_actu": "2020-09-01T22:44:48.695Z",
+        "fecha_crea": "2020-09-01T22:44:48.367Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 344,
+    "fields": {
+        "tocata": 19,
+        "cantidad": 1,
+        "total": "5000.00",
+        "fecha_actu": "2020-09-01T22:46:11.816Z",
+        "fecha_crea": "2020-09-01T22:46:11.816Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 345,
+    "fields": {
+        "tocata": 18,
+        "cantidad": 2,
+        "total": "8000.00",
+        "fecha_actu": "2020-09-01T22:47:17.896Z",
+        "fecha_crea": "2020-09-01T22:47:17.576Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 346,
+    "fields": {
+        "tocata": 20,
+        "cantidad": 1,
+        "total": "7000.00",
+        "fecha_actu": "2020-09-01T22:48:24.689Z",
+        "fecha_crea": "2020-09-01T22:48:24.689Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 347,
+    "fields": {
+        "tocata": 18,
+        "cantidad": 1,
+        "total": "4000.00",
+        "fecha_actu": "2020-09-01T22:52:30.865Z",
+        "fecha_crea": "2020-09-01T22:52:30.865Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 348,
+    "fields": {
+        "tocata": 17,
+        "cantidad": 1,
+        "total": "5000.00",
+        "fecha_actu": "2020-09-01T22:57:10.002Z",
+        "fecha_crea": "2020-09-01T22:57:10.002Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 349,
+    "fields": {
+        "tocata": 20,
+        "cantidad": 1,
+        "total": "7000.00",
+        "fecha_actu": "2020-09-02T16:23:06.934Z",
+        "fecha_crea": "2020-09-02T16:23:06.934Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 351,
+    "fields": {
+        "tocata": 20,
+        "cantidad": 4,
+        "total": "28000.00",
+        "fecha_actu": "2020-09-02T17:02:48.871Z",
+        "fecha_crea": "2020-09-02T17:02:47.417Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 352,
+    "fields": {
+        "tocata": 18,
+        "cantidad": 1,
+        "total": "4000.00",
+        "fecha_actu": "2020-09-02T17:44:44.365Z",
+        "fecha_crea": "2020-09-02T17:44:44.365Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 353,
+    "fields": {
+        "tocata": 17,
+        "cantidad": 1,
+        "total": "5000.00",
+        "fecha_actu": "2020-09-02T17:52:49.588Z",
+        "fecha_crea": "2020-09-02T17:52:49.588Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 356,
+    "fields": {
+        "tocata": 20,
+        "cantidad": 4,
+        "total": "28000.00",
+        "fecha_actu": "2020-09-02T18:00:02.577Z",
+        "fecha_crea": "2020-09-02T18:00:02.064Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 357,
+    "fields": {
+        "tocata": 19,
+        "cantidad": 1,
+        "total": "5000.00",
+        "fecha_actu": "2020-09-02T18:13:45.234Z",
+        "fecha_crea": "2020-09-02T18:13:45.234Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 358,
+    "fields": {
+        "tocata": 19,
+        "cantidad": 1,
+        "total": "5000.00",
+        "fecha_actu": "2020-09-02T23:14:06.582Z",
+        "fecha_crea": "2020-09-02T23:14:06.582Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 359,
+    "fields": {
+        "tocata": 19,
+        "cantidad": 1,
+        "total": "5000.00",
+        "fecha_actu": "2020-09-02T23:15:19.609Z",
+        "fecha_crea": "2020-09-02T23:15:19.609Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 360,
+    "fields": {
+        "tocata": 18,
+        "cantidad": 1,
+        "total": "4000.00",
+        "fecha_actu": "2020-09-02T23:24:47.056Z",
+        "fecha_crea": "2020-09-02T23:24:47.056Z"
+    }
+},
+{
+    "model": "carro.itemcarrocompra",
+    "pk": 361,
+    "fields": {
+        "tocata": 17,
+        "cantidad": 1,
+        "total": "5000.00",
+        "fecha_actu": "2020-09-02T23:52:16.159Z",
+        "fecha_crea": "2020-09-02T23:52:16.159Z"
     }
 }
 ]

@@ -3,12 +3,12 @@
     "model": "cuentas.user",
     "pk": 1,
     "fields": {
-        "password": "pbkdf2_sha256$150000$Wi5HWkHadg3Q$SCX5LDzUrqZt1EBfEVk64+i0qutNgtQja52iUol/MGI=",
-        "last_login": "2020-08-17T22:54:27.673Z",
+        "password": "pbkdf2_sha256$150000$WUXcp0Btiset$ft1u1wc42WA6oznq5QWzSpQU124iUJpcViOmjisr5AM=",
+        "last_login": "2020-09-03T00:40:57.458Z",
         "email": "rpparada@gmail.com",
-        "nombre": null,
-        "apellido": null,
-        "active": true,
+        "nombre": "Rodrigo",
+        "apellido": "Parada",
+        "is_active": true,
         "staff": true,
         "admin": true
     }
@@ -22,7 +22,7 @@
         "email": "juliopina@gmail.com",
         "nombre": null,
         "apellido": null,
-        "active": true,
+        "is_active": true,
         "staff": false,
         "admin": false
     }
@@ -36,9 +36,51 @@
         "email": "nicolebunout@gmail.com",
         "nombre": null,
         "apellido": null,
-        "active": true,
+        "is_active": true,
         "staff": false,
         "admin": false
+    }
+},
+{
+    "model": "cuentas.user",
+    "pk": 8,
+    "fields": {
+        "password": "pbkdf2_sha256$150000$Wwa7OjtOKp0w$A8EOgOaYSdSo3ptvVbK4z6Wnj2TFcgaQ5rc96vXnG/4=",
+        "last_login": null,
+        "email": "rpparada@hotmail.com",
+        "nombre": null,
+        "apellido": null,
+        "is_active": true,
+        "staff": false,
+        "admin": false
+    }
+},
+{
+    "model": "cuentas.emailactivation",
+    "pk": 8,
+    "fields": {
+        "user": 8,
+        "email": "rpparada@hotmail.com",
+        "key": "q11fjw1n934xz8w4f2de0a1if852b0mu",
+        "activated": false,
+        "forced_expired": false,
+        "expires": 7,
+        "fecha_crea": "2020-08-20T20:00:21.447Z",
+        "fecha_actua": "2020-08-20T20:01:03.938Z"
+    }
+},
+{
+    "model": "cuentas.emailactivation",
+    "pk": 9,
+    "fields": {
+        "user": 8,
+        "email": "rpparada@hotmail.com",
+        "key": "2v789fa5js0lqvxav4a2hj1ryzulkeoh",
+        "activated": true,
+        "forced_expired": false,
+        "expires": 7,
+        "fecha_crea": "2020-08-20T20:02:08.881Z",
+        "fecha_actua": "2020-08-20T20:02:30.912Z"
     }
 }
 ]

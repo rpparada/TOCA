@@ -8,6 +8,7 @@
         "usuario": 3,
         "foto_1920_1280": "fotos/artistas/foto1920_1280.jpg",
         "foto_525_350": "fotos/artistas/foto525_350.jpg",
+        "foto_380_507": "fotos/artistas/nicole380_507.jpg",
         "descripci\u00f3n": "A los 18 a\u00f1os, Bunout cursaba reci\u00e9n el primer a\u00f1o de sus estudios de canto en la academia Projazz cuando fue destacada en las temporadas de jazz joven del club El Perseguidor. Entonces no detuvo su marcha con conciertos y colaboraciones. En 2005, su nombre figur\u00f3 entonces entre las figuras emergentes del canto swing, como Natacha Montory, Consuelo Schuster o Camila Meza, sus contempor\u00e1neas de estudios.\r\n\r\nBunout lleg\u00f3 inluso a ser una de las voces predilectas de los maestros del swing chileno, el saxofonista Alfredo Espinoza y el pianista Giovanni Cultrera, con activas temporadas en El Mes\u00f3n Nerudiano y con presentaciones en el Teatro Municipal de Vi\u00f1a del Mar en enero de 2008 y en el concierto en el Teatro Mori que en 2009 celebr\u00f3 las 700 apariciones en vivo de estos m\u00fasicos. Adem\u00e1s, su voz aparece en los discos Cultrera, Espinoza y compa\u00f1\u00eda en vivo en Re\u00f1aca (2010), Live at Thelonious (2013) y Giovanni '85. Live again at Thelonious (2017).\r\n\r\nEn 2009, la cantante comenz\u00f3 a presentarse como solista en el mismo circuito jazz\u00edstico de la capital, en cuyas agrupaciones actuaron m\u00fasicos de trayectoria como Claudio Rubio, Andy Baeza o Nicol\u00e1s Vera, aunque tambi\u00e9n m\u00fasicos de jazz generacionales como Franz Mesko, \u00c1lvaro Severino, o Valentino Baos. En el inicio de la d\u00e9cada de 2010, comenzar\u00eda a escribir letras para nuevas canciones en una est\u00e9tica folk que paulatinamente la fue alejando del jazz. Colaboraciones junto al cantautor Camilo Eque dar\u00edan en 2013 un adelanto de lo que pronto se iba a modificar la propuesta de Nicole Bunout en el canto y la autor\u00eda, con canciones como \"Nabundear\u00e9\", \"Intromirada\" y \"Ma\u00f1anas de sol\", pertenecientes a su debut, Cris\u00e1lida (2014).",
         "email": "nicolebunout@gmail.com",
         "telefono_contacto": "",
@@ -16,7 +17,7 @@
         "link_instagram": "https://www.instagram.com/nicolebunout/?hl=es-la",
         "estado": "DI",
         "fecha_crea": "2020-07-31T22:25:13.790Z",
-        "fecha_actua": "2020-08-15T04:04:03.744Z",
+        "fecha_actua": "2020-08-18T15:15:18.848Z",
         "cualidades": [
             2,
             3,
@@ -39,6 +40,7 @@
         "usuario": 2,
         "foto_1920_1280": "fotos/artistas/foto1920_1280_ahCE7qZ.jpg",
         "foto_525_350": "fotos/artistas/foto525_350_N9QKcVk.jpg",
+        "foto_380_507": "fotos/artistas/julio380_507.jpg",
         "descripci\u00f3n": "La idea de mezclar en canciones \u00abmelancol\u00eda y desenfreno\u00bb pone a Julio Pi\u00f1a en un espacio peculiar para un combo que asegura tributar la cumbia porte\u00f1a. Su sonido, en realidad, contiene elementos el\u00e9ctricos asociables al rock, percusi\u00f3n de definitiva vinculaci\u00f3n afrocaribe\u00f1a, y congoja sentimental aprendida probablemente del bolero (o de la vida misma). Eso, junto a letras de saludable distancia de grandes mensajes, no exentas de humor sobre definiciones sociales que rara vez se revisan. Aplicados en la interpretaci\u00f3n, al menos en su primer disco el grupo se dio permiso tambi\u00e9n para integrar composiciones instrumentales.\r\n\r\nEse \u00e1lbum debut, de t\u00edtulo ir\u00f3nico (Grandes \u00e9xitos, vol. 1) y un cover por completo inesperado (\"High and dry\", de Radiohead; en el m\u00e1s licencioso spanglish), lo levant\u00f3 la banda s\u00f3lo un a\u00f1o despu\u00e9s de fijar su formaci\u00f3n, en Valpara\u00edso, con m\u00fasicos experimentados ya en la Sonora Patocarlo. Con la misma rapidez a\u00f1adieron a su agenda presentaciones nacionales y extranjeras, como las del festival SXSW en Austin (Estados Unidos), en 2016.\r\n\r\nEn el sonido del conjunto act\u00faan fuerzas libres de referencias personales: \u00abJulio Pi\u00f1a es un combo metacumbiero \u2014definen ellos\u2014: cumbia que refiere a la cumbia, cita sus muchos aspectos evolutivos, gui\u00f1os a sus muchos lugares de desarrollo, mezcla esto con las m\u00fasicas que le han sido contempor\u00e1neas desde su origen y que desde chile, este grupo ha consumido desde su ni\u00f1ez: el rock, el jazz, la cueca, los chinchineros, las baladas, los boleros, la psicodelia, el punk rock, un largo etc.\u00bb.",
         "email": "juliopina@gmail.com",
         "telefono_contacto": "",
@@ -47,7 +49,7 @@
         "link_instagram": "https://www.instagram.com/juliopinya/?hl=es-la",
         "estado": "DI",
         "fecha_crea": "2020-07-31T22:26:44.264Z",
-        "fecha_actua": "2020-08-15T04:03:56.525Z",
+        "fecha_actua": "2020-08-18T15:15:08.543Z",
         "cualidades": [
             2,
             3,
@@ -75,11 +77,11 @@
     "model": "artista.estilo",
     "pk": 11,
     "fields": {
-        "nombre": "canto_nuevo",
-        "slug": "canto_nuevo",
+        "nombre": "canto nuevo",
+        "slug": "cantonuevo",
         "activo": true,
         "fecha_crea": "2020-07-31T22:20:55.302Z",
-        "fecha_actua": "2020-07-31T22:20:55.302Z"
+        "fecha_actua": "2020-08-18T21:38:03.207Z"
     }
 },
 {

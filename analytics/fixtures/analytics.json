@@ -1,192 +1,1104 @@
 [
 {
     "model": "analytics.objectviewed",
-    "pk": 1,
-    "fields": {
-        "user": 1,
-        "ip_address": "127.0.0.1",
-        "content_type": 13,
-        "object_id": 6,
-        "timestamp": "2020-08-15T04:04:08.707Z"
-    }
-},
-{
-    "model": "analytics.objectviewed",
-    "pk": 2,
+    "pk": 628,
     "fields": {
         "user": 1,
         "ip_address": "127.0.0.1",
         "content_type": 13,
         "object_id": 5,
-        "timestamp": "2020-08-15T04:11:46.551Z"
+        "timestamp": "2020-08-29T23:22:17.990Z"
     }
 },
 {
     "model": "analytics.objectviewed",
-    "pk": 3,
-    "fields": {
-        "user": 3,
-        "ip_address": "127.0.0.1",
-        "content_type": 13,
-        "object_id": 5,
-        "timestamp": "2020-08-15T18:05:06.897Z"
-    }
-},
-{
-    "model": "analytics.objectviewed",
-    "pk": 4,
+    "pk": 629,
     "fields": {
         "user": 1,
         "ip_address": "127.0.0.1",
-        "content_type": 13,
-        "object_id": 5,
-        "timestamp": "2020-08-16T20:10:50.629Z"
+        "content_type": 20,
+        "object_id": 18,
+        "timestamp": "2020-08-29T23:22:36.506Z"
     }
 },
 {
     "model": "analytics.objectviewed",
-    "pk": 5,
+    "pk": 630,
     "fields": {
         "user": 1,
         "ip_address": "127.0.0.1",
-        "content_type": 13,
-        "object_id": 5,
-        "timestamp": "2020-08-16T20:53:46.311Z"
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-08-29T23:22:43.864Z"
     }
 },
 {
     "model": "analytics.objectviewed",
-    "pk": 6,
+    "pk": 631,
     "fields": {
         "user": 1,
         "ip_address": "127.0.0.1",
-        "content_type": 13,
-        "object_id": 5,
-        "timestamp": "2020-08-16T21:34:31.678Z"
+        "content_type": 20,
+        "object_id": 18,
+        "timestamp": "2020-08-31T15:17:35.420Z"
     }
 },
 {
     "model": "analytics.objectviewed",
-    "pk": 7,
+    "pk": 632,
     "fields": {
         "user": 1,
         "ip_address": "127.0.0.1",
-        "content_type": 13,
-        "object_id": 5,
-        "timestamp": "2020-08-16T22:00:42.425Z"
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-08-31T15:17:40.314Z"
     }
 },
 {
     "model": "analytics.objectviewed",
-    "pk": 8,
+    "pk": 633,
     "fields": {
         "user": 1,
         "ip_address": "127.0.0.1",
-        "content_type": 13,
-        "object_id": 6,
-        "timestamp": "2020-08-16T22:03:09.471Z"
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-08-31T16:14:29.320Z"
     }
 },
 {
     "model": "analytics.objectviewed",
-    "pk": 9,
+    "pk": 634,
     "fields": {
         "user": 1,
         "ip_address": "127.0.0.1",
-        "content_type": 13,
-        "object_id": 5,
-        "timestamp": "2020-08-17T22:55:02.657Z"
+        "content_type": 20,
+        "object_id": 20,
+        "timestamp": "2020-08-31T17:37:24.467Z"
     }
 },
 {
     "model": "analytics.objectviewed",
-    "pk": 10,
+    "pk": 635,
     "fields": {
         "user": 1,
         "ip_address": "127.0.0.1",
-        "content_type": 13,
-        "object_id": 5,
-        "timestamp": "2020-08-17T22:55:33.328Z"
+        "content_type": 20,
+        "object_id": 18,
+        "timestamp": "2020-08-31T17:40:35.694Z"
     }
 },
 {
     "model": "analytics.objectviewed",
-    "pk": 11,
+    "pk": 636,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-08-31T17:45:50.085Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 637,
     "fields": {
         "user": 1,
         "ip_address": "127.0.0.1",
-        "content_type": 13,
-        "object_id": 5,
-        "timestamp": "2020-08-17T22:55:53.133Z"
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-08-31T18:02:40.937Z"
     }
 },
 {
     "model": "analytics.objectviewed",
-    "pk": 12,
+    "pk": 638,
     "fields": {
         "user": 1,
         "ip_address": "127.0.0.1",
-        "content_type": 13,
-        "object_id": 5,
-        "timestamp": "2020-08-17T22:56:20.849Z"
+        "content_type": 20,
+        "object_id": 21,
+        "timestamp": "2020-08-31T18:05:15.242Z"
     }
 },
 {
     "model": "analytics.objectviewed",
+    "pk": 639,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 20,
+        "timestamp": "2020-08-31T18:09:25.256Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 640,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 20,
+        "timestamp": "2020-08-31T18:11:41.054Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 641,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 18,
+        "timestamp": "2020-08-31T20:05:55.711Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 642,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-08-31T20:06:01.254Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 643,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-08-31T20:47:45.958Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 644,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-08-31T21:03:28.373Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 645,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 21,
+        "timestamp": "2020-08-31T21:03:32.997Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 646,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 18,
+        "timestamp": "2020-08-31T21:11:38.640Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 647,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-08-31T21:12:56.831Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 648,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-08-31T21:23:51.930Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 649,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-08-31T21:29:05.986Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 650,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 21,
+        "timestamp": "2020-08-31T21:31:03.042Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 651,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 20,
+        "timestamp": "2020-08-31T21:33:00.705Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 652,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-08-31T21:56:37.949Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 653,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-08-31T22:08:40.480Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 654,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-08-31T22:12:18.205Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 655,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-08-31T22:16:01.585Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 656,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-08-31T22:17:14.152Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 657,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-08-31T22:17:26.289Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 658,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-08-31T22:19:02.976Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 659,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-08-31T22:19:16.520Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 660,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-08-31T22:20:26.748Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 661,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-08-31T22:23:33.903Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 662,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-08-31T22:27:00.915Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 663,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-08-31T22:31:27.188Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 664,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-08-31T22:31:49.114Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 665,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-08-31T22:32:33.769Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 666,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-08-31T22:32:45.286Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 667,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 20,
+        "timestamp": "2020-08-31T23:03:45.253Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 668,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 21,
+        "timestamp": "2020-08-31T23:13:48.674Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 669,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 21,
+        "timestamp": "2020-08-31T23:29:54.611Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 670,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 20,
+        "timestamp": "2020-08-31T23:33:28.584Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 671,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 18,
+        "timestamp": "2020-08-31T23:34:32.858Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 672,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 18,
+        "timestamp": "2020-09-01T15:31:37.888Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 673,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-09-01T15:32:54.114Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 674,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-09-01T15:33:48.164Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 675,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-09-01T21:59:07.206Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 676,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 18,
+        "timestamp": "2020-09-01T22:02:03.695Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 677,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-09-01T22:02:11.274Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 678,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-09-01T22:03:16.818Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 679,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 21,
+        "timestamp": "2020-09-01T22:11:13.444Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 680,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 20,
+        "timestamp": "2020-09-01T22:11:25.900Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 681,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 20,
+        "timestamp": "2020-09-01T22:13:30.822Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 682,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 18,
+        "timestamp": "2020-09-01T22:13:45.524Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 683,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-09-01T22:16:39.539Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 684,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 18,
+        "timestamp": "2020-09-01T22:40:46.933Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 685,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 21,
+        "timestamp": "2020-09-01T22:43:31.063Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 686,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 20,
+        "timestamp": "2020-09-01T22:44:46.709Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 687,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-09-01T22:46:10.252Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 688,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 18,
+        "timestamp": "2020-09-01T22:47:15.745Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 689,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 20,
+        "timestamp": "2020-09-01T22:48:23.301Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 690,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 18,
+        "timestamp": "2020-09-01T22:52:29.032Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 691,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-09-01T22:57:07.696Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 692,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 20,
+        "timestamp": "2020-09-02T16:22:51.288Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 693,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 20,
+        "timestamp": "2020-09-02T17:02:43.961Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 694,
+    "fields": {
+        "user": null,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 18,
+        "timestamp": "2020-09-02T17:44:43.132Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 695,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-09-02T17:52:47.831Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 696,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 20,
+        "timestamp": "2020-09-02T17:59:54.627Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 697,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-09-02T18:13:43.848Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 698,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-09-02T23:14:05.177Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 699,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 19,
+        "timestamp": "2020-09-02T23:15:18.078Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 700,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 18,
+        "timestamp": "2020-09-02T23:24:45.447Z"
+    }
+},
+{
+    "model": "analytics.objectviewed",
+    "pk": 701,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "content_type": 20,
+        "object_id": 17,
+        "timestamp": "2020-09-02T23:52:14.604Z"
+    }
+},
+{
+    "model": "analytics.usersession",
     "pk": 13,
     "fields": {
         "user": 1,
         "ip_address": "127.0.0.1",
-        "content_type": 13,
-        "object_id": 5,
-        "timestamp": "2020-08-17T22:56:35.516Z"
+        "session_key": "zwo2w9mw6d970oymt8vwqsxi8xtd86pn",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-20T23:09:16.057Z"
     }
 },
 {
-    "model": "analytics.objectviewed",
+    "model": "analytics.usersession",
     "pk": 14,
     "fields": {
         "user": 1,
         "ip_address": "127.0.0.1",
-        "content_type": 13,
-        "object_id": 6,
-        "timestamp": "2020-08-17T23:03:21.562Z"
+        "session_key": "h52787omkvfaeikyj5g0da9wiz8bohe8",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-22T18:49:02.639Z"
     }
 },
 {
     "model": "analytics.usersession",
-    "pk": 1,
+    "pk": 15,
     "fields": {
         "user": 1,
         "ip_address": "127.0.0.1",
-        "session_key": "izhgstl8q2fcvgpikvv4osmw4zkgrn0j",
+        "session_key": "8rylmjoy1vbh7xxdb014yj1l4ekh57bq",
         "active": true,
         "ended": false,
-        "timestamp": "2020-08-15T02:56:05.358Z"
+        "timestamp": "2020-08-22T18:50:00.012Z"
     }
 },
 {
     "model": "analytics.usersession",
-    "pk": 2,
+    "pk": 16,
     "fields": {
-        "user": 3,
+        "user": 1,
         "ip_address": "127.0.0.1",
-        "session_key": "8z0iqf81eamnpie8bro91lww8u7il0h2",
+        "session_key": "n57e5unqqa26p0363zsb9je15cq4dwhx",
         "active": true,
         "ended": false,
-        "timestamp": "2020-08-15T04:32:02.170Z"
+        "timestamp": "2020-08-22T19:17:50.726Z"
     }
 },
 {
     "model": "analytics.usersession",
-    "pk": 3,
+    "pk": 17,
     "fields": {
-        "user": 3,
+        "user": 1,
         "ip_address": "127.0.0.1",
-        "session_key": "arprl6yxopjz358gilgwdiwrnqa4lck7",
+        "session_key": "7z4cf3wd92gz120b4r5wbs7n4moh3f76",
         "active": true,
         "ended": false,
-        "timestamp": "2020-08-15T17:57:57.983Z"
+        "timestamp": "2020-08-22T19:25:30.802Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 18,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "vaepqunk66bw7syboh8wx2fctptgluix",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-23T03:06:47.935Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 19,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "vu8owgzybysftd5rguyndcv0lrwqtuvj",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-24T21:40:11.570Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 20,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "3n9dy5gp3nnvvynf063m2e5pqee67h3k",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-24T21:40:26.946Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 21,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "cbgrkc4w6drqla5gl8gzhmhki645g57k",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-24T21:45:36.072Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 22,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "6mgon3nys6tph77nrzm4lst58udd6nua",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-25T21:03:13.601Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 23,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "jl1ry2ruz46yusqvhpv66ou57sqagkmf",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-26T23:49:57.059Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 24,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "6ji108j3fbnyor0ox1758u4m9xxr4lg9",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-28T22:04:15.373Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 25,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "bxmyf6ipfzskh0h1i42to5hhfu9xo42o",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-29T19:35:50.942Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 26,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "90gizp6wev1e3184xhh2wse7ycv9kwel",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-29T19:44:34.401Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 27,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "trk8vgi9466w3rnc0e2b064xhke5a71m",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-31T17:46:00.888Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 28,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "dfm2y1uwyv36aj5hoscfd70je41qfvg2",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-31T21:15:05.662Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 29,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "r9xx24tdr43ysmfseti4ljdwvwdvwnv9",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-31T21:24:26.543Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 30,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "lph59xd9plomuthw713m2vgikhonjfpq",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-31T21:29:18.562Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 31,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "38be7s4w0s6zct9q3zm7brt9k7baiycp",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-31T21:31:13.970Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 32,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "tmz3i5nnzn97qwp6hkryrwaixsog3up9",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-31T21:33:12.385Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 33,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "cci271evlkk8mr5921wr8n0i12csbwbe",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-31T21:56:52.248Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 34,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "dspkn6n1kebkua9yeucyeda40c1smz7i",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-08-31T23:34:43.780Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 35,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "lnqz54jaub8xn4pkvy3nmw81ayxdnygj",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-09-01T15:31:51.057Z"
+    }
+},
+{
+    "model": "analytics.usersession",
+    "pk": 36,
+    "fields": {
+        "user": 1,
+        "ip_address": "127.0.0.1",
+        "session_key": "driv5dhdy491turs40kz9qv3adoa3l2y",
+        "active": true,
+        "ended": false,
+        "timestamp": "2020-09-02T17:44:54.330Z"
     }
 }
 ]

@@ -34,5 +34,17 @@
         "fecha_actu": "2020-08-15T04:01:59.095Z",
         "fecha_crea": "2020-08-15T04:01:59.095Z"
     }
+},
+{
+    "model": "facturacion.facturacionprofile",
+    "pk": 7,
+    "fields": {
+        "usuario": 8,
+        "email": "rpparada@hotmail.com",
+        "activo": true,
+        "estado": "PU",
+        "fecha_actu": "2020-08-20T20:00:21.380Z",
+        "fecha_crea": "2020-08-20T20:00:21.380Z"
+    }
 }
 ]

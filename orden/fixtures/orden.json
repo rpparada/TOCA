@@ -1,2 +1,415 @@
 [
+{
+    "model": "orden.ordencompra",
+    "pk": 61,
+    "fields": {
+        "orden_id": "P6RZET717G",
+        "facturacion_profile": 1,
+        "direccion_envio": null,
+        "direccion_facturacion": null,
+        "email_adicional": "",
+        "carro": 75,
+        "total": "7000.00",
+        "envio": "0.00",
+        "activo": true,
+        "estado": "PA",
+        "fecha_actu": "2020-09-02T16:29:44.010Z",
+        "fecha_crea": "2020-09-02T16:23:09.306Z"
+    }
+},
+{
+    "model": "orden.ordencompra",
+    "pk": 62,
+    "fields": {
+        "orden_id": "TK1N7KOVYB",
+        "facturacion_profile": 1,
+        "direccion_envio": null,
+        "direccion_facturacion": null,
+        "email_adicional": "",
+        "carro": 76,
+        "total": "28000.00",
+        "envio": "0.00",
+        "activo": true,
+        "estado": "PE",
+        "fecha_actu": "2020-09-02T17:03:36.486Z",
+        "fecha_crea": "2020-09-02T17:02:53.897Z"
+    }
+},
+{
+    "model": "orden.ordencompra",
+    "pk": 63,
+    "fields": {
+        "orden_id": "OB5ORZFK7G",
+        "facturacion_profile": 1,
+        "direccion_envio": null,
+        "direccion_facturacion": null,
+        "email_adicional": "",
+        "carro": 77,
+        "total": "4000.00",
+        "envio": "0.00",
+        "activo": true,
+        "estado": "PA",
+        "fecha_actu": "2020-09-02T17:47:04.619Z",
+        "fecha_crea": "2020-09-02T17:44:54.515Z"
+    }
+},
+{
+    "model": "orden.ordencompra",
+    "pk": 64,
+    "fields": {
+        "orden_id": "WUTNL74KOZ",
+        "facturacion_profile": 1,
+        "direccion_envio": null,
+        "direccion_facturacion": null,
+        "email_adicional": "",
+        "carro": 78,
+        "total": "5000.00",
+        "envio": "0.00",
+        "activo": true,
+        "estado": "PA",
+        "fecha_actu": "2020-09-02T17:54:09.360Z",
+        "fecha_crea": "2020-09-02T17:52:55.851Z"
+    }
+},
+{
+    "model": "orden.ordencompra",
+    "pk": 65,
+    "fields": {
+        "orden_id": "QWSWKH1HR1",
+        "facturacion_profile": 1,
+        "direccion_envio": null,
+        "direccion_facturacion": null,
+        "email_adicional": "",
+        "carro": 79,
+        "total": "28000.00",
+        "envio": "0.00",
+        "activo": true,
+        "estado": "PA",
+        "fecha_actu": "2020-09-02T18:00:30.361Z",
+        "fecha_crea": "2020-09-02T18:00:04.974Z"
+    }
+},
+{
+    "model": "orden.ordencompra",
+    "pk": 66,
+    "fields": {
+        "orden_id": "2FNOHRALVU",
+        "facturacion_profile": 1,
+        "direccion_envio": null,
+        "direccion_facturacion": null,
+        "email_adicional": "",
+        "carro": 80,
+        "total": "5000.00",
+        "envio": "0.00",
+        "activo": true,
+        "estado": "PA",
+        "fecha_actu": "2020-09-02T18:14:18.898Z",
+        "fecha_crea": "2020-09-02T18:13:47.846Z"
+    }
+},
+{
+    "model": "orden.ordencompra",
+    "pk": 67,
+    "fields": {
+        "orden_id": "DT0JJS1LG4",
+        "facturacion_profile": 1,
+        "direccion_envio": null,
+        "direccion_facturacion": null,
+        "email_adicional": "",
+        "carro": 81,
+        "total": "5000.00",
+        "envio": "0.00",
+        "activo": true,
+        "estado": "PA",
+        "fecha_actu": "2020-09-02T23:14:37.131Z",
+        "fecha_crea": "2020-09-02T23:14:09.400Z"
+    }
+},
+{
+    "model": "orden.ordencompra",
+    "pk": 68,
+    "fields": {
+        "orden_id": "X2W0P1PL5C",
+        "facturacion_profile": 1,
+        "direccion_envio": null,
+        "direccion_facturacion": null,
+        "email_adicional": "",
+        "carro": 82,
+        "total": "9000.00",
+        "envio": "0.00",
+        "activo": true,
+        "estado": "PA",
+        "fecha_actu": "2020-09-02T23:25:37.199Z",
+        "fecha_crea": "2020-09-02T23:15:22.608Z"
+    }
+},
+{
+    "model": "orden.ordencompra",
+    "pk": 69,
+    "fields": {
+        "orden_id": "0J9BK25G5I",
+        "facturacion_profile": 1,
+        "direccion_envio": null,
+        "direccion_facturacion": null,
+        "email_adicional": "",
+        "carro": 83,
+        "total": "5000.00",
+        "envio": "0.00",
+        "activo": true,
+        "estado": "PA",
+        "fecha_actu": "2020-09-03T00:40:53.332Z",
+        "fecha_crea": "2020-09-02T23:52:18.613Z"
+    }
+},
+{
+    "model": "orden.cobro",
+    "pk": 28,
+    "fields": {
+        "orden": 61,
+        "facturacion_profile": 1,
+        "token": "e0183b789325b83eb5a652d3d04ac36e731e837bc5c27701f10a48aa4fc41b18",
+        "accountingDate": "0902",
+        "buyOrder": "P6RZET717G",
+        "cardNumber": "6623",
+        "cardExpirationDate": null,
+        "sharesAmount": null,
+        "sharesNumber": "0",
+        "amount": "7000",
+        "commerceCode": "597020000540",
+        "authorizationCode": "1213",
+        "paymentTypeCode": "VN",
+        "responseCode": "0",
+        "sessionId": "1",
+        "transactionDate": "2020-09-02T16:29:13.758Z",
+        "urlRedirection": "https://webpay3gint.transbank.cl/webpayserver/voucher.cgi",
+        "vci": "TSY"
+    }
+},
+{
+    "model": "orden.cobro",
+    "pk": 29,
+    "fields": {
+        "orden": 63,
+        "facturacion_profile": 1,
+        "token": "e0699fe5a47080793f2727a582eb50bbd6d21c4e3d75931c898ebe452cfada88",
+        "accountingDate": "0902",
+        "buyOrder": "OB5ORZFK7G",
+        "cardNumber": "6623",
+        "cardExpirationDate": null,
+        "sharesAmount": null,
+        "sharesNumber": "0",
+        "amount": "4000",
+        "commerceCode": "597020000540",
+        "authorizationCode": "1213",
+        "paymentTypeCode": "VN",
+        "responseCode": "0",
+        "sessionId": "1",
+        "transactionDate": "2020-09-02T17:46:34.832Z",
+        "urlRedirection": "https://webpay3gint.transbank.cl/webpayserver/voucher.cgi",
+        "vci": "TSY"
+    }
+},
+{
+    "model": "orden.cobro",
+    "pk": 30,
+    "fields": {
+        "orden": 64,
+        "facturacion_profile": 1,
+        "token": "e1896bbbf0b7f23425b3cd46ee8933e07e5fe456efc6b798f603686c2c04ce07",
+        "accountingDate": "0902",
+        "buyOrder": "WUTNL74KOZ",
+        "cardNumber": "6623",
+        "cardExpirationDate": null,
+        "sharesAmount": null,
+        "sharesNumber": "0",
+        "amount": "5000",
+        "commerceCode": "597020000540",
+        "authorizationCode": "1213",
+        "paymentTypeCode": "VN",
+        "responseCode": "0",
+        "sessionId": "1",
+        "transactionDate": "2020-09-02T17:53:43.471Z",
+        "urlRedirection": "https://webpay3gint.transbank.cl/webpayserver/voucher.cgi",
+        "vci": "TSY"
+    }
+},
+{
+    "model": "orden.cobro",
+    "pk": 31,
+    "fields": {
+        "orden": 65,
+        "facturacion_profile": 1,
+        "token": "e2573323bafbb0dbba9f35ae719fcac149f46fc86f6079798b069cc0c14eb367",
+        "accountingDate": "0902",
+        "buyOrder": "QWSWKH1HR1",
+        "cardNumber": "6623",
+        "cardExpirationDate": null,
+        "sharesAmount": null,
+        "sharesNumber": "0",
+        "amount": "28000",
+        "commerceCode": "597020000540",
+        "authorizationCode": "1213",
+        "paymentTypeCode": "VN",
+        "responseCode": "0",
+        "sessionId": "1",
+        "transactionDate": "2020-09-02T18:00:07.008Z",
+        "urlRedirection": "https://webpay3gint.transbank.cl/webpayserver/voucher.cgi",
+        "vci": "TSY"
+    }
+},
+{
+    "model": "orden.cobro",
+    "pk": 32,
+    "fields": {
+        "orden": 66,
+        "facturacion_profile": 1,
+        "token": "e06e49850cc9cda42670375bf47a7d40bb9172e1393cf1c560ff2e77bd0357ca",
+        "accountingDate": "0902",
+        "buyOrder": "2FNOHRALVU",
+        "cardNumber": "6623",
+        "cardExpirationDate": null,
+        "sharesAmount": null,
+        "sharesNumber": "0",
+        "amount": "5000",
+        "commerceCode": "597020000540",
+        "authorizationCode": "1213",
+        "paymentTypeCode": "VN",
+        "responseCode": "0",
+        "sessionId": "1",
+        "transactionDate": "2020-09-02T18:13:57.629Z",
+        "urlRedirection": "https://webpay3gint.transbank.cl/webpayserver/voucher.cgi",
+        "vci": "TSY"
+    }
+},
+{
+    "model": "orden.cobro",
+    "pk": 33,
+    "fields": {
+        "orden": 67,
+        "facturacion_profile": 1,
+        "token": "ec07a1abffdf3be48674cbd8576ec9aec9e4e78efd3aba228cef7088a06fb357",
+        "accountingDate": "0902",
+        "buyOrder": "DT0JJS1LG4",
+        "cardNumber": "6623",
+        "cardExpirationDate": null,
+        "sharesAmount": null,
+        "sharesNumber": "0",
+        "amount": "5000",
+        "commerceCode": "597020000540",
+        "authorizationCode": "1213",
+        "paymentTypeCode": "VN",
+        "responseCode": "0",
+        "sessionId": "1",
+        "transactionDate": "2020-09-02T23:14:11.229Z",
+        "urlRedirection": "https://webpay3gint.transbank.cl/webpayserver/voucher.cgi",
+        "vci": "TSY"
+    }
+},
+{
+    "model": "orden.cobro",
+    "pk": 34,
+    "fields": {
+        "orden": 68,
+        "facturacion_profile": 1,
+        "token": "ec04322cd6a8ee8df241ae10455ee5e751ec4148404a2ae12d6b98d555fc8557",
+        "accountingDate": "0902",
+        "buyOrder": "X2W0P1PL5C",
+        "cardNumber": "6623",
+        "cardExpirationDate": null,
+        "sharesAmount": null,
+        "sharesNumber": "0",
+        "amount": "5000",
+        "commerceCode": "597020000540",
+        "authorizationCode": "000000",
+        "paymentTypeCode": "VN",
+        "responseCode": "-1",
+        "sessionId": "1",
+        "transactionDate": "2020-09-02T23:15:24.426Z",
+        "urlRedirection": "http://127.0.0.1:8000/carro/compraexitosa",
+        "vci": "TSN"
+    }
+},
+{
+    "model": "orden.cobro",
+    "pk": 35,
+    "fields": {
+        "orden": 68,
+        "facturacion_profile": 1,
+        "token": "e0b845bcdf8b5c44bace31140578cb2148b5de65f203c8b46065224821f2509e",
+        "accountingDate": "0902",
+        "buyOrder": "X2W0P1PL5C",
+        "cardNumber": "6623",
+        "cardExpirationDate": null,
+        "sharesAmount": null,
+        "sharesNumber": "0",
+        "amount": "9000",
+        "commerceCode": "597020000540",
+        "authorizationCode": "1213",
+        "paymentTypeCode": "VN",
+        "responseCode": "0",
+        "sessionId": "1",
+        "transactionDate": "2020-09-02T23:24:55.072Z",
+        "urlRedirection": "https://webpay3gint.transbank.cl/webpayserver/voucher.cgi",
+        "vci": "TSY"
+    }
+},
+{
+    "model": "orden.cobro",
+    "pk": 36,
+    "fields": {
+        "orden": 69,
+        "facturacion_profile": 1,
+        "token": "edaee988b4d5a867ae6b3bca87d4d885158e91f2b4565fc76f44e23acfd32cd4",
+        "accountingDate": "0902",
+        "buyOrder": "0J9BK25G5I",
+        "cardNumber": "6623",
+        "cardExpirationDate": null,
+        "sharesAmount": null,
+        "sharesNumber": "0",
+        "amount": "5000",
+        "commerceCode": "597020000540",
+        "authorizationCode": "1213",
+        "paymentTypeCode": "VN",
+        "responseCode": "0",
+        "sessionId": "1",
+        "transactionDate": "2020-09-02T23:52:20.758Z",
+        "urlRedirection": "http://127.0.0.1:8000/carro/compraexitosa",
+        "vci": "TSY"
+    }
+},
+{
+    "model": "orden.cobro",
+    "pk": 37,
+    "fields": {
+        "orden": 69,
+        "facturacion_profile": 1,
+        "token": "e95f8e8cf5649b50835047c62b82270dc7d749d71f2cbe68547fce98a3b189b0",
+        "accountingDate": "0902",
+        "buyOrder": "0J9BK25G5I",
+        "cardNumber": "6623",
+        "cardExpirationDate": null,
+        "sharesAmount": null,
+        "sharesNumber": "0",
+        "amount": "5000",
+        "commerceCode": "597020000540",
+        "authorizationCode": "1213",
+        "paymentTypeCode": "VN",
+        "responseCode": "0",
+        "sessionId": "1",
+        "transactionDate": "2020-09-03T00:40:24.486Z",
+        "urlRedirection": "https://webpay3gint.transbank.cl/webpayserver/voucher.cgi",
+        "vci": "TSY"
+    }
+},
+{
+    "model": "orden.controlcobro",
+    "pk": 2,
+    "fields": {
+        "token": "e95f8e8cf5649b50835047c62b82270dc7d749d71f2cbe68547fce98a3b189b0",
+        "estado": "initTransaction",
+        "orden": null,
+        "fecha_actu": "2020-09-03T00:40:51.920Z",
+        "fecha_crea": "2020-09-03T00:40:51.920Z"
+    }
+}
 ]
