@@ -10,9 +10,7 @@ urlpatterns = [
 
     path('retornotbk', views.retornotbk, name='retornotbk'),
     path('compraexitosa', views.compraexitosa, name='compraexitosa'),
-    path('fincompra', views.fincompra, name='fincompra'),
-    path('finerrorcompra', views.finerrorcompra, name='finerrorcompra'),
 
-    path('checkout/fin', views.checkout_complete_view, name='checkout_complete'),
+    #path('checkout/fin', views.checkout_complete_view, name='checkout_complete'),
     path('api/carro', views.carro_detalle_api_body_view, name='api-carro'),
 ]

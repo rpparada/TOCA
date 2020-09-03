@@ -196,3 +196,59 @@ class Cobro(models.Model):
 
     def __str__(self):
         return str(self.orden.id)
+
+# Control de Cobros
+
+# Código de respuesta de la autorización. Valores posibles:
+# 0 = Transacción aprobada
+# -1 = Rechazo de transacción - Reintente (Posible error en el ingreso de datos de la transacción)
+# -2 = Rechazo de transacción (Se produjo fallo al procesar la transacción. Este mensaje de rechazo está relacionado a parámetros de la tarjeta y/o su cuenta asociada)
+# -3 = Error en transacción (Interno Transbank)
+# -4 = Rechazo emisor (Rechazada por parte del emisor)
+# -5 = Rechazo - Posible Fraude (Transacción con riesgo de posible fraude)
+CONTROLCOBRO_ESTADO_OPCIONES = (
+    ('initTransaction','initTransaction'),
+    ('getTransactionResult','getTransactionResult'),
+    ('acknowledgeTransaction','acknowledgeTransaction'),
+    ('rechazoTransaccion_1','rechazoTransaccion_1'),
+    ('rechazoTransaccion_2','rechazoTransaccion_2'),
+    ('errorTransaccion','errorTransaccion'),
+    ('rechazoEmisor','rechazoEmisor'),
+    ('rechazoPosibleFraude','rechazoPosibleFraude'),
+)
+
+class ControlCobroQuerySet(models.query.QuerySet):
+    def by_token(self, token):
+        return self.filter(token=token)
+
+class ControlCobroManager(models.Manager):
+    def get_queryset(self):
+        return ControlCobroQuerySet(self.model, using=self._db)
+
+    def by_token(self, token):
+        return self.get_queryset().by_token(token)
+
+    def new_or_get(self, token):
+        created = False
+        qs = self.get_queryset().by_token(token)
+        if qs.count() == 1:
+            obj = qs.first()
+        else:
+            obj = self.objects.create(token=token)
+            created = True
+
+        return obj, created
+
+class ControlCobro(models.Model):
+
+    token                   = models.CharField(max_length=64)
+    estado                  = models.CharField(max_length=30, choices=CONTROLCOBRO_ESTADO_OPCIONES, default='initTransaction')
+    orden                   = models.ForeignKey(OrdenCompra, on_delete=models.DO_NOTHING, blank=True, null=True)
+
+    fecha_actu              = models.DateTimeField(auto_now=True)
+    fecha_crea              = models.DateTimeField(auto_now_add=True)
+
+    objects                 = ControlCobroManager()
+
+    def __str__(self):
+        return self.token

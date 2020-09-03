@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages, auth
 
 from .models import CarroCompra, ItemCarroCompra
-from orden.models import OrdenCompra, Cobro
+from orden.models import OrdenCompra, Cobro, ControlCobro
 from tocata.models import Tocata
 from facturacion.models import FacturacionProfile
 from lugar.models import Region, Comuna
@@ -219,13 +219,12 @@ def checkout_home(request):
         orden_obj.email_adicional = email
         orden_obj.save()
         is_done = orden_obj.check_done()
-        # if is_done:
-        #     orden_obj.mark_pagado()
-        #     request.session['carro_tocatas'] = 0
-        #     del request.session['carro_id']
-        #     return redirect('carro:checkout_complete')
-        if is_done:
 
+        if is_done:
+            # 1. Una vez seleccionado los bienes o servicios,
+            # tarjetahabiente decide pagar a través de Webpay.
+            # 2. El comercio inicia una transacción en Webpay,
+            # invocando el método initTransaction().
             transaction = inicia_transaccion(orden_obj)
 
             context = {
@@ -243,15 +242,47 @@ def checkout_home(request):
 def retornotbk(request):
 
     if request.method == 'POST':
+        # 3. Webpay procesa el requerimiento y entrega como resultado
+        # de la operación el token de la transacción y URL de
+        # redireccionamiento a la cual se deberá redirigir al tarjetahabiente.
 
+        # 4, 5, 6, 7, 8 y 9 son operaciones entre cliente y Transbank
+
+        # 10. El navegador Web del tarjetahabiente realiza una petición
+        # HTTPS al sitio del comercio, en base a la redirección generada
+        # por Webpay en el punto 9.
+        # 11. El sitio del comercio recibe la variable token_ws e invoca el
+        # segundo método Web, getTransactionResult() (mientras se despliega la
+        # página de transición), para obtener el resultado de la autorización.
+        # Se recomienda que el resultado de la autorización sea persistida en
+        # los sistemas del comercio, ya que este método se puede invocar una
+        # única vez por transacción.
         token = request.POST.get('token_ws')
+        control_obj = ControlCobro.objects.new_or_get(token=token)
+
+        # 12. Comercio recibe el resultado de la invocación del método
+        # getTransactionResult().
         transaction, transaction_detail = retorna_transaccion(token)
-        confirmar_transaccion(token)
 
         if transaction_detail["responseCode"] == 0:
+
             # Recuperar Orden
             orden_obj = OrdenCompra.objects.by_orden_id(transaction['buyOrder'])
             cobro_obj = orden_obj.guarda_cobro(transaction, token)
+
+            # 13. Para que el comercio informe a Webpay que el resultado de la
+            # transacción se ha recibido sin problemas, el sistema del comercio
+            # debe consumir el tercer método acknowledgeTransaction().
+            # Si esto fue ejecutado correctamente el producto puede ser
+            # liberado al cliente.
+            # De no ser consumido acknowledgeTransaction() o demorar más de 30
+            # segundos en su consumo, Webpay realizará la reversa de la transacción,
+            # asumiendo que existieron problemas de comunicación.
+            # En este caso el método retorna una Excepción indicando la situación,
+            # el mensaje obtenido en la excepción será Timeout error (Transaction
+            # is REVERSED)(272). Esta excepción debe ser manejada para no entregar
+            # el producto o servicio en caso que ocurra.
+            confirmar_transaccion(token)
 
             # Actualizar Orden
             orden_obj.mark_pagado()
@@ -263,6 +294,16 @@ def retornotbk(request):
                 'transaction_detail': transaction_detail,
                 'token': token,
             }
+
+            # 14. Una vez recibido el resultado de la transacción e informado a
+            # Webpay su correcta recepción, el sitio del comercio debe redirigir
+            # al tarjetahabiente nuevamente a Webpay, con la finalidad de desplegar
+            # el comprobante de pago. Es importante realizar este punto para que
+            # el tarjetahabiente entienda que el proceso de pago fue exitoso, y
+            # que involucrará un cargo a su tarjeta bancaria. El redireccionamiento
+            # a Webpay se hace utilizando como destino la URL informada por el
+            # método getTransactionResult()enviando por método POST el token de
+            # la transacción en la variable token_ws.
             return render(request, 'carro/envioexitosotbk.html', context)
 
         else:
@@ -273,27 +314,24 @@ def retornotbk(request):
             cobro_obj = orden_obj.guarda_cobro(transaction, token)
 
             context = {
-                'transaction': transaction,
-                'transaction_detail': transaction_detail,
-                'token': token,
+                #'cobro': cobro_obj,
             }
-            return render(request, 'carro/errorenpago.html', context)
+            return render(request, 'carro/comprafracasada.html', context)
+
+    return render(request, 'carro/noseaun.html', {})
 
 @csrf_exempt
 def compraexitosa(request):
 
-    token = ''
-    if request.method == 'POST':
-        token = request.POST.get('token_ws')
+    # 15 y 16 son operaciones entre cliente y Transbank
 
-    context = {
-        'token': token,
-    }
+    # 17. Una vez visualizado el comprobante de pago por un periodo
+    # acotado de tiempo, el tarjetahabiente es redirigido de vuelta al
+    # sitio del comercio, por medio de redireccionamiento con el token
+    # en la variable token_ws enviada por método POST hacia la página
+    # final informada por el comercio en el método initTransaction.
 
-    return render(request, 'carro/compraexitosa.html', context)
-
-def fincompra(request):
-
+    # 18. Sitio del comercio despliega página final de pago
     if request.method == 'POST':
 
         # ¿Es esta la unica solucion? Investigar
@@ -308,21 +346,4 @@ def fincompra(request):
         'orden': orden_obj,
     }
 
-    return render(request, 'carro/fincompra_old.html', context)
-
-def finerrorcompra (request):
-
-    token = ''
-    cobro_obj = Cobro.objects.none()
-    if request.method == 'POST':
-        token = request.POST.get('token_ws')
-        cobro_obj = Cobro.objects.get(token=token)
-
-    context = {
-        'cobro': cobro_obj,
-    }
-
-    return render(request, 'carro/finerrorcompra.html', context)
-
-def checkout_complete_view(request):
-    return render(request, 'carro/fincompra.html', {})
+    return render(request, 'carro/compraexitosa.html', context)
