@@ -165,7 +165,7 @@ class CobroManager(models.Manager):
         if qs.count() == 1:
             obj = qs.first()
         else:
-            obj = self.objects.create(orden=orden)
+            obj = self.model.objects.create(orden=orden)
             created = True
 
         return obj, created
@@ -234,7 +234,7 @@ class ControlCobroManager(models.Manager):
         if qs.count() == 1:
             obj = qs.first()
         else:
-            obj = self.objects.create(token=token)
+            obj = self.model.objects.create(token=token)
             created = True
 
         return obj, created
