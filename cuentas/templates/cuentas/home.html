@@ -8,7 +8,7 @@
 {% url 'cuenta:user-update' as userupdate_url %}
 {% url 'password_change' as cambiocontra_url %}
 {% url 'cuenta:historico-user-tocatas' as historicousertocatas_url %}
-
+{% url 'libreria' as libreria_url %}
 
 {% include 'partials/_alerts.html' %}
 
@@ -35,8 +35,8 @@
                                 Historico
                             </div>
                             <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><a href="{{ libreria_url }}">Compras</a></li>
                                 <li class="list-group-item"><a href="{{ historicousertocatas_url }}">Tocatas Visitadas</a></li>
-                                <li class="list-group-item">Artistas Visitados</li>
                             </ul>
                         </div>
                     </div>
