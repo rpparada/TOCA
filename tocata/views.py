@@ -4,9 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, ListView, View
 from django.http import Http404, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.conf import settings
 
 from itertools import chain
 from operator import attrgetter
+
+import os
 
 from .models import Tocata, TocataTicketFile
 from propuestaslugar.models import LugaresTocata
@@ -14,6 +17,7 @@ from artista.models import Artista
 from lugar.models import Lugar, Comuna, Region
 from usuario.models import UsuarioArtista, Usuario
 from carro.models import CarroCompra
+from orden.models import EntradasCompradas
 
 from .forms import TocataForm
 from tocataabierta.forms import TocataAbiertaForm
@@ -96,19 +100,49 @@ class TocataDetailView(ObjectViewedMixin, DetailView):
 
         return tocata
 
+
+from wsgiref.util import FileWrapper;
+from mimetypes import guess_type
+
 class TocataDownloadView(View):
 
-    def get(self, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         slug = kwargs.get('slug')
         pk = kwargs.get('pk')
 
         download_qs = TocataTicketFile.objects.filter(pk=pk, tocata__slug=slug)
         if download_qs.count() != 1:
             raise Http404('Archivo no encontrado')
-            
         download_obj = download_qs.first()
-        response = HttpResponse(download_obj.get_donwload_url())
-        return response
+
+        can_download = False
+        if request.user.is_authenticated:
+            can_download = True
+
+        tocatas_compradas = EntradasCompradas.objects.by_request(request)
+        if download_obj.tocata in tocatas_compradas:
+            can_download = True
+
+        if not can_download:
+            messages.error(request,'No tienes accesso a estas entradas')
+
+        file_root = settings.PROTECTED_ROOT
+        filepath = download_obj.file.path
+        final_filepath = os.path.join(file_root, filepath)
+
+        with open(final_filepath, 'rb') as f:
+            wrapper = FileWrapper(f)
+            mimetype = 'application/force-download'
+            guess_mimetype =guess_type(filepath)[0]
+            if guess_mimetype:
+                mimetype = guess_mimetype
+            response = HttpResponse(wrapper,content_type=mimetype)
+            response['Content-Disposition'] = 'attachment;filename=%s' %(download_obj.nombre)
+            response['X-SendFile'] = str(download_obj.nombre)
+            return response
+
+        #return redirect(download_obj.get_default_url())
+
 
 
 @login_required(login_url='index')
