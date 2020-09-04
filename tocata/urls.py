@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path('', views.TocataListView.as_view(), name='tocatas'),
     path('<slug:slug>/', views.TocataDetailView.as_view(), name='tocata'),
+    path('<slug:slug>/<int:pk>/', views.TocataDownloadView.as_view(), name='download'),
     #path('tocataabierta/<slug:slug>/', views.TocataAbiertaDetailView.as_view(), name='tocataabierta'),
     #path('proponerlugar_<int:tocata_id>', views.proponerlugar, name='proponerlugar'),
     path('artista/mistocatas', views.mistocatas, name='mistocatas'),

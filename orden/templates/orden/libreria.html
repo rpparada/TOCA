@@ -48,6 +48,7 @@
                             <th>Hora</th>
                             <th>Cantidad</th>
                             <th>Precio Unitario</th>
+                            <th>Descargas ITicket</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -61,6 +62,11 @@
                             <td>{{ object.item.tocata.hora }}</td>
                             <td>{{ object.item.cantidad }}</td>
                             <td>${{ object.item.tocata.costo|floatformat|intcomma }}</td>
+                            <td>
+                              {% for download in object.item.tocata.get_downloads %}
+                                <a href="{{ download.get_donwload_url }}">{{ download.nombre }}</a>
+                              {% endfor %}
+                            </td>
                             <td> <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Edit"><i class="icon-edit"></i></a>
                                 <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Delete"><i class="icon-trash-2"></i></a>
                                 <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Settings"><i class="icon-settings"></i></a>
@@ -70,13 +76,14 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
-                            <th>Status</th>
+                            <th>Name Tocata</th>
+                            <th>Artista</th>
+                            <th>Comuna</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Descarga ITicket</th>
                             <th>Actions</th>
                         </tr>
                     </tfoot>

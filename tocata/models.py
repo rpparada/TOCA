@@ -2,8 +2,12 @@ from django.db import models
 from django.conf import settings
 from django.db.models.signals import pre_save
 from django.db.models import Q
+from django.core.files.storage import FileSystemStorage
+from django.urls import reverse
 
 from django_resized import ResizedImageField
+
+import os
 
 from artista.models import Artista, Estilo
 from lugar.models import Lugar, Region, Comuna
@@ -55,6 +59,14 @@ class TocataManager(models.Manager):
             return qs
         return self.none()
 
+def upload_tocata_flayer_file_loc(instance, filename):
+    slug =instance.slug
+    if not slug:
+        slug = unique_slug_generator(instance)
+
+    location = 'tocata/fotos/{}/'.format(slug)
+    return location + filename
+
 class Tocata(models.Model):
 
     artista             = models.ForeignKey(Artista, on_delete=models.DO_NOTHING)
@@ -71,9 +83,9 @@ class Tocata(models.Model):
     asistentes_total    = models.IntegerField(default=0)
     asistentes_min      = models.IntegerField()
     asistentes_max      = models.IntegerField()
-    flayer_original     = models.ImageField(upload_to='fotos/tocatas/%Y/%m/%d/', blank=True, default='fotos/defecto/imagen_original.jpg')
-    flayer_1920_1280    = ResizedImageField(size=[1920, 1280],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_1920_1280.jpg')
-    flayer_380_507      = ResizedImageField(size=[380, 507],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_380_507.jpg')
+    flayer_original     = models.ImageField(upload_to=upload_tocata_flayer_file_loc, blank=True, default='fotos/defecto/imagen_original.jpg')
+    flayer_1920_1280    = ResizedImageField(size=[1920, 1280],upload_to=upload_tocata_flayer_file_loc, blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_1920_1280.jpg')
+    flayer_380_507      = ResizedImageField(size=[380, 507],upload_to=upload_tocata_flayer_file_loc, blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_380_507.jpg')
     evaluacion          = models.IntegerField(choices=parToca['valoresEvaluacion'],default=parToca['defaultEvaluacion'])
     estilos             = models.ManyToManyField(Estilo, blank=True)
     estado              = models.CharField(max_length=2, choices=parTocatas['estado_tipos'],default=parToca['publicado'])
@@ -89,6 +101,14 @@ class Tocata(models.Model):
     def __str__(self):
         return str(self.id)+' '+self.nombre
 
+    @property
+    def name(self):
+        return self.name
+
+    def get_downloads(self):
+        qs = self.tocataticketfile_set.all()
+        return qs
+
 def tocata_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
@@ -96,18 +116,29 @@ def tocata_pre_save_receiver(sender, instance, *args, **kwargs):
 pre_save.connect(tocata_pre_save_receiver, sender=Tocata)
 
 # Tocata ITicket
-
 def upload_tocata_ticket_file_loc(instance, filename):
     slug =instance.tocata.slug
     if not slug:
         slug = unique_slug_generator(instance.tocata)
 
-    location = 'tocata/{}/'.format(slug)
+    location = 'tocata/tickets/{}/'.format(slug)
     return location + filename
 
 class TocataTicketFile(models.Model):
     tocata              = models.ForeignKey(Tocata, on_delete=models.CASCADE)
-    file                = models.FileField(upload_to=upload_tocata_ticket_file_loc)
+    file                = models.FileField(
+                            upload_to=upload_tocata_ticket_file_loc,
+                            storage=FileSystemStorage(location=settings.PROTECTED_ROOT)
+                            )
 
     def __str__(self):
         return self.file.name
+
+    def get_donwload_url(self):
+        return reverse('tocata:download',
+            kwargs={'slug': self.tocata.slug, 'pk': self.pk}
+            )
+
+    @property
+    def nombre(self):
+        return os.path.basename(self.file.name)

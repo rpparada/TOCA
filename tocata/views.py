@@ -1,14 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.views.generic import DetailView, ListView
-from django.http import Http404
+from django.views.generic import DetailView, ListView, View
+from django.http import Http404, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from itertools import chain
 from operator import attrgetter
 
-from .models import Tocata
+from .models import Tocata, TocataTicketFile
 from propuestaslugar.models import LugaresTocata
 from artista.models import Artista
 from lugar.models import Lugar, Comuna, Region
@@ -95,6 +95,21 @@ class TocataDetailView(ObjectViewedMixin, DetailView):
             raise Http404('Error Desconocido')
 
         return tocata
+
+class TocataDownloadView(View):
+
+    def get(self, *args, **kwargs):
+        slug = kwargs.get('slug')
+        pk = kwargs.get('pk')
+
+        download_qs = TocataTicketFile.objects.filter(pk=pk, tocata__slug=slug)
+        if download_qs.count() != 1:
+            raise Http404('Archivo no encontrado')
+            
+        download_obj = download_qs.first()
+        response = HttpResponse(download_obj.get_donwload_url())
+        return response
+
 
 @login_required(login_url='index')
 def mistocatas(request):
