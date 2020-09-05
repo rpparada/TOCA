@@ -134,7 +134,7 @@ class TocataTicketFile(models.Model):
     def __str__(self):
         return self.file.name
 
-    def get_default_url(sefl):
+    def get_default_url(self):
         return self.tocata.get_absolute_url()
 
     def get_donwload_url(self):

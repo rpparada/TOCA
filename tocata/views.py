@@ -116,15 +116,16 @@ class TocataDownloadView(View):
         download_obj = download_qs.first()
 
         can_download = False
-        if request.user.is_authenticated:
-            can_download = True
 
-        tocatas_compradas = EntradasCompradas.objects.by_request(request)
-        if download_obj.tocata in tocatas_compradas:
+        tocatas_compradas = EntradasCompradas.objects.by_request(request).values('item')
+        print(tocatas_compradas)
+
+        if request.user.is_authenticated and download_obj.tocata in tocatas_compradas:
             can_download = True
 
         if not can_download:
             messages.error(request,'No tienes accesso a estas entradas')
+            return redirect(download_obj.get_default_url())
 
         file_root = settings.PROTECTED_ROOT
         filepath = download_obj.file.path
