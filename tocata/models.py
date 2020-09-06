@@ -103,7 +103,7 @@ class Tocata(models.Model):
 
     @property
     def name(self):
-        return self.name
+        return self.nombre
 
     def get_downloads(self):
         qs = self.tocataticketfile_set.all()

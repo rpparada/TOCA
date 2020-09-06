@@ -1,16 +1,19 @@
 from django.db import models
 from django.db.models.signals import pre_save, post_save
 from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 User = settings.AUTH_USER_MODEL
 
+
 import math
+import os
 
 
 from carro.models import CarroCompra, ItemCarroCompra
 from facturacion.models import FacturacionProfile
 from direccion.models import Direccion
 
-from toca.utils import unique_orden_id_generator
+from toca.utils import unique_orden_id_generator, unique_slug_generator
 from toca.parametros import parToca, parCarro, parOrden, mediodepago
 
 # Create your models here.
@@ -308,6 +311,15 @@ class EntradasCompradasManager(models.Manager):
     def by_request(self, request):
         return self.get_queryset().by_request(request)
 
+def upload_ticket_file_loc(instance, filename):
+    username = str(instance.entrada_comprada.facturacion_profile.usuario.email).replace('@','-').replace('.','-')
+    slug = instance.entrada_comprada.item.tocata.slug
+    if not slug:
+        slug = unique_slug_generator(instance.entrada_comprada.item.tocata)
+
+    location = '{0}/tickets/{1}/'.format(username,slug)
+    return location + filename
+
 class EntradasCompradas(models.Model):
 
     orden                   = models.ForeignKey(OrdenCompra, on_delete=models.CASCADE)
@@ -318,7 +330,23 @@ class EntradasCompradas(models.Model):
     fecha_actu              = models.DateTimeField(auto_now=True)
     fecha_crea              = models.DateTimeField(auto_now_add=True)
 
+    file                    = models.FileField(
+                            upload_to=upload_ticket_file_loc,
+                            storage=FileSystemStorage(location=settings.PROTECTED_ROOT),
+                            null=True,
+                            blank=True
+                            )
+
     objects                 = EntradasCompradasManager()
 
     def __str__(self):
         return str(self.item.cantidad)+' '+str(self.item.tocata.nombre)
+
+    def get_downloads_url(self):
+        return reverse('ordenes:download',
+            kwargs={'slug': self.item.tocata.slug, 'pk': self.pk}
+            )
+
+    @property
+    def nombrearchivo(self):
+        return os.path.basename(self.file.name)

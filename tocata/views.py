@@ -120,6 +120,7 @@ class TocataDownloadView(View):
         tocatas_compradas = EntradasCompradas.objects.by_request(request).values('item')
         print(tocatas_compradas)
 
+        # Arreglar permisos de descarga
         if request.user.is_authenticated and download_obj.tocata in tocatas_compradas:
             can_download = True
 

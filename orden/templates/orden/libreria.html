@@ -62,11 +62,7 @@
                             <td>{{ object.item.tocata.hora }}</td>
                             <td>{{ object.item.cantidad }}</td>
                             <td>${{ object.item.tocata.costo|floatformat|intcomma }}</td>
-                            <td>
-                              {% for download in object.item.tocata.get_downloads %}
-                                <a href="{{ download.get_donwload_url }}">{{ download.nombre }}</a>
-                              {% endfor %}
-                            </td>
+                            <td><a href="{{ object.get_donwload_url }}"></a></td>
                             <td> <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Edit"><i class="icon-edit"></i></a>
                                 <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Delete"><i class="icon-trash-2"></i></a>
                                 <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Settings"><i class="icon-settings"></i></a>
