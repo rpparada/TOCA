@@ -1,0 +1,46 @@
+{% extends "base-without-header.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} | REGISTRAR ARTISTAS{% endblock %}
+{% block content %}
+
+<!-- Section -->
+{% include 'partials/_alerts.html' %}
+
+<section class="fullscreen" data-bg-parallax="{% static 'images/fondos/audience-concert-lights-men-1150836.jpg' %}">
+    <div class="container">
+        <div>
+            <div class="text-center m-b-30">
+                <a href="{% url 'index' %}" class="logo">
+                    <img src="{% static 'images/iconos/logo_rojo_negro.png' %}" alt="Polo Logo">
+                </a>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 center p-40 background-white b-r-6">
+                    <form class="form-transparent-grey" action="{% url 'cuenta:enviaform' %}" method="POST">
+                      {% csrf_token %}
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h3>Enviar Formulario Nuevo Artista</h3>
+                                <p>Selecciona artista</p>
+                                {{ form.non_field_errors }}
+                            </div>
+                            <div class="form-group col-lg-12">
+                              {{ form.artista.errors }}
+                              {{ form.artista }}
+                            </div>
+                            <div class="col-lg-12 form-group">
+                                <button class="btn" type="submit">Enviar</button>
+                                <a href="{% url 'index' %}" class="btn btn-danger m-l-10">Cancelar</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end: Section -->
+
+{% endblock %}

@@ -6,10 +6,19 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.views.generic.edit import FormMixin
+from django.contrib.auth.decorators import login_required
 
 from .models import EmailActivation
+from artista.models import Artista
 
-from .forms import IngresarForm, RegistrarUserForm, ReactivateEmailForm, UserDetailChangeViewForm, CuentaPasswordChangeForm
+from .forms import (
+                IngresarForm,
+                RegistrarUserForm,
+                ReactivateEmailForm,
+                UserDetailChangeViewForm,
+                CuentaPasswordChangeForm,
+                EnviaEmailNuevoArtistaForm
+                )
 from .signals import user_logged_in
 
 from toca.mixins import NextUrlMixin, RequestFormAttachMixin
@@ -112,3 +121,35 @@ class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
         context = super(UserDetailUpdateView, self).get_context_data(*args, **kwargs)
         context['formContra'] = CuentaPasswordChangeForm(self.request.POST or None)
         return context
+
+class EnviaEmailNuevoArtistaView(NextUrlMixin, RequestFormAttachMixin, FormView):
+    form_class = EnviaEmailNuevoArtistaForm
+    template_name = 'cuentas/enviaformnuevoart.html'
+    success_url = '/'
+    default_next = '/'
+
+    def form_valid(self, form):
+        next_path = self.get_next_url()
+        return redirect(next_path)
+
+def activateArt(request, uidb64, token):
+
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        artista = Artista.objects.get(pk=uid)
+
+    except(TypeError, ValueError, OverflowError, Artista.DoesNotExist):
+        artista = None
+
+    if artista is not None and art_activation_token.check_token(artista, token):
+        artistaUserForm = ArtistaUserForm(initial={'email':artista.email,
+                                                    'username':artista.email})
+        usuarioArtistaForm = UsuarioArtistaForm(initial={'artista':artista})
+
+        context = {
+            'artistaUserForm': artistaUserForm,
+            'usuarioArtistaForm': usuarioArtistaForm,
+        }
+        return render(request, 'usuario/registrarart.html', context)
+    else:
+        return render(request, 'usuario/link_invalido.html')

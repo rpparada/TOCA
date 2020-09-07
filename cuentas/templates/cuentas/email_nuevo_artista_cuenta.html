@@ -1,0 +1,13 @@
+{% autoescape off %}
+
+Bienvenido a Tocatas Intimas.
+
+Completa el formularion haciendo click en el link de abajo:
+
+{{ domain }}{% url 'cuenta:activateart' uidb64=uid token=token %}
+
+Si el link no funciona, por favor copialo y pegalo en un nueva ventada del navegador.
+
+Atte.
+Equipo Tocatas Intimas
+{% endautoescape %}

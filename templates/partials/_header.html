@@ -12,13 +12,13 @@
 {% url 'mislugares' as mislugares_url %}
 {% url 'agregarlugar' as agregarlugar_url %}
 {% url 'mispropuestas' as mispropuestas_url %}
-{% url 'cuentaart' as cuentaart_url %}
 {% url 'miscompras' as miscompras_url %}
 {% url 'password_change' as cambiocontra_url %}
 {% url 'cuenta:salir' as salir_url %}
 {% url 'cuenta:home' as home_url %}
 {% url 'cuenta:ingresar' as ingresar_url %}
 {% url 'cuenta:registrar' as registrar_url %}
+{% url 'cuenta:enviaform' as enviaform_url %}
 
 <!-- Header -->
 <header id="header" data-transparent="false" data-fullwidth="true" class="dark submenu-light">
@@ -67,7 +67,7 @@
                             <li><a href="{{ artistas_url }}">Artistas</a></li>
 
                             {% if user.is_authenticated %}
-                              {% if request.session.es_artista == 'S' %}
+                              {% if request.user.is_musico %}
                                 <li class="dropdown"><a href="{{ mistocatas_url }}">Mis Tocatas</a>
                                   <ul class="dropdown-menu">
                                     <li><a href="{{ mistocatas_url }}">Mis Tocatas</a></li>
@@ -95,8 +95,7 @@
                                     {% if request.user.is_staff %}
                                     <li class="dropdown-submenu"><a href="#">Menu Admin</a>
                                         <ul class="dropdown-menu">
-                                            <!-- <li><a href="enviaform">Envia Form Nuevo Artista</a></li> -->
-                                            <li><a href="#">Envia Form Nuevo Artista</a></li>
+                                            <li><a href="{{ enviaform_url }}">Envia Form Nuevo Artista</a></li>
                                         </ul>
                                     </li>
                                     {% endif %}

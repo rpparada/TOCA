@@ -7,7 +7,16 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.contrib import messages, auth
 
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode, is_safe_url
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes, force_text
+from django.core.mail import EmailMessage
+
+from usuario.tokens import account_activation_token, art_activation_token
+
 from .models import EmailActivation
+from artista.models import Artista
 
 from .signals import user_logged_in
 
@@ -124,11 +133,6 @@ class IngresarForm(forms.Form):
             raise forms.ValidationError('Credenciales Invalidas')
         auth.login(request, usuario)
         self.user = usuario
-        if usuario.musico:
-            request.session['es_artista'] = 'S'
-        else:
-            request.session['es_artista'] = 'N'
-
         user_logged_in.send(usuario.__class__, instance=usuario, request=request)
 
         return data
@@ -223,3 +227,41 @@ class UserAdminChangeForm(forms.ModelForm):
 
     def clean_password(self):
         return self.initial["password"]
+
+class EnviaEmailNuevoArtistaForm(forms.Form):
+
+    artista         = forms.ModelChoiceField(
+                        queryset=Artista.objects.filter(usuario__isnull=True),
+                        #empty_label=None
+                        empty_label='Selecciona Artista'
+                    )
+
+    def __init__(self, request, *args, **kwargs):
+        self.request = request
+        super(EnviaEmailNuevoArtistaForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        request = self.request
+        data = self.cleaned_data
+        artista = data.get('artista')
+
+        if artista.email:
+            current_site = get_current_site(request)
+            mail_subject = 'Formulario de Ingreso de Artistas a Tocatas Intimas.'
+            message = render_to_string('cuentas/email_nuevo_artista_cuenta.html', {
+                'user': artista,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(artista.pk)),
+                'token': art_activation_token.make_token(artista),
+            })
+            to_email = artista.email
+            email = EmailMessage(
+                        mail_subject, message, to=[to_email]
+            )
+            email.send()
+            messages.success(request, 'Formulario Enviado')
+
+        else:
+            raise forms.ValidationError("Artista no tiene email registrado")
+
+        return data
