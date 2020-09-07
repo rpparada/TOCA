@@ -36,8 +36,6 @@ class ArtistaDetailView(ObjectViewedMixin, DetailView):
         tocatas = Tocata.objects.tocataartistadisponibles(artista)
         tocatasabiertas = TocataAbierta.objects.by_artista(artista)
 
-        print(tocatasabiertas)
-
         context['tocata_list'] = tocatas
         context['tocatasabiertas'] = tocatasabiertas
 

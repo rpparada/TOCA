@@ -18,7 +18,6 @@ def checkout_direccion_create_view(request):
 
     if form.is_valid():
 
-        print(request.POST)
         instance = form.save(commit=False)
         fact_profile, fact_profile_created = FacturacionProfile.objects.new_or_get(request)
         if fact_profile is not None:
@@ -27,9 +26,9 @@ def checkout_direccion_create_view(request):
             instance.tipo_direccion = tipo_direccion
             instance.save()
             request.session['direccion_'+tipo_direccion+'_id'] = instance.id
-            print('direccion_'+tipo_direccion+'_id')
+
         else:
-            print("Error aqui")
+
             return redirect('checkout')
 
         if is_safe_url(redirect_path, request.get_host()):
@@ -52,7 +51,6 @@ def checkout_direccion_reuse_view(request):
                 qs = Direccion.objects.filter(facturacion_profile=fact_profile,id=direccion_envio)
                 if qs.exists():
                     request.session['direccion_'+tipo_direccion+'_id'] = direccion_envio
-            print('direccion_'+tipo_direccion+'_id')
 
             if is_safe_url(redirect_path, request.get_host()):
                 return redirect(redirect_path)

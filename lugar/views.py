@@ -103,8 +103,6 @@ def cancelarpropuestaelegida(request, propuesta_id):
     if request.method == 'POST':
         propuesta = get_object_or_404(LugaresTocata, pk=propuesta_id)
         tocata = Tocata.objects.get(pk=propuesta.tocataabierta.tocata.id)
-        print(propuesta)
-        print(tocata)
 
         propuesta.estado = parToca['cancelado']
         propuesta.save()

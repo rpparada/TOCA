@@ -28,10 +28,8 @@ class OrdenCompraDetailView(LoginRequiredMixin, DetailView):
                 ).filter(
                     orden_id=self.kwargs.get('orden_id')
                 )
-        print('aqui1')
         if qs.count() == 1:
             return qs.first()
-        print('aqui2')
         raise Http404
 
 class LibreriaView(LoginRequiredMixin, ListView):
