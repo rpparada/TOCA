@@ -37,6 +37,9 @@ class TocataAbiertaQuerySet(models.query.QuerySet):
                     )
         return self.filter(lookups).distinct()
 
+    def by_artista(self, artista):
+        return self.filter(artista=artista)
+
 class TocataAbiertaManager(models.Manager):
 
     def get_queryset(self):
@@ -51,6 +54,12 @@ class TocataAbiertaManager(models.Manager):
     def get_mejores_tocatasabiertas(self, num_muestra):
         # Por ahora el criterio de mejores tocatas solo contemplara la fecha de creacion
         qs = self.get_queryset().disponible().order_by('-fecha_crea')[:num_muestra]
+        if qs:
+            return qs
+        return self.none()
+
+    def by_artista(self, artista):
+        qs = self.get_queryset().by_artista(artista).disponible()
         if qs:
             return qs
         return self.none()

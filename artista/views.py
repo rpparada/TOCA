@@ -6,6 +6,7 @@ from datetime import datetime
 
 from .models import Artista, Estilo
 from tocata.models import Tocata
+from tocataabierta.models import TocataAbierta
 
 from analytics.mixins import ObjectViewedMixin
 
@@ -31,8 +32,14 @@ class ArtistaDetailView(ObjectViewedMixin, DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ArtistaDetailView, self).get_context_data(*args, **kwargs)
-        tocatas = Tocata.objects.tocataartistadisponibles(context['object'])
-        context['tocatas'] = tocatas
+        artista = kwargs['object']
+        tocatas = Tocata.objects.tocataartistadisponibles(artista)
+        tocatasabiertas = TocataAbierta.objects.by_artista(artista)
+
+        print(tocatasabiertas)
+
+        context['tocata_list'] = tocatas
+        context['tocatasabiertas'] = tocatasabiertas
 
         return context
 

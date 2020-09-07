@@ -1,7 +1,7 @@
 {% load humanize %}
 <div class="team-member">
     <div class="team-image">
-        <img src="{{ instance.foto_525_350.url }}">
+        <a href="{{ instance.get_absolute_url }}"><img src="{{ instance.foto_525_350.url }}"></a>
     </div>
     <div class="team-desc">
         <h3><a href="{{ instance.get_absolute_url }}">{{ instance.nombre }}</a></h3>

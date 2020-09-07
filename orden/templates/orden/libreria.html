@@ -41,13 +41,14 @@
                 <table id="datatable" class="table table-bordered table-hover" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Name Tocata</th>
+                            <th>Orden</th>
+                            <th>Tocata</th>
                             <th>Artista</th>
                             <th>Comuna</th>
-                            <th>Fecha</th>
-                            <th>Hora</th>
+                            <th>Fecha y Hora</th>
                             <th>Cantidad</th>
                             <th>Precio Unitario</th>
+                            <th>Total</th>
                             <th>Descargas ITicket</th>
                             <th>Actions</th>
                         </tr>
@@ -55,15 +56,16 @@
                     <tbody>
                       {% for object in object_list %}
                         <tr>
+                            <td>{{ object.orden.orden_id }}</td>
                             <td>{{ object.item.tocata.nombre }}</td>
                             <td>{{ object.item.tocata.artista.nombre }}</td>
                             <td>{{ object.item.tocata.comuna }}</td>
-                            <td>{{ object.item.tocata.fecha }}</td>
-                            <td>{{ object.item.tocata.hora }}</td>
+                            <td>{{ object.item.tocata.fecha }}, {{ object.item.tocata.hora }}</td>
                             <td>{{ object.item.cantidad }}</td>
                             <td>${{ object.item.tocata.costo|floatformat|intcomma }}</td>
+                            <td>${{ object.item.total|floatformat|intcomma }}</td>
                             {% if object.file %}
-                            <td><a href="{{ object.get_download_url }}">{{ object.nombrearchivo }}</a></td>
+                            <td><a href="{{ object.get_download_url }}">ITicket</a></td>
                             {% else %}
                             <td></td>
                             {% endif %}
@@ -76,13 +78,14 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>Name Tocata</th>
+                            <th>Orden</th>
+                            <th>Tocata</th>
                             <th>Artista</th>
                             <th>Comuna</th>
-                            <th>Fecha</th>
-                            <th>Hora</th>
+                            <th>Fecha y Hora</th>
                             <th>Cantidad</th>
                             <th>Precio Unitario</th>
+                            <th>Total</th>
                             <th>Descarga ITicket</th>
                             <th>Actions</th>
                         </tr>

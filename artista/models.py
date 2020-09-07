@@ -32,14 +32,22 @@ class ArtistaManager(models.Manager):
             return qs
         return None
 
+def upload_fotos_artista_loc(instance, filename):
+    slug = instance.slug
+    if not slug:
+        slug = unique_slug_generator(instance)
+
+    location = 'fotos/artistas/{}/'.format(slug)
+    return location + filename
+
 class Artista(models.Model):
 
     nombre              = models.CharField(max_length=200)
     slug                = models.SlugField(blank=True, unique=True)
     usuario             = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
-    foto_1920_1280      = models.ImageField(upload_to='fotos/artistas/', blank=True)
-    foto_525_350        = models.ImageField(upload_to='fotos/artistas/', blank=True)
-    foto_380_507        = models.ImageField(upload_to='fotos/artistas/', blank=True)
+    foto_1920_1280      = models.ImageField(upload_to=upload_fotos_artista_loc, blank=True)
+    foto_525_350        = models.ImageField(upload_to=upload_fotos_artista_loc, blank=True)
+    foto_380_507        = models.ImageField(upload_to=upload_fotos_artista_loc, blank=True)
     descripción         = models.TextField(blank=True)
     cualidades          = models.ManyToManyField('Cualidad', blank=True)
     estilos             = models.ManyToManyField('Estilo', blank=True)
