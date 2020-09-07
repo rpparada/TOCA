@@ -64,6 +64,8 @@ class User(AbstractBaseUser):
     staff           = models.BooleanField(default=False)
     admin           = models.BooleanField(default=False)
 
+    musico          = models.BooleanField(default=False)
+
     USERNAME_FIELD  = 'email'
 
     REQUIRED_FIELDs = []
@@ -96,6 +98,10 @@ class User(AbstractBaseUser):
     @property
     def is_admin(self):
         return self.admin
+
+    @property
+    def is_musico(self):
+        return self.musico
 
 # Email Activacion
 class EmailActivationQuerySet(models.query.QuerySet):

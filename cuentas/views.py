@@ -84,11 +84,6 @@ class IngresarView(NextUrlMixin, RequestFormAttachMixin, FormView):
     default_next = '/'
 
     def form_valid(self, form):
-        #if Usuario.objects.get(user=usuario).es_artista:
-        #    request.session['es_artista'] = 'S'
-        #else:
-        #    request.session['es_artista'] = 'N'
-        #messages.success(request,'Ingreso Existos')
         next_path = self.get_next_url()
         return redirect(next_path)
 
