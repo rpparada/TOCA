@@ -63,6 +63,35 @@
     }
 },
 {
+    "model": "artista.artista",
+    "pk": 7,
+    "fields": {
+        "nombre": "Ana Tijoux",
+        "slug": "ana-tijoux",
+        "usuario": null,
+        "foto_1920_1280": "fotos/artistas/ana-tijoux/anita_tijoux_1920_1280.jpg",
+        "foto_525_350": "fotos/artistas/ana-tijoux/anita_tijoux_525_350.jpg",
+        "foto_380_507": "fotos/artistas/ana-tijoux/anita_tijoux_380_507.jpg",
+        "descripci\u00f3n": "Iniciada en el hip-hop, Ana Tijoux desborda esa y otras fronteras gracias a la poderosa trayectoria como solista con que se ha transformado en la figura chilena de mayor relevancia internacional de su generaci\u00f3n. Cinco discos grabados desde 2007, canciones como \"A veces\", \"1977\", \"La bala\", \"Shock\", \"Sacar la voz\", \"Mi verdad\" y \"Somos sur\", una agenda de giras y festivales por m\u00e1s de quince pa\u00edses de Am\u00e9rica y Europa a partir de 2009, colaboraciones con figuras globales como la mexicana Julieta Venegas y el uruguayo Jorge Drexler, un Grammy Latino ganado en 2014 y otras seis nominaciones a los premios Grammy y Grammy Latino son parte de esas marcas, siempre con la \u00f3ptica de una conciencia pol\u00edtica expresadada en el discurso y en la acci\u00f3n.",
+        "email": "anatijoux@gmail.com",
+        "telefono_contacto": "+56974997724",
+        "link_facebook": "https://www.facebook.com/anitatijoux/",
+        "link_twitter": "https://twitter.com/anatijoux?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor",
+        "link_instagram": "https://www.instagram.com/anatijoux/?hl=es-la",
+        "estado": "ND",
+        "fecha_crea": "2020-09-07T20:15:29.995Z",
+        "fecha_actua": "2020-09-07T20:52:26.933Z",
+        "cualidades": [
+            2,
+            4
+        ],
+        "estilos": [
+            15,
+            16
+        ]
+    }
+},
+{
     "model": "artista.estilo",
     "pk": 10,
     "fields": {
