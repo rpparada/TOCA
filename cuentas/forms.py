@@ -260,7 +260,6 @@ class EnviaEmailNuevoArtistaForm(forms.Form):
             )
             email.send()
             messages.success(request, 'Formulario Enviado')
-
         else:
             raise forms.ValidationError("Artista no tiene email registrado")
 
