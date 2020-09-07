@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.db.models.signals import pre_save, post_save
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -312,10 +313,10 @@ class EntradasCompradasManager(models.Manager):
         return self.get_queryset().by_request(request)
 
 def upload_ticket_file_loc(instance, filename):
-    username = str(instance.entrada_comprada.facturacion_profile.usuario.email).replace('@','-').replace('.','-')
-    slug = instance.entrada_comprada.item.tocata.slug
+    username = instance.facturacion_profile.usuario.email
+    slug = instance.item.tocata.slug
     if not slug:
-        slug = unique_slug_generator(instance.entrada_comprada.item.tocata)
+        slug = unique_slug_generator(instance.item.tocata)
 
     location = '{0}/tickets/{1}/'.format(username,slug)
     return location + filename
@@ -342,11 +343,13 @@ class EntradasCompradas(models.Model):
     def __str__(self):
         return str(self.item.cantidad)+' '+str(self.item.tocata.nombre)
 
-    def get_downloads_url(self):
+    def get_download_url(self):
         return reverse('ordenes:download',
-            kwargs={'slug': self.item.tocata.slug, 'pk': self.pk}
+            kwargs={'orden_id': self.orden.id,
+                    'pk': self.pk}
             )
 
     @property
     def nombrearchivo(self):
-        return os.path.basename(self.file.name)
+        if self.file:
+            return os.path.basename(self.file.name)

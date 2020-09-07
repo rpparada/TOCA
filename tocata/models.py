@@ -105,43 +105,8 @@ class Tocata(models.Model):
     def name(self):
         return self.nombre
 
-    def get_downloads(self):
-        qs = self.tocataticketfile_set.all()
-        return qs
-
 def tocata_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
 
 pre_save.connect(tocata_pre_save_receiver, sender=Tocata)
-
-# Tocata ITicket
-def upload_tocata_ticket_file_loc(instance, filename):
-    slug =instance.tocata.slug
-    if not slug:
-        slug = unique_slug_generator(instance.tocata)
-
-    location = 'tocata/tickets/{}/'.format(slug)
-    return location + filename
-
-class TocataTicketFile(models.Model):
-    tocata              = models.ForeignKey(Tocata, on_delete=models.CASCADE)
-    file                = models.FileField(
-                            upload_to=upload_tocata_ticket_file_loc,
-                            storage=FileSystemStorage(location=settings.PROTECTED_ROOT)
-                            )
-
-    def __str__(self):
-        return self.file.name
-
-    def get_default_url(self):
-        return self.tocata.get_absolute_url()
-
-    def get_donwload_url(self):
-        return reverse('tocata:download',
-            kwargs={'slug': self.tocata.slug, 'pk': self.pk}
-            )
-
-    @property
-    def nombre(self):
-        return os.path.basename(self.file.name)

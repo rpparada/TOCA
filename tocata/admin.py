@@ -1,16 +1,11 @@
 from django.contrib import admin
-from .models import Tocata, TocataTicketFile
+from .models import Tocata
 
 # Register your models here.
 
 
-class TocataTicketFileInLine(admin.TabularInline):
-    model = TocataTicketFile
-    extra = 1
-
 class TocataAdmin(admin.ModelAdmin):
     list_display = ['__str__', 'slug']
-    inlines = [TocataTicketFileInLine]
     class Meta:
         model = Tocata
 

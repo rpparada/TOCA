@@ -62,7 +62,11 @@
                             <td>{{ object.item.tocata.hora }}</td>
                             <td>{{ object.item.cantidad }}</td>
                             <td>${{ object.item.tocata.costo|floatformat|intcomma }}</td>
-                            <td><a href="{{ object.get_donwload_url }}"></a></td>
+                            {% if object.file %}
+                            <td><a href="{{ object.get_download_url }}">{{ object.nombrearchivo }}</a></td>
+                            {% else %}
+                            <td></td>
+                            {% endif %}
                             <td> <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Edit"><i class="icon-edit"></i></a>
                                 <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Delete"><i class="icon-trash-2"></i></a>
                                 <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Settings"><i class="icon-settings"></i></a>

@@ -1,7 +1,12 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404
+from django.http import Http404, HttpResponse
+from django.conf import settings
+
+import os
+from wsgiref.util import FileWrapper;
+from mimetypes import guess_type
 
 from .models import OrdenCompra, EntradasCompradas
 from facturacion.models import FacturacionProfile
@@ -37,26 +42,22 @@ class LibreriaView(LoginRequiredMixin, ListView):
 class ITicketDownloadView(View):
 
     def get(self, request, *args, **kwargs):
-        slug = kwargs.get('slug')
         pk = kwargs.get('pk')
 
-        download_qs = EntradasCompradas.objects.filter(pk=pk, tocata__slug=slug)
+        download_qs = EntradasCompradas.objects.filter(pk=pk)
         if download_qs.count() != 1:
             raise Http404('Archivo no encontrado')
         download_obj = download_qs.first()
 
         can_download = False
-
-        tocatas_compradas = EntradasCompradas.objects.by_request(request).values('item')
-        print(tocatas_compradas)
-
-        # Arreglar permisos de descarga
-        if request.user.is_authenticated and download_obj.tocata in tocatas_compradas:
+        tocatas_compradas = EntradasCompradas.objects.by_request(request)
+        # Permisos de descarga
+        if request.user.is_authenticated and download_obj in tocatas_compradas:
             can_download = True
 
         if not can_download:
             messages.error(request,'No tienes accesso a estas entradas')
-            return redirect(download_obj.get_default_url())
+            return redirect('libreria')
 
         file_root = settings.PROTECTED_ROOT
         filepath = download_obj.file.path
@@ -69,8 +70,8 @@ class ITicketDownloadView(View):
             if guess_mimetype:
                 mimetype = guess_mimetype
             response = HttpResponse(wrapper,content_type=mimetype)
-            response['Content-Disposition'] = 'attachment;filename=%s' %(download_obj.nombre)
-            response['X-SendFile'] = str(download_obj.nombre)
+            response['Content-Disposition'] = 'attachment;filename=%s' %(download_obj.nombrearchivo)
+            response['X-SendFile'] = str(download_obj.nombrearchivo)
             return response
 
         #return redirect(download_obj.get_default_url())

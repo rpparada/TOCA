@@ -11,7 +11,7 @@ from operator import attrgetter
 
 import os
 
-from .models import Tocata, TocataTicketFile
+from .models import Tocata
 from propuestaslugar.models import LugaresTocata
 from artista.models import Artista
 from lugar.models import Lugar, Comuna, Region
@@ -99,52 +99,6 @@ class TocataDetailView(ObjectViewedMixin, DetailView):
             raise Http404('Error Desconocido')
 
         return tocata
-
-
-from wsgiref.util import FileWrapper;
-from mimetypes import guess_type
-
-class TocataDownloadView(View):
-
-    def get(self, request, *args, **kwargs):
-        slug = kwargs.get('slug')
-        pk = kwargs.get('pk')
-
-        download_qs = TocataTicketFile.objects.filter(pk=pk, tocata__slug=slug)
-        if download_qs.count() != 1:
-            raise Http404('Archivo no encontrado')
-        download_obj = download_qs.first()
-
-        can_download = False
-
-        tocatas_compradas = EntradasCompradas.objects.by_request(request).values('item')
-        print(tocatas_compradas)
-
-        # Arreglar permisos de descarga
-        if request.user.is_authenticated and download_obj.tocata in tocatas_compradas:
-            can_download = True
-
-        if not can_download:
-            messages.error(request,'No tienes accesso a estas entradas')
-            return redirect(download_obj.get_default_url())
-
-        file_root = settings.PROTECTED_ROOT
-        filepath = download_obj.file.path
-        final_filepath = os.path.join(file_root, filepath)
-
-        with open(final_filepath, 'rb') as f:
-            wrapper = FileWrapper(f)
-            mimetype = 'application/force-download'
-            guess_mimetype =guess_type(filepath)[0]
-            if guess_mimetype:
-                mimetype = guess_mimetype
-            response = HttpResponse(wrapper,content_type=mimetype)
-            response['Content-Disposition'] = 'attachment;filename=%s' %(download_obj.nombre)
-            response['X-SendFile'] = str(download_obj.nombre)
-            return response
-
-        #return redirect(download_obj.get_default_url())
-
 
 
 @login_required(login_url='index')
