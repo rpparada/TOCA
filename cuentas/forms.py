@@ -216,7 +216,8 @@ class UserDetailChangeViewForm(forms.ModelForm):
                                     )
 
     class Meta:
-        model = User
+        model = PerfilUser
+        #model = User
         fields = ('nombre','apellido')
 
 class UserAdminChangeForm(forms.ModelForm):

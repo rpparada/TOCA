@@ -13,6 +13,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode, is_s
 from .tokens import account_activation_token, art_activation_token
 
 from .models import EmailActivation
+from perfil.models import PerfilUser
 from artista.models import Artista
 
 from .forms import (
@@ -113,7 +114,7 @@ class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'cuentas/cuenta.html'
 
     def get_object(self):
-        return self.request.user
+        return PerfilUser.objects.by_request(request=self.request)
 
     def get_success_url(self):
         return reverse('cuenta:home')

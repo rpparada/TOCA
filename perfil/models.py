@@ -4,7 +4,19 @@ User = settings.AUTH_USER_MODEL
 
 # Create your models here.
 # Perfil usuarios
+class PerfilUserQuerySet(models.query.QuerySet):
+    def by_request(self, request):
+        qs = self.filter(user=request.user)
+        obj = None
+        if qs.count() == 1:
+            obj = qs.first()
+
+        return obj
+
 class PerfilUserManager(models.Manager):
+    def get_queryset(self):
+        return PerfilUserQuerySet(self.model, using=self._db)
+
     def create_perfiluser(self, user, nombre=None, apellido=None):
         perfil_obj = self.model(
             user = user,
@@ -13,6 +25,9 @@ class PerfilUserManager(models.Manager):
         )
         perfil_obj.save(using=self._db)
         return perfil_obj
+
+    def by_request(self, request):
+        return self.get_queryset().by_request(request)
 
 class PerfilUser(models.Model):
 

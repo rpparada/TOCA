@@ -5,17 +5,10 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .models import EmailActivation
-from perfil.models import PerfilUser, PerfilArtista
 
 from .forms import UserAdminCreationForm, UserAdminChangeForm
 
 User = get_user_model()
-
-class PerfilUserInLine(admin.TabularInline):
-    model = PerfilUser
-
-class PerfilArtistaInLine(admin.TabularInline):
-    model = PerfilArtista
 
 # Register your models here.
 class UserAdmin(BaseUserAdmin):
@@ -45,8 +38,6 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('email',)
     filter_horizontal = ()
 
-    inlines = [PerfilUserInLine, PerfilArtistaInLine]
-
 admin.site.register(User, UserAdmin)
 
 
@@ -56,7 +47,6 @@ class EmailActivationAdmin(admin.ModelAdmin):
         model = EmailActivation
 
 admin.site.register(EmailActivation, EmailActivationAdmin)
-
 
 # Remove Group Model from admin. We're not using it.
 admin.site.unregister(Group)
