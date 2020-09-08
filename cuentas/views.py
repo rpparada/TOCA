@@ -97,10 +97,6 @@ class IngresarView(NextUrlMixin, RequestFormAttachMixin, FormView):
     success_url = '/'
     default_next = '/'
 
-    def form_valid(self, form):
-        next_path = self.get_next_url()
-        return redirect(next_path)
-
 class RegistrarView(CreateView):
     form_class = RegistrarUserForm
     template_name = 'cuentas/registrar.html'
@@ -149,25 +145,24 @@ class ValidarLinkNuevoArtistaView(FormMixin, View):
                 artista = None
 
             if artista is not None and art_activation_token.check_token(artista, token):
-                registrarArtistaForm = RegistrarArtistaForm(initial={'email':artista.email})
+                registrarArtistaForm = RegistrarArtistaForm(
+                                            initial={'email':artista.email},
+                                            request=request
+                                        )
 
                 context = {
                     'form': registrarArtistaForm
                 }
                 return render(request, 'cuentas/registrarart.html', context)
 
-        return redirect('cuenta:ingresar')
+        messages.error(request,'Link Invalido, consulta al equipo TI')
+        return redirect('index')
 
-class RegistrarArtistaView(RequestFormAttachMixin, FormView):
+class RegistrarArtistaView(NextUrlMixin, RequestFormAttachMixin, FormView):
     form_class = RegistrarArtistaForm
     template_name = 'cuentas/registrarart.html'
     success_url = '/'
     default_next = '/'
-
-    def form_valid(self, form):
-        next_path = self.get_next_url()
-        return redirect(next_path)
-
 
 def activateArt(request, uidb64, token):
 

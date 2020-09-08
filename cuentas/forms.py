@@ -328,3 +328,22 @@ class RegistrarArtistaForm(forms.Form):
                                                                         'class': 'form-control',
                                                                         }), label='Tipo Cuenta'
                                     )
+
+    def __init__(self, request, *args, **kwargs):
+        self.request = request
+        print(request)
+        super(RegistrarArtistaForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        request = self.request
+        data = self.cleaned_data
+
+        print(data)
+        return data
+
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Contraseñas deben ser iguales")
+        return password2

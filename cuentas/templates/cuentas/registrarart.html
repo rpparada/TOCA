@@ -67,13 +67,16 @@
                                 {{ form.tipo_cuenta.errors }}
                                 {{ form.tipo_cuenta }}
                             </div>
-                            <div class="col-lg-6 form-group">
-                                {{ form.password1.errors }}
-                                {{ form.password1 }}
-                            </div>
-                            <div class="col-lg-6 form-group">
-                                {{ form.password2.errors }}
-                                {{ form.password2 }}
+                            <div class="form-group input-group col-lg-12">
+
+                              <div class="col-lg-6 form-group">
+                                  {{ form.password1.errors }}
+                                  {{ form.password1 }}
+                              </div>
+                              <div class="col-lg-6 form-group">
+                                  {{ form.password2.errors }}
+                                  {{ form.password2 }}
+                              </div>
                             </div>
                             <div class="col-lg-12 form-group">
                                 <button class="btn" type="submit">Registrar</button>
