@@ -13,12 +13,14 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.core.mail import EmailMessage
 
-from usuario.tokens import account_activation_token, art_activation_token
+from .tokens import account_activation_token, art_activation_token
 
 from .models import EmailActivation
 from artista.models import Artista
 
 from .signals import user_logged_in
+
+from perfil.models import BANCOS_OPCIONES, TIPOS_CUENTAS_OPCIONES
 
 class ReactivateEmailForm(forms.Form):
     email           = forms.EmailField(widget=forms.EmailInput(attrs={
@@ -264,3 +266,65 @@ class EnviaEmailNuevoArtistaForm(forms.Form):
             raise forms.ValidationError("Artista no tiene email registrado")
 
         return data
+
+class RegistrarArtistaForm(forms.Form):
+
+    email           = forms.EmailField(widget=forms.EmailInput(attrs={
+                                                                "class": "form-control",
+                                                                "placeholder": "Email",
+                                                                'readonly': 'readonly'
+                                                            }), label='Email'
+                                    )
+    password1       = forms.CharField(widget=forms.PasswordInput(attrs={
+                                                                "class": "form-control",
+                                                                "placeholder": "Contraseña"
+                                                            }), label='Contraseña'
+                                    )
+    password2       = forms.CharField(widget=forms.PasswordInput(attrs={
+                                                                "class": "form-control",
+                                                                "placeholder": "Contraseña"
+                                                            }), label='Repite Contraseña'
+                                    )
+    nombre          = forms.CharField(widget=forms.TextInput(attrs={
+                                                                'id': 'primercampo',
+                                                                'class': 'form-control',
+                                                                'placeholder': 'Nombre'
+                                                            }), label='Nombre'
+                                        )
+    apellido        = forms.CharField(widget=forms.TextInput(attrs={
+                                                                'class': 'form-control',
+                                                                'placeholder': 'Apellido'
+                                                            }), label='Apellido'
+                                        )
+    rut                 = forms.IntegerField(widget=forms.NumberInput(attrs={
+                                                                'id': 'rut',
+                                                                'class': 'form-control',
+                                                                'placeholder': 'RUT'
+                                                            }), label='RUT'
+                                        )
+    digitoVerificador   = forms.CharField(max_length=1, widget=forms.TextInput(attrs={
+                                                                'id': 'digitover',
+                                                                'class': 'form-control',
+                                                                'placeholder': 'Digito Ver.'
+                                                            }), label='Digito Verificador'
+                                        )
+    num_celular         = forms.IntegerField(widget=forms.NumberInput(attrs={
+                                                                'class': 'form-control',
+                                                                'placeholder': 'Número Celular'
+                                                            }), label='( +56 ) 9'
+                                        )
+    banco               = forms.ChoiceField(choices=BANCOS_OPCIONES,
+                                                    widget=forms.Select(attrs={
+                                                                        'class': 'form-control',
+                                                                        }), label='Banco'
+                                    )
+    num_cuenta          = forms.CharField(widget=forms.TextInput(attrs={
+                                                                'class': 'form-control',
+                                                                'placeholder': 'Número Cuenta'
+                                                            }), label='Número Cuenta'
+                                        )
+    tipo_cuenta         = forms.ChoiceField(choices=TIPOS_CUENTAS_OPCIONES,
+                                                    widget=forms.Select(attrs={
+                                                                        'class': 'form-control',
+                                                                        }), label='Tipo Cuenta'
+                                    )

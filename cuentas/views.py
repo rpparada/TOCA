@@ -8,6 +8,10 @@ from django.utils.safestring import mark_safe
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.decorators import login_required
 
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode, is_safe_url
+from .tokens import account_activation_token, art_activation_token
+
 from .models import EmailActivation
 from artista.models import Artista
 
@@ -17,7 +21,8 @@ from .forms import (
                 ReactivateEmailForm,
                 UserDetailChangeViewForm,
                 CuentaPasswordChangeForm,
-                EnviaEmailNuevoArtistaForm
+                EnviaEmailNuevoArtistaForm,
+                RegistrarArtistaForm
                 )
 from .signals import user_logged_in
 
@@ -128,16 +133,47 @@ class EnviaEmailNuevoArtistaView(NextUrlMixin, RequestFormAttachMixin, FormView)
     success_url = '/'
     default_next = '/'
 
+class ValidarLinkNuevoArtistaView(FormMixin, View):
+    success_url = 'cuenta/ingresar'
+    uidb64 = None
+    token = None
+
+    def get(self, request, uidb64=None, token=None , *args, **kwargs):
+        self.uidb64 = uidb64
+        self.token = token
+        if uidb64 is not None and token is not None:
+            try:
+                uid = force_text(urlsafe_base64_decode(uidb64))
+                artista = Artista.objects.get(pk=uid)
+            except(TypeError, ValueError, OverflowError, Artista.DoesNotExist):
+                artista = None
+
+            if artista is not None and art_activation_token.check_token(artista, token):
+                registrarArtistaForm = RegistrarArtistaForm(initial={'email':artista.email})
+
+                context = {
+                    'form': registrarArtistaForm
+                }
+                return render(request, 'cuentas/registrarart.html', context)
+
+        return redirect('cuenta:ingresar')
+
+class RegistrarArtistaView(RequestFormAttachMixin, FormView):
+    form_class = RegistrarArtistaForm
+    template_name = 'cuentas/registrarart.html'
+    success_url = '/'
+    default_next = '/'
+
     def form_valid(self, form):
         next_path = self.get_next_url()
         return redirect(next_path)
+
 
 def activateArt(request, uidb64, token):
 
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         artista = Artista.objects.get(pk=uid)
-
     except(TypeError, ValueError, OverflowError, Artista.DoesNotExist):
         artista = None
 
@@ -150,6 +186,6 @@ def activateArt(request, uidb64, token):
             'artistaUserForm': artistaUserForm,
             'usuarioArtistaForm': usuarioArtistaForm,
         }
-        return render(request, 'usuario/registrarart.html', context)
+        return render(request, 'cuentas/registrarart.html', context)
     else:
-        return render(request, 'usuario/link_invalido.html')
+        return render(request, 'cuentas/link_invalido.html')
