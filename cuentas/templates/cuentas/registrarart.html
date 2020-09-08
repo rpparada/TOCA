@@ -19,18 +19,18 @@
                 <div class="col-lg-6 center p-40 background-white b-r-6">
                     <form id="formtocheck" class="form-transparent-grey" action="{% url 'cuentas:registrarnuevoartista' %}" method="POST">
                       {% csrf_token %}
-                      {{ form.non_field_errors }}
                         <div class="row">
                             <div class="col-lg-12">
                                 <h3>Registrate.</h3>
                                 <p>Por favor, completa la información requerida</p>
+                                {{ form.non_field_errors }}
+                                {{ form.password1.errors }}
+                                {{ form.password2.errors }}
                             </div>
+                            {{ form.artista }}
                             <div class="col-lg-12 form-group">
                               {{ form.email.errors }}
                               {{ form.email }}
-                            </div>
-                            <div class="col-lg-12 form-group">
-                                {{ usuarioArtistaForm.artista }}
                             </div>
                             <div class="col-lg-6 form-group">
                               {{ form.nombre.errors }}
@@ -67,16 +67,11 @@
                                 {{ form.tipo_cuenta.errors }}
                                 {{ form.tipo_cuenta }}
                             </div>
-                            <div class="form-group input-group col-lg-12">
-
-                              <div class="col-lg-6 form-group">
-                                  {{ form.password1.errors }}
-                                  {{ form.password1 }}
-                              </div>
-                              <div class="col-lg-6 form-group">
-                                  {{ form.password2.errors }}
-                                  {{ form.password2 }}
-                              </div>
+                            <div class="col-lg-6 form-group">
+                                {{ form.password1 }}
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                {{ form.password2 }}
                             </div>
                             <div class="col-lg-12 form-group">
                                 <button class="btn" type="submit">Registrar</button>

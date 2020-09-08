@@ -20,7 +20,7 @@ DEFAULT_ACTIVATION_DAYS = getattr(settings, 'DEFAULT_ACTIVATION_DAYS', 7)
 # Create your models here.
 #User
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, nombre=None, apellido=None, is_active=True, is_staff=False, is_admin=False):
+    def create_user(self, email, password=None, nombre=None, apellido=None, is_active=True, is_staff=False, is_admin=False, is_musico=False):
         if not email:
             raise ValueError("Nuevo usuario debe tener email")
         if not password:
@@ -35,6 +35,7 @@ class UserManager(BaseUserManager):
         user_obj.staff = is_staff
         user_obj.admin = is_admin
         user_obj.is_active = is_active
+        user_obj.musico = is_musico
         user_obj.save(using=self._db)
         return user_obj
 
@@ -52,6 +53,14 @@ class UserManager(BaseUserManager):
             password=password,
             is_staff=True,
             is_admin=True
+        )
+        return user
+
+    def create_musico(self, email, password=None):
+        user = self.create_user(
+            email,
+            password=password,
+            is_musico=True
         )
         return user
 
@@ -208,6 +217,10 @@ pre_save.connect(pre_save_email_validation, sender=EmailActivation)
 def post_save_user_create_receiver(sender, instance, created, *args, **kwargs):
     if created:
         obj = EmailActivation.objects.create(user=instance, email=instance.email)
-        obj.send_activation()
+        if instance.is_musico:
+            obj.activated = True
+            obj.save()
+        else:
+            obj.send_activation()
 
 post_save.connect(post_save_user_create_receiver, sender=User)

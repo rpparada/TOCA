@@ -4,6 +4,16 @@ User = settings.AUTH_USER_MODEL
 
 # Create your models here.
 # Perfil usuarios
+class PerfilUserManager(models.Manager):
+    def create_perfiluser(self, user, nombre=None, apellido=None):
+        perfil_obj = self.model(
+            user = user,
+            nombre = nombre,
+            apellido = apellido
+        )
+        perfil_obj.save(using=self._db)
+        return perfil_obj
+
 class PerfilUser(models.Model):
 
     user                = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -12,6 +22,8 @@ class PerfilUser(models.Model):
 
     fecha_crea          = models.DateTimeField(auto_now_add=True)
     fecha_actua         = models.DateTimeField(auto_now=True)
+
+    objects             = PerfilUserManager()
 
     def __str__(self):
         return self.user.email
@@ -42,6 +54,21 @@ TIPOS_CUENTAS_OPCIONES = (
     ('004','Cuenta Chequera Electrónica'),
     ('005','Cuenta RUT'),
 )
+
+# Perfil Artista
+class PerfilArtistaManager(models.Manager):
+    def create_perfilartista(self, user, rut, digitoVerificador, num_celular, banco, num_cuenta, tipo_cuenta):
+        perfil_obj = self.model(
+            user = user,
+            rut = rut,
+            digitoVerificador = digitoVerificador,
+            num_celular = num_celular,
+            banco = banco,
+            num_cuenta = num_cuenta,
+            tipo_cuenta = tipo_cuenta
+        )
+        perfil_obj.save(using=self._db)
+        return perfil_obj
 
 class PerfilArtista(models.Model):
 

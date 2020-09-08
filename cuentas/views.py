@@ -146,7 +146,8 @@ class ValidarLinkNuevoArtistaView(FormMixin, View):
 
             if artista is not None and art_activation_token.check_token(artista, token):
                 registrarArtistaForm = RegistrarArtistaForm(
-                                            initial={'email':artista.email},
+                                            initial={'email':artista.email,
+                                                    'artista':artista},
                                             request=request
                                         )
 

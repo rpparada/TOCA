@@ -142,7 +142,6 @@ class IngresarForm(forms.Form):
 class RegistrarUserForm(forms.ModelForm):
 
     email           = forms.EmailField(widget=forms.EmailInput(attrs={
-                                                                "id": "primercampo",
                                                                 "class": "form-control",
                                                                 "placeholder": "Email"
                                                             }), label='Email'
@@ -269,29 +268,29 @@ class EnviaEmailNuevoArtistaForm(forms.Form):
 
 class RegistrarArtistaForm(forms.Form):
 
-    email           = forms.EmailField(widget=forms.EmailInput(attrs={
+    email               = forms.EmailField(widget=forms.EmailInput(attrs={
                                                                 "class": "form-control",
                                                                 "placeholder": "Email",
                                                                 'readonly': 'readonly'
                                                             }), label='Email'
                                     )
-    password1       = forms.CharField(widget=forms.PasswordInput(attrs={
+    password1           = forms.CharField(widget=forms.PasswordInput(attrs={
                                                                 "class": "form-control",
                                                                 "placeholder": "Contraseña"
                                                             }), label='Contraseña'
                                     )
-    password2       = forms.CharField(widget=forms.PasswordInput(attrs={
+    password2           = forms.CharField(widget=forms.PasswordInput(attrs={
                                                                 "class": "form-control",
                                                                 "placeholder": "Contraseña"
                                                             }), label='Repite Contraseña'
                                     )
-    nombre          = forms.CharField(widget=forms.TextInput(attrs={
-                                                                'id': 'primercampo',
+    nombre              = forms.CharField(widget=forms.TextInput(attrs={
                                                                 'class': 'form-control',
-                                                                'placeholder': 'Nombre'
+                                                                'placeholder': 'Nombre',
+                                                                'autofocus': True
                                                             }), label='Nombre'
                                         )
-    apellido        = forms.CharField(widget=forms.TextInput(attrs={
+    apellido            = forms.CharField(widget=forms.TextInput(attrs={
                                                                 'class': 'form-control',
                                                                 'placeholder': 'Apellido'
                                                             }), label='Apellido'
@@ -328,6 +327,11 @@ class RegistrarArtistaForm(forms.Form):
                                                                         'class': 'form-control',
                                                                         }), label='Tipo Cuenta'
                                     )
+    artista             = forms.ModelChoiceField(
+                                queryset=Artista.objects.filter(usuario__isnull=True),
+                                empty_label=None,
+                                widget=forms.HiddenInput()
+                            )
 
     def __init__(self, request, *args, **kwargs):
         self.request = request
@@ -338,7 +342,12 @@ class RegistrarArtistaForm(forms.Form):
         request = self.request
         data = self.cleaned_data
 
-        print(data)
+        email = data.get('email')
+        contra = data.get('password1')
+
+        user = User.objects.create_musico(email=email, password=contra)
+        
+
         return data
 
     def clean_password2(self):
