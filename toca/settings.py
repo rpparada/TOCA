@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     #'cobro',
     'artista',
     'lugar',
-    'usuario',
+    #'usuario',
     'tocata',
     'home',
     'busqueda',
