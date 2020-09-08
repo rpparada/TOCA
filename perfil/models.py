@@ -80,5 +80,7 @@ class PerfilArtista(models.Model):
     num_cuenta          = models.CharField(max_length=100)
     tipo_cuenta         = models.CharField(max_length=200, choices=TIPOS_CUENTAS_OPCIONES,default='001')
 
+    objects             = PerfilArtistaManager()
+
     def __str__(self):
         return 'Artista '+self.user.email

@@ -17,6 +17,7 @@ from .tokens import account_activation_token, art_activation_token
 
 from .models import EmailActivation
 from artista.models import Artista
+from perfil.models import PerfilUser, PerfilArtista
 
 from .signals import user_logged_in
 
@@ -342,11 +343,50 @@ class RegistrarArtistaForm(forms.Form):
         request = self.request
         data = self.cleaned_data
 
+        # Data user
         email = data.get('email')
         contra = data.get('password1')
 
-        user = User.objects.create_musico(email=email, password=contra)
-        
+        user = User.objects.create_musico(
+                                    email=email,
+                                    password=contra
+                                )
+
+        # Data PerfilUser
+        nombre = data.get('nombre')
+        apellido = data.get('apellido')
+        user_perfil = PerfilUser.objects.create_perfiluser(
+                                                    user=user,
+                                                    nombre=nombre,
+                                                    apellido=apellido
+                                                )
+
+        # Data PerfilArtista
+        rut = data.get('rut')
+        digitoVerificador = data.get('digitoVerificador')
+        num_celular = data.get('num_celular')
+        banco = data.get('banco')
+        num_cuenta = data.get('num_cuenta')
+        tipo_cuenta = data.get('tipo_cuenta')
+
+        user_perfil_artista = PerfilArtista.objects.create_perfilartista(
+                                                    user=user,
+                                                    rut=rut,
+                                                    digitoVerificador=digitoVerificador,
+                                                    num_celular=num_celular,
+                                                    banco=banco,
+                                                    num_cuenta=num_cuenta,
+                                                    tipo_cuenta=tipo_cuenta
+                                                )
+        # Data Artista
+        artista = data.get('artista')
+        artista.link_user(user)
+
+        # Ingresa artista
+        auth.login(request, user)
+        self.user = user
+        user_logged_in.send(user.__class__, instance=user, request=request)
+        messages.success(request, 'Registro existoso')
 
         return data
 

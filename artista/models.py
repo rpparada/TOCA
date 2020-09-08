@@ -69,6 +69,11 @@ class Artista(models.Model):
     def get_absolute_url(self):
         return "/artistas/{slug}".format(slug=self.slug)
 
+    def link_user(self, user):
+        self.usuario = user
+        self.estado = 'DI'
+        self.save()
+
 def artista_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
