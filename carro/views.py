@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages, auth
+from django.views.generic import View
 
 from .models import CarroCompra, ItemCarroCompra
 from orden.models import OrdenCompra, Cobro, ControlCobro
@@ -17,8 +18,28 @@ from direccion.forms import DireccionForm
 from cuentas.forms import IngresarForm
 from orden.forms import AgregaEmailAdicional
 
-from toca.utils import inicia_transaccion, retorna_transaccion, confirmar_transaccion
+from toca.utils import inicia_transaccion, retorna_transaccion, confirmar_transaccion, render_to_pdf
 
+# Prueba Render to PDF
+class GeneraPDF(View):
+    def get(self, request, *args, **kwargs):
+        context = {
+            'boleta_id': 8838838,
+            'nombre_cliente': 'Rodrigo Parada',
+            'cantidad': 29939,
+            'fecha_compra': 'Hoy'
+        }
+        pdf = render_to_pdf('carro/entradaspdf.html', context)
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = 'ITicket_%s.pdf' %('1122334455')
+            content = 'inline; filename="%s"' %(filename)
+            download = request.GET.get("download")
+            if download:
+                content = 'attachment; filename="%s"' %(filename)
+            response['Content-Disposition'] = content
+            return response
+        return HttpResponse('No encontrado')
 
 # Create your views here.
 def carro_detalle_api_body_view(request):
@@ -369,7 +390,7 @@ def compraexitosa(request):
         control_obj.actualizar_estado('exitoso');
 
         orden_obj = control_obj.orden
-        
+
         # Recupera usurio (es esta la mejor opcion?)
         user =  orden_obj.facturacion_profile.usuario
 
