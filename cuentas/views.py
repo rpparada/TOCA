@@ -98,6 +98,10 @@ class IngresarView(NextUrlMixin, RequestFormAttachMixin, FormView):
     success_url = '/'
     default_next = '/'
 
+    def form_valid(self, form):
+        next_path = self.get_next_url()
+        return redirect(next_path)
+
 class RegistrarView(CreateView):
     form_class = RegistrarUserForm
     template_name = 'cuentas/registrar.html'

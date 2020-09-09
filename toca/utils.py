@@ -116,11 +116,13 @@ def render_to_pdf(template_src, context_dict={}):
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return None
 
-def render_to_pdf_file(template_src, context_dict={}):
+def render_to_pdf_file(template_src, context_dict={}, filename=''):
     template = get_template(template_src)
     html  = template.render(context_dict)
-    result = StringIO()
-    pdf = pisa.pisaDocument(StringIO(html.encode("ISO-8859-1")), result, link_callback=fetch_resources)
+    #result = open(filename, 'wb')
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    #result.close()
     if not pdf.err:
-        return pdf
+        return result.getvalue()
     return None

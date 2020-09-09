@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages, auth
 from django.views.generic import View
 from django.core.files.base import ContentFile
+from django.core.files import File
 
 from .models import CarroCompra, ItemCarroCompra
 from orden.models import OrdenCompra, Cobro, ControlCobro, EntradasCompradas
@@ -19,7 +20,12 @@ from direccion.forms import DireccionForm
 from cuentas.forms import IngresarForm
 from orden.forms import AgregaEmailAdicional
 
-from toca.utils import inicia_transaccion, retorna_transaccion, confirmar_transaccion, render_to_pdf, render_to_pdf_file
+from toca.utils import (inicia_transaccion,
+                    retorna_transaccion,
+                    confirmar_transaccion,
+                    render_to_pdf,
+                    render_to_pdf_file
+                    )
 
 # Prueba Render to PDF
 class GeneraPDF(View):
@@ -30,9 +36,14 @@ class GeneraPDF(View):
             'cantidad': 29939,
             'fecha_compra': 'Hoy'
         }
+
+        pdf_file = render_to_pdf_file('carro/entradaspdf.html', context, 'test.pdf')
+        print(pdf_file)
+
         pdf = render_to_pdf('carro/entradaspdf.html', context)
         if pdf:
             # Salvar a un archivo
+
             response = HttpResponse(pdf, content_type='application/pdf')
             filename = 'ITicket_%s.pdf' %('1122334455')
             content = 'inline; filename="%s"' %(filename)
@@ -406,10 +417,12 @@ def compraexitosa(request):
                 'fecha_compra': 'Hoy'
             }
             #pdf = render_to_pdf('carro/entradaspdf.html', context)
-            pdf = render_to_pdf_file('carro/entradaspdf.html', context)
+            pdf = render_to_pdf_file('carro/entradaspdf.html', context, 'test.pdf')
             # Falta salvar a un archivo antes de guardarlo en la tabla
-            f = ContentFile(pdf)
-            entrada_obj.file.save('test.pdf', f)
+            f = open('nuevotest.pdf', 'wb')
+            myfile = File(f)
+            myfile = ContentFile(pdf)
+            entrada_obj.file.save('nuevotest.pdf', myfile)
             #entrada_obj.save()
 
     context = {

@@ -5,7 +5,7 @@ from .models import Tocata
 
 
 class TocataAdmin(admin.ModelAdmin):
-    list_display = ['__str__', 'slug']
+    list_display = ['__str__', 'slug', 'asistentes_total', 'asistentes_min', 'asistentes_max']
     class Meta:
         model = Tocata
 
