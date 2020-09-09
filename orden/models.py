@@ -301,6 +301,12 @@ class EntradasCompradasQuerySet(models.query.QuerySet):
         fact_profile, created = FacturacionProfile.objects.new_or_get(request)
         return self.filter(facturacion_profile=fact_profile)
 
+    def by_orden(self, orden):
+        qs = self.filter(orden=orden)
+        obj = None
+        if qs.count() == 1:
+            obj = qs.first()
+        return obj
 
 class EntradasCompradasManager(models.Manager):
     def get_queryset(self):
@@ -311,6 +317,9 @@ class EntradasCompradasManager(models.Manager):
 
     def by_request(self, request):
         return self.get_queryset().by_request(request)
+
+    def by_orden(self, orden):
+        return self.get_queryset().by_orden(orden)
 
 def upload_ticket_file_loc(instance, filename):
     username = instance.facturacion_profile.usuario.email

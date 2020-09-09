@@ -101,6 +101,7 @@ webpay_service = tbk.services.WebpayService(normal_commerce)
 
 # Render to PDF para Boleta y Entrada
 from io import BytesIO
+from io import StringIO
 from django.http import HttpResponse
 from django.template.loader import get_template
 
@@ -113,4 +114,13 @@ def render_to_pdf(template_src, context_dict={}):
     pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
+def render_to_pdf_file(template_src, context_dict={}):
+    template = get_template(template_src)
+    html  = template.render(context_dict)
+    result = StringIO()
+    pdf = pisa.pisaDocument(StringIO(html.encode("ISO-8859-1")), result, link_callback=fetch_resources)
+    if not pdf.err:
+        return pdf
     return None

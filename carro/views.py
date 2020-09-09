@@ -6,9 +6,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages, auth
 from django.views.generic import View
+from django.core.files.base import ContentFile
 
 from .models import CarroCompra, ItemCarroCompra
-from orden.models import OrdenCompra, Cobro, ControlCobro
+from orden.models import OrdenCompra, Cobro, ControlCobro, EntradasCompradas
 from tocata.models import Tocata
 from facturacion.models import FacturacionProfile
 from lugar.models import Region, Comuna
@@ -18,7 +19,7 @@ from direccion.forms import DireccionForm
 from cuentas.forms import IngresarForm
 from orden.forms import AgregaEmailAdicional
 
-from toca.utils import inicia_transaccion, retorna_transaccion, confirmar_transaccion, render_to_pdf
+from toca.utils import inicia_transaccion, retorna_transaccion, confirmar_transaccion, render_to_pdf, render_to_pdf_file
 
 # Prueba Render to PDF
 class GeneraPDF(View):
@@ -31,6 +32,7 @@ class GeneraPDF(View):
         }
         pdf = render_to_pdf('carro/entradaspdf.html', context)
         if pdf:
+            # Salvar a un archivo
             response = HttpResponse(pdf, content_type='application/pdf')
             filename = 'ITicket_%s.pdf' %('1122334455')
             content = 'inline; filename="%s"' %(filename)
@@ -391,10 +393,24 @@ def compraexitosa(request):
 
         orden_obj = control_obj.orden
 
-        # Recupera usurio (es esta la mejor opcion?)
+        # Recupera usuario (es esta la mejor opcion?)
         user =  orden_obj.facturacion_profile.usuario
-
         auth.login(request, user)
+
+        entrada_obj = EntradasCompradas.objects.by_orden(orden_obj)
+        if entrada_obj:
+            context = {
+                'boleta_id': 8838838,
+                'nombre_cliente': 'Rodrigo Parada',
+                'cantidad': 29939,
+                'fecha_compra': 'Hoy'
+            }
+            #pdf = render_to_pdf('carro/entradaspdf.html', context)
+            pdf = render_to_pdf_file('carro/entradaspdf.html', context)
+            # Falta salvar a un archivo antes de guardarlo en la tabla
+            f = ContentFile(pdf)
+            entrada_obj.file.save('test.pdf', f)
+            #entrada_obj.save()
 
     context = {
         'orden': orden_obj,
