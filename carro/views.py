@@ -326,12 +326,12 @@ def retornotbk(request):
             # Actualizar Orden
             orden_obj.mark_pagado()
 
+            # Sumar numero de entradas compradas a tocata
+            orden_obj.sumar_asistentes_total()
+
             # Limpia Session Carro
             request.session['carro_tocatas'] = 0
             request.session.pop('carro_id', None)
-
-            # Sumar numero de entradas compradas a tocata
-            orden_obj.sumar_asistentes_total()
 
             context = {
                 'transaction': transaction,
@@ -376,6 +376,7 @@ def retornotbk(request):
             auth.login(request, user)
 
             request.session['carro_tocatas'] = orden_obj.carro.item.count()
+            request.session['carro_id'] = orden_obj.carro.id
 
             context = {
                 'orden': orden_obj,
@@ -402,29 +403,20 @@ def compraexitosa(request):
         control_obj, created = ControlCobro.objects.new_or_get(token=token)
         control_obj.actualizar_estado('exitoso');
 
+        # Limpia Session Carro
+        request.session['carro_tocatas'] = 0
+        request.session.pop('carro_id', None)
+
+        # Recupera Orden
         orden_obj = control_obj.orden
 
         # Recupera usuario (es esta la mejor opcion?)
         user =  orden_obj.facturacion_profile.usuario
         auth.login(request, user)
 
-        entrada_obj = EntradasCompradas.objects.by_orden(orden_obj)
-        if entrada_obj:
-            context = {
-                'boleta_id': 8838838,
-                'nombre_cliente': 'Rodrigo Parada',
-                'cantidad': 29939,
-                'fecha_compra': 'Hoy'
-            }
-            #pdf = render_to_pdf('carro/entradaspdf.html', context)
-            pdf = render_to_pdf_file('carro/entradaspdf.html', context, 'test.pdf')
-            # Falta salvar a un archivo antes de guardarlo en la tabla
-            f = open('nuevotest.pdf', 'wb')
-            myfile = File(f)
-            myfile = ContentFile(pdf)
-            entrada_obj.file.save('nuevotest.pdf', myfile)
-            #entrada_obj.save()
-
+        # Adjunta tickets de entrada a evento
+        orden_obj.agrega_entradas_compra()
+        
     context = {
         'orden': orden_obj,
     }

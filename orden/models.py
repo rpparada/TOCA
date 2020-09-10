@@ -3,18 +3,18 @@ from django.urls import reverse
 from django.db.models.signals import pre_save, post_save
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from django.core.files.base import ContentFile
+from django.core.files import File
 User = settings.AUTH_USER_MODEL
-
 
 import math
 import os
-
 
 from carro.models import CarroCompra, ItemCarroCompra
 from facturacion.models import FacturacionProfile
 from direccion.models import Direccion
 
-from toca.utils import unique_orden_id_generator, unique_slug_generator
+from toca.utils import unique_orden_id_generator, unique_slug_generator, render_to_pdf_file
 from toca.parametros import parCarro, parOrden, mediodepago
 
 # Create your models here.
@@ -109,6 +109,26 @@ class OrdenCompra(models.Model):
                         item = item
             )
         return EntradasCompradas.objects.filter(orden=self).count()
+
+    def agrega_entradas_compra(self):
+        entradas_obj = EntradasCompradas.objects.by_orden(self)
+        if entradas_obj:
+            for entrada_obj in entradas_obj:
+                context = {
+                    'boleta_id': 8838838,
+                    'nombre_cliente': 'Rodrigo Parada',
+                    'cantidad': 29939,
+                    'fecha_compra': 'Hoy'
+                }
+                #pdf = render_to_pdf('carro/entradaspdf.html', context)
+                pdf = render_to_pdf_file('carro/entradaspdf.html', context, 'test.pdf')
+                # Falta salvar a un archivo antes de guardarlo en la tabla
+                f = open('nuevotest.pdf', 'wb')
+                myfile = File(f)
+                myfile = ContentFile(pdf)
+                entrada_obj.file.save('nuevotest.pdf', myfile)
+                #entrada_obj.save()
+
 
     def mark_pagado(self):
         if self.estado != 'pagado':
@@ -308,11 +328,7 @@ class EntradasCompradasQuerySet(models.query.QuerySet):
         return self.filter(facturacion_profile=fact_profile)
 
     def by_orden(self, orden):
-        qs = self.filter(orden=orden)
-        obj = None
-        if qs.count() == 1:
-            obj = qs.first()
-        return obj
+        return self.filter(orden=orden)
 
 class EntradasCompradasManager(models.Manager):
     def get_queryset(self):
