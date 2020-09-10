@@ -4,10 +4,10 @@
         <div class="cart-product-thumbnail-name">{{ instance.tocata.nombre }}</div>
     </td>
     <td class="cart-product-description">
-        <p><span>{{ instance.tocata.lugar.region }}</span>
-            <span>{{ instance.tocata.lugar.comuna }}</span>
-            <span>{{ instance.tocata.fecha }}</span>
-            <span>{{ instance.tocata.hora }}</span>
+        <p><span>Donde: {{ instance.tocata.lugar.comuna }}</span>
+            <span>Cuando: {{ instance.tocata.fecha }}, {{ instance.tocata.hora }}</span>
+            <span>Cantidad: {{ instance.cantidad }}</span>
+            <span>Precio Unitario: ${{ item.tocata.costo|floatformat|intcomma }}</span>
         </p>
     </td>
     <td class="cart-product-subtotal">

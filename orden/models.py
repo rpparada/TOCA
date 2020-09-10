@@ -15,7 +15,7 @@ from facturacion.models import FacturacionProfile
 from direccion.models import Direccion
 
 from toca.utils import unique_orden_id_generator, unique_slug_generator
-from toca.parametros import parToca, parCarro, parOrden, mediodepago
+from toca.parametros import parCarro, parOrden, mediodepago
 
 # Create your models here.
 
@@ -41,7 +41,7 @@ class OrdenCompraManager(models.Manager):
 
     def new_or_get(self, fact_profile, carro_obj):
         created = False
-        qs = self.get_queryset().filter(facturacion_profile=fact_profile, carro=carro_obj, activo=True, estado=parToca['pendiente'])
+        qs = self.get_queryset().filter(facturacion_profile=fact_profile, carro=carro_obj, activo=True, estado='pendiente')
         if qs.count() == 1:
             obj = qs.first()
         else:
@@ -51,6 +51,12 @@ class OrdenCompraManager(models.Manager):
 
     def by_orden_id(self, orden_id):
         return self.get_queryset().by_orden_id(orden_id)
+
+ORDENCOMPRA_ESTADO_OPCIONES = (
+    ('pendiente','Pendiente'),
+    ('pagado','Pagado'),
+    ('cancelado','Cancelado'),
+)
 
 class OrdenCompra(models.Model):
 
@@ -64,7 +70,7 @@ class OrdenCompra(models.Model):
     envio                   = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     activo                  = models.BooleanField(default=True)
 
-    estado                  = models.CharField(max_length=2, choices=parOrden['estado_orden'],default=parToca['pendiente'])
+    estado                  = models.CharField(max_length=20, choices=ORDENCOMPRA_ESTADO_OPCIONES,default='pendiente')
     fecha_actu              = models.DateTimeField(auto_now=True)
     fecha_crea              = models.DateTimeField(auto_now_add=True)
 
@@ -105,9 +111,9 @@ class OrdenCompra(models.Model):
         return EntradasCompradas.objects.filter(orden=self).count()
 
     def mark_pagado(self):
-        if self.estado != parToca['pagado']:
+        if self.estado != 'pagado':
             if self.check_done():
-                self.estado = parToca['pagado']
+                self.estado = 'pagado'
                 self.save()
                 self.actualiza_compras()
 
@@ -353,7 +359,7 @@ class EntradasCompradas(models.Model):
         return str(self.item.cantidad)+' '+str(self.item.tocata.nombre)
 
     def get_download_url(self):
-        return reverse('ordenes:download',
+        return reverse('ordenes:downloadticket',
             kwargs={'orden_id': self.orden.id,
                     'pk': self.pk}
             )

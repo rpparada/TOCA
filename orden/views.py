@@ -16,7 +16,7 @@ class OrdenCompraListView(LoginRequiredMixin, ListView):
 
     template_name = 'orden/ordencompra_list.html'
     def get_queryset(self):
-        return OrdenCompra.objects.by_request(self.request)
+        return EntradasCompradas.objects.by_request(self.request).all()
 
 class OrdenCompraDetailView(LoginRequiredMixin, DetailView):
 
@@ -31,11 +31,6 @@ class OrdenCompraDetailView(LoginRequiredMixin, DetailView):
         if qs.count() == 1:
             return qs.first()
         raise Http404
-
-class LibreriaView(LoginRequiredMixin, ListView):
-    template_name = 'orden/libreria.html'
-    def get_queryset(self):
-        return EntradasCompradas.objects.by_request(self.request).all()
 
 class ITicketDownloadView(View):
 
