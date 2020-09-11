@@ -15,6 +15,7 @@ from .tokens import account_activation_token, art_activation_token
 from .models import EmailActivation
 from perfil.models import PerfilUser
 from artista.models import Artista
+from django.contrib.auth import views as auth_views
 
 from .forms import (
                 IngresarForm,

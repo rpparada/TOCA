@@ -47,7 +47,7 @@
             <div class="header-extras">
                 <ul>
                     <li><a id="btn-search" href="#"> <i class="icon-search"></i></a> </li>
-                    <li><a href="{{ carro_url }}"> <i class="icon-shopping-cart"></i></a></li> [ <span class="navbar-carro-numitems">{{ request.session.carro_tocatas }}</span> ]
+                    <li><a href="{{ carro_url }}"> <i class="icon-shopping-cart"></i></a></li> [ <span class="navbar-carro-numitems">{% if request.session.carro_tocatas %}{{ request.session.carro_tocatas }}{% else %}0{% endif %}</span> ]
                 </ul>
             </div>
             <!--end: Header Extras-->
