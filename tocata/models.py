@@ -8,6 +8,9 @@ from django.urls import reverse
 from django_resized import ResizedImageField
 
 import os
+from datetime import timedelta
+from django.utils import timezone
+
 
 from artista.models import Artista, Estilo
 from lugar.models import Lugar, Region, Comuna
@@ -104,6 +107,32 @@ class Tocata(models.Model):
     @property
     def name(self):
         return self.nombre
+
+    # Tag posibles de productos
+    # "product-new" = Nuevo
+    # "product-sale"
+    # "product-sale-off"
+    # "product-out-stock"
+    # "product-hot" = Confirmado
+    @property
+    def tagname(self):
+        tag = None
+        if self.asistentes_total >= self.asistentes_min:
+            tag = 'product-hot'
+        elif (timezone.now() - self.fecha_crea) < timedelta(days=7):
+            tag = 'product-new'
+
+        return tag
+
+    @property
+    def tagmsg(self):
+        msg = None
+        if self.asistentes_total >= self.asistentes_min:
+            msg = 'Confirmado'
+        elif (timezone.now() - self.fecha_crea) < timedelta(days=7):
+            msg = 'Nuevo'
+        return msg
+
 
 def tocata_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
