@@ -1,11 +1,16 @@
 {% load humanize %}
+{% load tocatasttags %}
 <div class="product">
   <div class="product-image">
     <a href="{{ instance.get_absolute_url }}"><img alt="Shop product image!" src="{{ instance.flayer_380_507.url }}">
     </a>
     <a href="{{ instance.get_absolute_url }}"><img alt="Shop product image!" src="{{ instance.flayer_380_507.url }}">
     </a>
-    <span class="product-new">NEW</span>
+    <!-- <span class="product-new">NEW</span>
+    <span class="product-sale">SALE</span>
+    <span class="product-sale-off">50% Off</span>
+    <span class="product-out-stock">HOLA</span> -->
+    <span class="product-{{ instance.nombre|determinatag }}">CONFIRMAD</span>
     <!-- <span class="product-wishlist">
       <a href="#"><i class="fa fa-cart-plus"></i></a>
     </span> -->
