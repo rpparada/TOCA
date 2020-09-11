@@ -18,6 +18,7 @@ from .tokens import account_activation_token, art_activation_token
 from .models import EmailActivation
 from artista.models import Artista
 from perfil.models import PerfilUser, PerfilArtista
+from carro.models import CarroCompra
 
 from .signals import user_logged_in
 
@@ -137,6 +138,11 @@ class IngresarForm(forms.Form):
         auth.login(request, usuario)
         self.user = usuario
         user_logged_in.send(usuario.__class__, instance=usuario, request=request)
+
+        # Verificar si hay carro vigente
+        carro_obj = CarroCompra.objects.get_vigente(usuario, request)
+        if not carro_obj:
+            carro_obj = CarroCompra.objects.new_or_get(request)
 
         return data
 

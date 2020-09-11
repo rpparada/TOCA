@@ -169,24 +169,3 @@ class RegistrarArtistaView(NextUrlMixin, RequestFormAttachMixin, FormView):
     template_name = 'cuentas/registrarart.html'
     success_url = '/'
     default_next = '/'
-
-def activateArt(request, uidb64, token):
-
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        artista = Artista.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, Artista.DoesNotExist):
-        artista = None
-
-    if artista is not None and art_activation_token.check_token(artista, token):
-        artistaUserForm = ArtistaUserForm(initial={'email':artista.email,
-                                                    'username':artista.email})
-        usuarioArtistaForm = UsuarioArtistaForm(initial={'artista':artista})
-
-        context = {
-            'artistaUserForm': artistaUserForm,
-            'usuarioArtistaForm': usuarioArtistaForm,
-        }
-        return render(request, 'cuentas/registrarart.html', context)
-    else:
-        return render(request, 'cuentas/link_invalido.html')

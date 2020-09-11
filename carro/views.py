@@ -330,6 +330,7 @@ def retornotbk(request):
             orden_obj.sumar_asistentes_total()
 
             # Limpia Session Carro
+            orden_obj.limpia_carro()
             request.session['carro_tocatas'] = 0
             request.session.pop('carro_id', None)
 
@@ -416,7 +417,7 @@ def compraexitosa(request):
 
         # Adjunta tickets de entrada a evento
         orden_obj.agrega_entradas_compra()
-        
+
     context = {
         'orden': orden_obj,
     }

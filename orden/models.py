@@ -168,6 +168,10 @@ class OrdenCompra(models.Model):
             item.tocata.asistentes_total += item.cantidad
             item.tocata.save()
 
+    def limpia_carro(self):
+        self.carro.vigente = False
+        self.carro.save()
+
 def pre_save_ordencompra_receiver(sender, instance, *args, **kwargs):
     if not instance.orden_id:
         instance.orden_id = unique_orden_id_generator(instance)

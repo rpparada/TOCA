@@ -24,6 +24,7 @@ class CarroCompraManager(models.Manager):
             nuevo_obj = True
             carro_obj = CarroCompra.objects.nuevo(user=request.user)
             request.session['carro_id'] = carro_obj.id
+            request.session['carro_tocatas'] = carro_obj.item.count()
 
         return carro_obj, nuevo_obj
 
@@ -35,12 +36,23 @@ class CarroCompraManager(models.Manager):
 
         return self.model.objects.create(usuario=user_obj)
 
+    def get_vigente(self, user, request):
+        qs = self.get_queryset().filter(usuario=user, vigente=True)
+        obj = None
+        if qs.exists():
+            obj = qs.first()
+            request.session['carro_id'] = obj.id
+            request.session['carro_tocatas'] = obj.item.count()
+
+        return obj
+
 class CarroCompra(models.Model):
 
     usuario             = models.ForeignKey(User, blank=True, null=True, on_delete=models.DO_NOTHING)
     item                = models.ManyToManyField('ItemCarroCompra', blank=True)
     subtotal            = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     total               = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
+    vigente             = models.BooleanField(default=True)
 
     fecha_actu          = models.DateTimeField(auto_now=True)
     fecha_crea          = models.DateTimeField(auto_now_add=True)
