@@ -62,7 +62,8 @@ INSTALLED_APPS = [
     'analytics',
     'tocataabierta',
     'propuestaslugar',
-    'perfil'
+    'perfil',
+    'marketing'
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -81,6 +82,10 @@ LOGOUT_URL = '/cuenta/salir'
 
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = False
+
+MAILCHIMP_API_KEY = 'c0ff17518164731f74f418a57743aad0-us2'
+MAILCHIMP_DATA_CENTER = 'us2'
+MAILCHIMP_EMAIL_LIST_ID = '1fe864c9ab'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
