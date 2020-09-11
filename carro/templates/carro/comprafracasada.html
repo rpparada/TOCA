@@ -13,11 +13,11 @@
             <div class="text-center">
                 <h3>Algo ha salido mal con le pago. Vuelve a intentarlo en unos minutos mas.</h3>
                 <p>Este es el numero de orden de tu compra: {{ orden.orden_id }}. Puedes
-                    <a href= class="text-underline">
+                    <a href="{% url 'carro:checkout' %}" class="text-underline">
                         <mark>ver tu orden</mark>
-                    </a> en la pagina de tu cuenta.</p>
+                    </a> en la pagina de compras.</p>
             </div>
-            <a href="{% url 'tocata:tocatas' %}" class="btn icon-left m-r-10"><span>Seguir Comprando</span></a><a class="btn icon-left" href="#"><span>Mis Compras</span></a>
+            <a href="{% url 'tocata:tocatas' %}" class="btn icon-left m-r-10"><span>Seguir Comprando</span></a><a class="btn icon-left" href="{% url 'ordenes:listacompras' %}"><span>Mis Compras</span></a>
         </div>
     </div>
 </section>
