@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %} | CUENTA{% endblock %}
+{% block content %}
+
+{% include 'partials/_alerts.html' %}
+
+<!-- Page Content -->
+<section id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="content col-lg-9">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="h4">Detalles Cuenta</span>
+                        <p class="text-muted">Cambia los detalles de tu cuenta</p>
+                    </div>
+                    <div class="card-body">
+                            <div class="tabs">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#tabProfile" role="tab" aria-controls="home" aria-selected="true">Notificaciones Email</a>
+                                    </li>
+                                </ul>
+                                {% if messages %}
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                                        {{ message }}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="tabProfile" role="tabpanel" aria-labelledby="tab-profile">
+                                      <form class="" action="" method="post">
+                                        {% csrf_token %}
+                                          {{ form.as_p }}
+                                        <div class="mt-4">
+                                            <button type="submit" class="btn btn-sm">Actualizar</button>
+                                            <a href="{{ home_url }}" class="btn btn-secondary btn-sm">Cancelar</a>
+                                            <!-- <button type="button" class="btn btn-secondary btn-sm">Cancel</button> -->
+                                        </div>
+                                      </form>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end: Page Content -->
+
+
+{% endblock %}

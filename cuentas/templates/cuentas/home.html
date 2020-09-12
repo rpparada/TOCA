@@ -9,6 +9,7 @@
 {% url 'password_change' as cambiocontra_url %}
 {% url 'cuenta:historico-user-tocatas' as historicousertocatas_url %}
 {% url 'ordenes:listacompras' as listacompras_url %}
+{% url 'marketing:marketing-pref' as marketing_pref_url %}
 
 {% include 'partials/_alerts.html' %}
 
@@ -26,6 +27,7 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item"><a href="{{ userupdate_url }}">Actualizar Detalles</a></li>
                                 <li class="list-group-item"><a href="{{ cambiocontra_url }}">Cambiar Contraseña</a></li>
+                                <li class="list-group-item"><a href="{{ marketing_pref_url }}">Notificaciones Email</a></li>
                             </ul>
                         </div>
                     </div>
