@@ -8,7 +8,7 @@
     </form>
   </span>
   <span style="float:left;">
-    <input type="text" class="qty" value="{% if instance %}{{ instance.cantidad }}{% else %}0{% endif %}">
+    <input type="text" class="qty" value="{% if instance %}{{ instance.cantidad }}{% else %}0{% endif %}" style="max-width: 50px;">
   </span>
   <span style="float:left;">
     <form class="form-carro-suma-ajax" data-endpoint="{% url 'carro:actualizarcarrosuma' %}" method="post">
