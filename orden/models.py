@@ -5,6 +5,9 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.core.files.base import ContentFile
 from django.core.files import File
+from django.utils import timezone
+from django.contrib import messages
+
 User = settings.AUTH_USER_MODEL
 
 import math
@@ -69,6 +72,7 @@ class OrdenCompra(models.Model):
     total                   = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     envio                   = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     activo                  = models.BooleanField(default=True)
+    fecha_pago              = models.DateTimeField(null=True, blank=True)
 
     estado                  = models.CharField(max_length=20, choices=ORDENCOMPRA_ESTADO_OPCIONES,default='pendiente')
     fecha_actu              = models.DateTimeField(auto_now=True)
@@ -87,19 +91,41 @@ class OrdenCompra(models.Model):
         self.save()
         return nuevo_total
 
-    def check_done(self):
+    def check_done(self, request):
 
-        # Agregar verificacion de venta de entradas disponibles (todas las entradas vendidas) si no las hay, quitar tocata de carro)
-        # Que significa disponibles:
-        # 1. Comprar antes de la fecha y hora del evento
-        # 2. Si aun quedan entradas disponibles
-        # 3. Verificar estado de tocata
-        # 4. ....
+        is_done = True
+
+        for item in self.carro.item.all():
+            # Verificar estado de tocata
+            if item.tocata.check_vigencia():
+                pass
+            else:
+                is_done = False
+                self.carro.item.remove(item)
+                messages.error(request,'Tocata ya no esta dispinible')
+
+            # Agregar verificacion de venta de entradas disponibles
+            if item.tocata.check_entradas(item.cantidad):
+                pass
+            else:
+                is_done = False
+                self.carro.item.remove(item)
+                messages.error(request,'No hay suficientes entradas disponibles')
+
+            # Comprar antes de la fecha y hora del evento
+            if item.tocata.check_fechahora():
+                pass
+            else:
+                is_done = False
+                self.carro.item.remove(item)
+                messages.error(request,'Compra fuera de tiempo')
+
         facturacion_profile = self.facturacion_profile
         total = self.total
-        if facturacion_profile and total > 0:
-            return True
-        return False
+        if facturacion_profile and total <= 0:
+            is_done = False
+
+        return is_done
 
     def actualiza_compras(self):
         for item in self.carro.item.all():
@@ -134,6 +160,7 @@ class OrdenCompra(models.Model):
         if self.estado != 'pagado':
             if self.check_done():
                 self.estado = 'pagado'
+                self.fecha_pago = timezone.now()
                 self.save()
                 self.actualiza_compras()
 
@@ -300,6 +327,7 @@ class ControlCobroManager(models.Manager):
 
         return obj, created
 
+# Control de pago con Transbank
 class ControlCobro(models.Model):
 
     token                   = models.CharField(max_length=64)
@@ -322,7 +350,7 @@ class ControlCobro(models.Model):
         self.orden = orden
         self.save()
 
-# Entradas Conmpradas
+# Entradas Compradas
 class EntradasCompradasQuerySet(models.query.QuerySet):
     def activas(self):
         return self.filter(rembolsado=False)

@@ -15,7 +15,6 @@ from .models import Tocata
 from propuestaslugar.models import LugaresTocata
 from artista.models import Artista
 from lugar.models import Lugar, Comuna, Region
-#from usuario.models import UsuarioArtista, Usuario
 from carro.models import CarroCompra
 from orden.models import EntradasCompradas
 

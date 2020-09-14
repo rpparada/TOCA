@@ -15,7 +15,6 @@ from django.utils import timezone
 from artista.models import Artista, Estilo
 from lugar.models import Lugar, Region, Comuna
 
-from toca.parametros import parToca, parTocatas, parLugaresToc, parTocatasAbiertas
 from toca.utils  import unique_slug_generator
 
 User = settings.AUTH_USER_MODEL
@@ -25,7 +24,7 @@ User = settings.AUTH_USER_MODEL
 class TocataQuerySet(models.query.QuerySet):
 
     def disponible(self):
-        return self.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
+        return self.filter(estado__in=['publicado','confirmado'])
 
     def busqueda(self, consulta):
         lookups = (Q(nombre__icontains=consulta) |
@@ -70,6 +69,15 @@ def upload_tocata_flayer_file_loc(instance, filename):
     location = 'tocata/fotos/{}/'.format(slug)
     return location + filename
 
+TOCATA_ESTADO_OPCIONES = (
+    ('publicado', 'Publicado'),     # Publicacion inicial de tocata
+    ('suspendido', 'Suspendido'),   # Tocata suspendida
+    ('confirmado', 'Confirmado'),   # Quorum alcanzado
+    ('vendido', 'Vendido'),         # Todas las entradas vendidas
+    ('completado', 'Completado'),   # Tocata realizada
+    ('borrado', 'Borrado'),         # Tocata borrada
+)
+
 class Tocata(models.Model):
 
     artista             = models.ForeignKey(Artista, on_delete=models.DO_NOTHING)
@@ -89,9 +97,8 @@ class Tocata(models.Model):
     flayer_original     = models.ImageField(upload_to=upload_tocata_flayer_file_loc, blank=True, default='fotos/defecto/imagen_original.jpg')
     flayer_1920_1280    = ResizedImageField(size=[1920, 1280],upload_to=upload_tocata_flayer_file_loc, blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_1920_1280.jpg')
     flayer_380_507      = ResizedImageField(size=[380, 507],upload_to=upload_tocata_flayer_file_loc, blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_380_507.jpg')
-    evaluacion          = models.IntegerField(choices=parToca['valoresEvaluacion'],default=parToca['defaultEvaluacion'])
     estilos             = models.ManyToManyField(Estilo, blank=True)
-    estado              = models.CharField(max_length=2, choices=parTocatas['estado_tipos'],default=parToca['publicado'])
+    estado              = models.CharField(max_length=20, choices=TOCATA_ESTADO_OPCIONES,default='publicado')
 
     fecha_actu          = models.DateTimeField(auto_now=True)
     fecha_crea          = models.DateTimeField(auto_now_add=True)
@@ -103,6 +110,29 @@ class Tocata(models.Model):
 
     def __str__(self):
         return str(self.id)+' '+self.nombre
+
+    def check_vigencia(self):
+        esta_vigente = False
+        estados_vig = [
+            'publicado',
+            'confirmado'
+        ]
+        if self.estado in estados_vig:
+            esta_vigente = True
+        return esta_vigente
+
+    def check_entradas(self, entradas):
+        entradas_disp = False
+        cantidad_disp = self.asistentes_max - self.asistentes_total
+        if entradas <= cantidad_disp:
+            entradas_disp = True
+        return entradas_disp
+
+    def check_fechahora(self):
+        a_tiempo = False
+        if (timezone.now().date() - self.fecha) <= timedelta(days=0):
+            a_tiempo = True
+        return a_tiempo
 
     @property
     def name(self):

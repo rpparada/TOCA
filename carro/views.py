@@ -252,7 +252,7 @@ def checkout_home(request):
         email = request.POST.get('email')
         orden_obj.email_adicional = email
         orden_obj.save()
-        is_done = orden_obj.check_done()
+        is_done = orden_obj.check_done(request)
 
         if is_done:
             # 1. Una vez seleccionado los bienes o servicios,
