@@ -241,7 +241,7 @@ def checkout_home(request):
     carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(request)
     orden_obj = None
     if nuevo_carro or carro_obj.item.count() == 0:
-        return redirect('carro')
+        return redirect('carro:carro')
 
     fact_profile, fact_profile_created = FacturacionProfile.objects.new_or_get(request)
     orden_obj, orden_obj_created = OrdenCompra.objects.new_or_get(fact_profile, carro_obj)
@@ -265,6 +265,9 @@ def checkout_home(request):
                 'transaction': transaction,
             }
             return render(request, 'carro/snippets/enviotbk.html', context)
+
+    if orden_obj.carro.item.count() == 0:
+        return redirect('carro:carro')
 
     context = {
         'email_adicional': email_adicional,

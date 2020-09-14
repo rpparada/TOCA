@@ -96,29 +96,35 @@ class OrdenCompra(models.Model):
         is_done = True
 
         for item in self.carro.item.all():
+
+            quitar_item = False
+
             # Verificar estado de tocata
             if item.tocata.check_vigencia():
                 pass
             else:
-                is_done = False
-                self.carro.item.remove(item)
-                messages.error(request,'Tocata ya no esta dispinible')
+                quitar_item = True
+                messages.error(request,'Tocata ya no esta disponible')
 
             # Agregar verificacion de venta de entradas disponibles
             if item.tocata.check_entradas(item.cantidad):
                 pass
             else:
-                is_done = False
-                self.carro.item.remove(item)
+                quitar_item = True
                 messages.error(request,'No hay suficientes entradas disponibles')
 
             # Comprar antes de la fecha y hora del evento
             if item.tocata.check_fechahora():
                 pass
             else:
-                is_done = False
-                self.carro.item.remove(item)
+                quitar_item = True
                 messages.error(request,'Compra fuera de tiempo')
+
+            # Quita tocatas que no califican y cancela check out
+            if quitar_item:
+                self.carro.item.remove(item)
+                request.session['carro_tocatas'] = self.carro.item.count()
+                is_done = False
 
         facturacion_profile = self.facturacion_profile
         total = self.total
