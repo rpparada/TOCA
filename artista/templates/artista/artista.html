@@ -19,45 +19,27 @@
                     hola
                   {% endif %}
                 </p>
+                <div class="social-icons align-center">
+                    <ul>
+                      {% if artista.link_facebook %}
+                        <li class="social-facebook"><a href="{{ artista.link_facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                      {% endif %}
+                      {% if artista.link_twitter %}
+                        <li class="social-twitter"><a href="{{ artista.link_twitter }}" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                      {% endif %}
+                      {% if artista.link_youtube %}
+                        <li class="social-youtube"><a href="{{ artista.link_youtube }}" target="_blank"><i class="fab fa-youtube"></i></a></li>
+                      {% endif %}
+                      {% if artista.link_instagram %}
+                        <li class="social-instagram"><a href="{{ artista.link_instagram }}" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                      {% endif %}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
 </section>
 <!-- end: SECTION FULLSCREEN -->
-<section>
-    <div class="container">
-        <div class="row  m-b-50">
-            <div class="col-lg-3">
-                <div class="heading-text heading-section">
-                    <h2>{{ artista.nombre|title }}</h2>
-                </div>
-                <div class="align-center">
-                  {% if artista.link_facebook %}
-                    <a class="btn btn-xs btn-slide btn-light" href="{{ artista.link_facebook }}" target="_blank">
-                        <i class="fab fa-facebook-f"></i>
-                        <span>Facebook</span></a>
-                  {% endif %}
-                  {% if artista.link_twitter %}
-                    <a class="btn btn-xs btn-slide btn-light" href="{{ artista.link_twitter }}" target="_blank" data-width="100">
-                        <i class="fab fa-twitter"></i>
-                        <span>Twitter</span></a>
-                  {% endif %}
-                  {% if artista.link_instagram %}
-                    <a class="btn btn-xs btn-slide btn-light" href="{{ artista.link_instagram }}" target="_blank" data-width="118">
-                        <i class="fab fa-instagram"></i>
-                        <span>Instagram</span></a>
-                  {% endif %}
-                </div>
-            </div>
-            <div class="col-lg-9">
-                <div class="row">
-                    <div class="col-lg-12">{{ artista.descripción|linebreaks }}</div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
 
 <!-- Tocatas Intimas -->
 <section class="background-grey">

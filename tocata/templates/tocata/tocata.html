@@ -67,17 +67,11 @@
             <div class="tabs tabs-folder">
                 <ul class="nav nav-tabs" id="myTab3" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active show" id="home-tab" data-toggle="tab" href="#home3" role="tab" aria-controls="home" aria-selected="false"><i class="fa fa-align-justify"></i>Descripción</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile3" role="tab" aria-controls="profile" aria-selected="true"><i class="fa fa-info"></i>Información Adicional</a>
+                        <a class="nav-link active show" id="profile-tab" data-toggle="tab" href="#profile3" role="tab" aria-controls="profile" aria-selected="true"><i class="fa fa-info"></i>Información Adicional</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent3">
-                    <div class="tab-pane fade active show" id="home3" role="tabpanel" aria-labelledby="home-tab">
-                        <p>{{ object.descripción }}</p>
-                    </div>
-                    <div class="tab-pane fade " id="profile3" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="tab-pane fade active show" id="profile3" role="tabpanel" aria-labelledby="profile-tab">
                         <table class="table table-striped table-bordered">
                             <tbody>
                                 <tr>
@@ -118,5 +112,37 @@
     </div>
 </section>
 <!-- end: SHOP PRODUCT PAGE -->
+
+{% if tocata_list.count > 0 %}
+<!-- Tocatas Intimas -->
+  <section class="background-grey">
+      <div class="container">
+  {% if tocata_list.count > 4 %}
+          <div class="heading-text heading-line text-center">
+              <h4>Mas Tocatas Íntimas de {{ object.artista.nombre|upper }}</h4>
+          </div>
+          <div class="carousel shop-products" data-margin="20" data-dots="false">
+            {% for tocata in tocata_list %}
+              {% include 'tocata/snippets/gridtocata.html' with instance=tocata %}
+            {% endfor %}
+          </div>
+  {% elif tocata_list.count > 0 %}
+          <div class="heading-text heading-line text-center">
+              <h4>Mas Tocatas Íntimas de {{ object.artista.nombre|upper }}</h4>
+          </div>
+          <div class="shop">
+  					<div class="row">
+              {% for tocata in tocata_list %}
+                <div class="col-lg-3">
+                {% include 'tocata/snippets/gridtocata.html' with instance=tocata %}
+                </div>
+              {% endfor %}
+            </div>
+  				</div>
+  {% endif %}
+      </div>
+  </section>
+<!-- end: Tocatas Intimas -->
+{% endif %}
 
 {% endblock %}
