@@ -46,7 +46,7 @@
     <div class="container">
 {% if tocata_list.count > 4 %}
         <div class="heading-text heading-line text-center">
-            <h4>TOCATAS ÍNTIMAS DE {{ artista.nombre|upper }}</h4>
+            <h4>Tocatas Íntimas de {{ artista.nombre|upper }}</h4>
         </div>
         <div class="carousel shop-products" data-margin="20" data-dots="false">
           {% for tocata in tocata_list %}
@@ -55,7 +55,7 @@
         </div>
 {% elif tocata_list.count > 0 %}
         <div class="heading-text heading-line text-center">
-            <h4>TOCATAS ÍNTIMAS DE {{ artista.nombre|upper }}</h4>
+            <h4>Tocatas Íntimas de {{ artista.nombre|upper }}</h4>
         </div>
         <div class="shop">
 					<div class="row">
@@ -68,7 +68,7 @@
 				</div>
 {% else %}
         <div class="heading-text heading-line text-center">
-            <h4>TOCATAS ÍNTIMAS DE {{ artista.nombre|upper }}</h4>
+            <h4>Tocatas Íntimas de {{ artista.nombre|upper }}</h4>
             <p>Actualmente no tenemos Tocatas Intimas diponibles.</p>
         </div>
 {% endif %}
@@ -81,7 +81,7 @@
     <div class="container">
 {% if tocatasabiertas.count > 4 %}
         <div class="heading-text heading-line text-center">
-            <h4>{{ artista.nombre|upper }} BUSCA DÓNDE TOCAR</h4>
+            <h4>{{ artista.nombre|upper }} Busca Dónde Hacer una Tocata Íntima</h4>
         </div>
         <div class="carousel shop-products" data-margin="20" data-dots="false">
           {% for tocataabierta in tocatasabiertas %}
@@ -90,7 +90,7 @@
         </div>
 {% elif tocatasabiertas.count > 0 %}
         <div class="heading-text heading-line text-center">
-            <h4>{{ artista.nombre|upper }} BUSCA DÓNDE TOCAR</h4>
+            <h4>{{ artista.nombre|upper }} Busca Dónde Hacer una Tocata Íntima</h4>
         </div>
         <div class="shop">
 					<div class="row">
@@ -103,8 +103,8 @@
 				</div>
 {% else %}
         <div class="heading-text heading-line text-center">
-            <h4>{{ artista.nombre|upper }} BUSCA DÓNDE TOCAR</h4>
-            <p>Actualmente no tenemos a ningún artista buscando donde tocar.</p>
+            <h4>{{ artista.nombre|upper }} Busca Dónde Hacer una Tocata Íntima</h4>
+            <p>Actualmente no tenemos al artista buscando donde tocar.</p>
         </div>
 {% endif %}
     </div>

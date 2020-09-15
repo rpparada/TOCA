@@ -114,6 +114,17 @@ class OrdenCompra(models.Model):
                 quitar_item = True
                 messages.error(request,'Compra fuera de tiempo')
 
+            # Verificar si usuario ya compro entrasas para este evento
+            entradas_comp = EntradasCompradas.objects.by_tocata(item.tocata)
+            num_entradas = 0
+            for entrada in entradas_comp:
+                num_entradas += entrada.item.cantidad
+
+            entradas_disponibles = 4 - num_entradas
+            if item.cantidad > entradas_disponibles:
+                quitar_item = True
+                messages.error(request,'Ya compraste entradas')
+
             # Quita tocatas que no califican y cancela check out
             if quitar_item:
                 self.carro.item.remove(item)
@@ -362,6 +373,10 @@ class EntradasCompradasQuerySet(models.query.QuerySet):
     def by_orden(self, orden):
         return self.filter(orden=orden)
 
+    def by_tocata(self, tocata):
+        return self.filter(item__tocata=tocata)
+
+
 class EntradasCompradasManager(models.Manager):
     def get_queryset(self):
         return EntradasCompradasQuerySet(self.model, self._db)
@@ -374,6 +389,9 @@ class EntradasCompradasManager(models.Manager):
 
     def by_orden(self, orden):
         return self.get_queryset().by_orden(orden)
+
+    def by_tocata(self, tocata):
+        return self.get_queryset().by_tocata(tocata)
 
 def upload_ticket_file_loc(instance, filename):
     username = instance.facturacion_profile.usuario.email
