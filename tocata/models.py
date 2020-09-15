@@ -1,16 +1,16 @@
 from django.db import models
 from django.conf import settings
 from django.db.models.signals import pre_save
-from django.db.models import Q
+from django.db.models import Q, F
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse
+
 
 from django_resized import ResizedImageField
 
 import os
-from datetime import timedelta
+from datetime import timedelta, datetime
 from django.utils import timezone
-
 
 from artista.models import Artista, Estilo
 from lugar.models import Lugar, Region, Comuna
@@ -23,8 +23,18 @@ User = settings.AUTH_USER_MODEL
 # Tocatas
 class TocataQuerySet(models.query.QuerySet):
 
+    def estado_disp(self):
+        return self.filter(estado__in = ['publicado','confirmado'])
+
+    def entrada_disp(self):
+        return self.filter(asistentes_max__gt = F('asistentes_total'))
+
+    def fecha_disp(self):
+        return self.filter(fecha__gte = datetime.now().date())
+
     def disponible(self):
-        return self.filter(estado__in=['publicado','confirmado'])
+        return self.estado_disp().entrada_disp().fecha_disp()
+        #return self.estado_disp().entrada_disp().fecha_disp()
 
     def busqueda(self, consulta):
         lookups = (Q(nombre__icontains=consulta) |

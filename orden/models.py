@@ -100,23 +100,17 @@ class OrdenCompra(models.Model):
             quitar_item = False
 
             # Verificar estado de tocata
-            if item.tocata.check_vigencia():
-                pass
-            else:
+            if not item.tocata.check_vigencia():
                 quitar_item = True
                 messages.error(request,'Tocata ya no esta disponible')
 
             # Agregar verificacion de venta de entradas disponibles
-            if item.tocata.check_entradas(item.cantidad):
-                pass
-            else:
+            if not item.tocata.check_entradas(item.cantidad):
                 quitar_item = True
                 messages.error(request,'No hay suficientes entradas disponibles')
 
             # Comprar antes de la fecha y hora del evento
-            if item.tocata.check_fechahora():
-                pass
-            else:
+            if not item.tocata.check_fechahora():
                 quitar_item = True
                 messages.error(request,'Compra fuera de tiempo')
 
