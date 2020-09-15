@@ -9,7 +9,7 @@
             <a href="{{ item.tocata.get_absolute_url }}">
                 <img src="{{ item.tocata.flayer_380_507.url }}" alt="{{ item.tocata.nombre }}">
             </a>
-            <div class="cart-product-thumbnail-name">{{ item.tocata.nombre }}</div>
+            <div class="cart-product-thumbnail-name"><a href="{{ item.tocata.get_absolute_url }}">{{ item.tocata.nombre }}</a></div>
         </td>
         <td class="cart-product-description">
             <p><span>{{ item.tocata.lugar.region }}</span>
