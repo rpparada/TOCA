@@ -421,6 +421,11 @@ def compraexitosa(request):
         # Adjunta tickets de entrada a evento
         orden_obj.agrega_entradas_compra()
 
+        # Enviar email con detalles de la compra
+        # orden_obj.email_detalles(request)
+        orden_obj.email_detalles_compra(request)
+
+
     context = {
         'orden': orden_obj,
     }

@@ -1,0 +1,116 @@
+{% load static %}
+{% load humanize %}
+<section id="shop-checkout">
+    <div class="container">
+        <div class="shop-cart">
+            <div class="row">
+                <div class="col-lg-6 no-padding">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4 class="upper">Email de Facturacion y envio de Ticket Electrónico</h4>
+                        </div>
+                        <div class="col-lg-10 form-group">
+                            <label class="sr-only">Email</label>
+                            <input type="text" class="form-control" placeholder="Email" value="{{ object.facturacion_profile.email }}" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 no-padding">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4 class="upper">Email adicional de envio de datos de compra</h4>
+                        </div>
+                        <div class="col-lg-10 form-group">
+                            <label class="sr-only">Email</label>
+                            <input type="text" class="form-control" placeholder="Email" value="{% if object.email_adicional %}{{ object.email_adicional }}{% else %}No ingresado{% endif %}" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="seperator"><i class="fa fa-credit-card"></i>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h4 class="upper">Tu Orden: {{ object.orden_id }} <span class="badge badge-pill badge-success">{{ object.get_estado_display }}</span></h4>
+                    {% if object.fecha_pago %}
+                    <p>(fecha de pago:{{ object.fecha_pago }})</p>
+                    {% endif %}
+                    <div class="table table-sm table-striped table-responsive table table-bordered table-responsive">
+                        <table class="table m-b-0">
+                            <thead>
+                                <tr>
+                                    <th class="cart-product-thumbnail">Tocata</th>
+                                    <th class="cart-product-name">Detalles</th>
+                                    <th class="cart-product-subtotal">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in object.carro.item.all %}
+                                <tr>
+                                    <td class="cart-product-thumbnail">
+                                        <div class="cart-product-thumbnail-name">{{ item.tocata.nombre }}</div>
+                                    </td>
+                                    <td class="cart-product-description">
+                                        <p><span>Donde: {{ item.tocata.lugar.comuna }}</span>
+                                            <span>Cuando: {{ item.tocata.fecha }}, {{ item.tocata.hora }}</span>
+                                            <span>Cantidad: {{ item.cantidad }}</span>
+                                            <span>Precio Unitario: ${{ item.tocata.costo|floatformat|intcomma }}</span>
+                                        </p>
+                                    </td>
+                                    <td class="cart-product-subtotal">
+                                        <span class="amount">${{ item.total|floatformat|intcomma }}</span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <h4>Total Orden</h4>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="cart-product-name">
+                                                <strong>Subtotal Orden</strong>
+                                            </td>
+                                            <td class="cart-product-name text-right">
+                                                <span class="amount">${{ object.carro.subtotal|floatformat|intcomma }}</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cart-product-name">
+                                                <strong>Envio</strong>
+                                            </td>
+                                            <td class="cart-product-name  text-right">
+                                                <span class="amount">Gratis (Boleto Electrónico)</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cart-product-name">
+                                                <strong>Total</strong>
+                                            </td>
+                                            <td class="cart-product-name text-right">
+                                                <span class="amount color lead"><strong>${{ object.total|floatformat|intcomma }}</strong></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <h4 class="upper">Metodo de Pago</h4>
+                            <div class="list-group">
+                                <input type="radio" name="RadioInputName" value="Value3" id="Radio3" />
+                                <label class="list-group-item" for="Radio3"><img alt="webpay" src="{% static 'images/pagos/banner-webpay.png' %}"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -8,6 +8,11 @@ from django.core.files import File
 from django.utils import timezone
 from django.contrib import messages
 
+from django.template.loader import get_template
+from django.core.mail import send_mail
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+
 User = settings.AUTH_USER_MODEL
 
 import math
@@ -91,6 +96,47 @@ class OrdenCompra(models.Model):
         self.save()
         return nuevo_total
 
+    def email_detalles_compra(self, request):
+
+        mail_subject = 'Tocatas Íntimas - ITicket Orden {num_orden}'.format(num_orden=self.orden_id)
+        context = {
+            'object': self,
+        }
+        message = render_to_string('orden/emails/iticket_email.html', context)
+        if self.email_adicional:
+            recipient_list = [self.facturacion_profile.email,self.email_adicional]
+        else:
+            recipient_list = [self.facturacion_profile.email]
+        email = EmailMessage(
+                    mail_subject, message, to=recipient_list
+                    )
+        email.send()
+
+    def email_detalles(self, request):
+
+        context = {
+            'object': self,
+        }
+        txt_ = get_template('orden/emails/iticket_email.txt').render(context)
+        html_ = get_template('orden/emails/iticket_email.html').render(context)
+
+        subject = 'Tocatas Íntimas - ITicket Orden {num_orden}'.format(num_orden=self.orden_id)
+        if self.email_adicional:
+            recipient_list = [self.facturacion_profile.email,self.email_adicional]
+        else:
+            recipient_list = [self.facturacion_profile.email]
+        from_email = 'rpparada@gmail.com'
+        sent_email = send_mail(
+            subject,
+            message = txt_,
+            from_email = from_email,
+            recipient_list = recipient_list,
+            html_message = html_,
+            fail_silently = False,
+        )
+
+        return sent_email
+
     def check_done(self, request):
 
         is_done = True
@@ -169,11 +215,11 @@ class OrdenCompra(models.Model):
 
     def mark_pagado(self):
         if self.estado != 'pagado':
-            if self.check_done():
-                self.estado = 'pagado'
-                self.fecha_pago = timezone.now()
-                self.save()
-                self.actualiza_compras()
+            #if self.check_done():
+            self.estado = 'pagado'
+            self.fecha_pago = timezone.now()
+            self.save()
+            self.actualiza_compras()
 
         return self.estado
 
