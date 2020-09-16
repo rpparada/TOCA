@@ -174,6 +174,7 @@ class OrdenCompra(models.Model):
             # Quita tocatas que no califican y cancela check out
             if quitar_item:
                 self.carro.item.remove(item)
+                item.delete()
                 request.session['carro_tocatas'] = self.carro.item.count()
                 is_done = False
 
