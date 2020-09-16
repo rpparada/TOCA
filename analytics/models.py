@@ -89,6 +89,9 @@ class UserSession(models.Model):
 
         return self.ended
 
+    def __str__(self):
+        return self.user.email
+
 def post_save_session_receiver(sender, instance, created, *args, **kwargs):
     if created:
         qs = UserSession.objects.filter(user=instance.user, ended=False, active=False).exclude(id=instance.id)

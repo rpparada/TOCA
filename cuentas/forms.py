@@ -65,6 +65,18 @@ class CuentaPasswordResetForm(PasswordResetForm):
                                                             }), label='Email'
                                     )
 
+
+    def clean(self):
+        data = self.cleaned_data
+
+        email = data.get('email')
+
+        qs = User.objects.filter(email=email)
+        if not qs.exists():
+            raise forms.ValidationError('Email no existe')
+
+        return data
+
 class CuentaPasswordChangeForm(PasswordChangeForm):
 
     old_password    = forms.CharField(widget=forms.PasswordInput(attrs={
@@ -182,6 +194,10 @@ class RegistrarUserForm(forms.ModelForm):
 
         if commit:
             user.save()
+            user_perfil = PerfilUser.objects.create_perfiluser(
+                                                        user=user
+                                                    )
+
         return user
 
 class UserAdminCreationForm(forms.ModelForm):
@@ -209,12 +225,14 @@ class UserAdminCreationForm(forms.ModelForm):
 
 
 class UserDetailChangeViewForm(forms.ModelForm):
+    user            = forms.CharField(widget=forms.HiddenInput())
 
     nombre          = forms.CharField(widget=forms.TextInput(attrs={
                                                                 "class": "form-control",
                                                                 "placeholder": "Nombre"
                                                             }), label='Nombre', required = False
                                     )
+
     apellido        = forms.CharField(widget=forms.TextInput(attrs={
                                                                 "class": "form-control",
                                                                 "placeholder": "Apellido"
@@ -223,8 +241,7 @@ class UserDetailChangeViewForm(forms.ModelForm):
 
     class Meta:
         model = PerfilUser
-        #model = User
-        fields = ('nombre','apellido')
+        fields = ('nombre','apellido', 'user')
 
 class UserAdminChangeForm(forms.ModelForm):
 
@@ -343,7 +360,6 @@ class RegistrarArtistaForm(forms.Form):
 
     def __init__(self, request, *args, **kwargs):
         self.request = request
-        print(request)
         super(RegistrarArtistaForm, self).__init__(*args, **kwargs)
 
     def clean(self):

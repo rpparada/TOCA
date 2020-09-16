@@ -26,7 +26,7 @@ class ArtistasListView(ListView):
 
         return context
 
-class ArtistaDetailView(ObjectViewedMixin, DetailView):
+class ArtistaDetailView(DetailView):
 
     template_name = 'artista/artista.html'
 

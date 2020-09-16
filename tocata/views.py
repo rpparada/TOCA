@@ -68,7 +68,7 @@ class TocataListView(ListView):
 
         return context
 
-class TocataDetailView(ObjectViewedMixin, DetailView):
+class TocataDetailView(DetailView):
 
     template_name = 'tocata/tocata.html'
 
