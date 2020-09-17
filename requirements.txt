@@ -18,7 +18,6 @@ Pillow==7.2.0
 pip-autoremove==0.9.1
 psycopg2-binary==2.8.5
 PyPDF2==1.26.0
-python-tbk==0.2.2
 pytz==2020.1
 reportlab==3.5.49
 requests==2.24.0
