@@ -2,7 +2,7 @@ python manage.py dumpdata analytics --format json --indent 4 > analytics/fixture
 python manage.py dumpdata artista --format json --indent 4 > artista/fixtures/artista.json
 python manage.py dumpdata busqueda --format json --indent 4 > busqueda/fixtures/busqueda.json
 python manage.py dumpdata carro --format json --indent 4 > carro/fixtures/carro.json
-python manage.py dumpdata cobro --format json --indent 4 > cobro/fixtures/cobro.json
+#python manage.py dumpdata cobro --format json --indent 4 > cobro/fixtures/cobro.json
 python manage.py dumpdata cuentas --format json --indent 4 > cuentas/fixtures/cuentas.json
 python manage.py dumpdata direccion --format json --indent 4 > direccion/fixtures/direccion.json
 python manage.py dumpdata facturacion --format json --indent 4 > facturacion/fixtures/facturacion.json
@@ -12,6 +12,8 @@ python manage.py dumpdata orden --format json --indent 4 > orden/fixtures/orden.
 python manage.py dumpdata propuestaslugar --format json --indent 4 > propuestaslugar/fixtures/propuestaslugar.json
 python manage.py dumpdata tocata --format json --indent 4 > tocata/fixtures/tocata.json
 python manage.py dumpdata tocataabierta --format json --indent 4 > tocataabierta/fixtures/tocataabierta.json
-python manage.py dumpdata usuario --format json --indent 4 > usuario/fixtures/usuario.json
+#python manage.py dumpdata usuario --format json --indent 4 > usuario/fixtures/usuario.json
+python manage.py dumpdata marketing --format json --indent 4 > marketing/fixtures/marketing.json
+python manage.py dumpdata transaccional --format json --indent 4 > transaccional/fixtures/transaccional.json
 
 python manage.py loaddata <archivo>
