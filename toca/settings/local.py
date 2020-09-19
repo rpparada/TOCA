@@ -29,8 +29,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-if DEBUG == True:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Email a la consola
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'rpparada@gmail.com'
+EMAIL_HOST_PASSWORD = 'Nofumar3024'
+DEFAULT_FROM_EMAIL = 'rpparada@gmail.com'
 
 # Application definition
 
@@ -63,7 +69,8 @@ INSTALLED_APPS = [
     'tocataabierta',
     'propuestaslugar',
     'perfil',
-    'marketing'
+    'marketing',
+    'transaccional'
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (

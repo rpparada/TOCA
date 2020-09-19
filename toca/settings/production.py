@@ -29,9 +29,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['.herokuapp.com']
 
-if DEBUG == True:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -63,7 +60,8 @@ INSTALLED_APPS = [
     'tocataabierta',
     'propuestaslugar',
     'perfil',
-    'marketing'
+    'marketing',
+    'transaccional'
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -86,6 +84,8 @@ FORCE_INACTIVE_USER_ENDSESSION = False
 MAILCHIMP_API_KEY = 'c0ff17518164731f74f418a57743aad0-us2'
 MAILCHIMP_DATA_CENTER = 'us2'
 MAILCHIMP_EMAIL_LIST_ID = '1fe864c9ab'
+
+DEFAULT_FROM_EMAIL = ''
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
