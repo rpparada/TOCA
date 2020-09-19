@@ -93,7 +93,7 @@ class OrdenCompra(models.Model):
         return nuevo_total
 
     def email_detalles_compra(self, request):
-        
+
         if self.email_adicional:
             recipient_list = [self.facturacion_profile.email,self.email_adicional]
         else:
@@ -102,7 +102,8 @@ class OrdenCompra(models.Model):
         EmailTemplate.send(
             'email_boleta_itickets',
             context = { 'object': self },
-            sender = 'rpparada@gmail.com',
+            subject = 'Tocatas Íntimas - ITicket Orden {num_orden}'.format(num_orden=self.orden_id),
+            sender = 'tocatasintimastest@gmail.com',
             emails = recipient_list
         )
 
