@@ -427,6 +427,8 @@ class EntradasCompradas(models.Model):
     item                    = models.ForeignKey(ItemCarroCompra, on_delete=models.CASCADE)
     rembolsado              = models.BooleanField(default=False)
 
+    slug                    = models.SlugField(blank=True, unique=False)
+
     fecha_actu              = models.DateTimeField(auto_now=True)
     fecha_crea              = models.DateTimeField(auto_now_add=True)
 
@@ -442,13 +444,25 @@ class EntradasCompradas(models.Model):
     def __str__(self):
         return str(self.item.cantidad)+' '+str(self.item.tocata.nombre)
 
+    def get_absolute_url(self):
+        return "/ordenes/{orden_id}/{slug}".format(orden_id=self.orden.orden_id, slug=self.slug)
+
     def get_download_url(self):
         return reverse('ordenes:downloadticket',
             kwargs={'orden_id': self.orden.id,
                     'pk': self.pk}
             )
 
+    def get_invitados(self):
+        return self.item.cantidad - 1
+
     @property
     def nombrearchivo(self):
         if self.file:
             return os.path.basename(self.file.name)
+
+def entradascompradas_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance.item.tocata)
+
+pre_save.connect(entradascompradas_pre_save_receiver, sender=EntradasCompradas)

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
-{% block title %} | MIS COMPRAS{% endblock %}
+{% block title %} | MIS ENTRADAS{% endblock %}
 {% block content %}
 
 {% include 'partials/_alerts.html' %}
@@ -35,7 +35,7 @@
                     <tbody>
                       {% for object in object_list %}
                         <tr>
-                            <td><a href="{% url 'ordenes:detalleentrada' object.orden.orden_id object.pk %}">ITicket</a></td>
+                            <td><a href="{{ object.get_absolute_url }}">ITicket</a></td>
                             <td>{{ object.item.tocata.nombre }}</td>
                             <td>{{ object.item.tocata.artista.nombre }}</td>
                             <td>{{ object.item.tocata.comuna }}</td>

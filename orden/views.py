@@ -75,17 +75,21 @@ class EntradasComprasListView(LoginRequiredMixin, ListView):
 class EntradasComprasDetailView(LoginRequiredMixin, DetailView):
     template_name = 'orden/entradascompradas_detail.html'
 
-    def get_object(self):
-        pk = self.kwargs.get('pk')
-        qs = EntradasCompradas.objects.by_request(
-                    self.request
-                ).filter(
-                    pk=pk
-                )
-        if qs.count() == 1:
-            return qs.first()
-        raise Http404
+    def get_object(self, queryset=None):
+        request = self.request
+        slug = self.kwargs.get('slug')
 
+        try:
+            entrada = EntradasCompradas.objects.get(slug=slug)
+        except EntradasCompradas.DoesNotExist:
+            raise Http404('Entrada No Encontrada')
+        except EntradasCompradas.MultipleObjectsReturned:
+            entradas = EntradasCompradas.objects.get(slug=slug)
+            entrada = entradas.first()
+        except:
+            raise Http404('Error Desconocido')
+
+        return entrada
 
 class ITicketDownloadView(View):
 

@@ -15,7 +15,8 @@ urlpatterns = [
     path('entradas', EntradasComprasListView.as_view(), name='entradas'),
 
     path('<str:orden_id>/', OrdenCompraDetailView.as_view(), name='detalleorden'),
-    path('<str:orden_id>/<int:pk>/', EntradasComprasDetailView.as_view(), name='detalleentrada'),
+    path('<str:orden_id>/<slug:slug>/', EntradasComprasDetailView.as_view(), name='detalleentrada'),
+    #path('<str:orden_id>/<int:pk>/', EntradasComprasDetailView.as_view(), name='detalleentrada'),
 
     path('<str:orden_id>/download/', OrdenDownloadView.as_view(), name='downloadorden'),
     path('<str:orden_id>/<int:pk>/download/', ITicketDownloadView.as_view(), name='downloadticket'),
