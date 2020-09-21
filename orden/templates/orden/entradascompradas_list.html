@@ -21,7 +21,7 @@
                 <table id="datatable" class="table table-bordered table-hover" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Orden</th>
+                            <th>ITicket</th>
                             <th>Tocata</th>
                             <th>Artista</th>
                             <th>Comuna</th>
@@ -29,14 +29,13 @@
                             <th>Cantidad</th>
                             <th>Precio Unitario</th>
                             <th>Total</th>
-                            <th>Descargas ITicket</th>
-                            <th>Actions</th>
+                            <th>Orden</th>
                         </tr>
                     </thead>
                     <tbody>
                       {% for object in object_list %}
                         <tr>
-                            <td> <a href="{% url 'ordenes:detalleentrada' object.orden.orden_id object.pk %}">{{ object.orden.orden_id }}</a></td>
+                            <td><a href="{% url 'ordenes:detalleentrada' object.orden.orden_id object.pk %}">ITicket</a></td>
                             <td>{{ object.item.tocata.nombre }}</td>
                             <td>{{ object.item.tocata.artista.nombre }}</td>
                             <td>{{ object.item.tocata.comuna }}</td>
@@ -44,21 +43,13 @@
                             <td>{{ object.item.cantidad }}</td>
                             <td>${{ object.item.tocata.costo|floatformat|intcomma }}</td>
                             <td>${{ object.item.total|floatformat|intcomma }}</td>
-                            {% if object.file %}
-                            <td><a href="{{ object.get_download_url }}">ITicket</a></td>
-                            {% else %}
-                            <td></td>
-                            {% endif %}
-                            <td> <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Edit"><i class="icon-edit"></i></a>
-                                <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Delete"><i class="icon-trash-2"></i></a>
-                                <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Settings"><i class="icon-settings"></i></a>
-                            </td>
+                            <td><a href="{% url 'ordenes:detalleorden' object.orden.orden_id %}">{{ object.orden.orden_id }}</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>Orden</th>
+                            <th>ITicket</th>
                             <th>Tocata</th>
                             <th>Artista</th>
                             <th>Comuna</th>
@@ -66,8 +57,7 @@
                             <th>Cantidad</th>
                             <th>Precio Unitario</th>
                             <th>Total</th>
-                            <th>Descarga ITicket</th>
-                            <th>Actions</th>
+                            <th>Orden</th>
                         </tr>
                     </tfoot>
                 </table>

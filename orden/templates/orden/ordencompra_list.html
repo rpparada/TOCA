@@ -26,8 +26,6 @@
                             <th>Fecha Pago</th>
                             <th>Total</th>
                             <th>Estado</th>
-                            <th>Descarga Orden</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,11 +36,6 @@
                             <td>{{ object.fecha_pago }}</td>
                             <td>{{ object.total|floatformat|intcomma }}</td>
                             <td><span class="badge badge-pill badge-success">{{ object.get_estado_display }}</span></td>
-                            <td><a href="{% url 'ordenes:downloadorden' object.orden_id %}">Descarga PDF</a></td>
-                            <td> <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Edit"><i class="icon-edit"></i></a>
-                                <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Delete"><i class="icon-trash-2"></i></a>
-                                <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Settings"><i class="icon-settings"></i></a>
-                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -53,8 +46,6 @@
                             <th>Fecha Pago</th>
                             <th>Total</th>
                             <th>Estado</th>
-                            <th>Descarga Orden</th>
-                            <th>Actions</th>
                         </tr>
                     </tfoot>
                 </table>

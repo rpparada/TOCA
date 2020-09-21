@@ -16,12 +16,13 @@ from toca.utils import render_to_pdf
 # Create your views here.
 class OrdenCompraListView(LoginRequiredMixin, ListView):
     template_name = 'orden/ordencompra_list.html'
+    paginate_by = 10
+    ordering = ['-fecha_pago']
 
     def get_queryset(self):
-        return OrdenCompra.objects.by_request(self.request)
+        return OrdenCompra.objects.by_request(self.request).order_by('-fecha_pago')
 
 class OrdenCompraDetailView(LoginRequiredMixin, DetailView):
-
     template_name = 'orden/ordencompra_detail.html'
 
     def get_object(self):
@@ -65,13 +66,13 @@ class OrdenDownloadView(LoginRequiredMixin, View):
         raise Http404
 
 class EntradasComprasListView(LoginRequiredMixin, ListView):
-
     template_name = 'orden/entradascompradas_list.html'
+    paginate_by = 10
+
     def get_queryset(self):
-        return EntradasCompradas.objects.by_request(self.request).all()
+        return EntradasCompradas.objects.by_request(self.request).all().order_by('item__tocata__fecha')
 
 class EntradasComprasDetailView(LoginRequiredMixin, DetailView):
-
     template_name = 'orden/entradascompradas_detail.html'
 
     def get_object(self):
