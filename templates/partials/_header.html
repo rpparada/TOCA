@@ -16,9 +16,12 @@
 {% url 'password_change' as cambiocontra_url %}
 {% url 'cuenta:salir' as salir_url %}
 {% url 'cuenta:home' as home_url %}
+{% url 'cuenta:user-update' as userupdate_url %}
 {% url 'cuenta:ingresar' as ingresar_url %}
 {% url 'cuenta:registrar' as registrar_url %}
 {% url 'cuenta:linknuevoartista' as linknuevoartista_url %}
+{% url 'ordenes:entradas' as entradas_url %}
+{% url 'ordenes:ordenes' as ordenes_url %}
 
 <!-- Header -->
 <header id="header" data-transparent="false" data-fullwidth="true" class="dark submenu-light">
@@ -89,9 +92,10 @@
                                 </li>
                                 <li class="dropdown"><a href="{{ home_url }}">Mi Cuenta [<small>{{ request.user }}</small>]</a>
                                   <ul class="dropdown-menu">
-                                    <li><a href="{{ home_url }}">Cuenta</a></li>
+                                    <li><a href="{{ userupdate_url }}">Detalles Cuenta</a></li>
                                     <li><a href="{{ cambiocontra_url }}">Cambiar Contraseña</a></li>
-                                    <li><a href="{{ miscompras_url }}">Mis Compras</a></li>
+                                    <li><a href="{{ entradas_url }}">Mis Entradas</a></li>
+                                    <li><a href="{{ ordenes_url }}">Mis Ordenes</a></li>
                                     {% if request.user.is_staff %}
                                     <li class="dropdown-submenu"><a href="#">Menu Admin</a>
                                         <ul class="dropdown-menu">
