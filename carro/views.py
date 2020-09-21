@@ -37,9 +37,6 @@ class GeneraPDF(View):
             'fecha_compra': 'Hoy'
         }
 
-        pdf_file = render_to_pdf_file('carro/entradaspdf.html', context, 'test.pdf')
-        print(pdf_file)
-
         pdf = render_to_pdf('carro/entradaspdf.html', context)
         if pdf:
             # Salvar a un archivo
@@ -417,9 +414,6 @@ def compraexitosa(request):
         # Recupera usuario (es esta la mejor opcion?)
         user =  orden_obj.facturacion_profile.usuario
         auth.login(request, user)
-
-        # Adjunta tickets de entrada a evento
-        orden_obj.agrega_entradas_compra()
 
         # Enviar email con detalles de la compra
         # orden_obj.email_detalles(request)

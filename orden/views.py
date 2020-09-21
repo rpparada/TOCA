@@ -11,12 +11,14 @@ from mimetypes import guess_type
 from .models import OrdenCompra, EntradasCompradas
 from facturacion.models import FacturacionProfile
 
+from toca.utils import render_to_pdf
+
 # Create your views here.
 class OrdenCompraListView(LoginRequiredMixin, ListView):
-
     template_name = 'orden/ordencompra_list.html'
+
     def get_queryset(self):
-        return EntradasCompradas.objects.by_request(self.request).all()
+        return OrdenCompra.objects.by_request(self.request)
 
 class OrdenCompraDetailView(LoginRequiredMixin, DetailView):
 
@@ -31,6 +33,58 @@ class OrdenCompraDetailView(LoginRequiredMixin, DetailView):
         if qs.count() == 1:
             return qs.first()
         raise Http404
+
+class OrdenDownloadView(LoginRequiredMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        orden_id = kwargs.get('orden_id')
+
+        print(orden_id)
+
+        qs = OrdenCompra.objects.by_request(
+                    self.request
+                ).filter(
+                    orden_id=orden_id
+                )
+
+        if qs.count() == 1:
+            orden = qs.first()
+            context = {
+                'object': orden
+            }
+            pdf = render_to_pdf('orden/emails/email_skeleton_test.html', context)
+            if pdf:
+                response = HttpResponse(pdf, content_type='application/pdf')
+                filename = 'IT_Orden_%s.pdf' %(orden.orden_id)
+                content = 'inline; filename="%s"' %(filename)
+                download = request.GET.get("download")
+                if download:
+                    content = 'attachment; filename="%s"' %(filename)
+                response['Content-Disposition'] = content
+                return response
+        raise Http404
+
+class EntradasComprasListView(LoginRequiredMixin, ListView):
+
+    template_name = 'orden/entradascompradas_list.html'
+    def get_queryset(self):
+        return EntradasCompradas.objects.by_request(self.request).all()
+
+class EntradasComprasDetailView(LoginRequiredMixin, DetailView):
+
+    template_name = 'orden/entradascompradas_detail.html'
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        qs = EntradasCompradas.objects.by_request(
+                    self.request
+                ).filter(
+                    pk=pk
+                )
+        if qs.count() == 1:
+            return qs.first()
+        raise Http404
+
 
 class ITicketDownloadView(View):
 

@@ -8,7 +8,8 @@
 {% url 'cuenta:user-update' as userupdate_url %}
 {% url 'password_change' as cambiocontra_url %}
 {% url 'cuenta:historico-user-tocatas' as historicousertocatas_url %}
-{% url 'ordenes:listacompras' as listacompras_url %}
+{% url 'ordenes:entradas' as entradas_url %}
+{% url 'ordenes:ordenes' as ordenes_url %}
 {% url 'marketing:marketing-pref' as marketing_pref_url %}
 
 {% include 'partials/_alerts.html' %}
@@ -37,8 +38,8 @@
                                 Historico
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><a href="{{ listacompras_url }}">Compras</a></li>
-                                <li class="list-group-item"><a href="{{ historicousertocatas_url }}">Tocatas Visitadas</a></li>
+                                <li class="list-group-item"><a href="{{ entradas_url }}">Entradas Compradas</a></li>
+                                <li class="list-group-item"><a href="{{ ordenes_url }}">Ordenes de Compra</a></li>
                             </ul>
                         </div>
                     </div>

@@ -22,23 +22,33 @@
                     <thead>
                         <tr>
                             <th>Orden</th>
-                            <th>Email Adicional</th>
-                            <th>Fecha Pago</th>
+                            <th>Tocata</th>
+                            <th>Artista</th>
+                            <th>Comuna</th>
+                            <th>Fecha y Hora</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
                             <th>Total</th>
-                            <th>Estado</th>
-                            <th>Descarga Orden</th>
+                            <th>Descargas ITicket</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                       {% for object in object_list %}
                         <tr>
-                            <td> <a href="{% url 'ordenes:detalleorden' object.orden_id %}">{{ object.orden_id }}</a></td>
-                            <td>{% if object.email_adicional %}{{ object.email_adicional }}{% else %}No informado{% endif %}</td>
-                            <td>{{ object.fecha_pago }}</td>
-                            <td>{{ object.total|floatformat|intcomma }}</td>
-                            <td><span class="badge badge-pill badge-success">{{ object.get_estado_display }}</span></td>
-                            <td><a href="{% url 'ordenes:downloadorden' object.orden_id %}">Descarga PDF</a></td>
+                            <td> <a href="{% url 'ordenes:detailcompra' object.orden.orden_id %}">{{ object.orden.orden_id }}</a></td>
+                            <td>{{ object.item.tocata.nombre }}</td>
+                            <td>{{ object.item.tocata.artista.nombre }}</td>
+                            <td>{{ object.item.tocata.comuna }}</td>
+                            <td>{{ object.item.tocata.fecha }}, {{ object.item.tocata.hora }}</td>
+                            <td>{{ object.item.cantidad }}</td>
+                            <td>${{ object.item.tocata.costo|floatformat|intcomma }}</td>
+                            <td>${{ object.item.total|floatformat|intcomma }}</td>
+                            {% if object.file %}
+                            <td><a href="{{ object.get_download_url }}">ITicket</a></td>
+                            {% else %}
+                            <td></td>
+                            {% endif %}
                             <td> <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Edit"><i class="icon-edit"></i></a>
                                 <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Delete"><i class="icon-trash-2"></i></a>
                                 <a class="ml-2" href="#" data-toggle="tooltip" data-original-title="Settings"><i class="icon-settings"></i></a>
@@ -49,11 +59,14 @@
                     <tfoot>
                         <tr>
                             <th>Orden</th>
-                            <th>Email Adicional</th>
-                            <th>Fecha Pago</th>
+                            <th>Tocata</th>
+                            <th>Artista</th>
+                            <th>Comuna</th>
+                            <th>Fecha y Hora</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
                             <th>Total</th>
-                            <th>Estado</th>
-                            <th>Descarga Orden</th>
+                            <th>Descarga ITicket</th>
                             <th>Actions</th>
                         </tr>
                     </tfoot>
