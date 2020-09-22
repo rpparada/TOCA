@@ -71,13 +71,13 @@
                                 <div class="p-dropdown">
                                     <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
                                     <ul class="p-dropdown-content">
-                                        {% if object.estado == 'publicado' %}
+                                        {% if object.estado in 'publicado,confirmado,vendido' %}
                                         <li><a href="" data-target="#modalsuce{{object.id}}" data-toggle="modal"><i class="icon-alert-triangle"></i>Suspender</a></li>
                                         {% endif %}
                                         {% if object.estado == 'suspendido' %}
                                         <li><a href="" data-target="#modalboce{{object.id}}" data-toggle="modal"><i class="icon-x"></i>Borrar</a></li>
                                         {% endif %}
-                                        {% if object.estado == 'publicado' %}
+                                        {% if object.estado in 'publicado,confirmado,vendido' %}
                                         <li>
                                           <hr>
                                         </li>
@@ -104,6 +104,9 @@
                   </table>
               </div>
           </div>
+          <!-- Pagination -->
+          {% include 'snippets/page.html' with instance=page_obj %}
+          <!-- end: Pagination -->
 
       </div>
   </section>

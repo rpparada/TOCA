@@ -151,6 +151,17 @@ class Tocata(models.Model):
             a_tiempo = True
         return a_tiempo
 
+    def suspender_tocata(self):
+        fue_suspendido = False
+        if self.estado in ['publicado','confirmado','vendido']:
+            self.estado = 'suspendido'
+            self.save()
+            fue_suspendido = True
+            # Agregar aqui los cambio necesarios para suspender tocata
+            # - Notificar asistentes con emial
+            # - Devolver dinero
+
+        return fue_suspendido
 
     @property
     def name(self):

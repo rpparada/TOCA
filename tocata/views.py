@@ -107,7 +107,7 @@ class TocataDetailView(DetailView):
 
 class TocatasArtistaListView(LoginRequiredMixin, ListView):
 
-    paginate_by = 12
+    paginate_by = 10
     template_name = 'tocata/mistocatas.html'
 
     def get_queryset(self, *args, **kwargs):
@@ -120,22 +120,19 @@ class TocatasArtistaListView(LoginRequiredMixin, ListView):
         context = super(TocatasArtistaListView, self).get_context_data(*args, **kwargs)
         return context
 
+class SuspenderTocataView(LoginRequiredMixin, View):
+    
+    def post(self, request, *args, **kwargs):
+
+
 @login_required(login_url='index')
-def mistocatas(request):
+def suspendertocata(request, tocata_id):
 
-    artista = UsuarioArtista.objects.get(user=request.user)
-    tocatascerradas = Tocata.objects.filter(artista=artista.artista).filter(estado__in=parTocatas['estado_tipos_vista'])
-    tocatasabiertas = TocataAbierta.objects.filter(artista=artista.artista).filter(estado__in=parTocatasAbiertas['estado_tipos_vista'])
+    if request.method == 'POST':
+        tocata = get_object_or_404(Tocata, pk=tocata_id)
+        tocata.suspender_tocata()
 
-    for tocataabierta in tocatasabiertas:
-        tocataabierta.numeropropuestas  = LugaresTocata.objects.filter(tocataabierta=tocataabierta).filter(estado=parToca['pendiente']).count()
-
-    context = {
-        'tocatascerradas': tocatascerradas,
-        'tocatasabiertas': tocatasabiertas,
-    }
-
-    return render(request,'tocata/mistocatas.html', context)
+    return redirect('tocata:mistocatas')
 
 @login_required(login_url='index')
 def creartocata(request):
@@ -206,16 +203,6 @@ def borrartocata(request, tocata_id):
     if request.method == 'POST':
         tocata = get_object_or_404(Tocata, pk=tocata_id)
         tocata.estado = parToca['borrado']
-        tocata.save()
-
-    return redirect('mistocatas')
-
-@login_required(login_url='index')
-def suspendertocata(request, tocata_id):
-
-    if request.method == 'POST':
-        tocata = get_object_or_404(Tocata, pk=tocata_id)
-        tocata.estado = parToca['suspendido']
         tocata.save()
 
     return redirect('mistocatas')
