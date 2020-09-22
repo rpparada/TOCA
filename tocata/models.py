@@ -47,6 +47,10 @@ class TocataQuerySet(models.query.QuerySet):
     def tocataartista(self, artista):
         return self.filter(artista=artista)
 
+    def tocataartista_by_request(self, request):
+        artista = Artista.objects.get(usuario=request.user)
+        return self.filter(artista=artista)
+
 class TocataManager(models.Manager):
 
     def get_queryset(self):
@@ -70,6 +74,9 @@ class TocataManager(models.Manager):
         if qs:
             return qs
         return self.none()
+
+    def tocataartista_by_request(self, request):
+        return self.get_queryset().tocataartista_by_request(request).exclude(estado='borrado')
 
 def upload_tocata_flayer_file_loc(instance, filename):
     slug =instance.slug

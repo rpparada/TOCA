@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import Http404
 from django.views.generic import DetailView, ListView
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import TocataAbierta
 from carro.models import CarroCompra
@@ -66,6 +67,21 @@ class TocataAbiertaDetailView(DetailView):
             raise Http404('Error Desconocido')
 
         return tocataabierta
+
+class TocatasAbiertasArtistaListView(LoginRequiredMixin, ListView):
+
+    paginate_by = 12
+    template_name = 'tocataabierta/mistocatasabiertas.html'
+
+    def get_queryset(self, *args, **kwargs):
+        request = self.request
+        tocatasabiertas = TocataAbierta.objects.tocataartista_by_request(request)
+
+        return tocatasabiertas
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(TocatasAbiertasArtistaListView, self).get_context_data(*args, **kwargs)
+        return context
 
 @login_required(login_url='index')
 def creartocataabierta(request):

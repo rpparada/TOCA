@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load thumbnail %}
+{% block title %} | MIS TOCATAS{% endblock %}
+{% block content %}
+{% include 'partials/_alerts.html' %}
+
+{% if object_list %}
+  {% for object in object_list %}
+  <!--Modal suspender -->
+  {% include 'tocataabierta/snippets/modalsuspender.html' with instance=object %}
+  <!-- end: Modal -->
+  <!--Modal borrar -->
+  {% include 'tocataabierta/snippets/modalborrar.html' with instance=object %}
+  <!-- end: Modal -->
+  {% endfor %}
+{% endif %}
+
+
+{% if object_list %}
+<section id="page-content" class="no-sidebar">
+    <div class="container">
+
+        <div class="row mb-3">
+            <div class="col-lg-6">
+                <h4>Buscando donde tocar</h4>
+                <p>Esta la lista de tus tocatas en busca de lugar.</p>
+            </div>
+            <div class="col-lg-6 text-right">
+                <a href="{% url 'tocataabierta:creartocataabierta' %}" class="btn btn-light"><i class="icon-plus"></i> Crear Tocata Abierta</a>
+                <div id="export_buttons" class="mt-2"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <table id="datatable" class="table table-bordered table-hover" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Lugar</th>
+                            <th>Fecha y Hora</th>
+                            <th>Asistentes Mínimo</th>
+                            <th>Número de Propuestas</th>
+                            <th>Estado</th>
+                            <th class="noExport">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for object in object_list %}
+                        <tr>
+                            <td><a href="{{ object.get_absolute_url }}">{{ object.nombre }}</a></td>
+                            <td>{{ object.region.nombre }}, {{ object.comuna.nombre }}</td>
+                            <td>{{ object.fecha }}, {{ object.hora}}</td>
+                            <td>{{ object.asistentes_min }}</td>
+                            {% if object.estado == 'CN' %}
+                            <td>--</td>
+                            {% else %}
+                            <td>{{ object.numeropropuestas }}</td>
+                            {% endif %}
+                            {% if object.estado == 'publicado' %}
+                              <td><span class="badge badge-pill badge-warning">{{ object.get_estado_display }}</span></td>
+                            {% elif object.estado == 'suspendido' %}
+                              <td><span class="badge badge-pill badge-danger">{{ object.get_estado_display }}</span></td>
+                            {% elif object.estado == 'confirmado' %}
+                              <td><span class="badge badge-pill badge-primary">{{ object.get_estado_display }}</span></td>
+                            {% endif %}
+                            <td>
+                              <div class="p-dropdown">
+                                  <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
+                                  <ul class="p-dropdown-content">
+                                      {% if object.estado == 'publicado' %}
+                                      <li><a href="" data-target="#modalsuab{{object.id}}" data-toggle="modal"><i class="icon-alert-triangle"></i>Suspender</a></li>
+                                      {% endif %}
+                                      {% if object.numeropropuestas > 0 %}
+                                      <li><a href="{% url 'verpropuestas' object.id %}"><i class="icon-home"></i>Ver Propuestas</a></li>
+                                      {% endif %}
+                                      {% if object.estado == 'suspendido' %}
+                                      <li><a href="" data-target="#modalboab{{object.id}}" data-toggle="modal"><i class="icon-x"></i>Borrar</a></li>
+                                      {% endif %}
+                                  </ul>
+                              </div>
+                            </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                          <th>Nombre</th>
+                          <th>Lugar</th>
+                          <th>Fecha y Hora</th>
+                          <th>Asistentes Min/Max</th>
+                          <th>Número de Propuestas</th>
+                          <th>Estado</th>
+                          <th>Acciones</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
+<section id="page-content" class="no-sidebar">
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-lg-6">
+                <h4>Buscando donde tocar</h4>
+                <p>Actualmente no estas buscando donde tocar.</p>
+            </div>
+            <div class="col-lg-6 text-right">
+                <a href="{% url 'tocataabierta:creartocataabierta' %}" class="btn btn-light"><i class="icon-plus"></i> Crear Tocata Abierta</a>
+                <div id="export_buttons" class="mt-2"></div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

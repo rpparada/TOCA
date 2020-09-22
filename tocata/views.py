@@ -12,6 +12,7 @@ from operator import attrgetter
 import os
 
 from .models import Tocata
+from tocataabierta.models import TocataAbierta
 from propuestaslugar.models import LugaresTocata
 from artista.models import Artista
 from lugar.models import Lugar, Comuna, Region
@@ -45,7 +46,7 @@ class UserTocatasHistoryView(LoginRequiredMixin, ListView):
 class TocataListView(ListView):
 
     queryset = Tocata.objects.disponible()
-    paginate_by = parToca['tocatas_pag']
+    paginate_by = 12
     template_name = 'tocata/tocatas.html'
     ordering = ['-fecha']
 
@@ -103,6 +104,21 @@ class TocataDetailView(DetailView):
 
         return tocata
 
+
+class TocatasArtistaListView(LoginRequiredMixin, ListView):
+
+    paginate_by = 12
+    template_name = 'tocata/mistocatas.html'
+
+    def get_queryset(self, *args, **kwargs):
+        request = self.request
+        tocatas = Tocata.objects.tocataartista_by_request(request)
+
+        return tocatas
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(TocatasArtistaListView, self).get_context_data(*args, **kwargs)
+        return context
 
 @login_required(login_url='index')
 def mistocatas(request):

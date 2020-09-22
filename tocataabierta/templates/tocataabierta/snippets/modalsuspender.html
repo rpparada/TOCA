@@ -1,0 +1,27 @@
+{% load humanize %}
+<!--Modal suspender -->
+<div class="modal fade" id="modalsuab{{instance.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-label">Suspender Tocata Abierta</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>¿Seguro quieres suspender "{{ instance.nombre }}"?</p>
+                    </div>
+                </div>
+            </div>
+            <form action="{% url 'tocataabierta:suspendertocataabierta' instance.id %}" method="POST">
+              {% csrf_token %}
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-b">Confirmo Suspensión</button>
+                <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
+              </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- end: Modal -->

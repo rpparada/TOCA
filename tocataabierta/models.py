@@ -40,6 +40,9 @@ class TocataAbiertaQuerySet(models.query.QuerySet):
     def by_artista(self, artista):
         return self.filter(artista=artista)
 
+    def tocataartista_by_request(self, request):
+        return self.disponible().filter(usuario=request.user)
+
 class TocataAbiertaManager(models.Manager):
 
     def get_queryset(self):
@@ -63,6 +66,9 @@ class TocataAbiertaManager(models.Manager):
         if qs:
             return qs
         return self.none()
+
+    def tocataartista_by_request(self, request):
+        return self.get_queryset().tocataartista_by_request(request)
 
 class TocataAbierta(models.Model):
 
