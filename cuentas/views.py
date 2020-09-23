@@ -6,7 +6,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.views.generic.edit import FormMixin
-from django.contrib.auth.decorators import login_required
 
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode, is_safe_url

@@ -2,12 +2,12 @@
 {% load static %}
 {% load humanize %}
 {% load thumbnail %}
-{% block title %} | CREAR TOCATAS{% endblock %}
+{% block title %} | CREAR TOCATA{% endblock %}
 {% block content %}
 
 {% include 'partials/_alerts.html' %}
 
-{% if request.session.es_artista == 'S' %}
+{% if request.user.is_musico %}
 <section id="page-content">
     <div class="container">
         <div class="row">
@@ -19,7 +19,7 @@
                       <p hidden id="mensajerror"></p>
                   </div>
                   <div class="card-body">
-                      <form id="formtocheck" action="{% url 'creartocatacerrada' %}" method="POST" data-ciudad-url-agregar="{% url 'ajax_load_comunas_tocata' %}" enctype="multipart/form-data">
+                      <form id="formtocheck" action="{% url 'tocata:creartocata' %}" method="POST" data-ciudad-url-agregar="{% url 'tocata:ajax_load_comunas_tocata' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">{{ form.nombre.label }}</label>

@@ -1,9 +1,11 @@
 from django import forms
+from django.contrib import messages
 
 import datetime
 
 from .models import Tocata
 from lugar.models import Region, Comuna, Lugar
+from artista.models import Artista
 
 from toca.parametros import parToca
 
@@ -13,7 +15,7 @@ class DateInput(forms.DateInput):
 class TimeInput(forms.TimeInput):
     input_type = 'time'
 
-class TocataForm(forms.ModelForm):
+class CrearTocataForm(forms.ModelForm):
 
     nombre              = forms.CharField(widget=forms.TextInput(attrs={
                                                                 'id': 'primercampo',
@@ -55,25 +57,44 @@ class TocataForm(forms.ModelForm):
 
     class Meta:
         model = Tocata
-        exclude = ('fecha_actu',
-                    'fecha_crea',
-                    'asistentes_total',
-                    'evaluacion',
-                    'asistentes_max',
-                    'estado',
-                    'region',
-                    'comuna',
-                    'usuario',
-                    'artista',
-                    'flayer_1920_1280',
-                    'flayer_380_507',
-                    )
+        fields = (
+            'nombre',
+            'lugar',
+            'descripción',
+            'costo',
+            'fecha',
+            'hora',
+            'asistentes_min',
+            'flayer_original'
+            )
 
     def __init__(self, user, *args, **kwargs):
         self.user = user
-        super(TocataForm, self).__init__(*args, **kwargs)
-
+        super(CrearTocataForm, self).__init__(*args, **kwargs)
         self.fields['lugar'].queryset = Lugar.objects.filter(usuario=user).filter(estado=parToca['disponible'])
+
+    def save(self, commit=True):
+        tocata = super(CrearTocataForm, self).save(commit=False)
+
+        if tocata.flayer_original:
+            tocata.flayer_380_507 = tocata.flayer_original
+            tocata.flayer_1920_1280 = tocata.flayer_original
+
+        tocata.estado = 'publicado'
+        tocata.region = tocata.lugar.region
+        tocata.comuna = tocata.lugar.comuna
+
+        tocata.usuario = self.user
+        artista = Artista.objects.get(usuario=self.user)
+        tocata.artista = artista
+        tocata.asistentes_max = tocata.lugar.capacidad
+
+        if commit:
+            tocata.save()
+            tocata.estilos.set(artista.estilos.all())
+            #messages.success(request, 'Tocata creada exitosamente')
+
+        return tocata
 
 class SuspenderTocataForm(forms.Form):
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.views.generic import DetailView, ListView, View
+from django.views.generic import DetailView, ListView, View, CreateView
 from django.http import Http404, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
@@ -19,7 +19,7 @@ from lugar.models import Lugar, Comuna, Region
 from carro.models import CarroCompra
 from orden.models import EntradasCompradas
 
-from .forms import TocataForm, SuspenderTocataForm, BorrarTocataForm
+from .forms import CrearTocataForm, SuspenderTocataForm, BorrarTocataForm
 from tocataabierta.forms import TocataAbiertaForm
 from propuestaslugar.forms import LugaresTocataForm
 
@@ -144,10 +144,22 @@ class BorrarTocataView(LoginRequiredMixin, View):
 
         return redirect('tocata:mistocatas')
 
+
+class CrearTocataView(LoginRequiredMixin, CreateView):
+    form_class = CrearTocataForm
+    template_name = 'tocata/creartocata.html'
+    success_url = '/tocatas/artista/mistocatas'
+
+    def get_form_kwargs(self, *args, **kwargs):
+        form_kwargs = super(CrearTocataView, self).get_form_kwargs(*args, **kwargs)
+        form_kwargs['user'] = self.request.user
+
+        return form_kwargs
+
 @login_required(login_url='index')
 def creartocatacerrada(request):
 
-    form = TocataForm(request.user, request.POST or None)
+    form = CrearTocataForm(request.user, request.POST or None)
 
     if form.is_valid():
 
@@ -157,7 +169,7 @@ def creartocatacerrada(request):
             nuevaTocata.flayer_380_507 = request.FILES['flayer_original']
             nuevaTocata.flayer_1920_1280 = request.FILES['flayer_original']
 
-        nuevaTocata.estado = parToca['publicado']
+        nuevaTocata.estado = 'publicado'
         nuevaTocata.region = nuevaTocata.lugar.region
         nuevaTocata.comuna = nuevaTocata.lugar.comuna
 
@@ -171,29 +183,13 @@ def creartocatacerrada(request):
         nuevaTocata.estilos.set(artista.estilos.all())
 
         messages.success(request, 'Tocata creada exitosamente')
-        return redirect('mistocatas')
-    #$else:
-    #    print(form.errors.as_data())
-    #    messages.error(request,'Error en form')
+        return redirect('tocata:mistocatas')
 
     context = {
         'form': form,
     }
 
-    return render(request, 'tocata/creartocatacerrada.html', context)
-
-@login_required(login_url='index')
-def detallestocata(request, tocata_id):
-
-    tocata = get_object_or_404(Tocata, pk=tocata_id)
-
-    context = {
-        'tocata': tocata,
-    }
-
-    return render(request, 'tocata/detallestocatacerrada.html', context)
-
-
+    return render(request, 'tocata/creartocata.html', context)
 
 @login_required(login_url='index')
 def carga_comunas_tocata(request):

@@ -6,9 +6,8 @@
 {% url 'tocataabierta:tocatasabiertas' as tocatasabiertas_url %}
 {% url 'artistas' as artistas_url %}
 {% url 'tocata:mistocatas' as mistocatas_url %}
-{% url 'tocataabierta:mistocatasabiertas' as mistocatasabiertas_url %}
 {% url 'tocata:creartocata' as creartocata_url %}
-{% url 'tocata:creartocatacerrada' as creartocatacerrada_url %}
+{% url 'tocataabierta:mistocatasabiertas' as mistocatasabiertas_url %}
 {% url 'tocataabierta:creartocataabierta' as creartocataabierta_url %}
 {% url 'mislugares' as mislugares_url %}
 {% url 'agregarlugar' as agregarlugar_url %}
@@ -75,11 +74,11 @@
                                 <li class="dropdown"><a href="{{ mistocatas_url }}">Mis Tocatas</a>
                                   <ul class="dropdown-menu">
                                     <li><a href="{{ mistocatas_url }}">Mis Tocatas</a></li>
-                                    <li><a href="{{ mistocatasabiertas_url }}">Mis Tocatas Abiertas</a></li>
+                                    <li><a href="{{ mistocatasabiertas_url }}">Buscando lugar</a></li>
                                     <li class="dropdown-submenu"><a href="{{ creartocata_url }}">Crea Tocata</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="{{ creartocatacerrada_url }}">Tocata Cerrada</a></li>
-                                            <li><a href="{{ creartocataabierta_url }}">Tocata Abierta</a></li>
+                                            <li><a href="{{ creartocata_url }}">Tocata</a></li>
+                                            <li><a href="{{ creartocataabierta_url }}">Buscar lugar</a></li>
                                         </ul>
                                     </li>
                                   </ul>
