@@ -15,9 +15,10 @@
                     </div>
                 </div>
             </div>
-            <form action="{% url 'tocata:borrartocata' instance.id %}" method="POST">
+            <form action="{% url 'tocata:borrartocata' %}" method="POST">
               {% csrf_token %}
               <div class="modal-footer">
+                <input type="hidden" name="tocata" id="id_tocata" value="{{ instance.id }}">
                 <button type="submit" class="btn btn-b">Confirmo Borrado</button>
                 <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Cancelar</button>
               </div>

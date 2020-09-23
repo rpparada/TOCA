@@ -19,7 +19,7 @@ from lugar.models import Lugar, Comuna, Region
 from carro.models import CarroCompra
 from orden.models import EntradasCompradas
 
-from .forms import TocataForm
+from .forms import TocataForm, SuspenderTocataForm, BorrarTocataForm
 from tocataabierta.forms import TocataAbiertaForm
 from propuestaslugar.forms import LugaresTocataForm
 
@@ -104,15 +104,15 @@ class TocataDetailView(DetailView):
 
         return tocata
 
-
 class TocatasArtistaListView(LoginRequiredMixin, ListView):
 
+    queryset = None
     paginate_by = 10
     template_name = 'tocata/mistocatas.html'
 
     def get_queryset(self, *args, **kwargs):
         request = self.request
-        tocatas = Tocata.objects.tocataartista_by_request(request)
+        tocatas = Tocata.objects.tocataartista_by_request(request).order_by('fecha')
 
         return tocatas
 
@@ -121,32 +121,28 @@ class TocatasArtistaListView(LoginRequiredMixin, ListView):
         return context
 
 class SuspenderTocataView(LoginRequiredMixin, View):
-    
+
+    form_class = SuspenderTocataForm
+
     def post(self, request, *args, **kwargs):
+        form = self.form_class(request, request.POST or None)
+        if form.is_valid():
+            tocata = form.cleaned_data['tocata']
+            tocata.suspender_tocata()
 
+        return redirect('tocata:mistocatas')
 
-@login_required(login_url='index')
-def suspendertocata(request, tocata_id):
+class BorrarTocataView(LoginRequiredMixin, View):
 
-    if request.method == 'POST':
-        tocata = get_object_or_404(Tocata, pk=tocata_id)
-        tocata.suspender_tocata()
+    form_class = BorrarTocataForm
 
-    return redirect('tocata:mistocatas')
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request, request.POST or None)
+        if form.is_valid():
+            tocata = form.cleaned_data['tocata']
+            tocata.borrar_tocata()
 
-@login_required(login_url='index')
-def creartocata(request):
-
-    if request.user.is_authenticated:
-        usuario = Usuario.objects.filter(user=request.user)[0]
-    else:
-        usuario = None
-
-    context = {
-        'usuario': usuario,
-    }
-
-    return render(request, 'tocata/creartocata.html', context)
+        return redirect('tocata:mistocatas')
 
 @login_required(login_url='index')
 def creartocatacerrada(request):
@@ -197,15 +193,7 @@ def detallestocata(request, tocata_id):
 
     return render(request, 'tocata/detallestocatacerrada.html', context)
 
-@login_required(login_url='index')
-def borrartocata(request, tocata_id):
 
-    if request.method == 'POST':
-        tocata = get_object_or_404(Tocata, pk=tocata_id)
-        tocata.estado = parToca['borrado']
-        tocata.save()
-
-    return redirect('mistocatas')
 
 @login_required(login_url='index')
 def carga_comunas_tocata(request):

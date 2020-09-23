@@ -74,3 +74,27 @@ class TocataForm(forms.ModelForm):
         super(TocataForm, self).__init__(*args, **kwargs)
 
         self.fields['lugar'].queryset = Lugar.objects.filter(usuario=user).filter(estado=parToca['disponible'])
+
+class SuspenderTocataForm(forms.Form):
+
+    tocata              = forms.ModelChoiceField(queryset=None,
+                                empty_label=None,
+                                widget=forms.HiddenInput()
+                            )
+
+    def __init__(self, request, *args, **kwargs):
+        self.request = request
+        super(SuspenderTocataForm, self).__init__(*args, **kwargs)
+        self.fields['tocata'].queryset = Tocata.objects.tocataartista_by_request(self.request)
+
+class BorrarTocataForm(forms.Form):
+
+    tocata              = forms.ModelChoiceField(queryset=None,
+                                empty_label=None,
+                                widget=forms.HiddenInput()
+                            )
+
+    def __init__(self, request, *args, **kwargs):
+        self.request = request
+        super(BorrarTocataForm, self).__init__(*args, **kwargs)
+        self.fields['tocata'].queryset = Tocata.objects.tocataartista_by_request(self.request)

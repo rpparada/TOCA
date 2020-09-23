@@ -74,7 +74,7 @@
                                         {% if object.estado in 'publicado,confirmado,vendido' %}
                                         <li><a href="" data-target="#modalsuce{{object.id}}" data-toggle="modal"><i class="icon-alert-triangle"></i>Suspender</a></li>
                                         {% endif %}
-                                        {% if object.estado == 'suspendido' %}
+                                        {% if object.estado in 'suspendido,completado' %}
                                         <li><a href="" data-target="#modalboce{{object.id}}" data-toggle="modal"><i class="icon-x"></i>Borrar</a></li>
                                         {% endif %}
                                         {% if object.estado in 'publicado,confirmado,vendido' %}

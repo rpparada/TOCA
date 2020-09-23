@@ -24,7 +24,7 @@ User = settings.AUTH_USER_MODEL
 class TocataQuerySet(models.query.QuerySet):
 
     def estado_disp(self):
-        return self.filter(estado__in = ['publicado','confirmado'])
+        return self.filter(estado__in = ['publicado','confirmado','vendido'])
 
     def entrada_disp(self):
         return self.filter(asistentes_max__gt = F('asistentes_total'))
@@ -34,7 +34,9 @@ class TocataQuerySet(models.query.QuerySet):
 
     def disponible(self):
         return self.estado_disp().entrada_disp().fecha_disp()
-        #return self.estado_disp().entrada_disp().fecha_disp()
+
+    def no_disponible(self):
+        return self.filter(estado__in = ['suspendido','completado'])
 
     def busqueda(self, consulta):
         lookups = (Q(nombre__icontains=consulta) |
@@ -51,13 +53,18 @@ class TocataQuerySet(models.query.QuerySet):
         artista = Artista.objects.get(usuario=request.user)
         return self.filter(artista=artista)
 
-class TocataManager(models.Manager):
+    def quita_barradas(self):
+        return self.exclude(estado='borrado')
 
+class TocataManager(models.Manager):
     def get_queryset(self):
         return TocataQuerySet(self.model, using=self._db)
 
     def disponible(self):
         return self.get_queryset().disponible()
+
+    def no_disponible(self):
+        return self.get_queryset().no_disponible()
 
     def busqueda(self, consulta):
         return self.get_queryset().disponible().busqueda(consulta)
@@ -76,7 +83,8 @@ class TocataManager(models.Manager):
         return self.none()
 
     def tocataartista_by_request(self, request):
-        return self.get_queryset().tocataartista_by_request(request).exclude(estado='borrado')
+        return self.get_queryset().tocataartista_by_request(request).quita_barradas()
+
 
 def upload_tocata_flayer_file_loc(instance, filename):
     slug =instance.slug
@@ -162,6 +170,15 @@ class Tocata(models.Model):
             # - Devolver dinero
 
         return fue_suspendido
+
+    def borrar_tocata(self):
+        fue_borrada = False
+        if self.estado in ['suspendido','completado']:
+            self.estado = 'borrado'
+            self.save()
+            fue_borrada = True
+
+        return fue_borrada
 
     @property
     def name(self):
