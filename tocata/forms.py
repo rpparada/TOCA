@@ -1,7 +1,8 @@
+from datetime import timedelta, datetime
+
 from django import forms
 from django.contrib import messages
-
-import datetime
+from django.utils import timezone
 
 from .models import Tocata
 from lugar.models import Region, Comuna, Lugar
@@ -20,7 +21,8 @@ class CrearTocataForm(forms.ModelForm):
     nombre              = forms.CharField(widget=forms.TextInput(attrs={
                                                                 'id': 'primercampo',
                                                                 'class': 'form-control',
-                                                                'placeholder': 'Nombre'
+                                                                'placeholder': 'Nombre',
+                                                                'autofocus': True
                                                             }), label='Nombre'
                                         )
     lugar               = forms.ModelChoiceField(queryset=None, empty_label=None, widget=forms.Select(attrs={
@@ -68,31 +70,59 @@ class CrearTocataForm(forms.ModelForm):
             'flayer_original'
             )
 
-    def __init__(self, user, *args, **kwargs):
-        self.user = user
+    def __init__(self, request, *args, **kwargs):
+        self.request = request
         super(CrearTocataForm, self).__init__(*args, **kwargs)
-        self.fields['lugar'].queryset = Lugar.objects.filter(usuario=user).filter(estado=parToca['disponible'])
+        self.fields['lugar'].queryset = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
+
+    def clean_costo(self):
+        costo = self.cleaned_data.get('costo')
+        # Costo de adhesion debe ser mayor a 0
+        if costo <= 0:
+            raise forms.ValidationError('Adhesion debe ser mayor a cero')
+
+        return costo
+
+    def clean_asistentes_min(self):
+        asistentes_min = self.cleaned_data.get('asistentes_min')
+        lugar = self.cleaned_data.get('lugar')
+        # Asistentes minimos debe ser mayor a 0
+        if asistentes_min <= 0:
+            raise forms.ValidationError('Debes definir un minimo de asistentes mayor a cero')
+
+        # Asistentes minimos no deben superar la capcidad del lugar seleccionado
+        if asistentes_min > lugar.capacidad:
+            raise forms.ValidationError('Lugar tiene una capacidad menor que el minimo de asistentes')
+
+        return asistentes_min
+
+    def clean_fecha(self):
+        fecha = self.cleaned_data.get('fecha')
+        # La fecha de las tocatas deben definirce con una semana de anticipacion
+        if (fecha - timezone.now().date()) <= timedelta(days=7):
+            raise forms.ValidationError('Debes definir una fecha futura con al menos 7 dias de anticipacion')
+
+        return fecha
 
     def save(self, commit=True):
         tocata = super(CrearTocataForm, self).save(commit=False)
+        request = self.request
 
         if tocata.flayer_original:
             tocata.flayer_380_507 = tocata.flayer_original
-            #tocata.flayer_1920_1280 = tocata.flayer_original
 
         tocata.estado = 'publicado'
         tocata.region = tocata.lugar.region
         tocata.comuna = tocata.lugar.comuna
 
-        tocata.usuario = self.user
-        artista = Artista.objects.get(usuario=self.user)
+        tocata.usuario = request.user
+        artista = Artista.objects.get(usuario=request.user)
         tocata.artista = artista
         tocata.asistentes_max = tocata.lugar.capacidad
 
         if commit:
             tocata.save()
             tocata.estilos.set(artista.estilos.all())
-            #messages.success(request, 'Tocata creada exitosamente')
 
         return tocata
 

@@ -25,6 +25,8 @@ from propuestaslugar.forms import LugaresTocataForm
 
 from analytics.mixins import ObjectViewedMixin
 
+from toca.mixins import NextUrlMixin, RequestFormAttachMixin
+
 from toca.parametros import parToca, parTocatas, parTocatasAbiertas
 
 # Create your views here.
@@ -145,37 +147,21 @@ class BorrarTocataView(LoginRequiredMixin, View):
         return redirect('tocata:mistocatas')
 
 
-class TocataCreateView(LoginRequiredMixin, CreateView):
+class TocataCreateView(NextUrlMixin, RequestFormAttachMixin, LoginRequiredMixin, CreateView):
     form_class = CrearTocataForm
     template_name = 'tocata/creartocata.html'
-    success_url = '/tocatas/artista/mistocatas'
-
-    def get_form_kwargs(self, *args, **kwargs):
-        form_kwargs = super(TocataCreateView, self).get_form_kwargs(*args, **kwargs)
-        form_kwargs['user'] = self.request.user
-
-        return form_kwargs
-
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        # else:
-        #     return self.form_invalid(form)
 
     def form_valid(self, form):
         request = self.request
         msg = '''Tocata publicada'''
         messages.success(request, msg)
-        return super(TocataCreateView, self).form_valid(form)
+        return super().form_valid(form)
 
-    # def form_invalid(self, form):
-    #     request = self.request
-    #     context = {
-    #         'form': form,
-    #         'key': self.key
-    #     }
-    #     return render(request, 'registration/activation_error.html', context)
+    def form_invalid(self, form):
+        request = self.request
+        msg = '''Error en formulario'''
+        messages.success(request, msg)
+        return super().form_invalid(form)
 
 @login_required(login_url='index')
 def creartocatacerrada(request):

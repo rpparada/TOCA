@@ -61,6 +61,6 @@ class Lugar(models.Model):
 
     def __str__(self):
         if self.nombre:
-            return self.nombre+', '+self.nombre_calle+' '+str(self.numero)+', '+str(self.comuna)
+            return self.nombre+', '+self.nombre_calle+' '+str(self.numero)+', '+str(self.comuna)+' - Aforo('+str(self.capacidad)+')'
         else:
-            return self.nombre_calle+' '+str(self.numero)+', '+str(self.comuna)
+            return self.nombre_calle+' '+str(self.numero)+', '+str(self.comuna)+' - aforo('+str(self.capacidad)+')'
