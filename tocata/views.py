@@ -145,7 +145,7 @@ class BorrarTocataView(LoginRequiredMixin, View):
         return redirect('tocata:mistocatas')
 
 
-class CrearTocataView(LoginRequiredMixin, CreateView):
+class TocataCreateView(LoginRequiredMixin, CreateView):
     form_class = CrearTocataForm
     template_name = 'tocata/creartocata.html'
     success_url = '/tocatas/artista/mistocatas'
