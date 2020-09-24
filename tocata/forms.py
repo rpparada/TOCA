@@ -52,7 +52,7 @@ class CrearTocataForm(forms.ModelForm):
                                                                 'placeholder': 'Asistentes Minimos'
                                                             }), label='Asistentes Mínimos'
                                         )
-    flayer_original     = forms.ImageField(required=False, widget=forms.FileInput(attrs={
+    flayer_380_507      = forms.ImageField(required=False, widget=forms.FileInput(attrs={
                                                                 'class': 'form-control-file',
                                                             }), label='Subir Flayer'
                                         )
@@ -67,7 +67,7 @@ class CrearTocataForm(forms.ModelForm):
             'fecha',
             'hora',
             'asistentes_min',
-            'flayer_original'
+            'flayer_380_507'
             )
 
     def __init__(self, request, *args, **kwargs):
@@ -108,10 +108,6 @@ class CrearTocataForm(forms.ModelForm):
         tocata = super(CrearTocataForm, self).save(commit=False)
         request = self.request
 
-        if tocata.flayer_original:
-            tocata.flayer_380_507 = tocata.flayer_original
-
-        tocata.estado = 'publicado'
         tocata.region = tocata.lugar.region
         tocata.comuna = tocata.lugar.comuna
 

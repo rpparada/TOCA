@@ -163,40 +163,40 @@ class TocataCreateView(NextUrlMixin, RequestFormAttachMixin, LoginRequiredMixin,
         messages.success(request, msg)
         return super().form_invalid(form)
 
-@login_required(login_url='index')
-def creartocatacerrada(request):
-
-    form = CrearTocataForm(request.user, request.POST or None)
-
-    if form.is_valid():
-
-        nuevaTocata = form.save(commit=False)
-        if 'flayer_original' in request.FILES:
-            nuevaTocata.flayer_original = request.FILES['flayer_original']
-            nuevaTocata.flayer_380_507 = request.FILES['flayer_original']
-            nuevaTocata.flayer_1920_1280 = request.FILES['flayer_original']
-
-        nuevaTocata.estado = 'publicado'
-        nuevaTocata.region = nuevaTocata.lugar.region
-        nuevaTocata.comuna = nuevaTocata.lugar.comuna
-
-        nuevaTocata.usuario = request.user
-        artista = Artista.objects.get(usuario=request.user)
-        nuevaTocata.artista = artista
-        nuevaTocata.asistentes_max = nuevaTocata.lugar.capacidad
-
-        nuevaTocata.save()
-
-        nuevaTocata.estilos.set(artista.estilos.all())
-
-        messages.success(request, 'Tocata creada exitosamente')
-        return redirect('tocata:mistocatas')
-
-    context = {
-        'form': form,
-    }
-
-    return render(request, 'tocata/creartocata.html', context)
+# @login_required(login_url='index')
+# def creartocatacerrada(request):
+#
+#     form = CrearTocataForm(request.user, request.POST or None)
+#
+#     if form.is_valid():
+#
+#         nuevaTocata = form.save(commit=False)
+#         if 'flayer_original' in request.FILES:
+#             nuevaTocata.flayer_original = request.FILES['flayer_original']
+#             nuevaTocata.flayer_380_507 = request.FILES['flayer_original']
+#             nuevaTocata.flayer_1920_1280 = request.FILES['flayer_original']
+#
+#         nuevaTocata.estado = 'publicado'
+#         nuevaTocata.region = nuevaTocata.lugar.region
+#         nuevaTocata.comuna = nuevaTocata.lugar.comuna
+#
+#         nuevaTocata.usuario = request.user
+#         artista = Artista.objects.get(usuario=request.user)
+#         nuevaTocata.artista = artista
+#         nuevaTocata.asistentes_max = nuevaTocata.lugar.capacidad
+#
+#         nuevaTocata.save()
+#
+#         nuevaTocata.estilos.set(artista.estilos.all())
+#
+#         messages.success(request, 'Tocata creada exitosamente')
+#         return redirect('tocata:mistocatas')
+#
+#     context = {
+#         'form': form,
+#     }
+#
+#     return render(request, 'tocata/creartocata.html', context)
 
 @login_required(login_url='index')
 def carga_comunas_tocata(request):
