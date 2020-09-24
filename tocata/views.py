@@ -151,10 +151,31 @@ class TocataCreateView(LoginRequiredMixin, CreateView):
     success_url = '/tocatas/artista/mistocatas'
 
     def get_form_kwargs(self, *args, **kwargs):
-        form_kwargs = super(CrearTocataView, self).get_form_kwargs(*args, **kwargs)
+        form_kwargs = super(TocataCreateView, self).get_form_kwargs(*args, **kwargs)
         form_kwargs['user'] = self.request.user
 
         return form_kwargs
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        # else:
+        #     return self.form_invalid(form)
+
+    def form_valid(self, form):
+        request = self.request
+        msg = '''Tocata publicada'''
+        messages.success(request, msg)
+        return super(TocataCreateView, self).form_valid(form)
+
+    # def form_invalid(self, form):
+    #     request = self.request
+    #     context = {
+    #         'form': form,
+    #         'key': self.key
+    #     }
+    #     return render(request, 'registration/activation_error.html', context)
 
 @login_required(login_url='index')
 def creartocatacerrada(request):

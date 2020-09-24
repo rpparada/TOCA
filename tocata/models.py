@@ -120,10 +120,8 @@ class Tocata(models.Model):
     asistentes_min      = models.IntegerField()
     asistentes_max      = models.IntegerField()
     flayer_original     = models.ImageField(upload_to=upload_tocata_flayer_file_loc, blank=True, default='fotos/defecto/imagen_original.jpg')
-    flayer_1920_1280    = ResizedImageField(size=[1920, 1280],upload_to=upload_tocata_flayer_file_loc, blank=True, default='fotos/defecto/imagen_1920_1280.jpg')
-    #flayer_1920_1280    = ResizedImageField(size=[1920, 1280],upload_to=upload_tocata_flayer_file_loc, blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_1920_1280.jpg')
-    flayer_380_507      = ResizedImageField(size=[380, 507],upload_to=upload_tocata_flayer_file_loc, blank=True, default='fotos/defecto/imagen_380_507.jpg')
-    #flayer_380_507      = ResizedImageField(size=[380, 507],upload_to=upload_tocata_flayer_file_loc, blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_380_507.jpg')
+    #flayer_380_507      = ResizedImageField(size=[380, 507],upload_to=upload_tocata_flayer_file_loc, blank=True, default='fotos/defecto/imagen_380_507.jpg')
+    flayer_380_507      = ResizedImageField(size=[380, 507],upload_to=upload_tocata_flayer_file_loc, blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_380_507.jpg')
     estilos             = models.ManyToManyField(Estilo, blank=True)
     estado              = models.CharField(max_length=20, choices=TOCATA_ESTADO_OPCIONES,default='publicado')
 

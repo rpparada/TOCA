@@ -78,7 +78,7 @@ class CrearTocataForm(forms.ModelForm):
 
         if tocata.flayer_original:
             tocata.flayer_380_507 = tocata.flayer_original
-            tocata.flayer_1920_1280 = tocata.flayer_original
+            #tocata.flayer_1920_1280 = tocata.flayer_original
 
         tocata.estado = 'publicado'
         tocata.region = tocata.lugar.region
