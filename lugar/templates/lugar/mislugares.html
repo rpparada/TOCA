@@ -7,119 +7,13 @@
 {% include 'partials/_alerts.html' %}
 
 <!-- Page Content -->
-{% if user.is_authenticated %}
-
-{% if mislugares %}
-
-{% for lugar in mislugares %}
+{% if object_list %}
+{% for object in object_list %}
 <!--Modal Borrar -->
-<div class="modal fade" id="modal{{lugar.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="modal-label">Borrar Lugar</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        {% if lugar.borra == 'SI' %}
-                        <p>¿Estas seguro que quieres borralo?</p>
-                        {% else %}
-                        <p>No puedes borralo, será utilizado en "<a href="{% url 'tocata' lugar.tocata.0.id %}">{{ lugar.tocata.0.nombre }}</a>"</p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-              <form action="{% url 'borrarlugar' lugar.id %}" method="POST">
-              {% csrf_token %}
-                {% if lugar.borra == 'SI' %}
-                <button type="submit" class="btn btn-b">Confirmo Borrado</button>
-                {% endif %}
-                <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
-              </form>
-            </div>
-        </div>
-    </div>
-</div>
+{% include 'lugar/snippets/modalborrar.html' with instance=object %}
 <!-- end: Modal -->
-
 <!--Modal Detalles -->
-<div class="modal fade" id="modalde{{lugar.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="modal-label">{{lugar.nombre_calle}} {{ lugar.numero }}, {{ lugar.region }} {{ lugar.comuna }}</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-            <form action="{% url 'actualizarlugar' lugar.id %}" method="POST">
-              {% csrf_token %}
-            <div class="modal-body">
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Calle</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" value="{{ lugar.nombre_calle }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Número</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" value="{{ lugar.numero }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Region</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{ lugar.region.nombre }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Comuna</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{ lugar.comuna.nombre }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Ciudad</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" value="{{ lugar.ciudad }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Depto.</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" value="{{ lugar.departamento }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Otros</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" value="{{ lugar.otros }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Capacidad Aprox.</label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" value="{{ lugar.capacidad }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Descripción</label>
-                    <div class="col-sm-10">
-                      <textarea class="form-control" rows="3" name="descripción">{{ lugar.descripción }}</textarea>
-                    </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-b">Actualizar</button>
-                <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
-              </div>
-              </form>
-            </div>
-        </div>
-    </div>
-</div>
+{% include 'lugar/snippets/modaldetalles.html' with instance=object %}
 <!-- end: Modal -->
 {% endfor %}
 
@@ -132,7 +26,7 @@
                   <p>Esta es la lista de tus lugares registrados.</p>
               </div>
               <div class="col-lg-6 text-right">
-                <a href="{% url 'agregarlugar' %}" class="btn btn-light"><i class="icon-plus"></i> Agregar Lugar</a>
+                <a href="{% url 'lugar:agregarlugar' %}" class="btn btn-light"><i class="icon-plus"></i> Agregar Lugar</a>
                 <div id="export_buttons" class="mt-2"></div>
               </div>
           </div>
@@ -149,21 +43,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                      {% for lugar in mislugares %}
+                      {% for object in object_list %}
                         <tr>
-                            {% if lugar.nombre %}
-                            <td>{{ lugar.nombre }}, {{ lugar.nombre_calle }} {{ lugar.numero }}</td>
+                            {% if object.nombre %}
+                            <td>{{ object.nombre }}, {{ object.nombre_calle }} {{ object.numero }}</td>
                             {% else %}
-                            <td>{{ lugar.nombre_calle }} {{ lugar.numero }}</td>
+                            <td>{{ object.nombre_calle }} {{ object.numero }}</td>
                             {% endif %}
-                            <td>{{ lugar.region }}/{{ lugar.comuna }}</td>
-                            <td>{{ lugar.capacidad }}</td>
+                            <td>{{ object.region }}/{{ object.comuna }}</td>
+                            <td>{{ object.capacidad }}</td>
                             <td>
                               <div class="p-dropdown">
                                   <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
                                   <ul class="p-dropdown-content">
-                                    <li><a data-target="#modalde{{lugar.id}}" data-toggle="modal" href="#"><i class="icon-eye"></i>Ver</a></li>
-                                    <li><a data-target="#modal{{lugar.id}}" data-toggle="modal" href="#"><i class="icon-x"></i>Borrar</a></li>
+                                    <li><a data-target="#modalde{{object.id}}" data-toggle="modal" href="#"><i class="icon-eye"></i>Ver</a></li>
+                                    <li><a data-target="#modal{{object.id}}" data-toggle="modal" href="#"><i class="icon-x"></i>Borrar</a></li>
                                   </ul>
                               </div>
                             </td>
@@ -194,20 +88,11 @@
                   <p>Actualmente no tienes ningun lugar registrado donde puedas invitar a tus artistas favoritos.</p>
               </div>
               <div class="col-lg-6 text-right">
-                <a href="{% url 'agregarlugar' %}" class="btn btn-light"><i class="icon-plus"></i> Crea Tu Primer Lugar</a>
+                <a href="{% url 'lugar:agregarlugar' %}" class="btn btn-light"><i class="icon-plus"></i> Crea Tu Primer Lugar</a>
                 <div id="export_buttons" class="mt-2"></div>
               </div>
           </div>
         <!-- end: DataTable -->
-    </div>
-</section>
-{% endif %}
-{% else %}
-<section id="page-content">
-    <div class="container">
-      <div data-animate="fadeInUp" class="text-center">
-          <a href="{% url 'ingresar' %}?next={{request.path|urlencode}}" class="btn">INGRESA A TU CUENTA</a>
-      </div>
     </div>
 </section>
 {% endif %}

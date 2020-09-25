@@ -1,0 +1,77 @@
+{% load humanize %}
+<!--Modal Detalles -->
+<div class="modal fade" id="modalde{{instance.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-label">{{instance.nombre_calle}} {{ instance.numero }}, {{ instance.region }} {{ instance.comuna }}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <form action="{% url 'lugar:actualizarlugar' instance.id %}" method="POST">
+              {% csrf_token %}
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Calle</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ instance.nombre_calle }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Número</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ instance.numero }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Region</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" value="{{ instance.region.nombre }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Comuna</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" value="{{ instance.comuna.nombre }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Ciudad</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ instance.ciudad }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Depto.</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ instance.departamento }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Otros</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ instance.otros }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Capacidad Aprox.</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" value="{{ instance.capacidad }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2 text-sm-right">Descripción</label>
+                    <div class="col-sm-10">
+                      <textarea class="form-control" rows="3" name="descripción">{{ instance.descripción }}</textarea>
+                    </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-b">Actualizar</button>
+                <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
+              </div>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: Modal -->

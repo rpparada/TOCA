@@ -23,7 +23,7 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path('', include('home.urls')),
     path('artistas/', include('artista.urls')),
-    path('lugares/', include('lugar.urls')),
+    path('lugares/', include(('lugar.urls','lugar'), namespace='lugar')),
     path('tocatas/', include(('tocata.urls','tocata'), namespace='tocata')),
     path('ofrecetucasa/', include(('tocataabierta.urls','tocataabierta'), namespace='tocataabierta')),
     path('propuestaslugar/', include(('propuestaslugar.urls','propuestaslugar'), namespace='propuestaslugar')),

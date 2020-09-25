@@ -18,7 +18,7 @@
                       <p hidden id="mensajerror"></p>
                   </div>
                   <div class="card-body">
-                      <form id="formtocheck" action="{% url 'agregarlugar' %}" method="POST" data-ciudad-url-agregar="{% url 'ajax_load_comunas_agregar' %}">
+                      <form id="formtocheck" action="{% url 'lugar:agregarlugar' %}" method="POST" data-ciudad-url-agregar="{% url 'lugar:ajax_load_comunas_agregar' %}">
                         {% csrf_token %}
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">{{ form.nombre.label }}</label>
