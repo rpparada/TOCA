@@ -68,19 +68,14 @@
                             <li><a href="{{ tocatas_url }}">Tocatas</a></li>
                             <li><a href="{{ tocatasabiertas_url }}">Ofrece tu Casa</a></li>
                             <li><a href="{{ artistas_url }}">Artistas</a></li>
-
                             {% if user.is_authenticated %}
                               {% if request.user.is_musico %}
                                 <li class="dropdown"><a href="{{ mistocatas_url }}">Mis Tocatas</a>
                                   <ul class="dropdown-menu">
                                     <li><a href="{{ mistocatas_url }}">Mis Tocatas</a></li>
-                                    <li><a href="{{ mistocatasabiertas_url }}">Buscando lugar</a></li>
-                                    <li class="dropdown-submenu"><a href="{{ creartocata_url }}">Crea Tocata</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="{{ creartocata_url }}">Tocata</a></li>
-                                            <li><a href="{{ creartocataabierta_url }}">Buscar lugar</a></li>
-                                        </ul>
-                                    </li>
+                                    <li><a href="{{ creartocata_url }}">Crear Tocata</a></li>
+                                    <li><a href="{{ mistocatasabiertas_url }}">Mis Busquedas</a></li>
+                                    <li><a href="{{ creartocataabierta_url }}">Crea Busquedas</a></li>
                                   </ul>
                                 </li>
                               {% endif %}

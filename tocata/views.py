@@ -1,33 +1,17 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, ListView, View, CreateView
-from django.http import Http404, HttpResponse
+from django.http import Http404
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.conf import settings
-
-from itertools import chain
-from operator import attrgetter
-
-import os
 
 from .models import Tocata
-from tocataabierta.models import TocataAbierta
-from propuestaslugar.models import LugaresTocata
-from artista.models import Artista
-from lugar.models import Lugar, Comuna, Region
 from carro.models import CarroCompra
-from orden.models import EntradasCompradas
 
 from .forms import CrearTocataForm, SuspenderTocataForm, BorrarTocataForm
-from tocataabierta.forms import TocataAbiertaForm
-from propuestaslugar.forms import LugaresTocataForm
 
 from analytics.mixins import ObjectViewedMixin
 
 from toca.mixins import NextUrlMixin, RequestFormAttachMixin
-
-from toca.parametros import parToca, parTocatas, parTocatasAbiertas
 
 # Create your views here.
 class UserTocatasHistoryView(LoginRequiredMixin, ListView):
@@ -153,60 +137,12 @@ class TocataCreateView(NextUrlMixin, RequestFormAttachMixin, LoginRequiredMixin,
 
     def form_valid(self, form):
         request = self.request
-        msg = '''Tocata publicada'''
+        msg = 'Tocata publicada'
         messages.success(request, msg)
         return super().form_valid(form)
 
     def form_invalid(self, form):
         request = self.request
-        msg = '''Error en formulario'''
-        messages.success(request, msg)
+        msg = 'Error en formulario'
+        messages.error(request, msg)
         return super().form_invalid(form)
-
-# @login_required(login_url='index')
-# def creartocatacerrada(request):
-#
-#     form = CrearTocataForm(request.user, request.POST or None)
-#
-#     if form.is_valid():
-#
-#         nuevaTocata = form.save(commit=False)
-#         if 'flayer_original' in request.FILES:
-#             nuevaTocata.flayer_original = request.FILES['flayer_original']
-#             nuevaTocata.flayer_380_507 = request.FILES['flayer_original']
-#             nuevaTocata.flayer_1920_1280 = request.FILES['flayer_original']
-#
-#         nuevaTocata.estado = 'publicado'
-#         nuevaTocata.region = nuevaTocata.lugar.region
-#         nuevaTocata.comuna = nuevaTocata.lugar.comuna
-#
-#         nuevaTocata.usuario = request.user
-#         artista = Artista.objects.get(usuario=request.user)
-#         nuevaTocata.artista = artista
-#         nuevaTocata.asistentes_max = nuevaTocata.lugar.capacidad
-#
-#         nuevaTocata.save()
-#
-#         nuevaTocata.estilos.set(artista.estilos.all())
-#
-#         messages.success(request, 'Tocata creada exitosamente')
-#         return redirect('tocata:mistocatas')
-#
-#     context = {
-#         'form': form,
-#     }
-#
-#     return render(request, 'tocata/creartocata.html', context)
-
-@login_required(login_url='index')
-def carga_comunas_tocata(request):
-
-    region_id = request.GET.get('region')
-    comuna_id = request.GET.get('comuna')
-    comunas = Comuna.objects.filter(region=int(region_id)).order_by('codigo')
-
-    context = {
-        'comunas_reg': comunas,
-    }
-
-    return render(request, 'tocata/comuna_dropdown_list_options_tocata.html', context)

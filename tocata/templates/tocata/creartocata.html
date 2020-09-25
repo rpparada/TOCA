@@ -19,7 +19,7 @@
                       <p hidden id="mensajerror"></p>
                   </div>
                   <div class="card-body">
-                      <form id="formtocheck" action="{% url 'tocata:creartocata' %}" method="POST" data-ciudad-url-agregar="{% url 'tocata:ajax_load_comunas_tocata' %}" enctype="multipart/form-data">
+                      <form id="formtocheck" action="{% url 'tocata:creartocata' %}" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">{{ form.nombre.label }}</label>

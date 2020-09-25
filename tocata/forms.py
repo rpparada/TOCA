@@ -99,7 +99,7 @@ class CrearTocataForm(forms.ModelForm):
     def clean_fecha(self):
         fecha = self.cleaned_data.get('fecha')
         # La fecha de las tocatas deben definirce con una semana de anticipacion
-        if (fecha - timezone.now().date()) <= timedelta(days=7):
+        if (fecha - timezone.now().date()) <= timedelta(days=5):
             raise forms.ValidationError('Debes definir una fecha futura con al menos 7 dias de anticipacion')
 
         return fecha

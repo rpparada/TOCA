@@ -8,8 +8,6 @@ urlpatterns = [
     # Vistas Artista
     path('artista/mistocatas', views.TocatasArtistaListView.as_view(), name='mistocatas'),
     path('artista/creartocata', views.TocataCreateView.as_view(), name='creartocata'),
-    #path('artista/creartocata', views.creartocatacerrada, name='creartocata'),
     path('artista/borrartocata', views.BorrarTocataView.as_view(), name='borrartocata'),
-    path('artista/suspendertocata', views.SuspenderTocataView.as_view(), name='suspendertocata'),
-    path('ajax/load-comunas_tocata/', views.carga_comunas_tocata, name='ajax_load_comunas_tocata'),
+    path('artista/suspendertocata', views.SuspenderTocataView.as_view(), name='suspendertocata')
 ]
