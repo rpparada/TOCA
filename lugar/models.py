@@ -58,6 +58,15 @@ class Lugar(models.Model):
         else:
             return self.nombre_calle+' '+str(self.numero)+', '+str(self.comuna)+' - aforo '+str(self.capacidad)
 
+    def update_descripción(self, descripción):
+        self.descripción = descripción
+        self.save()
+        return True
+
+    def borrar(self):
+        self.estado = 'noDisponible'
+        self.save()
+        return True
 
 # Regiones
 class Region(models.Model):

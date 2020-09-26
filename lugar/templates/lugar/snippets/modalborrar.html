@@ -10,21 +10,16 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        {% if instance.borra == 'SI' %}
                         <p>¿Estas seguro que quieres borralo?</p>
-                        {% else %}
-                        <p>No puedes borralo, será utilizado en "<a href="{% url 'tocata' instance.tocata.0.id %}">{{ instance.tocata.0.nombre }}</a>"</p>
-                        {% endif %}
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-              <form action="{% url 'lugar:borrarlugar' instance.id %}" method="POST">
+              <form action="{% url 'lugar:borrarlugar' %}" method="POST">
               {% csrf_token %}
-                {% if instance.borra == 'SI' %}
-                <button type="submit" class="btn btn-b">Confirmo Borrado</button>
-                {% endif %}
-                <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
+                <input type="hidden" name="lugar" id="id_lugar" value="{{ instance.id }}">
+                <button type="submit" class="btn btn-b">Confirmar</button>
+                <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Cancelar</button>
               </form>
             </div>
         </div>

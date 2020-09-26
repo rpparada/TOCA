@@ -2,7 +2,7 @@
 {% load static %}
 {% load humanize %}
 {% load thumbnail %}
-{% block title %} | CUENTA{% endblock %}
+{% block title %} | MIS LUGARES{% endblock %}
 {% block content %}
 {% include 'partials/_alerts.html' %}
 
@@ -23,7 +23,7 @@
           <div class="row mb-3">
               <div class="col-lg-6">
                   <h4>Mis Lugares</h4>
-                  <p>Esta es la lista de tus lugares registrados.</p>
+                  <p>Lista de tus lugares registrados.</p>
               </div>
               <div class="col-lg-6 text-right">
                 <a href="{% url 'lugar:agregarlugar' %}" class="btn btn-light"><i class="icon-plus"></i> Agregar Lugar</a>
@@ -36,8 +36,9 @@
                 <table id="datatable" class="table table-bordered table-hover" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Nombre, Calle y Número</th>
-                            <th>Regio/Comuna</th>
+                            <th>Nombre</th>
+                            <th>Dirección</th>
+                            <th>Comuna</th>
                             <th>Capacidad</th>
                             <th class="noExport">Acciones</th>
                         </tr>
@@ -48,9 +49,10 @@
                             {% if object.nombre %}
                             <td>{{ object.nombre }}, {{ object.nombre_calle }} {{ object.numero }}</td>
                             {% else %}
-                            <td>{{ object.nombre_calle }} {{ object.numero }}</td>
+                            <td>Sin nombre</td>
                             {% endif %}
-                            <td>{{ object.region }}/{{ object.comuna }}</td>
+                            <td>{{ object.nombre_calle }} {{ object.numero }}</td>
+                            <td>{{ object.comuna }}</td>
                             <td>{{ object.capacidad }}</td>
                             <td>
                               <div class="p-dropdown">
@@ -66,7 +68,8 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                          <th>Calle</th>
+                          <th>Nombre</th>
+                          <th>Dirección</th>
                           <th>Comuna</th>
                           <th>Capacidad</th>
                           <th>Acciones</th>

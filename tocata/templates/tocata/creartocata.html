@@ -21,6 +21,7 @@
                   <div class="card-body">
                       <form id="formtocheck" action="{% url 'tocata:creartocata' %}" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
+                          {{ form.non_field_errors }}
                           <div class="form-group row">
                               <label class="col-form-label col-sm-2 text-sm-right">{{ form.nombre.label }}</label>
                               <div class="col-sm-10">

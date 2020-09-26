@@ -3,15 +3,28 @@ from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView, ListView, View, CreateView
+from django.views.generic import (
+                            DetailView,
+                            ListView,
+                            View,
+                            CreateView
+                        )
 
 from .models import Lugar, Region, Provincia, Comuna
 from tocata.models import Tocata
 from propuestaslugar.models import LugaresTocata
 
-from .forms import LugarForm, RegionForm, ComunaForm
+from .forms import (
+                CrearLugarForm,
+                RegionForm,
+                ComunaForm,
+                ActualizaLugarForm,
+                BorrarLugarForm
+            )
 
 from toca.parametros import parToca
+
+from toca.mixins import NextUrlMixin, RequestFormAttachMixin
 
 # Create your views here.
 
@@ -23,76 +36,51 @@ class MisLugaresListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self, *args, **kwargs):
         request = self.request
-
         mislugares = Lugar.objects.by_request(request)
-        #tocataslugar = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
-        tocataslugar = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
-        for milugar in mislugares:
-            tocata = tocataslugar.filter(lugar=milugar).values('id','nombre')
-            if tocata:
-                milugar.borra = 'NO'
-                milugar.tocata = tocata
-            else:
-                milugar.borra = 'SI'
 
         return mislugares
 
+class LugarCreateView(NextUrlMixin, RequestFormAttachMixin, LoginRequiredMixin, CreateView):
+    form_class = CrearLugarForm
+    template_name = 'lugar/agregarlugar.html'
+    success_url = '/lugares/mislugares'
 
-@login_required(login_url='index')
-def misLugares(request):
+    def form_valid(self, form):
+        request = self.request
+        msg = 'Lugar creado'
+        messages.success(request, msg)
+        return super().form_valid(form)
 
-    mislugares = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
-    tocataslugar = Tocata.objects.filter(estado__in=[parToca['publicado'],parToca['confirmado'],])
+    def form_invalid(self, form):
+        request = self.request
+        msg = 'Error en formulario'
+        messages.error(request, msg)
+        return super().form_invalid(form)
 
-    for milugar in mislugares:
-        tocata = tocataslugar.filter(lugar=milugar).values('id','nombre')
-        if tocata:
-            milugar.borra = 'NO'
-            milugar.tocata = tocata
-        else:
-            milugar.borra = 'SI'
+class ActualizaLugarView(LoginRequiredMixin, View):
 
-    context = {
-        'mislugares': mislugares,
-    }
+    form_class = ActualizaLugarForm
 
-    return render(request,'lugar/mislugares.html', context)
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request, request.POST or None)
+        if form.is_valid():
+            lugar = form.cleaned_data['lugar']
+            descripción = form.cleaned_data['descripción']
+            lugar.update_descripción(descripción)
 
-
-@login_required(login_url='index')
-def agregarLugar(request):
-
-    form = LugarForm(request.POST or None);
-
-    if form.is_valid():
-
-        nuevoLugar = form.save(commit=False)
-        nuevoLugar.provincia = Comuna.objects.get(id=request.POST.get('comuna')).provincia
-        nuevoLugar.usuario = request.user
-        nuevoLugar.save()
-        messages.success(request, 'Lugar agregado exitosamente')
         return redirect('lugar:mislugares')
-    #else:
-        #print(form.errors.as_data())
-        #messages.error(request,'Error en form')
 
-    context = {
-        'form': form,
-    }
-    return render(request, 'lugar/agregarlugar.html', context)
+class BorrarLugarView(LoginRequiredMixin, View):
 
-@login_required(login_url='index')
-def actualizarLugar(request, lugar_id):
+    form_class = BorrarLugarForm
 
-    if request.method == 'POST':
-        lugar = get_object_or_404(Lugar, pk=lugar_id)
-        lugar.descripción = request.POST.get('descripción')
-        lugar.save()
-        messages.success(request, 'Lugar editado exitosamente')
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request, request.POST or None)
+        if form.is_valid():
+            lugar = form.cleaned_data['lugar']
+            lugar.borrar()
 
-    return redirect('mislugares')
-
-
+        return redirect('lugar:mislugares')
 
 @login_required(login_url='index')
 def mispropuestas(request):
@@ -170,15 +158,7 @@ def borrarpropuesta(request, propuesta_id):
 
     return render(request,'lugar/mispropuestas.html', context)
 
-@login_required(login_url='index')
-def borrarlugar(request, lugar_id):
 
-    if request.method == 'POST':
-        lugar = get_object_or_404(Lugar, pk=lugar_id)
-        lugar.estado = parToca['noDisponible']
-        lugar.save()
-
-    return redirect('mislugares')
 
 @login_required(login_url='index')
 def carga_comunas_agregar(request):
