@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} | {{ object.nombre }} {% endblock %}
+{% block content %}
+{% include 'partials/_alerts.html' %}
+
+<!-- SECTION IMAGE FULLSCREEN -->
+<section class="text-center fullscreen p-t-200 p-b-100 text-light" data-bg-image="{{ object.flayer_1920_1280.url }}">
+    <div class="bg-overlay"></div>
+    <div class="container">
+        <div data-animate="fadeInUp" class="text-center">
+            <div class="text-lg">{{ object.nombre }}</div>
+            <div class="text-medium">WILL BE OPEN IN:</div>
+        </div>
+        <div class="countdown medium rectangle countdown-light m-b-40" data-countdown="{{ object.fecha|date:"Y/m/d"}} {{ object.hora|date:"H:i:s" }}" data-animate="fadeInUp"></div>
+        <div data-animate-delay="600" data-animate="fadeInUp">
+            <p class="lead">{{ object.descripción }}</p>
+            <a href="{% url 'propuestaslugar:proponerlugar' object.id %}" class="btn">PRESTA TU CASA</a>
+        </div>
+    </div>
+
+</section>
+<!-- end: SECTION IMAGE FULLSCREEN -->
+
+<!-- EVENT INFO BOX -->
+<div class="event-info-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="event-info-icon"><i class="fa fa-calendar fa-2x"></i></div>
+                <div class="event-info-content">
+                    <div class="info-title">CUANDO</div>
+                    <div class="info-description">{{ object.fecha|date:"D d M Y"}} {{ object.hora|date:"H:i" }}</div>
+                </div>
+            </div>
+            <!-- Item 01 -->
+
+            <div class="col-lg-3">
+                <div class="event-info-icon"><i class="fa fa-map-marker-alt fa-2x"></i></div>
+                <div class="event-info-content">
+                    <div class="info-title">DONDE</div>
+                    <div class="info-description">{{ object.region }}, {{ object.comuna }}</div>
+                </div>
+            </div>
+            <!-- Item 02 -->
+
+            <div class="col-lg-3">
+                <div class="event-info-icon"><i class="fa fa-group fa-2x media-object"></i></div>
+                <div class="event-info-content">
+                    <div class="info-title">AUN QUEDA</div>
+                    <div class="info-description">{{ object.asistentes_diff }} entradas</div>
+
+                </div>
+            </div>
+            <!-- Item 03 -->
+            <div class="col-lg-3">
+                <div class="event-info-icon"><i class="fa fa-microphone fa-2x"></i></div>
+                <div class="event-info-content">
+                    <div class="info-title">ARTISTA</div>
+                    <div class="info-description">{{ object.artista.nombre }}</div>
+                </div>
+            </div>
+            <!-- Item 04 -->
+        </div>
+    </div>
+</div>
+<!-- end: EVENT INFO BOX -->
+
+<!--Team members -->
+<section class="background-grey">
+    <div class="container">
+        <div class="row team-members team-members-shadow m-b-40">
+            <div class="col-lg-10 center">
+              {% include 'artista/snippets/teammember.html' with instance=object.artista %}
+            </div>
+          </div>
+
+        </div>
+</section>
+<!-- end:Team members -->
+
+{% endblock %}

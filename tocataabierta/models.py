@@ -17,13 +17,6 @@ User = settings.AUTH_USER_MODEL
 # Create your models here.
 
 # Tocatas Abiertas
-TOCATAABIERTA_ESTADO_OPCIONES = (
-    ('publicado','Publicado'),
-    ('suspendido','Suspendido'),
-    ('confirmado','Confirmado'),
-    ('borrado','Borrado'),
-)
-
 class TocataAbiertaQuerySet(models.query.QuerySet):
 
     def disponible(self):
@@ -70,6 +63,13 @@ class TocataAbiertaManager(models.Manager):
     def tocataartista_by_request(self, request):
         return self.get_queryset().tocataartista_by_request(request)
 
+TOCATAABIERTA_ESTADO_OPCIONES = (
+    ('publicado','Publicado'),
+    ('suspendido','Suspendido'),
+    ('confirmado','Confirmado'),
+    ('borrado','Borrado'),
+)
+
 class TocataAbierta(models.Model):
 
     artista             = models.ForeignKey(Artista, on_delete=models.DO_NOTHING)
@@ -83,8 +83,6 @@ class TocataAbierta(models.Model):
     fecha               = models.DateField()
     hora                = models.TimeField()
     asistentes_min      = models.IntegerField()
-    flayer_original     = models.ImageField(upload_to='fotos/tocatas/%Y/%m/%d/', blank=True, default='fotos/defecto/imagen_original.jpg')
-    flayer_1920_1280    = ResizedImageField(size=[1920, 1280],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_1920_1280.jpg')
     flayer_380_507      = ResizedImageField(size=[380, 507],upload_to='fotos/lugares/%Y/%m/%d/', blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_380_507.jpg')
     tocata              = models.ForeignKey(Tocata, on_delete=models.DO_NOTHING, null=True, blank=True)
     estilos             = models.ManyToManyField(Estilo, blank=True)

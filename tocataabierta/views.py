@@ -1,13 +1,17 @@
 from django.shortcuts import render
 from django.http import Http404
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, View, CreateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 from .models import TocataAbierta
-from carro.models import CarroCompra
+from tocata.models import Tocata
+from lugar.models import Comuna
 
-from .forms import TocataAbiertaForm
+from .forms import CrearTocataAbiertaForm
+
+from toca.mixins import NextUrlMixin, RequestFormAttachMixin
 
 from toca.parametros import parToca
 
@@ -15,7 +19,7 @@ from toca.parametros import parToca
 class TocataAbiertaListView(ListView):
 
     queryset = TocataAbierta.objects.disponible()
-    paginate_by = parToca['tocatas_pag']
+    paginate_by = 12
     template_name = 'tocataabierta/tocatasabiertas.html'
     ordering = ['-fecha']
 
@@ -32,9 +36,7 @@ class TocataAbiertaListView(ListView):
 
         orden = self.request.GET.get('orden','fecha')
         direccion = self.request.GET.get('direccion','asc')
-        carro_obj, nuevo_carro = CarroCompra.objects.new_or_get(self.request)
 
-        context['carro'] = carro_obj
         context['orden'] = orden
         context['direccion'] = direccion
 
@@ -43,11 +45,15 @@ class TocataAbiertaListView(ListView):
 
 class TocataAbiertaDetailView(DetailView):
 
-    queryset = TocataAbierta.objects.all()
     template_name = 'tocataabierta/tocataabierta.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super(TocataAbiertaDetailView, self).get_context_data(*args, **kwargs)
+
+        tocataabierta = context['object']
+        otras_tocatas = Tocata.objects.tocataartistadisponibles(tocataabierta.artista)
+
+        context['tocata_list'] = otras_tocatas
 
         return context
 
@@ -83,49 +89,23 @@ class TocatasAbiertasArtistaListView(LoginRequiredMixin, ListView):
         context = super(TocatasAbiertasArtistaListView, self).get_context_data(*args, **kwargs)
         return context
 
-@login_required(login_url='index')
-def creartocataabierta(request):
+class TocataAbiertaCreateView(NextUrlMixin, RequestFormAttachMixin, LoginRequiredMixin, CreateView):
 
-    form = TocataAbiertaForm(request.POST or None)
+    form_class = CrearTocataAbiertaForm
+    template_name = 'tocataabierta/creartocataabierta.html'
 
-    if form.is_valid():
+    def form_valid(self, form):
+        request = self.request
+        msg = 'Busqueda publicada'
+        messages.success(request, msg)
+        return super().form_valid(form)
 
-        nuevaTocata = form.save(commit=False)
-        if 'flayer_original' in request.FILES:
-            nuevaTocata.flayer_original = request.FILES['flayer_original']
-            nuevaTocata.flayer_380_507 = request.FILES['flayer_original']
-            nuevaTocata.flayer_1920_1280 = request.FILES['flayer_original']
+    def form_invalid(self, form):
+        request = self.request
+        msg = 'Error en formulario'
+        messages.error(request, msg)
+        return super().form_invalid(form)
 
-        nuevaTocata.estado = parToca['publicado']
-        nuevaTocata.usuario = request.user
-        artista = Artista.objects.get(usuario=request.user)
-        nuevaTocata.artista = artista
-        nuevaTocata.save()
-
-        nuevaTocata.estilos.set(artista.estilos.all())
-
-        messages.success(request, 'Tocata Abierta creada')
-        return redirect('mistocatas')
-    #else:
-    #    print(form.errors.as_data())
-    #    messages.error(request,'Error en form')
-
-    context = {
-        'form': form,
-    }
-
-    return render(request, 'tocata/creartocataabierta.html', context)
-
-@login_required(login_url='index')
-def detallestocataabierta(request, tocata_id):
-
-    tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
-
-    context = {
-        'tocata': tocata,
-    }
-
-    return render(request, 'tocata/detallestocataabierta.html', context)
 
 @login_required(login_url='index')
 def borrartocataabierta(request, tocata_id):

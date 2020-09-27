@@ -1,7 +1,10 @@
 from django import forms
+from django.utils import timezone
+from datetime import timedelta
 
 from .models import TocataAbierta
 from lugar.models import Region, Comuna, Lugar
+from artista.models import Artista
 
 class DateInput(forms.DateInput):
     input_type = 'date'
@@ -9,12 +12,13 @@ class DateInput(forms.DateInput):
 class TimeInput(forms.TimeInput):
     input_type = 'time'
 
-class TocataAbiertaForm(forms.ModelForm):
+class CrearTocataAbiertaForm(forms.ModelForm):
 
     nombre              = forms.CharField(widget=forms.TextInput(attrs={
                                                                 'id': 'primercampo',
                                                                 'class': 'form-control',
-                                                                'placeholder': 'Nombre'
+                                                                'placeholder': 'Nombre',
+                                                                'autofocus': True
                                                             }), label='Nombre'
                                         )
     region              = forms.ModelChoiceField(queryset=Region.objects, empty_label=None, widget=forms.Select(attrs={
@@ -45,24 +49,26 @@ class TocataAbiertaForm(forms.ModelForm):
                                                                 'placeholder': 'Asistentes Minimos'
                                                             }), label='Asistentes Mínimos'
                                         )
-    flayer_original     = forms.ImageField(required=False, widget=forms.FileInput(attrs={
+    flayer_380_507      = forms.ImageField(required=False, widget=forms.FileInput(attrs={
                                                                 'class': 'form-control-file',
                                                             }), label='Subir Flayer'
                                         )
 
     class Meta:
         model = TocataAbierta
-        exclude = ('estado',
-                    'fecha_actu',
-                    'fecha_crea',
-                    'artista',
-                    'usuario',
-                    'flayer_1920_1280',
-                    'flayer_380_507',
-                    'costo',
-                    'tocata')
+        fields = (
+            'nombre',
+            'region',
+            'comuna',
+            'descripción',
+            'fecha',
+            'hora',
+            'asistentes_min',
+            'flayer_380_507'
+        )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, request, *args, **kwargs):
+        self.request = request
         super().__init__(*args, **kwargs)
         self.fields['comuna'].queryset = Comuna.objects.none()
 
@@ -74,3 +80,33 @@ class TocataAbiertaForm(forms.ModelForm):
                 pass
         elif self.instance.pk:
             self.fields['comuna'].queryset = self.instance.region.comuna_set.order_by('nombre')
+
+    def clean_asistentes_min(self):
+        asistentes_min = self.cleaned_data.get('asistentes_min')
+        # Asistentes minimos debe ser mayor a 0
+        if asistentes_min <= 0:
+            raise forms.ValidationError('Debes definir un minimo de asistentes mayor a cero')
+
+        return asistentes_min
+
+    def clean_fecha(self):
+        fecha = self.cleaned_data.get('fecha')
+        # La fecha de las tocatas deben definirce con una semana de anticipacion
+        if (fecha - timezone.now().date()) <= timedelta(days=5):
+            raise forms.ValidationError('Debes definir una fecha futura con al menos 7 dias de anticipacion')
+
+        return fecha
+
+    def save(self, commit=True):
+        tocataabierta = super(CrearTocataAbiertaForm, self).save(commit=False)
+        request = self.request
+
+        tocataabierta.usuario = request.user
+        artista = Artista.objects.get(usuario=request.user)
+        tocataabierta.artista = artista
+
+        if commit:
+            tocataabierta.save()
+            tocataabierta.estilos.set(artista.estilos.all())
+
+        return tocataabierta
