@@ -34,7 +34,11 @@ class TocataAbiertaQuerySet(models.query.QuerySet):
         return self.filter(artista=artista)
 
     def tocataartista_by_request(self, request):
-        return self.disponible().filter(usuario=request.user)
+        artista = Artista.objects.get(usuario=request.user)
+        return self.filter(artista=artista)
+
+    def quita_barradas(self):
+        return self.exclude(estado='borrado')
 
 class TocataAbiertaManager(models.Manager):
 
@@ -61,7 +65,7 @@ class TocataAbiertaManager(models.Manager):
         return self.none()
 
     def tocataartista_by_request(self, request):
-        return self.get_queryset().tocataartista_by_request(request)
+        return self.get_queryset().tocataartista_by_request(request).quita_barradas()
 
 TOCATAABIERTA_ESTADO_OPCIONES = (
     ('publicado','Publicado'),
@@ -98,6 +102,25 @@ class TocataAbierta(models.Model):
 
     def __str__(self):
         return self.nombre
+
+    def suspender_tocata(self):
+        fue_suspendido = False
+        if self.estado in ['publicado',]:
+            self.estado = 'suspendido'
+            self.save()
+            fue_suspendido = True
+            # Agregar aqui los cambio necesarios para suspender tocata
+
+        return fue_suspendido
+
+    def borrar_tocata(self):
+        fue_borrada = False
+        if self.estado in ['suspendido',]:
+            self.estado = 'borrado'
+            self.save()
+            fue_borrada = True
+
+        return fue_borrada
 
 def tocataabierta_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:

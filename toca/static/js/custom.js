@@ -52,7 +52,7 @@ $(document).ready(function (){
       }
     });
 
-  } else if (window.location.pathname === "/tocatas/artista/creartocataabierta") {
+  } else if (window.location.pathname === "/ofrecetucasa/artista/creartocataabierta") {
     // Creacion de Tocatas
     // Define variables iniciales
     var url = $("#formtocheck").attr("data-ciudad-url-agregar");

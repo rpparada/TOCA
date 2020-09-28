@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import Http404
 from django.views.generic import DetailView, ListView, View, CreateView
 from django.contrib.auth.decorators import login_required
@@ -9,7 +9,11 @@ from .models import TocataAbierta
 from tocata.models import Tocata
 from lugar.models import Comuna
 
-from .forms import CrearTocataAbiertaForm
+from .forms import (
+                CrearTocataAbiertaForm,
+                SuspenderTocataAbiertaForm,
+                BorrarTocataAbiertaForm
+            )
 
 from toca.mixins import NextUrlMixin, RequestFormAttachMixin
 
@@ -81,7 +85,7 @@ class TocatasAbiertasArtistaListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self, *args, **kwargs):
         request = self.request
-        tocatasabiertas = TocataAbierta.objects.tocataartista_by_request(request)
+        tocatasabiertas = TocataAbierta.objects.tocataartista_by_request(request).order_by('fecha')
 
         return tocatasabiertas
 
@@ -106,26 +110,27 @@ class TocataAbiertaCreateView(NextUrlMixin, RequestFormAttachMixin, LoginRequire
         messages.error(request, msg)
         return super().form_invalid(form)
 
+class SuspenderTocataAbiertaView(LoginRequiredMixin, View):
+    form_class = SuspenderTocataAbiertaForm
 
-@login_required(login_url='index')
-def borrartocataabierta(request, tocata_id):
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request, request.POST or None)
+        if form.is_valid():
+            tocataabierta = form.cleaned_data['tocataabierta']
+            tocataabierta.suspender_tocata()
 
-    if request.method == 'POST':
-        tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
-        tocata.estado = parToca['borrado']
-        tocata.save()
+        return redirect('tocataabierta:mistocatasabiertas')
 
-    return redirect('mistocatas')
+class BorrarTocataAbiertaView(LoginRequiredMixin, View):
+    form_class = BorrarTocataAbiertaForm
 
-@login_required(login_url='index')
-def suspendertocataabierta(request, tocata_id):
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request, request.POST or None)
+        if form.is_valid():
+            tocata = form.cleaned_data['tocataabierta']
+            tocata.borrar_tocata()
 
-    if request.method == 'POST':
-        tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
-        tocata.estado = parToca['suspendido']
-        tocata.save()
-
-    return redirect('mistocatas')
+        return redirect('tocataabierta:mistocatasabiertas')
 
 @login_required(login_url='index')
 def carga_comunas_tocata(request):

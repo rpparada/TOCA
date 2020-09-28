@@ -110,3 +110,27 @@ class CrearTocataAbiertaForm(forms.ModelForm):
             tocataabierta.estilos.set(artista.estilos.all())
 
         return tocataabierta
+
+class SuspenderTocataAbiertaForm(forms.Form):
+
+    tocataabierta       = forms.ModelChoiceField(queryset=None,
+                                empty_label=None,
+                                widget=forms.HiddenInput()
+                            )
+
+    def __init__(self, request, *args, **kwargs):
+        self.request = request
+        super(SuspenderTocataAbiertaForm, self).__init__(*args, **kwargs)
+        self.fields['tocataabierta'].queryset = TocataAbierta.objects.tocataartista_by_request(self.request)
+
+class BorrarTocataAbiertaForm(forms.Form):
+
+    tocataabierta       = forms.ModelChoiceField(queryset=None,
+                                empty_label=None,
+                                widget=forms.HiddenInput()
+                            )
+
+    def __init__(self, request, *args, **kwargs):
+        self.request = request
+        super(BorrarTocataAbiertaForm, self).__init__(*args, **kwargs)
+        self.fields['tocataabierta'].queryset = TocataAbierta.objects.tocataartista_by_request(self.request)
