@@ -5,7 +5,6 @@ urlpatterns = [
     # Vistas Generales
     path('', views.TocataListView.as_view(), name='tocatas'),
     path('<slug:slug>/', views.TocataDetailView.as_view(), name='tocata'),
-    # Vistas Artista
     path('artista/mistocatas', views.TocatasArtistaListView.as_view(), name='mistocatas'),
     path('artista/creartocata', views.TocataCreateView.as_view(), name='creartocata'),
     path('artista/borrartocata', views.BorrarTocataView.as_view(), name='borrartocata'),

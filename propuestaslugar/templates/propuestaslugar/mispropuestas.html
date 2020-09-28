@@ -7,13 +7,10 @@
 {% include 'partials/_alerts.html' %}
 
 <!-- Page Content -->
-{% if user.is_authenticated %}
-
-{% if mispropuestas %}
-
-{% for propuesta in mispropuestas %}
+{% if object_list %}
+{% for object in object_list %}
 <!--Modal Cancelar -->
-<div class="modal fade" id="modalca{{propuesta.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="modalca{{object.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -23,7 +20,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        {% if propuesta.estado == 'PE' %}
+                        {% if object.estado == 'PE' %}
                         <p>¿Estas seguro que quieres borralo?</p>
                         {% else %}
                         <p>No puedes cancelarla</p>
@@ -32,9 +29,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-              <form action="{% url 'cancelarpropuesta' propuesta.id %}" method="POST">
+              <form action="{% url 'propuestaslugar:cancelarpropuesta' object.id %}" method="POST">
               {% csrf_token %}
-                {% if propuesta.estado == 'PE' %}
+                {% if object.estado == 'PE' %}
                 <button type="submit" class="btn btn-b">Confirmo Cancelación</button>
                 {% endif %}
                 <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
@@ -46,7 +43,7 @@
 <!-- end: Modal -->
 
 <!--Modal Borrar -->
-<div class="modal fade" id="modalbo{{propuesta.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="modalbo{{object.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -56,7 +53,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        {% if propuesta.estado == 'PE' %}
+                        {% if object.estado == 'PE' %}
                         <p>¿Estas seguro que quieres borralo?</p>
                         {% else %}
                         <p>No puedes cancelarla</p>
@@ -65,9 +62,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-              <form action="{% url 'borrarpropuesta' propuesta.id %}" method="POST">
+              <form action="{% url 'propuestaslugar:borrarpropuesta' object.id %}" method="POST">
               {% csrf_token %}
-                {% if propuesta.estado == 'NE' or propuesta.estado == 'CA' or propuesta.estado == 'CM' %}
+                {% if object.estado == 'NE' or object.estado == 'CA' or object.estado == 'CM' %}
                 <button type="submit" class="btn btn-b">Confirmo Borrado</button>
                 {% endif %}
                 <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
@@ -79,7 +76,7 @@
 <!-- end: Modal -->
 
 <!--Modal Cancelar elegida -->
-<div class="modal fade" id="modalcael{{propuesta.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="modalcael{{object.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -95,7 +92,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-              <form action="{% url 'cancelarpropuestaelegida' propuesta.id %}" method="POST">
+              <form action="{% url 'propuestaslugar:cancelarpropuestaelegida' object.id %}" method="POST">
               {% csrf_token %}
                 <button type="submit" class="btn btn-b">Confirmo Cancelación</button>
                 <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
@@ -129,25 +126,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                      {% for propuesta in mispropuestas %}
+                      {% for object in object_list %}
                         <tr>
-                            <td>{{ propuesta.lugar.nombre_calle }} {{ propuesta.lugar.numero }}, {{ propuesta.lugar.comuna }}</td>
-                            {% if propuesta.estado == 'EL' %}
-                            <td><a href="{% url 'tocata' propuesta.tocataabierta.tocata.id %}">{{ propuesta.tocataabierta.artista.nombre }}, {{ propuesta.tocataabierta.nombre }}</a></td>
+                            <td>{{ object.lugar.nombre_calle }} {{ object.lugar.numero }}, {{ object.lugar.comuna }}</td>
+                            {% if object.estado == 'EL' %}
+                            <td><a href="{{ object.tocataabierta.tocata.get_absolute_url }}">{{ object.tocataabierta.artista.nombre }}, {{ object.tocataabierta.nombre }}</a></td>
                             {% else %}
-                            <td><a href="{% url 'tocataabierta' propuesta.tocataabierta.id %}">{{ propuesta.tocataabierta.artista.nombre }}, {{ propuesta.tocataabierta.nombre }}</a></td>
+                            <td><a href="{{ object.tocataabierta.get_absolute_url }}">{{ object.tocataabierta.artista.nombre }}, {{ object.tocataabierta.nombre }}</a></td>
                             {% endif %}
-                            <td>{{ propuesta.get_estado_display }}</td>
+                            <td>{{ object.get_estado_display }}</td>
                             <td>
                               <div class="p-dropdown">
                                   <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
                                   <ul class="p-dropdown-content">
-                                    {% if propuesta.estado == 'PE' %}
-                                    <li><a data-target="#modalca{{propuesta.id}}" data-toggle="modal" href="#"><i class="icon-stop-circle"></i>Cancelar</a></li>
-                                    {% elif propuesta.estado == 'EL' %}
-                                    <li><a data-target="#modalcael{{propuesta.id}}" data-toggle="modal" href="#"><i class="icon-stop-circle"></i>Cancelar</a></li>
-                                    {% elif propuesta.estado == 'NE' or propuesta.estado == 'CA' or propuesta.estado == 'CM' %}
-                                    <li><a data-target="#modalbo{{propuesta.id}}" data-toggle="modal" href="#"><i class="icon-x"></i>Borrar</a></li>
+                                    {% if object.estado == 'PE' %}
+                                    <li><a data-target="#modalca{{object.id}}" data-toggle="modal" href="#"><i class="icon-stop-circle"></i>Cancelar</a></li>
+                                    {% elif object.estado == 'EL' %}
+                                    <li><a data-target="#modalcael{{object.id}}" data-toggle="modal" href="#"><i class="icon-stop-circle"></i>Cancelar</a></li>
+                                    {% elif object.estado == 'NE' or object.estado == 'CA' or object.estado == 'CM' %}
+                                    <li><a data-target="#modalbo{{object.id}}" data-toggle="modal" href="#"><i class="icon-x"></i>Borrar</a></li>
                                     {% endif %}
                                   </ul>
                               </div>
@@ -180,15 +177,6 @@
               </div>
           </div>
         <!-- end: DataTable -->
-    </div>
-</section>
-{% endif %}
-{% else %}
-<section id="page-content">
-    <div class="container">
-      <div data-animate="fadeInUp" class="text-center">
-          <a href="{% url 'ingresar' %}?next={{request.path|urlencode}}" class="btn">INGRESA A TU CUENTA</a>
-      </div>
     </div>
 </section>
 {% endif %}

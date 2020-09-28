@@ -1,8 +1,92 @@
 from django.shortcuts import render
-
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import (
+                                DetailView,
+                                ListView,
+                                View,
+                                CreateView
+                            )
+
+from .models import LugaresTocata
 
 # Create your views here.
+class MisPropuestasListView(LoginRequiredMixin, ListView):
+    template_name = 'propuestaslugar/mispropuestas.html'
+    paginate_by = 12
+
+    def get_queryset(self, *args, **kwargs):
+        request = self.request
+        mis_propuestas = LugaresTocata.objects.mis_propuestas_by_request(request)
+        print(mis_propuestas)
+        return mis_propuestas
+
+
+@login_required(login_url='index')
+def cancelarpropuesta(request, propuesta_id):
+
+    if request.method == 'POST':
+        propuesta = get_object_or_404(LugaresTocata, pk=propuesta_id)
+        if propuesta.estado == parToca['pendiente']:
+            propuesta.estado = parToca['cancelado']
+            propuesta.save()
+        else:
+            messages.success(request, 'Solo puede cancelar un propuesta cuando esta pendiente')
+
+    mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
+    mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
+
+    context = {
+        'mispropuestas': mispropuestas,
+    }
+
+    return render(request,'lugar/mispropuestas.html', context)
+
+@login_required(login_url='index')
+def cancelarpropuestaelegida(request, propuesta_id):
+
+    if request.method == 'POST':
+        propuesta = get_object_or_404(LugaresTocata, pk=propuesta_id)
+        tocata = Tocata.objects.get(pk=propuesta.tocataabierta.tocata.id)
+
+        propuesta.estado = parToca['cancelado']
+        propuesta.save()
+
+        tocata.estado = parToca['suspendido']
+        tocata.save()
+
+        messages.success(request, 'Solo puede cancelar un propuesta cuando esta pendiente')
+
+    mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
+    mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
+
+    context = {
+        'mispropuestas': mispropuestas,
+    }
+
+    return render(request,'lugar/mispropuestas.html', context)
+
+@login_required(login_url='index')
+def borrarpropuesta(request, propuesta_id):
+
+    if request.method == 'POST':
+        propuesta = get_object_or_404(LugaresTocata, pk=propuesta_id)
+        if propuesta.estado in [parToca['noelegido'], parToca['cancelado'],parToca['completado']]:
+            propuesta.estado = parToca['borrado']
+            propuesta.save()
+        else:
+            messages.success(request, 'No puedes borrar un propuesta mintras tenga tocatas activas')
+
+    mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
+    mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
+
+    context = {
+        'mispropuestas': mispropuestas,
+    }
+
+    return render(request,'lugar/mispropuestas.html', context)
+
+
 @login_required(login_url='index')
 def proponerlugar(request, tocata_id):
 
