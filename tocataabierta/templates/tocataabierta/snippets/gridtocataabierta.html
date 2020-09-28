@@ -5,14 +5,9 @@
     </a>
     <a href="{{ instance.get_absolute_url }}"><img alt="Shop product image!" src="{{ instance.flayer_380_507.url }}">
     </a>
-    <span class="product-sale-off">BUSCANDO</span>
-    <!-- <span class="product-new">NEW</span> -->
-    <!-- <span class="product-wishlist">
-      <a href="#"><i class="fa fa-cart-plus"></i></a>
-    </span> -->
-    <!-- <div class="product-overlay">
-      <a href="{{ instance.get_absolute_url }}" data-lightbox="ajax">Quick View</a>
-    </div> -->
+    {% if instance.tagname %}
+    <span class="{{ instance.tagname }}" style="width: 270px; border-radius: 0px 0px 0px; opacity: 0.7; bottom: 300px">{{ instance.tagmsg }}</span>
+    {% endif %}
   </div>
 
   <div class="product-description">
@@ -20,13 +15,6 @@
     <div class="product-title">
       <h3><a href="{{ instance.get_absolute_url }}">{{ instance.nombre }}</a></h3>
     </div>
-    <!-- <div class="product-rate">
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star-half-o"></i>
-    </div> -->
     <div class="product-reviews"><a href="#">{{ instance.fecha }} {{ instance.hora }}</a>
     </div>
   </div>

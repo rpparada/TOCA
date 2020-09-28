@@ -5,8 +5,10 @@
     </a>
     <a href="{{ instance.get_absolute_url }}"><img alt="Shop product image!" src="{{ instance.flayer_380_507.url }}">
     </a>
-    {% if instance.tagname %}
-    <span class="{{ instance.tagname }}" style="height: 80px; width: 80px; line-height: 80px;">{{ instance.tagmsg }}</span>
+    {% if instance.tagname == 'product-hot' %}
+      <span class="{{ instance.tagname }}" style="border-radius: 0; width: 250px; opacity: 0.6; font-size: 18px;">{{ instance.tagmsg }}</span>
+    {% elif instance.tagname == 'product-new' %}
+      <span class="{{ instance.tagname }}" style="height: 50px; width: 50px; line-height: 50px;">{{ instance.tagmsg }}</span>
     {% endif %}
   </div>
 

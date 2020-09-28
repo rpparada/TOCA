@@ -202,9 +202,9 @@ class Tocata(models.Model):
     def tagmsg(self):
         msg = None
         if self.asistentes_total >= self.asistentes_min:
-            msg = 'Confirmado'
+            msg = 'TOCATA CONFIRMADA'
         elif (timezone.now() - self.fecha_crea) < timedelta(days=7):
-            msg = 'Nuevo'
+            msg = 'NUEVA'
         return msg
 
 

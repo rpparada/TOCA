@@ -122,6 +122,18 @@ class TocataAbierta(models.Model):
 
         return fue_borrada
 
+    @property
+    def tagname(self):
+        tag = None
+        tag = 'product-sale-off'
+        return tag
+
+    @property
+    def tagmsg(self):
+        msg = None
+        msg = "PRESTA' LA CASA"
+        return msg
+
 def tocataabierta_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
