@@ -62,7 +62,7 @@ class CancelarPropuestaElegidaView(LoginRequiredMixin, View):
             propuesta.cancelar_elegido()
 
             # Suspender Tocata Abierta
-            # Este proceso tambien suspendera Tocata
+            # Este proceso tambien suspende Tocata Publicada
             propuesta.tocataabierta.suspender_tocata_confirmado()
 
         return redirect('propuestaslugar:mispropuestas')
