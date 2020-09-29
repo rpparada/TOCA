@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
@@ -9,6 +9,12 @@ from django.views.generic import (
                             )
 
 from .models import LugaresTocata
+
+from .forms import (
+                CancelarPropuestaForm,
+                BorrarPropuestaForm,
+                CancelarPropuestaElegidaForm,
+            )
 
 # Create your views here.
 class MisPropuestasListView(LoginRequiredMixin, ListView):
@@ -21,70 +27,45 @@ class MisPropuestasListView(LoginRequiredMixin, ListView):
         print(mis_propuestas)
         return mis_propuestas
 
+class CancelarPropuestaView(LoginRequiredMixin, View):
 
-@login_required(login_url='index')
-def cancelarpropuesta(request, propuesta_id):
+    form_class = CancelarPropuestaForm
 
-    if request.method == 'POST':
-        propuesta = get_object_or_404(LugaresTocata, pk=propuesta_id)
-        if propuesta.estado == parToca['pendiente']:
-            propuesta.estado = parToca['cancelado']
-            propuesta.save()
-        else:
-            messages.success(request, 'Solo puede cancelar un propuesta cuando esta pendiente')
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request, request.POST or None)
+        if form.is_valid():
+            propuesta = form.cleaned_data['propuesta']
+            propuesta.cancelar()
 
-    mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
-    mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
+        return redirect('propuestaslugar:mispropuestas')
 
-    context = {
-        'mispropuestas': mispropuestas,
-    }
+class BorrarPropuestaView(LoginRequiredMixin, View):
 
-    return render(request,'lugar/mispropuestas.html', context)
+    form_class = BorrarPropuestaForm
 
-@login_required(login_url='index')
-def cancelarpropuestaelegida(request, propuesta_id):
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request, request.POST or None)
+        if form.is_valid():
+            propuesta = form.cleaned_data['propuesta']
+            propuesta.borrar()
 
-    if request.method == 'POST':
-        propuesta = get_object_or_404(LugaresTocata, pk=propuesta_id)
-        tocata = Tocata.objects.get(pk=propuesta.tocataabierta.tocata.id)
+        return redirect('propuestaslugar:mispropuestas')
 
-        propuesta.estado = parToca['cancelado']
-        propuesta.save()
+class CancelarPropuestaElegidaView(LoginRequiredMixin, View):
 
-        tocata.estado = parToca['suspendido']
-        tocata.save()
+    form_class = CancelarPropuestaElegidaForm
 
-        messages.success(request, 'Solo puede cancelar un propuesta cuando esta pendiente')
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request, request.POST or None)
+        if form.is_valid():
+            propuesta = form.cleaned_data['propuesta']
+            propuesta.cancelar_elegido()
 
-    mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
-    mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
+            # Suspender Tocata Abierta
+            # Este proceso tambien suspendera Tocata
+            propuesta.tocataabierta.suspender_tocata_confirmado()
 
-    context = {
-        'mispropuestas': mispropuestas,
-    }
-
-    return render(request,'lugar/mispropuestas.html', context)
-
-@login_required(login_url='index')
-def borrarpropuesta(request, propuesta_id):
-
-    if request.method == 'POST':
-        propuesta = get_object_or_404(LugaresTocata, pk=propuesta_id)
-        if propuesta.estado in [parToca['noelegido'], parToca['cancelado'],parToca['completado']]:
-            propuesta.estado = parToca['borrado']
-            propuesta.save()
-        else:
-            messages.success(request, 'No puedes borrar un propuesta mintras tenga tocatas activas')
-
-    mispropuestas = LugaresTocata.objects.filter(lugar__usuario=request.user)
-    mispropuestas = mispropuestas.exclude(estado__in=[parToca['borrado']])
-
-    context = {
-        'mispropuestas': mispropuestas,
-    }
-
-    return render(request,'lugar/mispropuestas.html', context)
+        return redirect('propuestaslugar:mispropuestas')
 
 
 @login_required(login_url='index')

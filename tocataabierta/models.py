@@ -103,7 +103,7 @@ class TocataAbierta(models.Model):
     def __str__(self):
         return self.nombre
 
-    def suspender_tocata(self):
+    def suspender(self):
         fue_suspendido = False
         if self.estado in ['publicado',]:
             self.estado = 'suspendido'
@@ -111,6 +111,19 @@ class TocataAbierta(models.Model):
             fue_suspendido = True
             # Agregar aqui los cambio necesarios para suspender tocata
 
+        return fue_suspendido
+
+    def suspender_tocata_confirmado(self):
+        fue_suspendido = False
+        if self.estado in ['confirmado',]:
+            self.estado = 'suspendido'
+            self.save()
+            fue_suspendido = True
+
+            # Agregar aqui los cambio necesarios para suspender tocata
+            if self.tocata:
+                self.tocata.suspender_tocata()
+                
         return fue_suspendido
 
     def borrar_tocata(self):

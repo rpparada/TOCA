@@ -12,12 +12,24 @@ class LugaresTocataQuerySet(models.query.QuerySet):
     def sin_borradas(self):
         return self.exclude(estado__in=['borrado',])
 
+    def para_borrar(self):
+        return self.filter(estado__in=['cancelado','completado','noelegido'])
+
+    def elegidas(self):
+        return self.filter(estado__in=['elegido',])
+
 class LugaresTocataManager(models.Manager):
     def get_queryset(self):
         return LugaresTocataQuerySet(self.model, using=self._db)
 
     def mis_propuestas_by_request(self, request):
         return self.get_queryset().mis_propuestas_by_request(request).sin_borradas().order_by('-fecha_crea')
+
+    def para_borrar_by_request(self, request):
+        return self.get_queryset().mis_propuestas_by_request(request).para_borrar().sin_borradas()
+
+    def elegidas_by_request(self, request):
+        return self.get_queryset().mis_propuestas_by_request(request).elegidas()
 
 LUGARESTOCATA_ESTADO_OPCIONES = (
     ('elegido','Elegido'),
@@ -30,8 +42,8 @@ LUGARESTOCATA_ESTADO_OPCIONES = (
 
 class LugaresTocata(models.Model):
 
-    tocataabierta       = models.ForeignKey(TocataAbierta, on_delete=models.DO_NOTHING)
-    lugar               = models.ForeignKey(Lugar, on_delete=models.DO_NOTHING)
+    tocataabierta       = models.ForeignKey(TocataAbierta, on_delete=models.CASCADE)
+    lugar               = models.ForeignKey(Lugar, on_delete=models.CASCADE)
 
     estado              = models.CharField(max_length=20, choices=LUGARESTOCATA_ESTADO_OPCIONES,default='pendiente')
     fecha_actu          = models.DateTimeField(auto_now=True)
@@ -41,3 +53,30 @@ class LugaresTocata(models.Model):
 
     def __str__(self):
         return self.tocataabierta.nombre+' - '+str(self.lugar.nombre_calle)+' '+str(self.lugar.numero)
+
+    def cancelar(self):
+        fue_cancelado = False
+        if self.estado in ['pendiente',]:
+            self.estado = 'cancelado'
+            self.save()
+            fue_cancelado = True
+
+        return fue_cancelado
+
+    def borrar(self):
+        fue_borrado = False
+        if self.estado in ['noelegido', 'cancelado','completado', ]:
+            self.estado = 'borrado'
+            self.save()
+            fue_borrado = True
+
+        return fue_borrado
+
+    def cancelar_elegido(self):
+        fue_cancelado = False
+        if self.estado in ['elegido',]:
+            self.estado = 'cancelado'
+            self.save()
+            fue_cancelado = True
+
+        return fue_cancelado

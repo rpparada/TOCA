@@ -117,7 +117,7 @@ class SuspenderTocataAbiertaView(LoginRequiredMixin, View):
         form = self.form_class(request, request.POST or None)
         if form.is_valid():
             tocataabierta = form.cleaned_data['tocataabierta']
-            tocataabierta.suspender_tocata()
+            tocataabierta.suspender()
 
         return redirect('tocataabierta:mistocatasabiertas')
 

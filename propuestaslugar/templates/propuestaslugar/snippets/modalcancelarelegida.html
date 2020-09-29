@@ -1,0 +1,28 @@
+<!--Modal Cancelar elegida -->
+<div class="modal fade" id="modalcael{{instance.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-label">Cancelar Propuesta Elegida</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Si cancelas el lugar tambien se cancelará la Tocata</p>
+                        <p>¿Estas seguro que quieres cancelarla?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <form action="{% url 'propuestaslugar:cancelarpropuestaelegida' %}" method="POST">
+              {% csrf_token %}
+                <input type="hidden" name="propuesta" id="id_propuesta" value="{{ instance.id }}">
+                <button type="submit" class="btn btn-b">Confirmo</button>
+                <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Cance</button>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: Modal -->

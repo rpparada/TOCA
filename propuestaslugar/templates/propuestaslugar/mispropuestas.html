@@ -8,101 +8,19 @@
 
 <!-- Page Content -->
 {% if object_list %}
-{% for object in object_list %}
-<!--Modal Cancelar -->
-<div class="modal fade" id="modalca{{object.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="modal-label">Cancelar Propuesta</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        {% if object.estado == 'PE' %}
-                        <p>¿Estas seguro que quieres borralo?</p>
-                        {% else %}
-                        <p>No puedes cancelarla</p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-              <form action="{% url 'propuestaslugar:cancelarpropuesta' object.id %}" method="POST">
-              {% csrf_token %}
-                {% if object.estado == 'PE' %}
-                <button type="submit" class="btn btn-b">Confirmo Cancelación</button>
-                {% endif %}
-                <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
-              </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end: Modal -->
+  {% for object in object_list %}
+    <!--Modal Cancelar -->
+    {% include 'propuestaslugar/snippets/modalcancelar.html' with instance=object %}
+    <!-- end: Modal -->
 
-<!--Modal Borrar -->
-<div class="modal fade" id="modalbo{{object.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="modal-label">Borrar Propuesta</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        {% if object.estado == 'PE' %}
-                        <p>¿Estas seguro que quieres borralo?</p>
-                        {% else %}
-                        <p>No puedes cancelarla</p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-              <form action="{% url 'propuestaslugar:borrarpropuesta' object.id %}" method="POST">
-              {% csrf_token %}
-                {% if object.estado == 'NE' or object.estado == 'CA' or object.estado == 'CM' %}
-                <button type="submit" class="btn btn-b">Confirmo Borrado</button>
-                {% endif %}
-                <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
-              </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end: Modal -->
+    <!--Modal Borrar -->
+    {% include 'propuestaslugar/snippets/modalborrar.html' with instance=object %}
+    <!-- end: Modal -->
 
-<!--Modal Cancelar elegida -->
-<div class="modal fade" id="modalcael{{object.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="modal-label">Cancelar Propuesta Elegida</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <p>Si cancelas el lugar tambien se cancelará la Tocata</p>
-                        <p>¿Estas seguro que quieres cancelarla?</p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-              <form action="{% url 'propuestaslugar:cancelarpropuestaelegida' object.id %}" method="POST">
-              {% csrf_token %}
-                <button type="submit" class="btn btn-b">Confirmo Cancelación</button>
-                <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
-              </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end: Modal -->
-{% endfor %}
+    <!--Modal Cancelar elegida -->
+    {% include 'propuestaslugar/snippets/modalcancelarelegida.html' with instance=object %}
+    <!-- end: Modal -->
+  {% endfor %}
 
 <section id="page-content" class="no-sidebar">
     <div class="container">
@@ -129,7 +47,7 @@
                       {% for object in object_list %}
                         <tr>
                             <td>{{ object.lugar.nombre_calle }} {{ object.lugar.numero }}, {{ object.lugar.comuna }}</td>
-                            {% if object.estado == 'EL' %}
+                            {% if object.estado == 'elegido' %}
                             <td><a href="{{ object.tocataabierta.tocata.get_absolute_url }}">{{ object.tocataabierta.artista.nombre }}, {{ object.tocataabierta.nombre }}</a></td>
                             {% else %}
                             <td><a href="{{ object.tocataabierta.get_absolute_url }}">{{ object.tocataabierta.artista.nombre }}, {{ object.tocataabierta.nombre }}</a></td>
@@ -139,11 +57,11 @@
                               <div class="p-dropdown">
                                   <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
                                   <ul class="p-dropdown-content">
-                                    {% if object.estado == 'PE' %}
+                                    {% if object.estado == 'pendiente' %}
                                     <li><a data-target="#modalca{{object.id}}" data-toggle="modal" href="#"><i class="icon-stop-circle"></i>Cancelar</a></li>
-                                    {% elif object.estado == 'EL' %}
+                                    {% elif object.estado == 'elegido' %}
                                     <li><a data-target="#modalcael{{object.id}}" data-toggle="modal" href="#"><i class="icon-stop-circle"></i>Cancelar</a></li>
-                                    {% elif object.estado == 'NE' or object.estado == 'CA' or object.estado == 'CM' %}
+                                    {% elif object.estado == 'noelegido' or object.estado == 'cancelado' or object.estado == 'completado' %}
                                     <li><a data-target="#modalbo{{object.id}}" data-toggle="modal" href="#"><i class="icon-x"></i>Borrar</a></li>
                                     {% endif %}
                                   </ul>
