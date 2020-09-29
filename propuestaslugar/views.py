@@ -14,6 +14,7 @@ from .forms import (
                 CancelarPropuestaForm,
                 BorrarPropuestaForm,
                 CancelarPropuestaElegidaForm,
+                ProponerLugarForm
             )
 
 # Create your views here.
@@ -67,6 +68,18 @@ class CancelarPropuestaElegidaView(LoginRequiredMixin, View):
 
         return redirect('propuestaslugar:mispropuestas')
 
+
+class ProponerLugarView(LoginRequiredMixin, View):
+
+    form_class = ProponerLugarForm
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request, request.POST or None)
+        if form.is_valid():
+            tocataabierta = form.cleaned_data['tocataabierta']
+            lugar = form.cleaned_data['lugar']
+
+        return redirect('propuestaslugar:mispropuestas')
 
 @login_required(login_url='index')
 def proponerlugar(request, tocata_id):

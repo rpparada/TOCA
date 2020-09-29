@@ -1,5 +1,0 @@
-<form action="{% url 'propuestaslugar:proponerlugar' instance.id %}" method="POST" class="form">
-  {% csrf_token %}
-  <input type="hidden" name="tocata_id" value="{{ instance.id }}">
-  <button type="submit" class="btn"><i class="icon-home"></i> Presta' la Casa</button>
-</form>

@@ -1,0 +1,40 @@
+<form action="{% url 'propuestaslugar:proponerlugar' %}" method="POST" class="form">
+  {% csrf_token %}
+  <input type="hidden" name="lugar" value="{{ instance.id }}">
+  <input type="hidden" name="tocataabierta" value="{{ instance.id }}">
+  <button type="submit" class="btn"><i class="icon-home"></i> Presta' la Casa</button>
+</form>
+
+<!--Modal Presta' la casa -->
+<div class="modal fade" id="modalbo{{instance.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-label">Borrar Propuesta</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        {% if instance.estado == 'pendiente' %}
+                        <p>¿Estas seguro que quieres borralo?</p>
+                        {% else %}
+                        <p>No puedes cancelarla</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <form action="{% url 'propuestaslugar:borrarpropuesta' %}" method="POST">
+              {% csrf_token %}
+                <input type="hidden" name="propuesta" id="id_propuesta" value="{{ instance.id }}">
+                {% if instance.estado == 'noelegido' or instance.estado == 'cancelado' or instance.estado == 'completado' %}
+                <button type="submit" class="btn btn-b">Confirmo</button>
+                {% endif %}
+                <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Cancelar</button>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: Modal -->

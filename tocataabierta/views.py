@@ -15,6 +15,8 @@ from .forms import (
                 BorrarTocataAbiertaForm
             )
 
+from propuestaslugar.forms import ProponerLugarForm
+
 from toca.mixins import NextUrlMixin, RequestFormAttachMixin
 
 from toca.parametros import parToca
@@ -58,6 +60,7 @@ class TocataAbiertaDetailView(DetailView):
         otras_tocatas = Tocata.objects.tocataartistadisponibles(tocataabierta.artista)
 
         context['tocata_list'] = otras_tocatas
+        context['form_prestalacasa'] = ProponerLugarForm(self.request or None)
 
         return context
 
