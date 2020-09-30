@@ -68,3 +68,13 @@ class ProponerLugarForm(forms.Form):
         self.request = request
         super(ProponerLugarForm, self).__init__(*args, **kwargs)
         self.fields['lugar'].queryset = Lugar.objects.by_request(self.request)
+
+    def clean_lugar(self):
+        lugar = self.cleaned_data.get('lugar')
+        tocataabierta = self.cleaned_data.get('tocataabierta')
+        if tocataabierta.comuna.nombre == 'Todas':
+            if tocataabierta.region.nombre != lugar.region.nombre:
+                raise forms.ValidationError('Lugar no esta en la Region')
+        else:
+            if tocataabierta.region.nombre != lugar.region.nombre or tocataabierta.comuna.nombre != lugar.comuna.nombre:
+                raise forms.ValidationError('Lugar no esta en la Region y/o Comuna')

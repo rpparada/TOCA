@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
@@ -25,7 +26,6 @@ class MisPropuestasListView(LoginRequiredMixin, ListView):
     def get_queryset(self, *args, **kwargs):
         request = self.request
         mis_propuestas = LugaresTocata.objects.mis_propuestas_by_request(request)
-        print(mis_propuestas)
         return mis_propuestas
 
 class CancelarPropuestaView(LoginRequiredMixin, View):
@@ -78,6 +78,11 @@ class ProponerLugarView(LoginRequiredMixin, View):
         if form.is_valid():
             tocataabierta = form.cleaned_data['tocataabierta']
             lugar = form.cleaned_data['lugar']
+
+            # Verificar si ya se envio propuesta
+            propuesta, created = LugaresTocata.objects.new_or_get(tocataabierta, lugar)
+            if not created:
+                messages.error(request,'Ya habias enviado este lugar para esta tocata')
 
         return redirect('propuestaslugar:mispropuestas')
 

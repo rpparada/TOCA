@@ -12,16 +12,14 @@
     <!--Modal Cancelar -->
     {% include 'propuestaslugar/snippets/modalcancelar.html' with instance=object %}
     <!-- end: Modal -->
-
     <!--Modal Borrar -->
     {% include 'propuestaslugar/snippets/modalborrar.html' with instance=object %}
     <!-- end: Modal -->
-
     <!--Modal Cancelar elegida -->
     {% include 'propuestaslugar/snippets/modalcancelarelegida.html' with instance=object %}
     <!-- end: Modal -->
   {% endfor %}
-
+  
 <section id="page-content" class="no-sidebar">
     <div class="container">
         <!-- DataTable -->
@@ -38,7 +36,8 @@
                     <thead>
                         <tr>
                             <th>Lugar</th>
-                            <th>Artista/Tocata</th>
+                            <th>Artista</th>
+                            <th>Tocata</th>
                             <th>Estado</th>
                             <th class="noExport">Acciones</th>
                         </tr>
@@ -46,12 +45,9 @@
                     <tbody>
                       {% for object in object_list %}
                         <tr>
-                            <td>{{ object.lugar.nombre_calle }} {{ object.lugar.numero }}, {{ object.lugar.comuna }}</td>
-                            {% if object.estado == 'elegido' %}
-                            <td><a href="{{ object.tocataabierta.tocata.get_absolute_url }}">{{ object.tocataabierta.artista.nombre }}, {{ object.tocataabierta.nombre }}</a></td>
-                            {% else %}
-                            <td><a href="{{ object.tocataabierta.get_absolute_url }}">{{ object.tocataabierta.artista.nombre }}, {{ object.tocataabierta.nombre }}</a></td>
-                            {% endif %}
+                            <td>{% if object.lugar.nombre %}{{ object.lugar.nombre }}, {% endif %}{{ object.lugar.nombre_calle }} {{ object.lugar.numero }}, {{ object.lugar.comuna }}</td>
+                            <td><a href="{{ object.tocataabierta.artista.get_absolute_url }}">{{ object.tocataabierta.artista.nombre }}</a></td>
+                            <td><a href="{{ object.tocataabierta.get_absolute_url }}">{{ object.tocataabierta.nombre }}</a></td>
                             <td>{{ object.get_estado_display }}</td>
                             <td>
                               <div class="p-dropdown">
@@ -73,7 +69,8 @@
                     <tfoot>
                         <tr>
                           <th>Lugar</th>
-                          <th>Artista/Tocata</th>
+                          <th>Tocata</th>
+                          <th>Tocata</th>
                           <th>Estado</th>
                           <th>Acciones</th>
                         </tr>

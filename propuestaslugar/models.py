@@ -18,6 +18,21 @@ class LugaresTocataQuerySet(models.query.QuerySet):
     def elegidas(self):
         return self.filter(estado__in=['elegido',])
 
+    def by_tocataabierta(self, tocataabierta):
+        return self.filter(tocataabierta=tocataabierta)
+
+    def by_lugar(self, lugar):
+        return self.filter(lugar=lugar)
+
+    def sin_borrado_cancelado(self):
+        return self.exclude(estado__in=['cancelado', 'borrado',])
+
+    def existe(self, tocataabierta, lugar):
+        qs = self.by_tocataabierta(tocataabierta).by_lugar(lugar).sin_borrado_cancelado()
+        if qs.exists():
+            return qs.first()
+        return None
+
 class LugaresTocataManager(models.Manager):
     def get_queryset(self):
         return LugaresTocataQuerySet(self.model, using=self._db)
@@ -30,6 +45,21 @@ class LugaresTocataManager(models.Manager):
 
     def elegidas_by_request(self, request):
         return self.get_queryset().mis_propuestas_by_request(request).elegidas()
+
+    def existe(self, tocataabierta, lugar):
+        return self.get_queryset().existe(tocataabierta, lugar)
+
+    def new_or_get(self, tocataabierta, lugar):
+        obj = self.get_queryset().existe(tocataabierta, lugar)
+        created = False
+        if not obj:
+            obj = self.model.objects.create(
+                                        tocataabierta=tocataabierta,
+                                        lugar=lugar
+                                    )
+            created = True
+
+        return obj, created
 
 LUGARESTOCATA_ESTADO_OPCIONES = (
     ('elegido','Elegido'),
