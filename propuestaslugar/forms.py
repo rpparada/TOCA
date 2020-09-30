@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib import messages
 
 from .models import LugaresTocata
 
@@ -70,11 +71,16 @@ class ProponerLugarForm(forms.Form):
         self.fields['lugar'].queryset = Lugar.objects.by_request(self.request)
 
     def clean_lugar(self):
+        request = self.request
         lugar = self.cleaned_data.get('lugar')
         tocataabierta = self.cleaned_data.get('tocataabierta')
         if tocataabierta.comuna.nombre == 'Todas':
             if tocataabierta.region.nombre != lugar.region.nombre:
+                messages.error(request,'Lugar no esta en la Region')
                 raise forms.ValidationError('Lugar no esta en la Region')
         else:
             if tocataabierta.region.nombre != lugar.region.nombre or tocataabierta.comuna.nombre != lugar.comuna.nombre:
+                messages.error(request,'Lugar no esta en la Region y/o Comuna')
                 raise forms.ValidationError('Lugar no esta en la Region y/o Comuna')
+
+        return lugar

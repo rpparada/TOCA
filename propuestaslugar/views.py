@@ -78,7 +78,7 @@ class ProponerLugarView(LoginRequiredMixin, View):
         if form.is_valid():
             tocataabierta = form.cleaned_data['tocataabierta']
             lugar = form.cleaned_data['lugar']
-
+            
             # Verificar si ya se envio propuesta
             propuesta, created = LugaresTocata.objects.new_or_get(tocataabierta, lugar)
             if not created:
