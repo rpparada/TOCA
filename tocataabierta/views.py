@@ -60,7 +60,7 @@ class TocataAbiertaDetailView(DetailView):
         otras_tocatas = Tocata.objects.tocataartistadisponibles(tocataabierta.artista)
 
         context['tocata_list'] = otras_tocatas
-        context['form_prestalacasa'] = ProponerLugarForm(self.request or None)
+        context['form_prestalacasa'] = ProponerLugarForm(self.request or None, tocataabierta or None)
 
         return context
 

@@ -51,7 +51,7 @@ class CancelarPropuestaElegidaForm(forms.Form):
 class ProponerLugarForm(forms.Form):
 
     tocataabierta       = forms.ModelChoiceField(
-                                        queryset=TocataAbierta.objects.disponible(),
+                                        queryset=None,
                                         empty_label=None,
                                         widget=forms.HiddenInput()
                                     )
@@ -65,10 +65,27 @@ class ProponerLugarForm(forms.Form):
                                         label='Selecciona lugar:'
                                     )
 
-    def __init__(self, request, *args, **kwargs):
+    def __init__(self, request, tocataabierta, *args, **kwargs):
         self.request = request
+        #self.tocataabierta = tocataabierta
         super(ProponerLugarForm, self).__init__(*args, **kwargs)
-        self.fields['lugar'].queryset = Lugar.objects.by_request(self.request)
+
+        print(request.POST)
+        print(tocataabierta)
+        print('hola1')
+        if tocataabierta.comuna.nombre == 'Todas':
+            # Buscar por region
+            print('hola2')
+            lugares = Lugar.objects.by_region(tocataabierta, request)
+        else:
+            # Buscar por comuna
+            print('hola3')
+            lugares = Lugar.objects.by_comuna(tocataabierta, request)
+
+        print('hola4')
+        self.fields['lugar'].queryset = lugares
+        self.fields['tocataabierta'] = TocataAbierta.objects.filter(id=tocataabierta.id)
+        #self.fields['tocataabierta'] = TocataAbierta.objects.disponible()
 
     def clean_lugar(self):
         request = self.request
