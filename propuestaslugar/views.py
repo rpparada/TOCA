@@ -100,14 +100,14 @@ class VerPropuestasLitsView(LoginRequiredMixin, ListView):
 
         return lugares
 
-    def get_context_data(self):
+    def get_context_data(self, *args, **kwargs):
         context = super(VerPropuestasLitsView, self).get_context_data(*args, **kwargs)
 
-        tocataabierta = self.request.GET.get('tocataabierta')
+        tocataabierta_id = self.request.GET.get('tocataabierta')
+        tocataabierta = TocataAbierta.objects.get(id=tocataabierta_id)
         context['tocataabierta'] = tocataabierta
 
         return context
-
 
 @login_required(login_url='index')
 def verpropuestas(request, tocata_id):

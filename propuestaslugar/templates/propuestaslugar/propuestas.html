@@ -13,7 +13,7 @@
   <div class="modal fade" id="modal{{object.lugar.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
       <div class="modal-dialog">
           <div class="modal-content">
-            <form id="formtocheck" action="{% url 'seleccionarpropuestas' tocataabierta.id object.id %}" method="POST">
+            <form id="formtocheck" action="{% url 'propuestaslugar:seleccionarpropuestas' tocataabierta.id object.id %}" method="POST">
               {% csrf_token %}
               <div class="modal-header">
                   <h4 class="modal-title" id="modal-label">Aceptar Lugar</h4>
