@@ -82,57 +82,32 @@ class ProponerLugarView(LoginRequiredMixin, View):
         if form.is_valid():
             tocataabierta = form.cleaned_data['tocataabierta']
             lugar = form.cleaned_data['lugar']
-
             # Verificar si ya se envio propuesta
             propuesta, created = LugaresTocata.objects.new_or_get(tocataabierta, lugar)
             if not created:
                 messages.error(request,'Ya habias enviado este lugar para esta tocata')
-        else:
-            print(form.errors)
+
         return redirect('propuestaslugar:mispropuestas')
 
-@login_required(login_url='index')
-def proponerlugar(request, tocata_id):
+class VerPropuestasLitsView(LoginRequiredMixin, ListView):
 
-    if request.method == 'POST':
-        form = LugaresTocataForm(request.POST)
+    template_name = 'propuestaslugar/propuestas.html'
+    paginate_by = 12
 
-        if form.is_valid():
+    def get_queryset(self):
+        tocataabierta_id = self.request.GET.get('tocataabierta')
+        lugares = LugaresTocata.objects.filter(tocataabierta=tocataabierta_id).filter(estado='pendiente')
 
-            lugartocata = form.save(commit=False)
-            if LugaresTocata.objects.filter(tocataabierta=tocata_id).filter(lugar=lugartocata.lugar).exclude(estado__in=[parToca['cancelado'],parToca['borrado']]):
-                messages.error(request,'Ya habias enviado este lugar para esta tocata')
-            else:
-                tocataabierta = TocataAbierta.objects.get(pk=tocata_id)
-                if tocataabierta.comuna.nombre == 'Todas':
-                    if tocataabierta.region.nombre == lugartocata.lugar.region.nombre:
-                        lugartocata.save()
-                        messages.success(request, 'Lugar enviado al artista')
-                        return redirect('index')
-                    else:
-                        messages.error(request,'Lugar no esta en la Region')
-                else:
-                    if tocataabierta.region.nombre == lugartocata.lugar.region.nombre\
-                     and tocataabierta.comuna.nombre == lugartocata.lugar.comuna.nombre:
-                     lugartocata.save()
-                     messages.success(request, 'Lugar enviado al artista')
-                     return redirect('index')
-                    else:
-                        messages.error(request,'Lugar no esta en la Region y/o Comuna')
+        return lugares
 
-        else:
-            print(form.errors.as_data())
-            messages.error(request,'Error en form')
+    def get_context_data(self):
+        context = super(VerPropuestasLitsView, self).get_context_data(*args, **kwargs)
 
-    tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
-    mislugares = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
+        tocataabierta = self.request.GET.get('tocataabierta')
+        context['tocataabierta'] = tocataabierta
 
-    context = {
-        'mislugares': mislugares,
-        'tocata': tocata,
-    }
+        return context
 
-    return render(request, 'tocata/proponerlugar.html', context)
 
 @login_required(login_url='index')
 def verpropuestas(request, tocata_id):

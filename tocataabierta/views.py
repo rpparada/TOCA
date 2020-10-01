@@ -8,6 +8,7 @@ from django.contrib import messages
 from .models import TocataAbierta
 from tocata.models import Tocata
 from lugar.models import Comuna
+from propuestaslugar.models import LugaresTocata
 
 from .forms import (
                 CrearTocataAbiertaForm,
@@ -89,6 +90,9 @@ class TocatasAbiertasArtistaListView(LoginRequiredMixin, ListView):
     def get_queryset(self, *args, **kwargs):
         request = self.request
         tocatasabiertas = TocataAbierta.objects.tocataartista_by_request(request).order_by('fecha')
+
+        for tocataabierta in tocatasabiertas:
+            tocataabierta.numeropropuestas  = LugaresTocata.objects.filter(tocataabierta=tocataabierta).filter(estado='pendiente').count()
 
         return tocatasabiertas
 

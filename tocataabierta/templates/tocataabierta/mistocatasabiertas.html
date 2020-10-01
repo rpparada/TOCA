@@ -17,7 +17,6 @@
   {% endfor %}
 {% endif %}
 
-
 {% if object_list %}
 <section id="page-content" class="no-sidebar">
     <div class="container">
@@ -74,7 +73,10 @@
                                       <li><a href="" data-target="#modalsuab{{object.id}}" data-toggle="modal"><i class="icon-alert-triangle"></i>Suspender</a></li>
                                       {% endif %}
                                       {% if object.numeropropuestas > 0 %}
-                                      <li><a href="{% url 'verpropuestas' object.id %}"><i class="icon-home"></i>Ver Propuestas</a></li>
+                                        <form action="{% url 'propuestaslugar:verpropuestas' %}" method="GET">
+                                          <input hidden name="tocataabierta" type="text" value="{{ object.id }}"/>
+                                          <li><button type="submit" style="padding:0px;border:none;"><i class="icon-home"></i>Ver Propuestas</button></li>
+                                        </form>
                                       {% endif %}
                                       {% if object.estado == 'suspendido' %}
                                       <li><a href="" data-target="#modalboab{{object.id}}" data-toggle="modal"><i class="icon-x"></i>Borrar</a></li>

@@ -2,20 +2,18 @@
 {% load static %}
 {% load humanize %}
 {% load thumbnail %}
-{% block title %} | {{ tocata.nombre }} {% endblock %}
+{% block title %} | {{ tocataabierta.nombre }} {% endblock %}
 {% block content %}
 {% include 'partials/_alerts.html' %}
 
-
 <!-- Page Content -->
-{% if user.is_authenticated %}
-{% if listaLugares %}
-  {% for lugar in listaLugares %}
+{% if object_list %}
+  {% for object in object_list %}
   <!--Modal seleccion -->
-  <div class="modal fade" id="modal{{lugar.lugar.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+  <div class="modal fade" id="modal{{object.lugar.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
       <div class="modal-dialog">
           <div class="modal-content">
-            <form id="formtocheck" action="{% url 'seleccionarpropuestas' tocata.id lugar.id %}" method="POST">
+            <form id="formtocheck" action="{% url 'seleccionarpropuestas' tocataabierta.id object.id %}" method="POST">
               {% csrf_token %}
               <div class="modal-header">
                   <h4 class="modal-title" id="modal-label">Aceptar Lugar</h4>
@@ -24,16 +22,16 @@
               <div class="modal-body">
                   <div class="row">
                       <div class="col-md-12">
-                          {% if lugar.lugar.capacidad < tocata.asistentes_min %}
+                          {% if object.lugar.capacidad < tocataabierta.asistentes_min %}
                             <p>El lugar seleccionado tiene capacidades de asistencia diferentes a lo esperado.</p>
                             <p>Si aceptas, se ajustaran los datos de asistencia definidos inicialmente a:</p>
-                            <p>Cambiaremos Asistentencia Mínima de {{tocata.asistentes_min}} a {{lugar.lugar.capacidad}}.</p>
-                            <p>Cambiaremos Asistentencia Máxima de {{tocata.asistentes_max}} a {{lugar.lugar.capacidad}}.</p>
+                            <p>Cambiaremos Asistentencia Mínima de {{tocataabierta.asistentes_min}} a {{object.lugar.capacidad}}.</p>
+                            <p>Cambiaremos Asistentencia Máxima de {{tocataabierta.asistentes_max}} a {{object.lugar.capacidad}}.</p>
                           {% else %}
-                            {% if lugar.lugar.capacidad != tocata.asistentes_max %}
+                            {% if object.lugar.capacidad != tocataabierta.asistentes_max %}
                               <p>El lugar seleccionado tiene capacidades de asistencia diferentes a lo esperado.</p>
                               <p>Si aceptas, se ajustaran los datos de asistencia definidos inicialmente a:</p>
-                              <p>Cambiaremos Asistentencia Máxima de {{tocata.asistentes_max}} a {{lugar.lugar.capacidad}}.</p>
+                              <p>Cambiaremos Asistentencia Máxima de {{tocataabierta.asistentes_max}} a {{object.lugar.capacidad}}.</p>
                             {% else %}
                               <p>¿Estas seguro de aceptar este lugar?</p>
                             {% endif %}
@@ -59,7 +57,7 @@
   <!-- end: Modal -->
 
   <!--Modal detalles lugar -->
-  <div class="modal fade" id="modalde{{lugar.lugar.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
+  <div class="modal fade" id="modalde{{object.lugar.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
       <div class="modal-dialog">
           <div class="modal-content">
               <div class="modal-header">
@@ -70,55 +68,55 @@
                 <div class="form-group row">
                     <label class="col-form-label col-sm-2 text-sm-right">Calle</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" value="{{ lugar.lugar.nombre_calle }}" readonly>
+                        <input type="text" class="form-control" value="{{ object.lugar.nombre_calle }}" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-sm-2 text-sm-right">Número</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" value="{{ lugar.lugar.numero }}" readonly>
+                        <input type="text" class="form-control" value="{{ object.lugar.numero }}" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-sm-2 text-sm-right">Region</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{ lugar.lugar.region.nombre }}" readonly>
+                      <input type="text" class="form-control" value="{{ object.lugar.region.nombre }}" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-sm-2 text-sm-right">Comuna</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{ lugar.lugar.comuna.nombre }}" readonly>
+                      <input type="text" class="form-control" value="{{ object.lugar.comuna.nombre }}" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-sm-2 text-sm-right">Ciudad</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" value="{{ lugar.lugar.ciudad }}" readonly>
+                        <input type="text" class="form-control" value="{{ object.lugar.ciudad }}" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-sm-2 text-sm-right">Depto.</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" value="{{ lugar.lugar.departamento }}" readonly>
+                        <input type="text" class="form-control" value="{{ object.lugar.departamento }}" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-sm-2 text-sm-right">Otros</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" value="{{ lugar.lugar.otros }}" readonly>
+                        <input type="text" class="form-control" value="{{ object.lugar.otros }}" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-sm-2 text-sm-right">Capacidad Aprox.</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" value="{{ lugar.lugar.capacidad }}" readonly>
+                        <input type="number" class="form-control" value="{{ object.lugar.capacidad }}" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-sm-2 text-sm-right">Descripción</label>
                     <div class="col-sm-10">
-                      <textarea class="form-control" rows="3" name="descripción" readonly>{{ lugar.lugar.descripción }}</textarea>
+                      <textarea class="form-control" rows="3" name="descripción" readonly>{{ object.lugar.descripción }}</textarea>
                     </div>
                 </div>
               </div>
@@ -135,16 +133,16 @@
 <section id="page-content" class="no-sidebar">
     <div class="container">
         <!-- DataTable -->
-          <input type="hidden" class="form-control" value="{{ tocata.id }}" name="tocata">
-          <input type="hidden" class="form-control" value="{{ tocata.usuario.id }}" name="usuario">
+          <input type="hidden" class="form-control" value="{{ tocataabierta.id }}" name="tocata">
+          <input type="hidden" class="form-control" value="{{ tocataabierta.usuario.id }}" name="usuario">
           <div class="row mb-3">
               <div class="col-lg-6">
-                  <h4>{{ tocata.nombre }}</h4>
-                  <p>{{ tocata.artista }}</p>
+                  <h4>{{ tocataabierta.nombre }}</h4>
+                  <p>{{ tocataabierta.artista }}</p>
               </div>
           </div>
 
-          {% if listaLugares %}
+          {% if object_list %}
           <div class="row">
               <div class="col-lg-12">
                   <table id="datatable" class="table table-bordered table-hover" style="width:100%">
@@ -154,24 +152,24 @@
                               <th>Calle</th>
                               <th>Comuna</th>
                               <th>Cuidad</th>
-                              <th>Capacidad Aprox.<br>(Lo que pides: {{ tocata.asistentes_min}} min)</th>
+                              <th>Capacidad Aprox.<br>(Lo que pides: {{ tocataabierta.asistentes_min}} min)</th>
                               <th class="noExport">Seleccionar</th>
                           </tr>
                       </thead>
                       <tbody>
-                        {% for lugar in listaLugares %}
+                        {% for object in object_list %}
                           <tr>
-                              <td>{{ lugar.lugar.usuario.email }}</td>
-                              <td>{{ lugar.lugar.nombre_calle }}, {{ lugar.lugar.numero }}</td>
-                              <td>{{ lugar.lugar.comuna }}</td>
-                              <td>{{ lugar.lugar.ciudad }}</td>
-                              <td>{{ lugar.lugar.capacidad }}</td>
+                              <td>{{ object.lugar.usuario.email }}</td>
+                              <td>{{ object.lugar.nombre_calle }}, {{ object.lugar.numero }}</td>
+                              <td>{{ object.lugar.comuna }}</td>
+                              <td>{{ object.lugar.ciudad }}</td>
+                              <td>{{ object.lugar.capacidad }}</td>
                               <td>
                                 <div class="p-dropdown">
                                     <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
                                     <ul class="p-dropdown-content">
-                                        <li><a href="" data-target="#modal{{lugar.lugar.id}}" data-toggle="modal"><i class="icon-check-circle"></i>Seleccionar</a></li>
-                                        <li><a href="" data-target="#modalde{{lugar.lugar.id}}" data-toggle="modal"><i class="icon-eye"></i>Ver</a></li>
+                                        <li><a href="" data-target="#modal{{object.lugar.id}}" data-toggle="modal"><i class="icon-check-circle"></i>Seleccionar</a></li>
+                                        <li><a href="" data-target="#modalde{{object.lugar.id}}" data-toggle="modal"><i class="icon-eye"></i>Ver</a></li>
                                     </ul>
                                 </div>
                               </td>
@@ -195,16 +193,6 @@
         <!-- end: DataTable -->
     </div>
 </section>
-{% else %}
-<section id="page-content">
-    <div class="container">
-      <div data-animate="fadeInUp" class="text-center">
-          <a href="{% url 'ingresar' %}?next={{request.path|urlencode}}" class="btn">INGRESA A TU CUENTA</a>
-      </div>
-    </div>
-</section>
-{% endif %}
 <!-- end: Page Content -->
-
 
 {% endblock %}
