@@ -1,9 +1,10 @@
 <!--Modal Presta' la casa -->
 <div class="modal fade" id="modalprestalacasa{{instance.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
-      <form action="{% url 'propuestaslugar:proponerlugar' %}" method="POST">
-      {% csrf_token %}
+      {% if form_prestalacasa.lugar|length %}
         <div class="modal-content">
+          <form action="{% url 'propuestaslugar:proponerlugar' %}" method="POST">
+          {% csrf_token %}
             <div class="modal-header">
                 <h4 class="modal-title" id="modal-label">Presta' la casa</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -19,11 +20,28 @@
             </div>
             <div class="modal-footer">
                 <input type="hidden" name="tocataabierta" value="{{ instance.id }}">
-                <button type="submit" class="btn btn-b">Confirmo</button>
+                <button type="submit" class="btn btn-b">Seleccionar</button>
                 <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Cancelar</button>
             </div>
+          </form>
         </div>
-      </form>
+      {% else %}
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-label">Presta' la casa</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group row">
+                  <label class="col-form-label col-sm-12 text-sm-left">No tienes direcciones registradas en {{instance.region}}{% if instance.comuna.nombre != 'Todas' %}, {{instance.comuna}}{% endif %}</label>
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      {% endif %}
     </div>
 </div>
 <!-- end: Modal -->

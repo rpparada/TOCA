@@ -74,18 +74,12 @@ class ProponerLugarView(LoginRequiredMixin, View):
 
     form_class = ProponerLugarForm
 
-    def get_form_kwargs(self):
-        kwargs = super(ProponerLugarView, self).get_form_kwargs()
-        kwargs['tocataabierta'] = self.tocataabierta
-        return kwargs
-
     def post(self, request, *args, **kwargs):
         tocataabierta_id = request.POST.get('tocataabierta')
         tocataabierta = TocataAbierta.objects.get(id=tocataabierta_id)
+
         form = self.form_class(request, tocataabierta, request.POST or None)
-        print('aqui1')
         if form.is_valid():
-            print('aqui2')
             tocataabierta = form.cleaned_data['tocataabierta']
             lugar = form.cleaned_data['lugar']
 
@@ -95,7 +89,6 @@ class ProponerLugarView(LoginRequiredMixin, View):
                 messages.error(request,'Ya habias enviado este lugar para esta tocata')
         else:
             print(form.errors)
-        print('aqui3')
         return redirect('propuestaslugar:mispropuestas')
 
 @login_required(login_url='index')

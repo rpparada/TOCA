@@ -30,10 +30,10 @@ class LugarManager(models.Manager):
         return self.get_queryset().by_request(request).disponible().order_by('-fecha_crea')
 
     def by_region(self, tocataabierta, request):
-        return self.get_queryset().by_request(request).by_region(tocataabierta)
+        return self.get_queryset().by_request(request).by_region(tocataabierta).disponible()
 
     def by_comuna(self, tocataabierta, request):
-        return self.get_queryset().by_request(request).by_comuna(tocataabierta)
+        return self.get_queryset().by_request(request).by_comuna(tocataabierta).disponible()
 
 LUGAR_ESTADO_OPCIONES = (
     ('disponible','Disponible'),

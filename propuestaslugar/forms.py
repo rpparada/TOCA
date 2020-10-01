@@ -67,25 +67,21 @@ class ProponerLugarForm(forms.Form):
 
     def __init__(self, request, tocataabierta, *args, **kwargs):
         self.request = request
-        #self.tocataabierta = tocataabierta
         super(ProponerLugarForm, self).__init__(*args, **kwargs)
 
-        print(request.POST)
-        print(tocataabierta)
-        print('hola1')
-        if tocataabierta.comuna.nombre == 'Todas':
-            # Buscar por region
-            print('hola2')
-            lugares = Lugar.objects.by_region(tocataabierta, request)
-        else:
-            # Buscar por comuna
-            print('hola3')
-            lugares = Lugar.objects.by_comuna(tocataabierta, request)
+        lugares = Lugar.objects.none()
+        tocataabierta_qs = TocataAbierta.objects.none()
+        if tocataabierta:
+            tocataabierta_qs = TocataAbierta.objects.filter(id=tocataabierta.id)
+            if tocataabierta.comuna.nombre == 'Todas':
+                # Buscar por region
+                lugares = Lugar.objects.by_region(tocataabierta, request)
+            else:
+                # Buscar por comuna
+                lugares = Lugar.objects.by_comuna(tocataabierta, request)
 
-        print('hola4')
         self.fields['lugar'].queryset = lugares
-        self.fields['tocataabierta'] = TocataAbierta.objects.filter(id=tocataabierta.id)
-        #self.fields['tocataabierta'] = TocataAbierta.objects.disponible()
+        self.fields['tocataabierta'].queryset = tocataabierta_qs
 
     def clean_lugar(self):
         request = self.request
