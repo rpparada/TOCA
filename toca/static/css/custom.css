@@ -17,3 +17,10 @@
 .destacaerrorform {
   border-color:  red;
 }
+
+/* Quita bullets de los radios de seleccion */
+.custom-radio-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}

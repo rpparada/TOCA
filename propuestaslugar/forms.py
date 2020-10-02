@@ -59,9 +59,10 @@ class ProponerLugarForm(forms.Form):
     lugar               = forms.ModelChoiceField(
                                         queryset=None,
                                         empty_label=None,
-                                        widget=forms.Select(attrs={
-                                                            'class': 'form-control',
-                                                        }),
+                                        # widget=forms.Select(attrs={
+                                        #                     'class': 'form-control',
+                                        #                 }),
+                                        widget=forms.RadioSelect(attrs={'class': "custom-radio-list"}),
                                         label='Selecciona lugar:'
                                     )
 
@@ -82,6 +83,7 @@ class ProponerLugarForm(forms.Form):
 
         self.fields['lugar'].queryset = lugares
         self.fields['tocataabierta'].queryset = tocataabierta_qs
+        self.fields['lugar'].initial = lugares.first()
 
     def clean_lugar(self):
         request = self.request

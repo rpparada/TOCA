@@ -11,6 +11,7 @@ from django.views.generic import (
 
 from .models import LugaresTocata
 from tocataabierta.models import TocataAbierta
+from lugar.models import Lugar
 
 from .forms import (
                 CancelarPropuestaForm,
@@ -18,6 +19,7 @@ from .forms import (
                 CancelarPropuestaElegidaForm,
                 ProponerLugarForm
             )
+from lugar.forms import CrearLugarForm
 
 # Create your views here.
 class MisPropuestasListView(LoginRequiredMixin, ListView):
@@ -70,24 +72,58 @@ class CancelarPropuestaElegidaView(LoginRequiredMixin, View):
         return redirect('propuestaslugar:mispropuestas')
 
 
-class ProponerLugarView(LoginRequiredMixin, View):
+class ProponerLugarListView(LoginRequiredMixin, ListView):
 
-    form_class = ProponerLugarForm
+    template_name = 'propuestaslugar/prestalacasa.html'
+    #paginate_by = 12
 
-    def post(self, request, *args, **kwargs):
-        tocataabierta_id = request.POST.get('tocataabierta')
+    def get_queryset(self):
+        request = self.request
+
+        tocataabierta_id = request.GET.get('tocataabierta')
         tocataabierta = TocataAbierta.objects.get(id=tocataabierta_id)
 
-        form = self.form_class(request, tocataabierta, request.POST or None)
-        if form.is_valid():
-            tocataabierta = form.cleaned_data['tocataabierta']
-            lugar = form.cleaned_data['lugar']
-            # Verificar si ya se envio propuesta
-            propuesta, created = LugaresTocata.objects.new_or_get(tocataabierta, lugar)
-            if not created:
-                messages.error(request,'Ya habias enviado este lugar para esta tocata')
+        lugares = Lugar.objects.none()
+        if tocataabierta.comuna.nombre == 'Todas':
+            # Buscar por region
+            lugares = Lugar.objects.by_region(tocataabierta, request)
+        else:
+            # Buscar por comuna
+            lugares = Lugar.objects.by_comuna(tocataabierta, request)
 
-        return redirect('propuestaslugar:mispropuestas')
+        return lugares
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProponerLugarListView, self).get_context_data(*args, **kwargs)
+
+        tocataabierta_id = self.request.GET.get('tocataabierta')
+        tocataabierta = TocataAbierta.objects.get(id=tocataabierta_id)
+
+        context['tocataabierta'] = tocataabierta
+        context['form_prestalacasa'] = ProponerLugarForm(self.request or None, tocataabierta or None)
+        context['form_lugar'] = CrearLugarForm(self.request)
+
+        return context
+
+# class ProponerLugarView(LoginRequiredMixin, View):
+#
+#     form_class = ProponerLugarForm
+#     template_name = 'propuestaslugar/prestalacasa.html'
+#
+#     def post(self, request, *args, **kwargs):
+#         tocataabierta_id = request.POST.get('tocataabierta')
+#         tocataabierta = TocataAbierta.objects.get(id=tocataabierta_id)
+#
+#         form = self.form_class(request, tocataabierta, request.POST or None)
+#         if form.is_valid():
+#             tocataabierta = form.cleaned_data['tocataabierta']
+#             lugar = form.cleaned_data['lugar']
+#             # Verificar si ya se envio propuesta
+#             propuesta, created = LugaresTocata.objects.new_or_get(tocataabierta, lugar)
+#             if not created:
+#                 messages.error(request,'Ya habias enviado este lugar para esta tocata')
+#
+#         return redirect('propuestaslugar:mispropuestas')
 
 class VerPropuestasLitsView(LoginRequiredMixin, ListView):
 
