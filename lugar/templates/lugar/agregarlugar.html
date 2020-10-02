@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
-{% load thumbnail %}
 {% block title %} | AGREGAR LUGAR{% endblock %}
 
 {% block content %}
@@ -18,79 +17,9 @@
                       <p hidden id="mensajerror"></p>
                   </div>
                   <div class="card-body">
-                      <form id="formtocheck" action="{% url 'lugar:agregarlugar' %}" method="POST" data-ciudad-url-agregar="{% url 'lugar:ajax_load_comunas_agregar' %}">
-                        {% csrf_token %}
-                          {{ form.non_field_errors }}
-                          <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.nombre.label }}</label>
-                              <div class="col-sm-10">
-                                {{ form.nombre }}
-                                {{ form.nombre.errors }}
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.nombre_calle.label }}</label>
-                              <div class="col-sm-7">
-                                {{ form.nombre_calle }}
-                                {{ form.nombre_calle.errors }}
-                              </div>
-                              <label class="col-form-label col-sm-1">{{ form.numero.label }}</label>
-                              <div class="col-sm-2">
-                                {{ form.numero }}
-                                {{ form.numero.errors }}
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.region.label }}</label>
-                              <div class="col-sm-4">
-                                {{ form.region }}
-                                {{ form.region.errors }}
-                              </div>
-                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.comuna.label }}</label>
-                              <div class="col-sm-4">
-                                {{ form.comuna }}
-                                {{ form.comuna.errors }}
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.ciudad.label }}</label>
-                              <div class="col-sm-5">
-                                {{ form.ciudad }}
-                                {{ form.ciudad.errors }}
-                              </div>
-                              <label class="col-form-label col-sm-1 text-sm-right">{{ form.departamento.label }}</label>
-                              <div class="col-sm-4">
-                                {{ form.departamento }}
-                                {{ form.departamento.errors }}
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.otros.label }}</label>
-                              <div class="col-sm-10">
-                                {{ form.otros }}
-                                {{ form.otros.errors }}
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.descripción.label }}</label>
-                              <div class="col-sm-10">
-                                {{ form.descripción }}
-                                {{ form.descripción.errors }}
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.capacidad.label }}</label>
-                              <div class="col-sm-10">
-                                {{ form.capacidad }}
-                                {{ form.capacidad.errors }}
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <div class="col-sm-10 ml-sm-auto">
-                                  <button type="submit" class="btn btn-primary">Agregar</button>
-                              </div>
-                          </div>
-                      </form>
+                    <!--Form Agrega Lugar -->
+                    {% include 'lugar/snippets/agregalugarform.html' with form=form %}
+                    <!-- end: Form -->
                   </div>
               </div>
 
