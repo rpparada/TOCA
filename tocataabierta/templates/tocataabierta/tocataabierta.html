@@ -10,6 +10,10 @@
 {% include 'propuestaslugar/snippets/modalprestalacasa.html' with instance=object %}
 <!-- end: Modal -->
 
+<!--Modal Agregar Lugar -->
+{% include 'lugar/snippets/modalagregarlugar.html' with instance=object %}
+<!-- end: Modal -->
+
 <!-- SHOP PRODUCT PAGE -->
 <section id="product-page" class="product-page p-b-0">
     <div class="container">
@@ -34,8 +38,6 @@
                         <div class="product-title">
                             <h3><a href="#">{{ object.nombre }}</a></h3>
                         </div>
-                        <!-- <div class="product-price"><ins>${{ object.costo|floatformat|intcomma }}</ins>
-                        </div> -->
                         <div class="seperator m-b-10"></div>
                         <p>{{ object.descripción }}</p>
                         <div class="product-meta">
@@ -85,18 +87,10 @@
                                     <td>Cuándo</td>
                                     <td>{{ object.fecha|date:"D d M Y"}} {{ object.hora|date:"H:i" }}</td>
                                 </tr>
-                                <!-- <tr>
-                                    <td>Número de Entradas a la Venta</td>
-                                    <td>{{ object.asistentes_max|intcomma }}</td>
-                                </tr> -->
                                 <tr>
                                     <td>Quórum Mínimo</td>
                                     <td>{{ object.asistentes_min|intcomma }}</td>
                                 </tr>
-                                <!-- <tr>
-                                    <td>Número de Entradas ya Vendidas</td>
-                                    <td>{{ object.asistentes_total|intcomma }}</td>
-                                </tr> -->
                             </tbody>
                         </table>
                     </div>

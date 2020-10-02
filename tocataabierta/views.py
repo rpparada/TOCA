@@ -17,6 +17,7 @@ from .forms import (
             )
 
 from propuestaslugar.forms import ProponerLugarForm
+from lugar.forms import CrearLugarForm
 
 from toca.mixins import NextUrlMixin, RequestFormAttachMixin
 
@@ -62,6 +63,7 @@ class TocataAbiertaDetailView(DetailView):
 
         context['tocata_list'] = otras_tocatas
         context['form_prestalacasa'] = ProponerLugarForm(self.request or None, tocataabierta or None)
+        context['form_lugar'] = CrearLugarForm(self.request)
 
         return context
 
