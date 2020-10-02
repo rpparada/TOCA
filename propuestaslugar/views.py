@@ -105,25 +105,36 @@ class ProponerLugarListView(LoginRequiredMixin, ListView):
 
         return context
 
-# class ProponerLugarView(LoginRequiredMixin, View):
-#
-#     form_class = ProponerLugarForm
-#     template_name = 'propuestaslugar/prestalacasa.html'
-#
-#     def post(self, request, *args, **kwargs):
-#         tocataabierta_id = request.POST.get('tocataabierta')
-#         tocataabierta = TocataAbierta.objects.get(id=tocataabierta_id)
-#
-#         form = self.form_class(request, tocataabierta, request.POST or None)
-#         if form.is_valid():
-#             tocataabierta = form.cleaned_data['tocataabierta']
-#             lugar = form.cleaned_data['lugar']
-#             # Verificar si ya se envio propuesta
-#             propuesta, created = LugaresTocata.objects.new_or_get(tocataabierta, lugar)
-#             if not created:
-#                 messages.error(request,'Ya habias enviado este lugar para esta tocata')
-#
-#         return redirect('propuestaslugar:mispropuestas')
+class SeleccionarLugarView(LoginRequiredMixin, View):
+
+    form_class = ProponerLugarForm
+
+    def post(self, request, *args, **kwargs):
+        tocataabierta_id = request.POST.get('tocataabierta')
+        tocataabierta = TocataAbierta.objects.get(id=tocataabierta_id)
+
+        form = self.form_class(request, tocataabierta, request.POST or None)
+        if form.is_valid():
+            tocataabierta = form.cleaned_data['tocataabierta']
+            lugar = form.cleaned_data['lugar']
+            # Verificar si ya se envio propuesta
+            propuesta, created = LugaresTocata.objects.new_or_get(tocataabierta, lugar)
+            if not created:
+                messages.error(request,'Ya habias enviado este lugar para esta tocata')
+
+        return redirect('propuestaslugar:mispropuestas')
+
+class AgregarYSeleccionarLugar(LoginRequiredMixin ,View):
+
+    form_class = CrearLugarForm
+
+    def post(self, request, *args, **kwargs):
+
+        form = self.form_class(request.POST or none)
+        if form.is_valid():
+            print('ok')
+        else:
+            print('error')
 
 class VerPropuestasLitsView(LoginRequiredMixin, ListView):
 

@@ -6,6 +6,8 @@
 {% block content %}
 {% include 'partials/_alerts.html' %}
 
+{% url 'lugar:agregarlugar' as agregarlugar_url %}
+
 <section id="page-content">
     <div class="container">
         <div class="row">
@@ -18,7 +20,7 @@
                   </div>
                   <div class="card-body">
                     <!--Form Agrega Lugar -->
-                    {% include 'lugar/snippets/agregalugarform.html' with form=form %}
+                    {% include 'lugar/snippets/agregalugarform.html' with form=form nombreboton='Agregar' endpoint=agregarlugar_url %}
                     <!-- end: Form -->
                   </div>
               </div>
