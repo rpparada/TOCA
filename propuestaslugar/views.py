@@ -131,11 +131,16 @@ class AgregarYSeleccionarLugar(LoginRequiredMixin ,View):
     form_class = CrearLugarPropuestaForm
 
     def post(self, request, *args, **kwargs):
-
-        form = self.form_class(request, request.POST or none)
+        tocataabierta_id = request.POST.get('tocataabierta')
+        tocataabierta = TocataAbierta.objects.get(id=tocataabierta_id)
+        form = self.form_class(request, tocataabierta, request.POST or none)
         if form.is_valid():
             # Direccion salvada
-            form.save()
+            lugar = form.save()
+
+            #Crear Propuesta con nueva direccion
+            propuesta, created = LugaresTocata.objects.new_or_get(tocataabierta, lugar)
+
         else:
             print('error')
 

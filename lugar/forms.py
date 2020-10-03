@@ -265,7 +265,7 @@ class CrearLugarPropuestaForm(forms.ModelForm):
         return capacidad
 
     def save(self, commit=True):
-        lugar = super(CrearLugarForm, self).save(commit=False)
+        lugar = super(CrearLugarPropuestaForm, self).save(commit=False)
         request = self.request
 
         lugar.provincia = Comuna.objects.get(id=lugar.comuna.id).provincia

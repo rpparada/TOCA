@@ -2,6 +2,7 @@
 {% load humanize %}
 <form id="formtocheck" action="{{ endpoint }}" method="POST" data-ciudad-url-agregar="{% url 'lugar:ajax_load_comunas_agregar' %}">
   {% csrf_token %}
+    <input type="hidden" name="tocataabierta" value="{{ tocataabierta.id }}">
     {{ form.non_field_errors }}
     <div class="form-group row">
         <label class="col-form-label col-sm-2 text-sm-right">{{ form.nombre.label }}</label>
