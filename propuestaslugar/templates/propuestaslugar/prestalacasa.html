@@ -31,7 +31,7 @@
                           </div>
                           {% if object_list %}
                           <form action="{% url 'propuestaslugar:seleccionarlugar' %}" method="POST">
-                          {% csrf_token %}
+                          {% csrf_token %}                          
                           <div class="col-lg-12 form-group">
                             {{ form_prestalacasa.lugar.errors }}
                             {{ form_prestalacasa.lugar }}

@@ -11,7 +11,7 @@ from django.views.generic import (
 
 from .models import LugaresTocata
 from tocataabierta.models import TocataAbierta
-from lugar.models import Lugar
+from lugar.models import Lugar, Comuna
 
 from .forms import (
                 CancelarPropuestaForm,
@@ -19,7 +19,9 @@ from .forms import (
                 CancelarPropuestaElegidaForm,
                 ProponerLugarForm
             )
-from lugar.forms import CrearLugarForm
+from lugar.forms import CrearLugarForm, CrearLugarPropuestaForm
+
+from toca.mixins import NextUrlMixin, RequestFormAttachMixin
 
 # Create your views here.
 class MisPropuestasListView(LoginRequiredMixin, ListView):
@@ -101,7 +103,7 @@ class ProponerLugarListView(LoginRequiredMixin, ListView):
 
         context['tocataabierta'] = tocataabierta
         context['form_prestalacasa'] = ProponerLugarForm(self.request or None, tocataabierta or None)
-        context['form_lugar'] = CrearLugarForm(self.request)
+        context['form_lugar'] = CrearLugarPropuestaForm(self.request, tocataabierta)
 
         return context
 
@@ -126,15 +128,18 @@ class SeleccionarLugarView(LoginRequiredMixin, View):
 
 class AgregarYSeleccionarLugar(LoginRequiredMixin ,View):
 
-    form_class = CrearLugarForm
+    form_class = CrearLugarPropuestaForm
 
     def post(self, request, *args, **kwargs):
 
-        form = self.form_class(request.POST or none)
+        form = self.form_class(request, request.POST or none)
         if form.is_valid():
-            print('ok')
+            # Direccion salvada
+            form.save()
         else:
             print('error')
+
+        return redirect('propuestaslugar:mispropuestas')
 
 class VerPropuestasLitsView(LoginRequiredMixin, ListView):
 
