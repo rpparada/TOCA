@@ -33,6 +33,9 @@ class LugaresTocataQuerySet(models.query.QuerySet):
             return qs.first()
         return None
 
+    def ver_propuestas(self, tocataabierta_id):
+        return self.filter(tocataabierta=tocataabierta_id).filter(estado='pendiente').order_by('-fecha_crea')
+
 class LugaresTocataManager(models.Manager):
     def get_queryset(self):
         return LugaresTocataQuerySet(self.model, using=self._db)
@@ -60,6 +63,9 @@ class LugaresTocataManager(models.Manager):
             created = True
 
         return obj, created
+
+    def ver_propuestas(self, tocataabierta_id):
+        return self.get_queryset().ver_propuestas(tocataabierta_id)
 
 LUGARESTOCATA_ESTADO_OPCIONES = (
     ('elegido','Elegido'),

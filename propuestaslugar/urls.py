@@ -10,7 +10,5 @@ urlpatterns = [
     path('seleccionarlugar', views.SeleccionarLugarView.as_view(), name='seleccionarlugar'),
     path('agregaryseleccionarlugar', views.AgregarYSeleccionarLugar.as_view(), name='agregaryseleccionarlugar'),
     path('artista/propuestas', views.VerPropuestasLitsView.as_view(), name='verpropuestas'),
-    #path('artista/propuestas_<int:tocata_id>', views.verpropuestas, name='verpropuestas'),
-    path('artista/seleccionarpropuestas_<int:tocata_id>_<int:lugar_id>', views.seleccionarpropuestas, name='seleccionarpropuestas'),
-
+    path('artista/seleccionarpropuesta', views.SeleccionarPropuestasView.as_view(), name='seleccionarpropuesta'),
 ]

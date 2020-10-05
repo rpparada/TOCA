@@ -17,7 +17,8 @@ from .forms import (
                 CancelarPropuestaForm,
                 BorrarPropuestaForm,
                 CancelarPropuestaElegidaForm,
-                ProponerLugarForm
+                ProponerLugarForm,
+                SeleccionarPropuestasForm
             )
 from lugar.forms import CrearLugarForm, CrearLugarPropuestaForm
 
@@ -153,7 +154,7 @@ class VerPropuestasLitsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         tocataabierta_id = self.request.GET.get('tocataabierta')
-        lugares = LugaresTocata.objects.filter(tocataabierta=tocataabierta_id).filter(estado='pendiente')
+        lugares = LugaresTocata.objects.ver_propuestas(tocataabierta_id)
 
         return lugares
 
@@ -166,18 +167,25 @@ class VerPropuestasLitsView(LoginRequiredMixin, ListView):
 
         return context
 
-@login_required(login_url='index')
-def verpropuestas(request, tocata_id):
+class SeleccionarPropuestasView(LoginRequiredMixin, View):
 
-    tocata = get_object_or_404(TocataAbierta, pk=tocata_id)
-    listaLugares  = LugaresTocata.objects.filter(tocataabierta=tocata).filter(estado=parToca['pendiente'])
+    form_class = SeleccionarPropuestasForm
 
-    context = {
-        'tocata': tocata,
-        'listaLugares': listaLugares,
-    }
+    def post(self, request, *args, **kwargs):
+        tocataabierta_id = request.POST.get('tocataabierta')
+        tocataabierta = TocataAbierta.objects.get(id=tocataabierta_id)
 
-    return render(request, 'tocata/propuestas.html', context)
+        lugar_id = request.POST.get('lugar')
+        lugar = Lugar.objects.get(id=lugar_id)
+
+        form = self.form_class(request, tocataabierta, lugar, request.POST or none)
+        if form.is_valid():
+            print('ok')
+        else:
+            print('error')
+
+        return redirect('propuestaslugar:verpropuestas')
+        #return redirect('index')
 
 @login_required(login_url='index')
 def seleccionarpropuestas(request, tocata_id, lugar_id):

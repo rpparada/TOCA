@@ -59,9 +59,6 @@ class ProponerLugarForm(forms.Form):
     lugar               = forms.ModelChoiceField(
                                         queryset=None,
                                         empty_label=None,
-                                        # widget=forms.Select(attrs={
-                                        #                     'class': 'form-control',
-                                        #                 }),
                                         widget=forms.RadioSelect(attrs={'class': "custom-radio-list"}),
                                         label='Selecciona lugar:'
                                     )
@@ -99,3 +96,47 @@ class ProponerLugarForm(forms.Form):
                 raise forms.ValidationError('Lugar no esta en la Region y/o Comuna')
 
         return lugar
+
+class SeleccionarPropuestasForm(forms.Form):
+
+    tocataabierta       = forms.ModelChoiceField(
+                                        queryset=None,
+                                        empty_label=None,
+                                        widget=forms.HiddenInput()
+                                    )
+
+    lugar               = forms.ModelChoiceField(
+                                        queryset=None,
+                                        empty_label=None,
+                                        widget=forms.HiddenInput()
+                                    )
+
+    costo               = forms.DecimalField(widget=forms.NumberInput(attrs={
+                                                                'class': 'form-control',
+                                                                'placeholder': 'Costo Adhesion',
+                                                                'autofocus': True
+                                                            }), label='Costo Adhesion'
+                                        )
+
+    def __init__(self, request, tocataabierta, lugar, *args, **kwargs):
+        self.request = request
+        super(SeleccionarPropuestasForm, self).__init__(*args, **kwargs)
+
+        lugar_qs = Lugar.objects.none()
+        tocataabierta_qs = TocataAbierta.objects.none()
+        if tocataabierta:
+            tocataabierta_qs = TocataAbierta.objects.filter(id=tocataabierta.id)
+
+        if lugar:
+            lugar_qs = Lugar.objects.filter(id=lugar.id)
+
+        self.fields['lugar'].queryset = lugar_qs
+        self.fields['tocataabierta'].queryset = tocataabierta_qs
+
+    def clean_costo(self):
+        costo = self.cleaned_data.get('costo')
+        # Costo de adhesion debe ser mayor a 0
+        if costo <= 0:
+            raise forms.ValidationError('Adhesion debe ser mayor a cero')
+
+        return costo

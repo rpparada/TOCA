@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
-{% load thumbnail %}
 {% block title %} | {{ tocataabierta.nombre }} {% endblock %}
 {% block content %}
 {% include 'partials/_alerts.html' %}
@@ -9,123 +8,12 @@
 <!-- Page Content -->
 {% if object_list %}
   {% for object in object_list %}
-  <!--Modal seleccion -->
-  <div class="modal fade" id="modal{{object.lugar.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
-      <div class="modal-dialog">
-          <div class="modal-content">
-            <form id="formtocheck" action="{% url 'propuestaslugar:seleccionarpropuestas' tocataabierta.id object.id %}" method="POST">
-              {% csrf_token %}
-              <div class="modal-header">
-                  <h4 class="modal-title" id="modal-label">Aceptar Lugar</h4>
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              </div>
-              <div class="modal-body">
-                  <div class="row">
-                      <div class="col-md-12">
-                          {% if object.lugar.capacidad < tocataabierta.asistentes_min %}
-                            <p>El lugar seleccionado tiene capacidades de asistencia diferentes a lo esperado.</p>
-                            <p>Si aceptas, se ajustaran los datos de asistencia definidos inicialmente a:</p>
-                            <p>Cambiaremos Asistentencia Mínima de {{tocataabierta.asistentes_min}} a {{object.lugar.capacidad}}.</p>
-                            <p>Cambiaremos Asistentencia Máxima de {{tocataabierta.asistentes_max}} a {{object.lugar.capacidad}}.</p>
-                          {% else %}
-                            {% if object.lugar.capacidad != tocataabierta.asistentes_max %}
-                              <p>El lugar seleccionado tiene capacidades de asistencia diferentes a lo esperado.</p>
-                              <p>Si aceptas, se ajustaran los datos de asistencia definidos inicialmente a:</p>
-                              <p>Cambiaremos Asistentencia Máxima de {{tocataabierta.asistentes_max}} a {{object.lugar.capacidad}}.</p>
-                            {% else %}
-                              <p>¿Estas seguro de aceptar este lugar?</p>
-                            {% endif %}
-                          {% endif %}
-                          <p hidden id="mensajerror"></p>
-                      </div>
-                  </div>
-                  <div class="form-group row">
-                      <label class="col-form-label col-sm-2 text-sm-right">Valor Tocata</label>
-                      <div class="col-sm-10">
-                          <input id="primercampo" type="number" class="requerido form-control" value="0" name="costo">
-                      </div>
-                  </div>
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-b">Confirmo Lugar</button>
-                <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Anular</button>
-              </div>
-            </form>
-          </div>
-      </div>
-  </div>
+  <!-- Modal Seleccion Propuesta -->
+  {% include 'propuestaslugar/snippets/modalaceptapropuesta.html' with instance=object %}
   <!-- end: Modal -->
 
   <!--Modal detalles lugar -->
-  <div class="modal fade" id="modalde{{object.lugar.id}}" tabindex="-1" role="modal" aria-labelledby="modal-label" aria-hidden="true" style="display: none;">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h4 class="modal-title" id="modal-label">Detalles Lugar</h4>
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              </div>
-              <div class="modal-body">
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Calle</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" value="{{ object.lugar.nombre_calle }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Número</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" value="{{ object.lugar.numero }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Region</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{ object.lugar.region.nombre }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Comuna</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" value="{{ object.lugar.comuna.nombre }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Ciudad</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" value="{{ object.lugar.ciudad }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Depto.</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" value="{{ object.lugar.departamento }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Otros</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" value="{{ object.lugar.otros }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Capacidad Aprox.</label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" value="{{ object.lugar.capacidad }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-sm-2 text-sm-right">Descripción</label>
-                    <div class="col-sm-10">
-                      <textarea class="form-control" rows="3" name="descripción" readonly>{{ object.lugar.descripción }}</textarea>
-                    </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-b" data-dismiss="modal">Aceptar</button>
-              </div>
-          </div>
-      </div>
-  </div>
+  {% include 'propuestaslugar/snippets/modaldetalleslugar.html' with instance=object %}
   <!-- end: Modal -->
   {% endfor %}
 {% endif %}
