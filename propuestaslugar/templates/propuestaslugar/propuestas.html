@@ -55,8 +55,15 @@
                               <td>
                                 <div class="p-dropdown">
                                     <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
-                                    <ul class="p-dropdown-content">
-                                        <li><a href="" data-target="#modal{{object.lugar.id}}" data-toggle="modal"><i class="icon-check-circle"></i>Seleccionar</a></li>
+                                    <ul class="p-dropdown-content custom-radio-list">
+
+                                        <form action="{% url 'tocata:creartocatadesdetocataabierta' %}" method="POST">
+                                          {% csrf_token %}
+                                          <input type="hidden" name="tocataabierta" id="id_tocataabierta" value="{{ tocataabierta.id }}">
+                                          <input type="hidden" name="lugar" id="id_lugar" value="{{ object.lugar.id }}">
+                                          <li><button type="submit" style="border:none; background-color: white;"><i class="icon-check-circle"></i> Elegir</button></li>
+                                        </form>
+                                        <!-- <li><a href="" data-target="#modal{{object.lugar.id}}" data-toggle="modal"><i class="icon-check-circle"></i>Seleccionar</a></li> -->
                                         <li><a href="" data-target="#modalde{{object.lugar.id}}" data-toggle="modal"><i class="icon-eye"></i>Ver</a></li>
                                     </ul>
                                 </div>

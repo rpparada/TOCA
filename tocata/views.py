@@ -7,7 +7,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Tocata
 from carro.models import CarroCompra
 
-from .forms import CrearTocataForm, SuspenderTocataForm, BorrarTocataForm
+from .forms import (
+            CrearTocataForm,
+            SuspenderTocataForm,
+            BorrarTocataForm,
+            TocataDesdeTocataAbiertaCreateForm
+        )
 
 from analytics.mixins import ObjectViewedMixin
 
@@ -130,7 +135,6 @@ class BorrarTocataView(LoginRequiredMixin, View):
 
         return redirect('tocata:mistocatas')
 
-
 class TocataCreateView(NextUrlMixin, RequestFormAttachMixin, LoginRequiredMixin, CreateView):
     form_class = CrearTocataForm
     template_name = 'tocata/creartocata.html'
@@ -146,3 +150,8 @@ class TocataCreateView(NextUrlMixin, RequestFormAttachMixin, LoginRequiredMixin,
         msg = 'Error en formulario'
         messages.error(request, msg)
         return super().form_invalid(form)
+
+class TocataDesdeTocataAbiertaCreateView(RequestFormAttachMixin, LoginRequiredMixin, CreateView):
+
+    form_class = TocataDesdeTocataAbiertaCreateForm
+    template_name = 'tocata/creartocatadesdetocataabierta.html'

@@ -21,6 +21,7 @@ from .forms import (
                 SeleccionarPropuestasForm
             )
 from lugar.forms import CrearLugarForm, CrearLugarPropuestaForm
+from tocata.forms import TocataDesdeTocataAbiertaCreateForm
 
 from toca.mixins import NextUrlMixin, RequestFormAttachMixin
 
@@ -164,6 +165,7 @@ class VerPropuestasLitsView(LoginRequiredMixin, ListView):
         tocataabierta_id = self.request.GET.get('tocataabierta')
         tocataabierta = TocataAbierta.objects.get(id=tocataabierta_id)
         context['tocataabierta'] = tocataabierta
+        context['form_tocata'] = TocataDesdeTocataAbiertaCreateForm
 
         return context
 
