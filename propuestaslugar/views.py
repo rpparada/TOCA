@@ -184,8 +184,9 @@ class SeleccionarPropuestasView(LoginRequiredMixin, View):
         else:
             print('error')
 
-        return redirect('propuestaslugar:verpropuestas')
-        #return redirect('index')
+            print(form.errors)
+        #return redirect('propuestaslugar:verpropuestas')
+        return redirect('index')
 
 @login_required(login_url='index')
 def seleccionarpropuestas(request, tocata_id, lugar_id):
