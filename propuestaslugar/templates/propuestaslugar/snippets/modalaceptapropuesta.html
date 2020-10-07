@@ -13,18 +13,13 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        {% if instance.lugar.capacidad < tocataabierta.asistentes_min %}
+                        {% if instance.lugar.capacidad != tocataabierta.asistentes_min %}
                           <p>El lugar seleccionado tiene capacidades de asistencia diferentes a lo esperado.</p>
                           <p>Si aceptas, se ajustaran los datos de asistencia definidos inicialmente a:</p>
-                          <p>Cambiaremos Asistentencia Mínima de {{tocataabierta.asistentes_min}} a {{instance.lugar.capacidad}}.</p>
-                          <p>Cambiaremos Asistentencia Máxima de {{tocataabierta.asistentes_max}} a {{instance.lugar.capacidad}}.</p>
+                          <p> - Cambiaremos Asistentencia Mínima de {{tocataabierta.asistentes_min}} a {{instance.lugar.capacidad}} asistentes.</p>
+                          <p> - Asistentencia Máxima quedara definida en {{instance.lugar.capacidad}} asistentes.</p>
                         {% else %}
-                          {% if instance.lugar.capacidad != tocataabierta.asistentes_max %}
-                            <p>El lugar seleccionado tiene capacidades de asistencia diferentes a lo esperado.</p>
-                            <p>Si aceptas, se ajustaran los datos de asistencia definidos inicialmente a:</p>
-                            <p>Cambiaremos Asistentencia Máxima de {{tocataabierta.asistentes_max}} a {{instance.lugar.capacidad}}.</p>
-                          {% else %}
-                            <p>¿Estas seguro de aceptar este lugar?</p>
+                          <p>¿Estas seguro de aceptar este lugar?</p>
                           {% endif %}
                         {% endif %}
                     </div>
