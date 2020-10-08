@@ -123,7 +123,7 @@ class TocataAbierta(models.Model):
             # Agregar aqui los cambio necesarios para suspender tocata
             if self.tocata:
                 self.tocata.suspender_tocata()
-                
+
         return fue_suspendido
 
     def borrar_tocata(self):
@@ -134,6 +134,15 @@ class TocataAbierta(models.Model):
             fue_borrada = True
 
         return fue_borrada
+
+    def confirmar(self):
+        fue_confirmada = False
+        if self.estado in ['publicado',]:
+            self.estado = 'confirmado'
+            self.save()
+            fue_confirmada = True
+
+        return fue_confirmada
 
     @property
     def tagname(self):

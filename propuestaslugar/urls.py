@@ -10,5 +10,4 @@ urlpatterns = [
     path('seleccionarlugar', views.SeleccionarLugarView.as_view(), name='seleccionarlugar'),
     path('agregaryseleccionarlugar', views.AgregarYSeleccionarLugar.as_view(), name='agregaryseleccionarlugar'),
     path('artista/propuestas', views.VerPropuestasLitsView.as_view(), name='verpropuestas'),
-    path('artista/seleccionarpropuesta', views.SeleccionarPropuestasView.as_view(), name='seleccionarpropuesta'),
 ]

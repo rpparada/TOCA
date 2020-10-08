@@ -8,6 +8,7 @@ from .models import Tocata
 from lugar.models import Region, Comuna, Lugar
 from artista.models import Artista
 from tocataabierta.models import TocataAbierta
+from propuestaslugar.models import LugaresTocata
 
 from toca.parametros import parToca
 
@@ -236,8 +237,20 @@ class TocataDesdeTocataAbiertaCreateForm(forms.ModelForm):
         tocataabierta = TocataAbierta.objects.get(id=tocataabierta_id)
 
         # Actualizar estado de tocata abierta
+        tocataabierta.confirmar()
 
         # Actualizar estado de propuestas
+        lugar_propuesto = LugaresTocata.objects.existe(tocataabierta, tocata.lugar)
+        lugar_propuesto.elegir()
+        lista_lugares = LugaresTocata.objects.filter(tocataabierta=tocataabierta).filter(estado='pendiente')
+        for lugar in lista_lugares:
+            lugar.no_elegir()
+
+        # Agregar informacion restante a modelo Tocata
+        # Definir capacidad
+        tocata.asistentes_max = tocata.lugar.capacidad
+        if tocata.lugar.capacidad < tocata.asistentes_min:
+            tocata.asistentes_min = tocata.lugar.capacidad
 
         tocata.flayer_380_507 = tocataabierta.flayer_380_507
 
@@ -245,12 +258,16 @@ class TocataDesdeTocataAbiertaCreateForm(forms.ModelForm):
         tocata.comuna = tocata.lugar.comuna
 
         tocata.usuario = request.user
+
         artista = Artista.objects.get(usuario=request.user)
         tocata.artista = artista
-        tocata.asistentes_max = tocata.lugar.capacidad
 
         if commit:
             tocata.save()
             tocata.estilos.set(artista.estilos.all())
+
+            # Asignar tocata a tocata intima
+            tocataabierta.tocata = tocata
+            tocataabierta.save()
 
         return tocata

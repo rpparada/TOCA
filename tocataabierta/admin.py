@@ -5,7 +5,7 @@ from .models import TocataAbierta
 # Register your models here.
 
 class TocataAbiertaAdmin(admin.ModelAdmin):
-    list_display = ['__str__', 'id']
+    list_display = ['__str__', 'id', 'estado']
 
     class Meta:
         model = TocataAbierta

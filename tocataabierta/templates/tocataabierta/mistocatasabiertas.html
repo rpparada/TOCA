@@ -72,13 +72,16 @@
                                   <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
                                   <ul class="p-dropdown-content custom-radio-list">
                                       {% if object.estado == 'publicado' %}
-                                      <li><a href="" data-target="#modalsuab{{object.id}}" data-toggle="modal"><i class="icon-alert-triangle"></i>Suspender</a></li>
                                         {% if object.numeropropuestas > 0 %}
                                           <li><a href="javascript:;" onclick="document.getElementById('verpropuestas{{object.id}}').submit();"><i class="icon-home"></i> Propuestas</a></li>
                                         {% endif %}
+                                        <li><a href="" data-target="#modalsuab{{object.id}}" data-toggle="modal"><i class="icon-alert-triangle"></i>Suspender</a></li>
                                       {% endif %}
                                       {% if object.estado == 'suspendido' %}
                                       <li><a href="" data-target="#modalboab{{object.id}}" data-toggle="modal"><i class="icon-x"></i>Borrar</a></li>
+                                      {% endif %}
+                                      {% if object.estado == 'confirmado' %}
+                                      <li><a href="{{ object.tocata.get_absolute_url }}"><i class="icon-music"></i>Ver Tocata Íntima</a></li>
                                       {% endif %}
                                   </ul>
                               </div>

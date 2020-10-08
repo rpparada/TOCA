@@ -116,3 +116,21 @@ class LugaresTocata(models.Model):
             fue_cancelado = True
 
         return fue_cancelado
+
+    def elegir(self):
+        fue_elegido = False
+        if self.estado in ['pendiente',]:
+            self.estado = 'elegido'
+            self.save()
+            fue_elegido = True
+
+        return fue_elegido
+
+    def no_elegir(self):
+        fue_no_elegido = False
+        if self.estado in ['pendiente',]:
+            self.estado = 'noelegido'
+            self.save()
+            fue_no_elegido = True
+
+        return fue_no_elegido
