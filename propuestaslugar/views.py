@@ -165,7 +165,7 @@ class VerPropuestasLitsView(LoginRequiredMixin, ListView):
         tocataabierta_id = self.request.GET.get('tocataabierta')
         tocataabierta = TocataAbierta.objects.get(id=tocataabierta_id)
         context['tocataabierta'] = tocataabierta
-        context['form_tocata'] = TocataDesdeTocataAbiertaCreateForm
+        context['form_tocata'] = TocataDesdeTocataAbiertaCreateForm(self.request or None)
 
         return context
 

@@ -25,8 +25,15 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <input type="hidden" name="tocataabierta" id="id_tocataabierta" value="{{ tocataabierta.id }}">
+                        <input type="hidden" name="nombre" id="id_nombre" value="{{ tocataabierta.nombre }}">
                         <input type="hidden" name="lugar" id="id_lugar" value="{{ instance.lugar.id }}">
+                        <input type="hidden" name="descripción" id="id_descripción" value="{{ tocataabierta.descripción }}">
+                        <input type="hidden" name="costo" id="id_costo" value="0">
+                        <input type="hidden" name="fecha" id="id_fecha" value="{{ tocataabierta.fecha|date:"Y-m-d" }}">
+                        <input type="hidden" name="hora" id="id_hora" value="{{ tocataabierta.hora|date:"G:i" }}">
+                        <input type="hidden" name="asistentes_min" id="id_asistentes_min" value="{{ tocataabierta.asistentes_min }}">
+                        <input type="hidden" name="asistentes_max" id="id_asistentes_max" value="{{ instance.lugar.capacidad }}">
+                        <input type="hidden" name="tocataabierta" id="id_tocataabierta" value="{{ tocataabierta.id }}">
                     </div>
                 </div>
             </div>

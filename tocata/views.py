@@ -136,6 +136,7 @@ class BorrarTocataView(LoginRequiredMixin, View):
         return redirect('tocata:mistocatas')
 
 class TocataCreateView(NextUrlMixin, RequestFormAttachMixin, LoginRequiredMixin, CreateView):
+
     form_class = CrearTocataForm
     template_name = 'tocata/creartocata.html'
 
@@ -155,3 +156,15 @@ class TocataDesdeTocataAbiertaCreateView(RequestFormAttachMixin, LoginRequiredMi
 
     form_class = TocataDesdeTocataAbiertaCreateForm
     template_name = 'tocata/creartocatadesdetocataabierta.html'
+
+    def form_valid(self, form):
+        request = self.request
+        msg = 'Tocata publicada'
+        messages.success(request, msg)
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        request = self.request
+        msg = 'Error en formulario'
+        messages.error(request, msg)
+        return super().form_invalid(form)

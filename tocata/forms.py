@@ -7,6 +7,7 @@ from django.utils import timezone
 from .models import Tocata
 from lugar.models import Region, Comuna, Lugar
 from artista.models import Artista
+from tocataabierta.models import TocataAbierta
 
 from toca.parametros import parToca
 
@@ -152,36 +153,47 @@ class TocataDesdeTocataAbiertaCreateForm(forms.ModelForm):
                                                                 'id': 'primercampo',
                                                                 'class': 'form-control',
                                                                 'placeholder': 'Nombre',
-                                                                'autofocus': True
+                                                                'readonly': True
                                                             }), label='Nombre'
                                         )
     lugar               = forms.ModelChoiceField(queryset=None, empty_label=None, widget=forms.Select(attrs={
                                                                                         'class': 'form-control',
+                                                                                        'readonly': True
                                                             }), label='Mis Lugares'
                                     )
     descripción         = forms.CharField(required=False, widget=forms.Textarea(attrs={
                                                                 'class': 'form-control',
-                                                                'placeholder': 'Descripción'
+                                                                'placeholder': 'Descripción',
+                                                                'readonly': True,
                                                             }), label='Descripción'
                                         )
     costo               = forms.DecimalField(widget=forms.NumberInput(attrs={
                                                                 'class': 'form-control',
-                                                                'placeholder': 'Costo Adhesion'
+                                                                'placeholder': 'Costo Adhesion',
+                                                                'autofocus': True
                                                             }), label='Costo Adhesion'
                                         )
     fecha               = forms.DateField(widget=DateInput(attrs={
                                                                 'class': 'form-control',
+                                                                'readonly': True,
                                                             }), label='Fecha'
                                         )
     hora                = forms.TimeField(widget=TimeInput(attrs={
                                                                 'class': 'form-control',
+                                                                'readonly': True,
                                                             }), label='Hora'
                                         )
     asistentes_min      = forms.IntegerField(widget=forms.NumberInput(attrs={
                                                                 'class': 'form-control',
-                                                                'placeholder': 'Asistentes Minimos'
+                                                                'placeholder': 'Asistentes Minimos',
+                                                                'readonly': True,
                                                             }), label='Asistentes Mínimos'
                                         )
+    tocataabierta       = forms.ModelChoiceField(queryset=None, empty_label=None, widget=forms.Select(attrs={
+                                                                                        'class': 'form-control',
+                                                                                        'readonly': True
+                                                            }), label='Mis Lugares'
+                                    )
     flayer_380_507      = forms.ImageField(required=False, widget=forms.FileInput(attrs={
                                                                 'class': 'form-control-file',
                                                             }), label='Subir Flayer'
@@ -196,47 +208,37 @@ class TocataDesdeTocataAbiertaCreateForm(forms.ModelForm):
             'costo',
             'fecha',
             'hora',
-            'asistentes_min',
-            'flayer_380_507'
+            'asistentes_min'
             )
 
     def __init__(self, request, *args, **kwargs):
         self.request = request
         super(TocataDesdeTocataAbiertaCreateForm, self).__init__(*args, **kwargs)
-        self.fields['lugar'].queryset = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
+        lugar_id = request.POST.get('lugar')
+        tocataabierta_id = request.POST.get('tocataabierta')
+
+        self.fields['lugar'].queryset = Lugar.objects.filter(id=lugar_id)
+        self.fields['tocataabierta'].queryset = TocataAbierta.objects.filter(id=tocataabierta_id)
 
     def clean_costo(self):
         costo = self.cleaned_data.get('costo')
         # Costo de adhesion debe ser mayor a 0
         if costo <= 0:
-            raise forms.ValidationError('Adhesion debe ser mayor a cero')
+            raise forms.ValidationError('Ingresa precio de entrada')
 
         return costo
 
-    def clean_asistentes_min(self):
-        asistentes_min = self.cleaned_data.get('asistentes_min')
-        lugar = self.cleaned_data.get('lugar')
-        # Asistentes minimos debe ser mayor a 0
-        if asistentes_min <= 0:
-            raise forms.ValidationError('Debes definir un minimo de asistentes mayor a cero')
-
-        # Asistentes minimos no deben superar la capcidad del lugar seleccionado
-        if asistentes_min > lugar.capacidad:
-            raise forms.ValidationError('Lugar tiene una capacidad menor que el minimo de asistentes')
-
-        return asistentes_min
-
-    def clean_fecha(self):
-        fecha = self.cleaned_data.get('fecha')
-        # La fecha de las tocatas deben definirce con una semana de anticipacion
-        if (fecha - timezone.now().date()) <= timedelta(days=5):
-            raise forms.ValidationError('Debes definir una fecha futura con al menos 7 dias de anticipacion')
-
-        return fecha
-
     def save(self, commit=True):
-        tocata = super(CrearTocataForm, self).save(commit=False)
+        tocata = super(TocataDesdeTocataAbiertaCreateForm, self).save(commit=False)
         request = self.request
+
+        tocataabierta_id = request.POST.get('tocataabierta')
+        tocataabierta = TocataAbierta.objects.get(id=tocataabierta_id)
+
+        print(tocataabierta)
+        print(tocataabierta.flayer_380_507)
+
+        tocata.flayer_380_507 = tocataabierta.flayer_380_507
 
         tocata.region = tocata.lugar.region
         tocata.comuna = tocata.lugar.comuna
