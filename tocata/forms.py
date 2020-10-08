@@ -235,8 +235,9 @@ class TocataDesdeTocataAbiertaCreateForm(forms.ModelForm):
         tocataabierta_id = request.POST.get('tocataabierta')
         tocataabierta = TocataAbierta.objects.get(id=tocataabierta_id)
 
-        print(tocataabierta)
-        print(tocataabierta.flayer_380_507)
+        # Actualizar estado de tocata abierta
+
+        # Actualizar estado de propuestas
 
         tocata.flayer_380_507 = tocataabierta.flayer_380_507
 
