@@ -42,7 +42,9 @@ class TocataQuerySet(models.query.QuerySet):
         lookups = (Q(nombre__icontains=consulta) |
                     Q(descripción__icontains=consulta) |
                     Q(artista__nombre__icontains=consulta) |
-                    Q(estilos__nombre__icontains=consulta)
+                    Q(estilos__nombre__icontains=consulta) |
+                    Q(lugar__region__nombre__icontains=consulta) |
+                    Q(lugar__comuna__nombre__icontains=consulta) 
                     )
         return self.filter(lookups).distinct()
 
