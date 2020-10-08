@@ -66,7 +66,7 @@
                               <td><span class="badge badge-pill badge-primary">{{ object.get_estado_display }}</span></td>
                             {% endif %}
                             <td>
-                              <form id="verpropuestas" action="{% url 'propuestaslugar:verpropuestas' %}" method="GET">
+                              <form id="verpropuestas{{object.id}}" action="{% url 'propuestaslugar:verpropuestas' %}" method="GET">
                               <input hidden name="tocataabierta" type="text" value="{{ object.id }}"/>
                               <div class="p-dropdown">
                                   <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
@@ -74,7 +74,7 @@
                                       {% if object.estado == 'publicado' %}
                                       <li><a href="" data-target="#modalsuab{{object.id}}" data-toggle="modal"><i class="icon-alert-triangle"></i>Suspender</a></li>
                                         {% if object.numeropropuestas > 0 %}
-                                          <li><a href="javascript:;" onclick="document.getElementById('verpropuestas').submit();"><i class="icon-home"></i> Propuestas</a></li>
+                                          <li><a href="javascript:;" onclick="document.getElementById('verpropuestas{{object.id}}').submit();"><i class="icon-home"></i> Propuestas</a></li>
                                         {% endif %}
                                       {% endif %}
                                       {% if object.estado == 'suspendido' %}
