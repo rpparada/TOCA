@@ -25,6 +25,7 @@ from .forms import (
                 EnviaEmailNuevoArtistaForm,
                 RegistrarArtistaForm
                 )
+from marketing.forms import MarketingPreferenceForm
 from .signals import user_logged_in
 
 from toca.mixins import NextUrlMixin, RequestFormAttachMixin
@@ -125,7 +126,8 @@ class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(UserDetailUpdateView, self).get_context_data(*args, **kwargs)
-        context['formContra'] = CuentaPasswordChangeForm(self.request.POST or None)
+        context['form_email'] = MarketingPreferenceForm(self.request.POST or None)
+        #context['formContra'] = CuentaPasswordChangeForm(self.request.POST or None)
         return context
 
 class EnviaEmailNuevoArtistaView(NextUrlMixin, RequestFormAttachMixin, FormView):

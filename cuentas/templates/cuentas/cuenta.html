@@ -17,8 +17,8 @@
             <div class="content col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <span class="h4">Detalles Cuenta</span>
-                        <p class="text-muted">Cambia los detalles de tu cuenta</p>
+                        <span class="h4">Actualizar Detalles</span>
+                        <p class="text-muted">Aqui puedes modificar los datos de tu cuenta</p>
                     </div>
                     <div class="card-body">
                         <!-- <form> -->
@@ -28,7 +28,7 @@
                                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#tabProfile" role="tab" aria-controls="home" aria-selected="true">Detalles Cuenta</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#tabPassword" role="tab" aria-controls="profile" aria-selected="false">Contraseña</a>
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#tabMarketingEmail" role="tab" aria-controls="profile" aria-selected="false">Marketing Email</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content" id="myTabContent">
@@ -62,38 +62,14 @@
                                         </div>
                                       </form>
                                     </div>
-                                    <div class="tab-pane fade" id="tabPassword" role="tabpanel" aria-labelledby="tab-password">
-                                      <form class="" action="{% url 'password_change' %}" method="post">
+                                    <div class="tab-pane fade" id="tabMarketingEmail" role="tabpanel" aria-labelledby="tab-marketing-email">
+                                      <form class="{% url 'marketing:marketing-pref' %}" action="" method="post">
                                         {% csrf_token %}
-                                        {{ form.non_field_errors }}
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    {{ formContra.old_password.errors }}
-                                                    <label class="form-control-label" for="{{ formContra.old_password.id_for_label }}">{{ formContra.old_password.label }}</label>
-                                                    {{ formContra.old_password }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    {{ formContra.new_password1.errors }}
-                                                    <label class="form-control-label" for="{{ formContra.new_password1.id_for_label }}">{{ formContra.new_password1.label }}</label>
-                                                    {{ formContra.new_password1 }}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    {{ formContra.new_password2.errors }}
-                                                    <label class="form-control-label" for="{{ formContra.new_password2.id_for_label }}">{{ formContra.new_password2.label }}</label>
-                                                    {{ formContra.new_password2 }}
-                                                </div>
-                                            </div>
-                                        </div>
+                                          {{ form_email.as_p }}
                                         <div class="mt-4">
                                             <button type="submit" class="btn btn-sm">Actualizar</button>
                                             <a href="{{ home_url }}" class="btn btn-secondary btn-sm">Cancelar</a>
+                                            <!-- <button type="button" class="btn btn-secondary btn-sm">Cancel</button> -->
                                         </div>
                                       </form>
                                     </div>
