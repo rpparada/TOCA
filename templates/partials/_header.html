@@ -64,33 +64,50 @@
                     <nav>
                         <ul>
                             <li><a href="{{ index_url }}">Home</a></li>
-                            <li><a href="{{ tocatas_url }}">Tocatas</a></li>
+                            <li><a href="{{ tocatas_url }}">Tocatas Íntimas</a></li>
                             <li><a href="{{ tocatasabiertas_url }}">Presta' la Casa</a></li>
                             <li><a href="{{ artistas_url }}">Artistas</a></li>
                             {% if user.is_authenticated %}
                               {% if request.user.is_musico %}
                                 <li class="dropdown"><a href="{{ mistocatas_url }}">Mis Tocatas</a>
                                   <ul class="dropdown-menu">
-                                    <li><a href="{{ mistocatas_url }}">Mis Tocatas</a></li>
-                                    <li><a href="{{ creartocata_url }}">Crear Tocata</a></li>
-                                    <li><a href="{{ mistocatasabiertas_url }}">Mis Presta' la Casa</a></li>
-                                    <li><a href="{{ creartocataabierta_url }}">Crea Presta' la Casa</a></li>
+                                    <li class="dropdown-submenu"><a href="{{ mistocatas_url }}">Tocatas Íntimas</a>
+                                        <ul class="dropdown-menu">
+                                          <li><a href="{{ mistocatas_url }}">Mis Tocatas Íntimas</a></li>
+                                          <li><a href="{{ creartocata_url }}">Crear Tocata Íntima</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu"><a href="{{ mistocatas_url }}">Presta' la Casa</a>
+                                        <ul class="dropdown-menu">
+                                          <li><a href="{{ mistocatasabiertas_url }}">Mis Presta' la Casa</a></li>
+                                          <li><a href="{{ creartocataabierta_url }}">Crear Presta' la Casa</a></li>
+                                        </ul>
+                                    </li>
                                   </ul>
                                 </li>
                               {% endif %}
-                                <li class="dropdown"><a href="{{ mislugares_url }}">Mis Lugares</a>
+                                <li class="dropdown"><a href="{{ home_url }}">Mi Cuenta[<small>{{ request.user }}</small>]</a>
                                   <ul class="dropdown-menu">
-                                    <li><a href="{{ mislugares_url }}">Mis Lugares</a></li>
-                                    <li><a href="{{ agregarlugar_url }}">Agregar Lugar</a></li>
-                                    <li><a href="{{ mispropuestas_url }}">Mis Propuesta</a></li>
-                                  </ul>
-                                </li>
-                                <li class="dropdown"><a href="{{ home_url }}">Mi Cuenta [<small>{{ request.user }}</small>]</a>
-                                  <ul class="dropdown-menu">
-                                    <li><a href="{{ userupdate_url }}">Detalles Cuenta</a></li>
-                                    <li><a href="{{ cambiocontra_url }}">Cambiar Contraseña</a></li>
-                                    <li><a href="{{ entradas_url }}">Mis Entradas</a></li>
-                                    <li><a href="{{ ordenes_url }}">Mis Ordenes</a></li>
+                                    <li class="dropdown-submenu"><a href="#">Detalles Cuenta</a>
+                                        <ul class="dropdown-menu">
+                                          <li><a href="{{ userupdate_url }}">Actualizar Detalles</a></li>
+                                          <li><a href="{{ cambiocontra_url }}">Cambiar Contraseña</a></li>
+                                          <li><a href="{{ marketing_pref_url }}">Notificaciones Email</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu"><a href="#">Mis Compras</a>
+                                        <ul class="dropdown-menu">
+                                          <li><a href="{{ entradas_url }}">Entradas</a></li>
+                                          <li><a href="{{ ordenes_url }}">Ordenes</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu"><a href="{{ mislugares_url }}">Mis Direcciones</a>
+                                      <ul class="dropdown-menu">
+                                          <li><a href="{{ mislugares_url }}">Direcciones Guardadas</a></li>
+                                          <li><a href="{{ agregarlugar_url }}">Agregar Dirección</a></li>
+                                      </ul>
+                                    </li>
+                                    <li><a href="{{ mispropuestas_url }}">Mis Invitaciones</a></li>
                                     {% if request.user.is_staff %}
                                     <li class="dropdown-submenu"><a href="#">Menu Admin</a>
                                         <ul class="dropdown-menu">

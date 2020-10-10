@@ -11,6 +11,9 @@
 {% url 'ordenes:entradas' as entradas_url %}
 {% url 'ordenes:ordenes' as ordenes_url %}
 {% url 'marketing:marketing-pref' as marketing_pref_url %}
+{% url 'lugar:mislugares' as mislugares_url %}
+{% url 'lugar:agregarlugar' as agregarlugar_url %}
+{% url 'propuestaslugar:mispropuestas' as mispropuestas_url %}
 
 {% include 'partials/_alerts.html' %}
 
@@ -35,15 +38,35 @@
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="card-header">
-                                Historico
+                                Mis Compras
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><a href="{{ entradas_url }}">Entradas Compradas</a></li>
-                                <li class="list-group-item"><a href="{{ ordenes_url }}">Ordenes de Compra</a></li>
+                                <li class="list-group-item"><a href="{{ entradas_url }}">Entradas</a></li>
+                                <li class="list-group-item"><a href="{{ ordenes_url }}">Ordenes</a></li>
                             </ul>
                         </div>
                     </div>
-
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header">
+                                Mis Direcciones
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><a href="{{ mislugares_url }}">Direcciones Guardadas</a></li>
+                                <li class="list-group-item"><a href="{{ agregarlugar_url }}">Agregar Dirección</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header">
+                                Mis Invitaciones
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><a href="{{ mispropuestas_url }}">Mis Invitaciones</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
