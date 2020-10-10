@@ -1,16 +1,14 @@
-from datetime import timedelta, datetime
-
 from django import forms
 from django.contrib import messages
 from django.utils import timezone
+
+from datetime import timedelta, datetime
 
 from .models import Tocata
 from lugar.models import Region, Comuna, Lugar
 from artista.models import Artista
 from tocataabierta.models import TocataAbierta
 from propuestaslugar.models import LugaresTocata
-
-from toca.parametros import parToca
 
 class DateInput(forms.DateInput):
     input_type = 'date'
@@ -75,7 +73,7 @@ class CrearTocataForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         self.request = request
         super(CrearTocataForm, self).__init__(*args, **kwargs)
-        self.fields['lugar'].queryset = Lugar.objects.filter(usuario=request.user).filter(estado=parToca['disponible'])
+        self.fields['lugar'].queryset = Lugar.objects.filter(usuario=request.user).filter(estado='disponible')
 
     def clean_costo(self):
         costo = self.cleaned_data.get('costo')
