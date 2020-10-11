@@ -19,21 +19,6 @@ from analytics.mixins import ObjectViewedMixin
 from toca.mixins import NextUrlMixin, RequestFormAttachMixin
 
 # Create your views here.
-class UserTocatasHistoryView(LoginRequiredMixin, ListView):
-
-    template_name = 'tocata/historico-user-tocatas.html'
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(UserTocatasHistoryView, self).get_context_data(*args, **kwargs)
-
-        return context
-
-    def get_queryset(self, *args, **kwargs):
-        request = self.request
-        views = request.user.objectviewed_set.by_model(Tocata)
-
-        return views
-
 class TocataListView(ListView):
 
     queryset = Tocata.objects.disponible()
@@ -168,3 +153,18 @@ class TocataDesdeTocataAbiertaCreateView(RequestFormAttachMixin, LoginRequiredMi
         msg = 'Error en formulario'
         messages.error(request, msg)
         return super().form_invalid(form)
+
+class UserTocatasHistoryView(LoginRequiredMixin, ListView):
+
+    template_name = 'tocata/historico-user-tocatas.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(UserTocatasHistoryView, self).get_context_data(*args, **kwargs)
+
+        return context
+
+    def get_queryset(self, *args, **kwargs):
+        request = self.request
+        views = request.user.objectviewed_set.by_model(Tocata)
+
+        return views

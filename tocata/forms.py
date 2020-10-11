@@ -25,9 +25,13 @@ class CrearTocataForm(forms.ModelForm):
                                                                 'autofocus': True
                                                             }), label='Nombre'
                                         )
-    lugar               = forms.ModelChoiceField(queryset=None, empty_label=None, widget=forms.Select(attrs={
-                                                                                        'class': 'form-control',
-                                                            }), label='Mis Lugares'
+    lugar               = forms.ModelChoiceField(queryset=None,
+                                                    empty_label=None,
+                                                    widget=forms.Select(attrs={
+                                                                            'class': 'form-control',
+                                                                        }
+                                                                    ),
+                                                    label='Mis Lugares'
                                     )
     descripción         = forms.CharField(required=False, widget=forms.Textarea(attrs={
                                                                 'class': 'form-control',
@@ -213,6 +217,7 @@ class TocataDesdeTocataAbiertaCreateForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         self.request = request
         super(TocataDesdeTocataAbiertaCreateForm, self).__init__(*args, **kwargs)
+        
         lugar_id = request.POST.get('lugar')
         tocataabierta_id = request.POST.get('tocataabierta')
 
