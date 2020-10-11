@@ -86,7 +86,7 @@ class BorrarLugarView(LoginRequiredMixin, View):
 def carga_comunas_agregar(request):
 
     region_id = request.GET.get('region')
-    comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
+    comunas = Comuna.objects.filter(region=region_id).exclude(nombre='Todas').order_by('nombre')
     context = {
         'comunas_reg': comunas,
     }
@@ -97,7 +97,7 @@ def carga_comunas_actualizar(request):
 
     region_id = request.GET.get('region')
     comuna_id = request.GET.get('comuna')
-    comunas = Comuna.objects.filter(region=region_id).order_by('nombre')
+    comunas = Comuna.objects.filter(region=region_id).exclude(nombre='Todas').order_by('nombre')
 
     if comuna_id.isdigit():
         context = {

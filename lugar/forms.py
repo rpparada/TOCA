@@ -80,7 +80,7 @@ class CrearLugarForm(forms.ModelForm):
         if 'region' in self.data:
             try:
                 region_id = int(self.data.get('region'))
-                self.fields['comuna'].queryset = Comuna.objects.filter(region=region_id).order_by('nombre')
+                self.fields['comuna'].queryset = Comuna.objects.filter(region=region_id).exclude(nombre='Todas').order_by('nombre')
             except (ValueError, TypeError):
                 pass
         elif self.instance.pk:
@@ -244,7 +244,7 @@ class CrearLugarPropuestaForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['region'].queryset = Region.objects.filter(id=tocataabierta.region.id)
         if tocataabierta.comuna.nombre == 'Todas':
-            self.fields['comuna'].queryset = Comuna.objects.filter(region=tocataabierta.region)
+            self.fields['comuna'].queryset = Comuna.objects.filter(region=tocataabierta.region).exclude(nombre='Todas')
         else:
             self.fields['comuna'].queryset = Comuna.objects.filter(id=tocataabierta.comuna.id)
 
