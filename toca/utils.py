@@ -97,7 +97,7 @@ normal_commerce = tbk.commerce.Commerce(
     tbk_cert_data=normal_commerce_data['tbk_cert_data'],
     environment=tbk.environments.DEVELOPMENT,
 )
-#webpay_service = tbk.services.WebpayService(normal_commerce)
+webpay_service = tbk.services.WebpayService(normal_commerce)
 
 # Render to PDF para Boleta y Entrada
 from io import BytesIO
