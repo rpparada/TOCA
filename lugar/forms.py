@@ -90,7 +90,7 @@ class CrearLugarForm(forms.ModelForm):
         numero = self.cleaned_data.get('numero')
         # Numero calle debe ser mayor a 0
         if numero <= 0:
-            raise forms.ValidationError('Numero calle debe ser mayor a cero')
+            raise forms.ValidationError('Número calle debe ser mayor a cero')
 
         return numero
 

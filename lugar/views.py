@@ -47,13 +47,13 @@ class LugarCreateView(NextUrlMixin, RequestFormAttachMixin, LoginRequiredMixin, 
 
     def form_valid(self, form):
         request = self.request
-        msg = 'Lugar creado'
+        msg = 'Dirección creado exitosamente'
         messages.success(request, msg)
         return super().form_valid(form)
 
     def form_invalid(self, form):
         request = self.request
-        msg = 'Error en formulario'
+        msg = 'Error al crear dirección'
         messages.error(request, msg)
         return super().form_invalid(form)
 

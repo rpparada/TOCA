@@ -8,25 +8,25 @@
 
 <!-- Page Content -->
 {% if object_list %}
-{% for object in object_list %}
-<!--Modal Borrar -->
-{% include 'lugar/snippets/modalborrar.html' with instance=object %}
-<!-- end: Modal -->
-<!--Modal Detalles -->
-{% include 'lugar/snippets/modaldetalles.html' with instance=object %}
-<!-- end: Modal -->
-{% endfor %}
+  {% for object in object_list %}
+    <!--Modal Borrar -->
+    {% include 'lugar/snippets/modalborrar.html' with instance=object %}
+    <!-- end: Modal -->
+    <!--Modal Detalles -->
+    {% include 'lugar/snippets/modaldetalles.html' with instance=object %}
+    <!-- end: Modal -->
+  {% endfor %}
 
 <section id="page-content" class="no-sidebar">
     <div class="container">
         <!-- DataTable -->
           <div class="row mb-3">
               <div class="col-lg-6">
-                  <h4>Mis Lugares</h4>
-                  <p>Lista de tus lugares registrados.</p>
+                  <h4>Mis Direcciones</h4>
+                  <p>Lista de tus direcciones registradas.</p>
               </div>
               <div class="col-lg-6 text-right">
-                <a href="{% url 'lugar:agregarlugar' %}" class="btn btn-light"><i class="icon-plus"></i> Agregar Lugar</a>
+                <a href="{% url 'lugar:agregarlugar' %}" class="btn btn-light"><i class="icon-plus"></i> Agregar Dirección</a>
                 <div id="export_buttons" class="mt-2"></div>
               </div>
           </div>
@@ -37,7 +37,7 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Dirección</th>
+                            <th>Calle y Número</th>
                             <th>Comuna</th>
                             <th>Capacidad</th>
                             <th class="noExport">Acciones</th>
@@ -69,7 +69,7 @@
                     <tfoot>
                         <tr>
                           <th>Nombre</th>
-                          <th>Dirección</th>
+                          <th>Calle y Número</th>
                           <th>Comuna</th>
                           <th>Capacidad</th>
                           <th>Acciones</th>
@@ -87,11 +87,11 @@
         <!-- DataTable -->
           <div class="row mb-3">
               <div class="col-lg-6">
-                  <h4>Mis Lugares</h4>
-                  <p>Actualmente no tienes ningun lugar registrado donde puedas invitar a tus artistas favoritos.</p>
+                  <h4>Mis Direcciones</h4>
+                  <p>Actualmente no tienes ninguna dirección registrada. Crea una para invitar a tus artistas favoritos.</p>
               </div>
               <div class="col-lg-6 text-right">
-                <a href="{% url 'lugar:agregarlugar' %}" class="btn btn-light"><i class="icon-plus"></i> Crea Tu Primer Lugar</a>
+                <a href="{% url 'lugar:agregarlugar' %}" class="btn btn-light"><i class="icon-plus"></i> Agregar Dirección</a>
                 <div id="export_buttons" class="mt-2"></div>
               </div>
           </div>
