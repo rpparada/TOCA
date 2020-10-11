@@ -51,7 +51,7 @@
                     </div>
                     <div class="row right">
                         <div class="col-lg-12">
-                          {% if object.estado == 'pendiente' %}
+                          {% if object.estado == 'publicado' %}
                           <form action="{% url 'propuestaslugar:proponerlugar' %}" method="GET">
                             <input type="hidden" name="tocataabierta" value="{{ object.id }}">
                             <button type="submit" class="btn"><i class="icon-home"></i> Presta' la Casa</button>
