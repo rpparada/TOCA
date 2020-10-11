@@ -5,7 +5,6 @@
 {% block content %}
 
 {% include 'partials/_alerts.html' %}
-
 <!-- Page Content -->
 <section id="page-content" class="no-sidebar">
     <div class="container">
@@ -15,8 +14,9 @@
                 <h4>Mis Ordenes</h4>
             </div>
         </div>
-        <div class="row">
 
+        {% if object_list %}
+        <div class="row">
             <div class="col-lg-12">
                 <table id="datatable" class="table table-bordered table-hover" style="width:100%">
                     <thead>
@@ -49,9 +49,15 @@
                         </tr>
                     </tfoot>
                 </table>
-
             </div>
         </div>
+        {% else %}
+        <div class="row">
+            <div class="col-lg-12">
+              <p>Actualmente no tienes ninguna orden en lista</p>
+            </div>
+        </div>
+        {% endif %}
         <!-- end: DataTable -->
 
         <!-- Pagination -->
@@ -60,6 +66,4 @@
     </div>
 </section>
 <!-- end: Page Content -->
-
-
 {% endblock %}
