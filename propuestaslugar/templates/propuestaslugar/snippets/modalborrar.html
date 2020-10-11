@@ -3,17 +3,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="modal-label">Borrar Propuesta</h4>
+                <h4 class="modal-title" id="modal-label">Borrar Invitación</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        {% if instance.estado == 'pendiente' %}
-                        <p>¿Estas seguro que quieres borralo?</p>
-                        {% else %}
-                        <p>No puedes cancelarla</p>
-                        {% endif %}
+                        <p>¿Seguro quieres borrarla?</p>
                     </div>
                 </div>
             </div>

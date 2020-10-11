@@ -2,7 +2,7 @@
 {% load static %}
 {% load humanize %}
 {% load thumbnail %}
-{% block title %} | MIS PROPUESTAS{% endblock %}
+{% block title %} | MIS INVITACIONES{% endblock %}
 {% block content %}
 {% include 'partials/_alerts.html' %}
 
@@ -19,14 +19,14 @@
     {% include 'propuestaslugar/snippets/modalcancelarelegida.html' with instance=object %}
     <!-- end: Modal -->
   {% endfor %}
-  
+
 <section id="page-content" class="no-sidebar">
     <div class="container">
         <!-- DataTable -->
           <div class="row mb-3">
               <div class="col-lg-6">
-                  <h4>Mis Propuestas</h4>
-                  <p>Esta es la lista de tus lugares registrados.</p>
+                  <h4>Mis Invitaciones</h4>
+                  <p>Lista de tus invitaciones a artistas a tocar en tu casa.</p>
               </div>
           </div>
 
@@ -35,9 +35,10 @@
                 <table id="datatable" class="table table-bordered table-hover" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Lugar</th>
+                            <th>Dirección</th>
                             <th>Artista</th>
                             <th>Tocata</th>
+                            <th>Cuándo</th>
                             <th>Estado</th>
                             <th class="noExport">Acciones</th>
                         </tr>
@@ -48,15 +49,25 @@
                             <td>{% if object.lugar.nombre %}{{ object.lugar.nombre }}, {% endif %}{{ object.lugar.nombre_calle }} {{ object.lugar.numero }}, {{ object.lugar.comuna }}</td>
                             <td><a href="{{ object.tocataabierta.artista.get_absolute_url }}">{{ object.tocataabierta.artista.nombre }}</a></td>
                             <td><a href="{{ object.tocataabierta.get_absolute_url }}">{{ object.tocataabierta.nombre }}</a></td>
-                            <td>{{ object.get_estado_display }}</td>
+                            <td>{{ object.tocataabierta.fecha }}, {{ object.tocataabierta.hora }}</td>
+
+                            {% if object.estado == 'elegido' %}
+                            <td><span class="badge badge-pill badge-success">{{ object.get_estado_display }}</span></td>
+                            {% elif object.estado == 'noelegido' %}
+                            <td><span class="badge badge-pill badge-info">{{ object.get_estado_display }}</span></td>
+                            {% elif object.estado == 'pendiente' %}
+                            <td><span class="badge badge-pill badge-warning">{{ object.get_estado_display }}</span></td>
+                            {% elif object.estado == 'cancelado' %}
+                            <td><span class="badge badge-pill badge-danger">{{ object.get_estado_display }}</span></td>
+                            {% endif %}
                             <td>
                               <div class="p-dropdown">
                                   <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
                                   <ul class="p-dropdown-content">
                                     {% if object.estado == 'pendiente' %}
-                                    <li><a data-target="#modalca{{object.id}}" data-toggle="modal" href="#"><i class="icon-stop-circle"></i>Cancelar</a></li>
+                                    <li><a data-target="#modalca{{object.id}}" data-toggle="modal" href="#"><i class="icon-stop-circle"></i>Cancelar Invitación</a></li>
                                     {% elif object.estado == 'elegido' %}
-                                    <li><a data-target="#modalcael{{object.id}}" data-toggle="modal" href="#"><i class="icon-stop-circle"></i>Cancelar</a></li>
+                                    <li><a data-target="#modalcael{{object.id}}" data-toggle="modal" href="#"><i class="icon-stop-circle"></i>Cancelar Tocata</a></li>
                                     {% elif object.estado == 'noelegido' or object.estado == 'cancelado' or object.estado == 'completado' %}
                                     <li><a data-target="#modalbo{{object.id}}" data-toggle="modal" href="#"><i class="icon-x"></i>Borrar</a></li>
                                     {% endif %}
@@ -71,6 +82,7 @@
                           <th>Lugar</th>
                           <th>Tocata</th>
                           <th>Tocata</th>
+                          <th>Cuándo</th>
                           <th>Estado</th>
                           <th>Acciones</th>
                         </tr>
@@ -87,8 +99,8 @@
         <!-- DataTable -->
           <div class="row mb-3">
               <div class="col-lg-6">
-                  <h4>Mis Propuestas</h4>
-                  <p>Actualmente no tienes ningun propuesta invitando a tus artistas favoritos.</p>
+                  <h4>Mis Invitaciones</h4>
+                  <p>Actualmente no tienes ninguna invitación.</p>
               </div>
           </div>
         <!-- end: DataTable -->

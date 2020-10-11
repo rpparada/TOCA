@@ -3,17 +3,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="modal-label">Cancelar Propuesta</h4>
+                <h4 class="modal-title" id="modal-label">Cancelar Invitación</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        {% if instance.estado == 'pendiente' %}
-                        <p>¿Estas seguro que quieres borralo?</p>
-                        {% else %}
-                        <p>No puedes cancelarla</p>
-                        {% endif %}
+                        <p>¿Seguro quieres cancelar invitación?</p>
                     </div>
                 </div>
             </div>
@@ -21,9 +17,7 @@
               <form action="{% url 'propuestaslugar:cancelarpropuesta' %}" method="POST">
               {% csrf_token %}
                 <input type="hidden" name="propuesta" id="id_propuesta" value="{{ instance.id }}">
-                {% if instance.estado == 'pendiente' %}
                 <button type="submit" class="btn btn-b">Confirmo</button>
-                {% endif %}
                 <button type="button" class="btn btn-danger m-l-10" data-dismiss="modal">Cancelar</button>
               </form>
             </div>
