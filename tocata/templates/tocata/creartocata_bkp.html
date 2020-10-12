@@ -14,8 +14,8 @@
             <div class="content col-lg-12">
               <div class="card">
                   <div class="card-header">
-                      <h5 class="card-title">Crea Tocata Íntima</h5>
-                      <h6 class="card-subtitle text-muted">Completa el formulario para crear tu próxima Tocata Íntima.</h6>
+                      <h5 class="card-title">Crea tu próxima Tocata Íntima</h5>
+                      <h6 class="card-subtitle text-muted">Completa el formulario para crear tu Tocata Íntima.</h6>
                       <p hidden id="mensajerror"></p>
                   </div>
                   <div class="card-body">
@@ -27,6 +27,16 @@
                               <div class="col-sm-10">
                                 {{ form.nombre.errors }}
                                 {{ form.nombre }}
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.lugar.label }}</label>
+                              <div class="col-sm-8">
+                                {{ form.lugar.errors }}
+                                {{ form.lugar }}
+                              </div>
+                              <div class="col-sm-2 ml-sm-auto">
+                                  <a href="{% url 'lugar:agregarlugar' %}" class="btn btn-primary">Crear Lugar</a>
                               </div>
                           </div>
                           <div class="form-group row">
@@ -73,7 +83,7 @@
                           </div>
                           <div class="form-group row">
                               <div class="col-sm-10 ml-sm-auto">
-                                  <button type="submit" class="btn btn-primary">Siguente</button>
+                                  <button type="submit" class="btn btn-primary">Crear Tocata</button>
                               </div>
                           </div>
                       </form>

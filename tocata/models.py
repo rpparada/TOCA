@@ -44,7 +44,7 @@ class TocataQuerySet(models.query.QuerySet):
                     Q(artista__nombre__icontains=consulta) |
                     Q(estilos__nombre__icontains=consulta) |
                     Q(lugar__region__nombre__icontains=consulta) |
-                    Q(lugar__comuna__nombre__icontains=consulta) 
+                    Q(lugar__comuna__nombre__icontains=consulta)
                     )
         return self.filter(lookups).distinct()
 
@@ -120,7 +120,7 @@ class Tocata(models.Model):
     hora                = models.TimeField()
     asistentes_total    = models.IntegerField(default=0)
     asistentes_min      = models.IntegerField()
-    asistentes_max      = models.IntegerField()
+    asistentes_max      = models.IntegerField(null=True, blank=True)
     flayer_380_507      = ResizedImageField(size=[380, 507],upload_to=upload_tocata_flayer_file_loc, blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_380_507.jpg')
     estilos             = models.ManyToManyField(Estilo, blank=True)
     estado              = models.CharField(max_length=20, choices=TOCATA_ESTADO_OPCIONES,default='publicado')

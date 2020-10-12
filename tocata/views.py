@@ -1,6 +1,13 @@
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.contrib import messages
-from django.views.generic import DetailView, ListView, View, CreateView
+from django.views.generic import (
+                                DetailView,
+                                ListView,
+                                View,
+                                CreateView,
+                                UpdateView
+                            )
 from django.http import Http404
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -11,7 +18,8 @@ from .forms import (
             CrearTocataForm,
             SuspenderTocataForm,
             BorrarTocataForm,
-            TocataDesdeTocataAbiertaCreateForm
+            TocataDesdeTocataAbiertaCreateForm,
+            SeleccionarLugarTocataForm
         )
 
 from analytics.mixins import ObjectViewedMixin
@@ -124,6 +132,7 @@ class TocataCreateView(NextUrlMixin, RequestFormAttachMixin, LoginRequiredMixin,
 
     form_class = CrearTocataForm
     template_name = 'tocata/creartocata.html'
+    # success_url = 'seleccionardireccion'
 
     def form_valid(self, form):
         request = self.request
@@ -136,6 +145,23 @@ class TocataCreateView(NextUrlMixin, RequestFormAttachMixin, LoginRequiredMixin,
         msg = 'Error en formulario'
         messages.error(request, msg)
         return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('tocata:seleccionardireccion', kwargs={'slug':self.object.slug})
+
+class SeleccionarLugarTocataView(NextUrlMixin, RequestFormAttachMixin, LoginRequiredMixin, UpdateView):
+
+    form_class = SeleccionarLugarTocataForm
+    template_name = 'tocata/seleccionalugar.html'
+
+    def get_object(self):
+        return Tocata.objects.get(slug=self.kwargs['slug'])
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(SeleccionarLugarTocataView, self).get_context_data(*args, **kwargs)
+        context['slug'] = self.kwargs['slug']
+        return context
+
 
 class TocataDesdeTocataAbiertaCreateView(RequestFormAttachMixin, LoginRequiredMixin, CreateView):
 

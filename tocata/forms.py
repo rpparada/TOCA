@@ -25,14 +25,14 @@ class CrearTocataForm(forms.ModelForm):
                                                                 'autofocus': True
                                                             }), label='Nombre'
                                         )
-    lugar               = forms.ModelChoiceField(queryset=None,
-                                                    empty_label=None,
-                                                    widget=forms.Select(attrs={
-                                                                            'class': 'form-control',
-                                                                        }
-                                                                    ),
-                                                    label='Mis Lugares'
-                                    )
+    # lugar               = forms.ModelChoiceField(queryset=None,
+    #                                                 empty_label=None,
+    #                                                 widget=forms.Select(attrs={
+    #                                                                         'class': 'form-control',
+    #                                                                     }
+    #                                                                 ),
+    #                                                 label='Mis Lugares'
+    #                                 )
     descripción         = forms.CharField(required=False, widget=forms.Textarea(attrs={
                                                                 'class': 'form-control',
                                                                 'placeholder': 'Descripción'
@@ -65,7 +65,7 @@ class CrearTocataForm(forms.ModelForm):
         model = Tocata
         fields = (
             'nombre',
-            'lugar',
+            # 'lugar',
             'descripción',
             'costo',
             'fecha',
@@ -77,7 +77,7 @@ class CrearTocataForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         self.request = request
         super(CrearTocataForm, self).__init__(*args, **kwargs)
-        self.fields['lugar'].queryset = Lugar.objects.filter(usuario=request.user).filter(estado='disponible')
+        # self.fields['lugar'].queryset = Lugar.objects.filter(usuario=request.user).filter(estado='disponible')
 
     def clean_costo(self):
         costo = self.cleaned_data.get('costo')
@@ -95,8 +95,8 @@ class CrearTocataForm(forms.ModelForm):
             raise forms.ValidationError('Debes definir un minimo de asistentes mayor a cero')
 
         # Asistentes minimos no deben superar la capcidad del lugar seleccionado
-        if asistentes_min > lugar.capacidad:
-            raise forms.ValidationError('Lugar tiene una capacidad menor que el minimo de asistentes')
+        # if asistentes_min > lugar.capacidad:
+        #     raise forms.ValidationError('Lugar tiene una capacidad menor que el minimo de asistentes')
 
         return asistentes_min
 
@@ -112,17 +112,51 @@ class CrearTocataForm(forms.ModelForm):
         tocata = super(CrearTocataForm, self).save(commit=False)
         request = self.request
 
-        tocata.region = tocata.lugar.region
-        tocata.comuna = tocata.lugar.comuna
+        # tocata.region = tocata.lugar.region
+        # tocata.comuna = tocata.lugar.comuna
 
         tocata.usuario = request.user
         artista = Artista.objects.get(usuario=request.user)
         tocata.artista = artista
-        tocata.asistentes_max = tocata.lugar.capacidad
+        # tocata.asistentes_max = tocata.lugar.capacidad
 
         if commit:
             tocata.save()
             tocata.estilos.set(artista.estilos.all())
+
+        return tocata
+
+class SeleccionarLugarTocataForm(forms.ModelForm):
+
+    lugar               = forms.ModelChoiceField(queryset=None,
+                                                    empty_label=None,
+                                                    widget=forms.Select(attrs={
+                                                                            'class': 'form-control',
+                                                                        }
+                                                                    ),
+                                                    label='Mis Lugares'
+                                    )
+
+    class Meta:
+        model = Tocata
+        fields = ('lugar',)
+
+    def __init__(self, request, *args, **kwargs):
+        self.request = request
+        super(SeleccionarLugarTocataForm, self).__init__(*args, **kwargs)
+        self.fields['lugar'].queryset = Lugar.objects.filter(usuario=request.user).filter(estado='disponible')
+
+    def save(self, commit=True):
+        tocata = super(SeleccionarLugarTocataForm, self).save(commit=False)
+        request = self.request
+
+        tocata.region = tocata.lugar.region
+        tocata.comuna = tocata.lugar.comuna
+
+        tocata.asistentes_max = tocata.lugar.capacidad
+
+        if commit:
+            tocata.save()
 
         return tocata
 
@@ -217,7 +251,7 @@ class TocataDesdeTocataAbiertaCreateForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         self.request = request
         super(TocataDesdeTocataAbiertaCreateForm, self).__init__(*args, **kwargs)
-        
+
         lugar_id = request.POST.get('lugar')
         tocataabierta_id = request.POST.get('tocataabierta')
 
