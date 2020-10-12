@@ -1,0 +1,14 @@
+{% load static %}
+{% load humanize %}
+<div class="product">
+    <div class="product-image">
+        <a><img src="{{ instance.flayer_380_507.url }}" alt="{{ object.nombre }}">
+        </a>
+    </div>
+    <div class="product-description">
+        <div class="product-category">{{ instance.artista.nombre }}</div>
+        <div class="product-title">
+            <h3><a href="{{ instance.get_absolute_url }}">{{ instance.nombre }}</a></h3>
+        </div>
+    </div>
+</div>

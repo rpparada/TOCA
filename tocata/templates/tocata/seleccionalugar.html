@@ -7,41 +7,60 @@
 
 {% include 'partials/_alerts.html' %}
 
-{% if request.user.is_musico %}
-<section id="page-content">
-    <div class="container">
-        <div class="row">
-            <div class="content col-lg-12">
-              <div class="card">
-                  <div class="card-header">
-                      <h5 class="card-title">Selecciona Dirección</h5>
-                      <h6 class="card-subtitle text-muted">Selecciona la dirección o creala completando el formulario.</h6>
-                      <p hidden id="mensajerror"></p>
-                  </div>
-                  <div class="card-body">
-                      <form id="formtocheck" action="{% url 'tocata:seleccionardireccion' slug %}" method="POST">
-                        {% csrf_token %}
-                          {{ form.non_field_errors }}
-                          <div class="form-group row">
-                              <label class="col-form-label col-sm-2 text-sm-right">{{ form.lugar.label }}</label>
-                              <div class="col-sm-10">
-                                {{ form.lugar.errors }}
-                                {{ form.lugar }}
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <div class="col-sm-10 ml-sm-auto">
-                                  <button type="submit" class="btn btn-primary">Crear Tocata</button>
-                              </div>
-                          </div>
-                      </form>
-                  </div>
-              </div>
+{% url 'tocata:agregaryseleccionadireccion' as agregaryseleccionadireccion_url %}
 
-            </div>
+{% if request.user.is_musico %}
+<!-- SHOP CHECKOUT -->
+<section id="shop-checkout">
+    <div class="container">
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="widget-shop">
+                <!--Form Agrega Lugar -->
+                {% include 'tocata/snippets/tocatawidget.html' with instance=tocata %}
+                <!-- end: Form -->
+              </div>
+          </div>
+      </div>
+
+        <div class="shop-cart">
+                <div class="seperator"><i class="fa fa-music"></i>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 no-padding">
+                        <div class="row">
+                          <div class="col-lg-12">
+                              <h4 class="upper">Selecciona Dirección</h4>
+                          </div>
+                          <form action="{% url 'tocata:seleccionardireccion' tocata.slug %}" method="POST">
+                          {% csrf_token %}
+                          <div class="col-lg-12 form-group">
+                            {{ form.lugar.errors }}
+                            {{ form.lugar }}
+                          </div>
+                          <div class="col-lg-12 form-group">
+                            <input type="hidden" name="tocataabierta" value="{{ tocataabierta.id }}">
+                            <button type="submit" class="btn btn-primary">Seleccionar Dirección</button>
+                          </div>
+                          </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4 class="upper">Agregar Dirección</h4>
+                            </div>
+                            <!--Form Agrega Lugar -->
+                            {% include 'lugar/snippets/agregalugarform.html' with form=form_lugar nombreboton='Agregar y Selecciona Dirección' endpoint=agregaryseleccionadireccion_url %}
+                            <!-- end: Form -->
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 </section>
+<!-- end: SHOP CHECKOUT -->
+
 {% endif %}
 
 {% endblock %}

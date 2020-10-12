@@ -36,7 +36,7 @@ class TocataQuerySet(models.query.QuerySet):
         return self.estado_disp().entrada_disp().fecha_disp()
 
     def no_disponible(self):
-        return self.filter(estado__in = ['suspendido','completado'])
+        return self.filter(estado__in = ['suspendido','completado','inicial'])
 
     def busqueda(self, consulta):
         lookups = (Q(nombre__icontains=consulta) |
@@ -97,7 +97,8 @@ def upload_tocata_flayer_file_loc(instance, filename):
     return location + filename
 
 TOCATA_ESTADO_OPCIONES = (
-    ('publicado', 'Publicado'),     # Publicacion inicial de tocata
+    ('inicial', 'Inicial'),     # Publicada
+    ('publicado', 'Publicado'),     # Publicada
     ('suspendido', 'Suspendido'),   # Tocata suspendida
     ('confirmado', 'Confirmado'),   # Quorum alcanzado
     ('vendido', 'Vendido'),         # Todas las entradas vendidas
@@ -123,7 +124,7 @@ class Tocata(models.Model):
     asistentes_max      = models.IntegerField(null=True, blank=True)
     flayer_380_507      = ResizedImageField(size=[380, 507],upload_to=upload_tocata_flayer_file_loc, blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_380_507.jpg')
     estilos             = models.ManyToManyField(Estilo, blank=True)
-    estado              = models.CharField(max_length=20, choices=TOCATA_ESTADO_OPCIONES,default='publicado')
+    estado              = models.CharField(max_length=20, choices=TOCATA_ESTADO_OPCIONES,default='inicial')
 
     fecha_actu          = models.DateTimeField(auto_now=True)
     fecha_crea          = models.DateTimeField(auto_now_add=True)
@@ -173,12 +174,29 @@ class Tocata(models.Model):
 
     def borrar_tocata(self):
         fue_borrada = False
-        if self.estado in ['suspendido','completado']:
+        if self.estado in ['suspendido','completado','inicial']:
             self.estado = 'borrado'
             self.save()
             fue_borrada = True
 
         return fue_borrada
+
+    def agrega_lugar(self, lugar):
+
+        self.lugar = lugar
+        self.region = lugar.region
+        self.comuna = lugar.comuna
+        self.asistentes_max = lugar.capacidad
+        self.save()
+
+    def publicar(self):
+        fue_publicado = False
+        if self.estado in ['inicial',]:
+            self.estado = 'publicado'
+            self.save()
+            fue_publicado = True
+
+        return fue_publicado
 
     @property
     def name(self):

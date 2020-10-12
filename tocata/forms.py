@@ -25,14 +25,6 @@ class CrearTocataForm(forms.ModelForm):
                                                                 'autofocus': True
                                                             }), label='Nombre'
                                         )
-    # lugar               = forms.ModelChoiceField(queryset=None,
-    #                                                 empty_label=None,
-    #                                                 widget=forms.Select(attrs={
-    #                                                                         'class': 'form-control',
-    #                                                                     }
-    #                                                                 ),
-    #                                                 label='Mis Lugares'
-    #                                 )
     descripción         = forms.CharField(required=False, widget=forms.Textarea(attrs={
                                                                 'class': 'form-control',
                                                                 'placeholder': 'Descripción'
@@ -112,13 +104,9 @@ class CrearTocataForm(forms.ModelForm):
         tocata = super(CrearTocataForm, self).save(commit=False)
         request = self.request
 
-        # tocata.region = tocata.lugar.region
-        # tocata.comuna = tocata.lugar.comuna
-
         tocata.usuario = request.user
         artista = Artista.objects.get(usuario=request.user)
         tocata.artista = artista
-        # tocata.asistentes_max = tocata.lugar.capacidad
 
         if commit:
             tocata.save()
@@ -154,6 +142,8 @@ class SeleccionarLugarTocataForm(forms.ModelForm):
         tocata.comuna = tocata.lugar.comuna
 
         tocata.asistentes_max = tocata.lugar.capacidad
+
+        tocata.estado = 'publicado'
 
         if commit:
             tocata.save()

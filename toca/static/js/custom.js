@@ -16,7 +16,8 @@ $('.close').click(function () {
 // Acciones cuando paguinas cargan
 $(document).ready(function (){
 
-  if (window.location.pathname === "/lugares/agregarlugar" || window.location.pathname === "/propuestaslugar/proponerlugar"){
+
+  if ((window.location.href.indexOf("/lugares/agregarlugar") > -1) || (window.location.href.indexOf("/propuestaslugar/proponerlugar") > -1) || (window.location.href.indexOf("/tocatas/artista/seleccionardireccion/") > -1)){
     // Agregar Lugar
     // Define posibles comunas de acuerdo a region seleccionada
     // Habilita campos de acuerdo con el tipo de tocata
@@ -72,7 +73,8 @@ $(document).ready(function (){
 
 // Define posibles comunas de acuerdo a region seleccionada
 $("#id_region").change(function () {
-  if (window.location.pathname === "/lugares/agregarlugar" || window.location.pathname === "/propuestaslugar/proponerlugar" ){
+
+  if ((window.location.href.indexOf("/lugares/agregarlugar") > -1) || (window.location.href.indexOf("/propuestaslugar/proponerlugar") > -1) || (window.location.href.indexOf("/tocatas/artista/seleccionardireccion/") > -1)){
     var url = $("#formtocheck").attr("data-ciudad-url-agregar");
     var regionId = $(this).val();
     $.ajax({

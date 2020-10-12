@@ -49,14 +49,20 @@
                         {% for object in object_list %}
                           <tr>
                               <td><a href="{{ object.get_absolute_url }}">{{ object.nombre }}</a></td>
+                              {% if object.lugar %}
                               <td>{{ object.lugar.nombre_calle }} {{ object.lugar.numero }} <br> {{ object.lugar.region.nombre }}, {{ object.lugar.comuna.nombre }}</td>
+                              {% else %}
+                              <td>Aun sin dirección <a href="{% url 'tocata:seleccionardireccion' object.slug %}"><small>(Seleccion Dirección)</small></a></td>
+                              {% endif %}
                               <td>{{ object.fecha }}, {{ object.hora}}</td>
                               <td>${{ object.costo|floatformat|intcomma }}</td>
                               <td>Vendidas: {{ object.asistentes_total }}
                                   <br> Min: {{ object.asistentes_min }}
                                   <br>Max: {{ object.asistentes_max }}
                                   </td>
-                              {% if object.estado == 'publicado' %}
+                              {% if object.estado == 'inicial' %}
+                                <td><span class="badge badge-pill badge-warning">{{ object.get_estado_display }}</span></td>
+                              {% elif object.estado == 'publicado' %}
                                 <td><span class="badge badge-pill badge-warning">{{ object.get_estado_display }}</span></td>
                               {% elif object.estado == 'suspendido' %}
                                 <td><span class="badge badge-pill badge-danger">{{ object.get_estado_display }}</span></td>
@@ -74,7 +80,10 @@
                                         {% if object.estado in 'publicado,confirmado,vendido' %}
                                         <li><a href="" data-target="#modalsuce{{object.id}}" data-toggle="modal"><i class="icon-alert-triangle"></i>Suspender</a></li>
                                         {% endif %}
-                                        {% if object.estado in 'suspendido,completado' %}
+                                        {% if object.estado in 'inicial' %}
+                                        <li><a href="{% url 'tocata:seleccionardireccion' object.slug %}"><i class="icon-home"></i>Seleccion Dirección</a></li>
+                                        {% endif %}
+                                        {% if object.estado in 'suspendido,completado,inicial' %}
                                         <li><a href="" data-target="#modalboce{{object.id}}" data-toggle="modal"><i class="icon-x"></i>Borrar</a></li>
                                         {% endif %}
                                         {% if object.estado in 'publicado,confirmado,vendido' %}

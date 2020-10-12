@@ -21,6 +21,7 @@ from .forms import (
             TocataDesdeTocataAbiertaCreateForm,
             SeleccionarLugarTocataForm
         )
+from lugar.forms import CrearLugarForm, CrearLugarPropuestaForm
 
 from analytics.mixins import ObjectViewedMixin
 
@@ -132,19 +133,6 @@ class TocataCreateView(NextUrlMixin, RequestFormAttachMixin, LoginRequiredMixin,
 
     form_class = CrearTocataForm
     template_name = 'tocata/creartocata.html'
-    # success_url = 'seleccionardireccion'
-
-    def form_valid(self, form):
-        request = self.request
-        msg = 'Tocata publicada'
-        messages.success(request, msg)
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        request = self.request
-        msg = 'Error en formulario'
-        messages.error(request, msg)
-        return super().form_invalid(form)
 
     def get_success_url(self):
         return reverse_lazy('tocata:seleccionardireccion', kwargs={'slug':self.object.slug})
@@ -159,9 +147,47 @@ class SeleccionarLugarTocataView(NextUrlMixin, RequestFormAttachMixin, LoginRequ
 
     def get_context_data(self, *args, **kwargs):
         context = super(SeleccionarLugarTocataView, self).get_context_data(*args, **kwargs)
-        context['slug'] = self.kwargs['slug']
+
+        tocata = Tocata.objects.get(slug=self.kwargs['slug'])
+        context['tocata'] = tocata
+        context['form_lugar'] = CrearLugarForm(self.request)
+
         return context
 
+    def form_valid(self, form):
+        request = self.request
+        msg = 'Tocata Íntima publicada'
+        messages.success(request, msg)
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        request = self.request
+        msg = 'Error en formulario'
+        messages.error(request, msg)
+        return super().form_invalid(form)
+
+class AgregarYSeleccionaDireccionView(LoginRequiredMixin ,View):
+
+    form_class = CrearLugarForm
+
+    def post(self, request, *args, **kwargs):
+        tocata_id = request.POST.get('tocata')
+        tocata = Tocata.objects.get(id=tocata_id)
+        form = self.form_class(request, request.POST or none)
+        if form.is_valid():
+            # Direccion salvada
+            lugar = form.save()
+
+            # Agrega dirección a tocata y publicar
+            tocata.agrega_lugar(lugar)
+            tocata.publicar()
+            
+            msg = 'Tocata Íntima publicada'
+            messages.success(request, msg)
+
+        #return redirect('propuestaslugar:mispropuestas')
+        #return reverse_lazy('tocata:tocata', kwargs={'slug':tocata.slug})
+        return redirect('tocata:tocata', slug=tocata.slug)
 
 class TocataDesdeTocataAbiertaCreateView(RequestFormAttachMixin, LoginRequiredMixin, CreateView):
 
