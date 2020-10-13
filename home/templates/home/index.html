@@ -12,10 +12,10 @@
     <div class="container container-fullscreen">
         <div class="text-middle text-center">
             <h1 class="text-uppercase text-lg text-light" data-animate="fadeInUp"> - TOCATAS ÍNTIMAS - </h1>
-            {% if usuario.es_artista %}
-            <p class="lead text-light " data-animate="fadeInUp" data-animate-delay="600">La mejor forma de publicar, organizar y cobrar Tocatas Íntimas.</p>
+            {% if request.user.is_musico %}
+            <p class="lead text-light " data-animate="fadeInUp" data-animate-delay="600">La mejor forma de publicar, organizar y cobrar por tus Tocatas Íntimas.</p>
             <span data-animate="fadeInUp" data-animate-delay="900">
-                <a href="{% url 'creartocata' %}" class="btn">Crea una nueva Tocata Intima</a>
+                <a href="{% url 'tocata:creartocata' %}" class="btn">Crea una nueva Tocata Íntima</a>
             {% else %}
             <p class="lead text-light " data-animate="fadeInUp" data-animate-delay="600">Disfruta de tus artistas favoritos en un ambiente íntimo.</p>
             <span data-animate="fadeInUp" data-animate-delay="900">

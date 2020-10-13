@@ -87,7 +87,6 @@ class TocataManager(models.Manager):
     def tocataartista_by_request(self, request):
         return self.get_queryset().tocataartista_by_request(request).quita_barradas()
 
-
 def upload_tocata_flayer_file_loc(instance, filename):
     slug =instance.slug
     if not slug:

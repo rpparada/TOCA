@@ -7,6 +7,22 @@ from toca.utils  import unique_slug_generator
 
 # Create your models here.
 # Testimonios
+class TestimonioQuerySet(models.QuerySet):
+    def para_artistas(self):
+        return self.filter(objetivo='artistas')
+
+    def para_usuarios(self):
+        return self.filter(objetivo='usuarios')
+
+class TestimonioManager(models.Manager):
+    def get_queryset(self):
+        return TestimonioQuerySet(self.model, using=self._db)
+
+    def get_testimonio_by_request(self, request):
+        if request.user.is_musico:
+            return self.get_queryset().para_artistas().order_by('fecha_crea')
+        return self.get_queryset().para_usuarios().order_by('fecha_crea')
+
 TESTIMONIO_ESTADO_OPCIONES = (
     ('disponible','Disponible'),
     ('nodisponible','No Disponible'),
@@ -17,27 +33,9 @@ TESTIMONIO_OBJETIVO_OPCIONES = (
     ('usuarios','Usuarios'),
 )
 
-class TestimonioQuerySet(models.QuerySet):
-    def solo_artistas(self):
-        return self.filter(objetivo='artistas')
-
-    def solo_usuarios(self):
-        return self.filter(objetivo='usuarios')
-
-class TestimonioManager(models.Manager):
-    def get_queryset(self):
-        return TestimonioQuerySet(self.model, using=self._db)
-
-    def get_testimonio(self, request):
-        tipo_usuario = request.session.get('es_artista', 'N')
-        if tipo_usuario == 'S':
-            return self.get_queryset().solo_artistas()
-        return self.get_queryset().solo_usuarios()
-
 class Testimonio(models.Model):
 
     artista             = models.ForeignKey(Artista, on_delete=models.DO_NOTHING)
-    #slug                = models.SlugField(blank=True, unique=True)
     testimonio          = models.CharField(max_length=120, blank=True)
     objetivo            = models.CharField(max_length=20, choices=TESTIMONIO_OBJETIVO_OPCIONES,default='usuarios')
 
@@ -50,36 +48,28 @@ class Testimonio(models.Model):
     def __str__(self):
         return str(self.artista)+'('+str(self.objetivo)+'): '+str(self.testimonio[:100])
 
-# def testimonio_pre_save_receiver(sender, instance, *args, **kwargs):
-#     if not instance.slug:
-#         instance.slug = unique_slug_generator(instance)
-#
-# pre_save.connect(testimonio_pre_save_receiver, sender=Testimonio)
-
 # Descripcion TocatasIntimas
-DESCRIPCION_OBJETIVO_OPCIONES = (
-    ('artistas','Artistas'),
-    ('usuarios','Usuarios'),
-)
-
 class DescripcionTocatasIntimasQuerySet(models.QuerySet):
-    def solo_artistas(self):
+    def para_artistas(self):
         return self.filter(objetivo='artistas')
-    def solo_usuarios(self):
+
+    def para_usuarios(self):
         return self.filter(objetivo='usuarios')
-    def ordenar_fecha_crea(self):
-        return self.order_by('fecha_crea')
 
 class DescripcionTocatasIntimasManager(models.Manager):
     def get_queryset(self):
         return DescripcionTocatasIntimasQuerySet(self.model, using=self._db)
 
-    def get_descripcion(self, request):
-        tipo_usuario = request.session.get('es_artista', 'N')
-        if tipo_usuario == 'S':
-            return self.get_queryset().solo_artistas().ordenar_fecha_crea()
+    def get_descripcion_by_request(self, request):
+        if request.user.is_musico:
+            return self.get_queryset().para_artistas().order_by('fecha_crea')
 
-        return self.get_queryset().solo_usuarios().ordenar_fecha_crea()
+        return self.get_queryset().para_usuarios().order_by('fecha_crea')
+
+DESCRIPCION_OBJETIVO_OPCIONES = (
+    ('artistas','Artistas'),
+    ('usuarios','Usuarios'),
+)
 
 class DescripcionTocatasIntimas(models.Model):
 
