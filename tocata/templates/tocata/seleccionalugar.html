@@ -23,40 +23,40 @@
           </div>
       </div>
 
-        <div class="shop-cart">
-                <div class="seperator"><i class="fa fa-music"></i>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 no-padding">
-                        <div class="row">
+      <div class="shop-cart">
+              <div class="seperator"><i class="fa fa-music"></i>
+              </div>
+              <div class="row">
+                  <div class="col-lg-6">
+                      <div class="row">
+                        <div class="col-lg-12">
+                            <h4 class="upper">Selecciona Dirección</h4>
+                        </div>
+                        <form action="{% url 'tocata:seleccionardireccion' tocata.slug %}" method="POST">
+                        {% csrf_token %}
+                        <div class="col-lg-12 form-group">
+                          {{ form.lugar.errors }}
+                          {{ form.lugar }}
+                        </div>
+                        <div class="col-lg-12 form-group">
+                          <input type="hidden" name="tocataabierta" value="{{ tocataabierta.id }}">
+                          <button type="submit" class="btn btn-primary">Seleccionar Dirección</button>
+                        </div>
+                        </form>
+                      </div>
+                  </div>
+                  <div class="col-lg-6">
+                      <div class="row">
                           <div class="col-lg-12">
-                              <h4 class="upper">Selecciona Dirección</h4>
+                              <h4 class="upper">Agregar Dirección</h4>
                           </div>
-                          <form action="{% url 'tocata:seleccionardireccion' tocata.slug %}" method="POST">
-                          {% csrf_token %}
-                          <div class="col-lg-12 form-group">
-                            {{ form.lugar.errors }}
-                            {{ form.lugar }}
-                          </div>
-                          <div class="col-lg-12 form-group">
-                            <input type="hidden" name="tocataabierta" value="{{ tocataabierta.id }}">
-                            <button type="submit" class="btn btn-primary">Seleccionar Dirección</button>
-                          </div>
-                          </form>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <h4 class="upper">Agregar Dirección</h4>
-                            </div>
-                            <!--Form Agrega Lugar -->
-                            {% include 'lugar/snippets/agregalugarform.html' with form=form_lugar nombreboton='Agregar y Selecciona Dirección' endpoint=agregaryseleccionadireccion_url %}
-                            <!-- end: Form -->
-                        </div>
-                    </div>
-                </div>
-        </div>
+                          <!--Form Agrega Lugar -->
+                          {% include 'lugar/snippets/agregalugarform.html' with form=form_lugar nombreboton='Agregar y Selecciona Dirección' endpoint=agregaryseleccionadireccion_url %}
+                          <!-- end: Form -->
+                      </div>
+                  </div>
+              </div>
+      </div>
     </div>
 </section>
 <!-- end: SHOP CHECKOUT -->

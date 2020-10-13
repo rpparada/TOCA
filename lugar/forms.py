@@ -20,7 +20,7 @@ class CrearLugarForm(forms.ModelForm):
     numero          = forms.IntegerField(widget=forms.NumberInput(attrs={
                                                                 'class': 'form-control',
                                                                 'placeholder': 'Número Calle'
-                                                            }), label='Número'
+                                                            }), label='Núm.'
                                     )
     ciudad          = forms.CharField(required=False, widget=forms.TextInput(attrs={
                                                                 'class': 'form-control',
@@ -181,7 +181,7 @@ class CrearLugarPropuestaForm(forms.ModelForm):
     numero          = forms.IntegerField(widget=forms.NumberInput(attrs={
                                                                 'class': 'form-control',
                                                                 'placeholder': 'Número Calle'
-                                                            }), label='Número'
+                                                            }), label='Núm.'
                                     )
     ciudad          = forms.CharField(required=False, widget=forms.TextInput(attrs={
                                                                 'class': 'form-control',
