@@ -2,15 +2,11 @@ from django.db import models
 from django.conf import settings
 from django.db.models.signals import pre_save
 from django.db.models import Q, F
-from django.core.files.storage import FileSystemStorage
-from django.urls import reverse
-
+from django.utils import timezone
 
 from django_resized import ResizedImageField
 
-import os
 from datetime import timedelta, datetime
-from django.utils import timezone
 
 from artista.models import Artista, Estilo
 from lugar.models import Lugar, Region, Comuna
@@ -96,7 +92,7 @@ def upload_tocata_flayer_file_loc(instance, filename):
     return location + filename
 
 TOCATA_ESTADO_OPCIONES = (
-    ('inicial', 'Inicial'),     # Publicada
+    ('inicial', 'Inicial'),         # Tocata sin lugar definido
     ('publicado', 'Publicado'),     # Publicada
     ('suspendido', 'Suspendido'),   # Tocata suspendida
     ('confirmado', 'Confirmado'),   # Quorum alcanzado
@@ -138,11 +134,7 @@ class Tocata(models.Model):
 
     def check_vigencia(self):
         esta_vigente = False
-        estados_vig = [
-            'publicado',
-            'confirmado'
-        ]
-        if self.estado in estados_vig:
+        if self.estado in ['publicado','confirmado',]:
             esta_vigente = True
         return esta_vigente
 
