@@ -1,9 +1,6 @@
 from django.db import models
-#from django.contrib.auth.models import User
 from django.conf import settings
 from django.db.models.signals import m2m_changed, pre_save
-
-from tocata.models import Tocata
 
 User = settings.AUTH_USER_MODEL
 # Create your models here.
@@ -129,7 +126,7 @@ ITEMCARRO_CANTIDAD_OPCIONES_MAX = len(ITEMCARRO_CANTIDAD_OPCIONES)
 
 class ItemCarroCompra(models.Model):
 
-    tocata              = models.ForeignKey(Tocata, null=True, on_delete=models.DO_NOTHING)
+    tocata              = models.ForeignKey('tocata.Tocata', null=True, on_delete=models.DO_NOTHING)
     cantidad            = models.IntegerField(default=1, choices=ITEMCARRO_CANTIDAD_OPCIONES)
     total               = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
 

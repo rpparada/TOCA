@@ -113,7 +113,7 @@ class SuspenderTocataView(LoginRequiredMixin, View):
         form = self.form_class(request, request.POST or None)
         if form.is_valid():
             tocata = form.cleaned_data['tocata']
-            tocata.suspender_tocata()
+            tocata.suspender_tocata(request)
 
         return redirect('tocata:mistocatas')
 
@@ -181,7 +181,7 @@ class AgregarYSeleccionaDireccionView(LoginRequiredMixin ,View):
             # Agrega dirección a tocata y publicar
             tocata.agrega_lugar(lugar)
             tocata.publicar()
-            
+
             msg = 'Tocata Íntima publicada'
             messages.success(request, msg)
 

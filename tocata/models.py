@@ -10,6 +10,8 @@ from datetime import timedelta, datetime
 
 from artista.models import Artista, Estilo
 from lugar.models import Lugar, Region, Comuna
+from transaccional.models import EmailTemplate
+from orden.models import EntradasCompradas
 
 from toca.utils  import unique_slug_generator
 
@@ -151,15 +153,34 @@ class Tocata(models.Model):
             a_tiempo = True
         return a_tiempo
 
-    def suspender_tocata(self):
+    def suspender_tocata(self, request):
         fue_suspendido = False
         if self.estado in ['publicado','confirmado','vendido']:
-            self.estado = 'suspendido'
+            #self.estado = 'suspendido'
             self.save()
             fue_suspendido = True
-            # Agregar aqui los cambio necesarios para suspender tocata
+
             # - Notificar asistentes con emial
+            # Extraer lista de emails
+            recipient_list = []
+            entradas = EntradasCompradas.objects.by_tocata(self)
+            if entradas.exists():
+                for entrada in entradas.iterator():
+                    recipient_list.append(entrada.facturacion_profile.email)
+
+            print(recipient_list)
+
+            # Enviar Email
+            # EmailTemplate.send(
+            #     'email_boleta_itickets',
+            #     context = { 'object': self },
+            #     subject = 'Tocatas Íntimas - ITicket Orden {num_orden}'.format(num_orden=self.orden_id),
+            #     sender = 'tocatasintimastest@gmail.com',
+            #     emails = recipient_list
+            # )
+            
             # - Devolver dinero
+            # Por ahora las anulaciones se haran manualmente
 
         return fue_suspendido
 

@@ -19,8 +19,9 @@ class TestimonioManager(models.Manager):
         return TestimonioQuerySet(self.model, using=self._db)
 
     def get_testimonio_by_request(self, request):
-        if request.user.is_musico:
-            return self.get_queryset().para_artistas().order_by('fecha_crea')
+        if request.user.is_authenticated:
+            if request.user.is_musico:
+                return self.get_queryset().para_artistas().order_by('fecha_crea')
         return self.get_queryset().para_usuarios().order_by('fecha_crea')
 
 TESTIMONIO_ESTADO_OPCIONES = (
@@ -61,8 +62,9 @@ class DescripcionTocatasIntimasManager(models.Manager):
         return DescripcionTocatasIntimasQuerySet(self.model, using=self._db)
 
     def get_descripcion_by_request(self, request):
-        if request.user.is_musico:
-            return self.get_queryset().para_artistas().order_by('fecha_crea')
+        if request.user.is_authenticated:
+            if request.user.is_musico:
+                return self.get_queryset().para_artistas().order_by('fecha_crea')
 
         return self.get_queryset().para_usuarios().order_by('fecha_crea')
 
