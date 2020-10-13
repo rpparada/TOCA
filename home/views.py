@@ -1,18 +1,9 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db.models import Q
 from django.views.generic import ListView
-
-from datetime import datetime
-from itertools import chain
-from operator import attrgetter
 
 from tocata.models import Tocata
 from tocataabierta.models import TocataAbierta
 from artista.models import Artista
 from .models import Testimonio, DescripcionTocatasIntimas
-from carro.models import CarroCompra
 
 # Create your views here.
 class IndexListView(ListView):
