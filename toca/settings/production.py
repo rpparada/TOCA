@@ -44,10 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'sorl.thumbnail',
     # Nuestras aplicaciones
-    #'cobro',
     'artista',
     'lugar',
-    #'usuario',
     'tocata',
     'home',
     'busqueda',
@@ -61,7 +59,8 @@ INSTALLED_APPS = [
     'propuestaslugar',
     'perfil',
     'marketing',
-    'transaccional'
+    'transaccional',
+    'anulaciones'
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
