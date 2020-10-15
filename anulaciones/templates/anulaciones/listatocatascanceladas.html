@@ -6,17 +6,6 @@
 {% include 'partials/_alerts.html' %}
 
 {% if object_list %}
-  {% for object in object_list %}
-  <!--Modal suspender -->
-  {% include 'tocata/snippets/modalsuspender.html' with instance=object %}
-  <!-- end: Modal -->
-  <!--Modal borrar -->
-  {% include 'tocata/snippets/modalborrar.html' with instance=object %}
-  <!-- end: Modal -->
-  {% endfor %}
-{% endif %}
-
-{% if object_list %}
   <section id="page-content" class="no-sidebar">
       <div class="container">
 
@@ -45,50 +34,42 @@
                       <tbody>
                         {% for object in object_list %}
                           <tr>
-                              <td><a href="{{ object.get_absolute_url }}">{{ object.nombre }}</a></td>
-                              {% if object.lugar %}
-                              <td>{{ object.lugar.nombre_calle }} {{ object.lugar.numero }} <br> {{ object.lugar.region.nombre }}, {{ object.lugar.comuna.nombre }}</td>
+                              <td><a href="{{ object.tocata.get_absolute_url }}">{{ object.tocata.nombre }}</a></td>
+                              {% if object.tocata.lugar %}
+                              <td>{{ object.tocata.lugar.nombre_calle }} {{ object.tocata.lugar.numero }} <br> {{ object.tocata.lugar.region.nombre }}, {{ object.tocata.lugar.comuna.nombre }}</td>
                               {% else %}
-                              <td>Aun sin dirección <a href="{% url 'tocata:seleccionardireccion' object.slug %}"><small>(Seleccion Dirección)</small></a></td>
+                              <td>Aun sin dirección <a href="{% url 'tocata:seleccionardireccion' object.tocata.slug %}"><small>(Seleccion Dirección)</small></a></td>
                               {% endif %}
-                              <td>{{ object.fecha }}, {{ object.hora}}</td>
-                              <td>${{ object.costo|floatformat|intcomma }}</td>
-                              <td>Vendidas: {{ object.asistentes_total }}
-                                  <br> Min: {{ object.asistentes_min }}
-                                  <br>Max: {{ object.asistentes_max }}
+                              <td>{{ object.tocata.fecha }}, {{ object.tocata.hora}}</td>
+                              <td>${{ object.tocata.costo|floatformat|intcomma }}</td>
+                              <td>Vendidas: {{ object.tocata.asistentes_total }}
+                                  <br> Min: {{ object.tocata.asistentes_min }}
+                                  <br>Max: {{ object.tocata.asistentes_max }}
                                   </td>
                               <td>{{ object.get_motivo_display }}</td>
-                              {% if object.estado == 'inicial' %}
-                                <td><span class="badge badge-pill badge-warning">{{ object.get_estado_display }}</span></td>
-                              {% elif object.estado == 'publicado' %}
-                                <td><span class="badge badge-pill badge-warning">{{ object.get_estado_display }}</span></td>
-                              {% elif object.estado == 'suspendido' %}
+                              {% if object.estado == 'pendiente' %}
                                 <td><span class="badge badge-pill badge-danger">{{ object.get_estado_display }}</span></td>
-                              {% elif object.estado == 'confirmado' %}
-                                <td><span class="badge badge-pill badge-info">{{ object.get_estado_display }}</span></td>
-                              {% elif object.estado == 'vendido' %}
-                                <td><span class="badge badge-pill badge-primary">{{ object.get_estado_display }}</span></td>
-                              {% elif object.estado == 'completado' %}
+                              {% elif object.estado == 'reembolsado' %}
                                 <td><span class="badge badge-pill badge-success">{{ object.get_estado_display }}</span></td>
                               {% endif %}
                               <td>
                                 <div class="p-dropdown">
                                     <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
                                     <ul class="p-dropdown-content">
-                                        {% if object.estado in 'publicado,confirmado,vendido' %}
-                                        <li><a href="" data-target="#modalsuce{{object.id}}" data-toggle="modal"><i class="icon-alert-triangle"></i>Suspender</a></li>
+                                        {% if object.tocata.estado in 'publicado,confirmado,vendido' %}
+                                        <li><a href="" data-target="#modalsuce{{object.tocata.id}}" data-toggle="modal"><i class="icon-alert-triangle"></i>Suspender</a></li>
                                         {% endif %}
-                                        {% if object.estado in 'inicial' %}
-                                        <li><a href="{% url 'tocata:seleccionardireccion' object.slug %}"><i class="icon-home"></i>Seleccion Dirección</a></li>
+                                        {% if object.tocata.estado in 'inicial' %}
+                                        <li><a href="{% url 'tocata:seleccionardireccion' object.tocata.slug %}"><i class="icon-home"></i>Seleccion Dirección</a></li>
                                         {% endif %}
-                                        {% if object.estado in 'suspendido,completado,inicial' %}
-                                        <li><a href="" data-target="#modalboce{{object.id}}" data-toggle="modal"><i class="icon-x"></i>Borrar</a></li>
+                                        {% if object.tocata.estado in 'suspendido,completado,inicial' %}
+                                        <li><a href="" data-target="#modalboce{{object.tocata.id}}" data-toggle="modal"><i class="icon-x"></i>Borrar</a></li>
                                         {% endif %}
-                                        {% if object.estado in 'publicado,confirmado,vendido' %}
+                                        {% if object.tocata.estado in 'publicado,confirmado,vendido' %}
                                         <li>
                                           <hr>
                                         </li>
-                                        <li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8000/{{ object.get_absolute_url }}"><i class="icon-facebook"></i>Compartir</a></li>
+                                        <li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8000/{{ object.tocata.get_absolute_url }}"><i class="icon-facebook"></i>Compartir</a></li>
                                         <li><a href="#"><i class="icon-twitter"></i>Compartir</a></li>
                                         {% endif %}
                                     </ul>
