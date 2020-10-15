@@ -27,7 +27,7 @@
                               <th>Costo</th>
                               <th>Asistencia</th>
                               <th>Motivo</th>
-                              <th>Estado</th>
+                              <th>Estado Reembolso</th>
                               <th class="noExport">Acciones</th>
                           </tr>
                       </thead>
@@ -56,22 +56,7 @@
                                 <div class="p-dropdown">
                                     <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
                                     <ul class="p-dropdown-content">
-                                        {% if object.tocata.estado in 'publicado,confirmado,vendido' %}
-                                        <li><a href="" data-target="#modalsuce{{object.tocata.id}}" data-toggle="modal"><i class="icon-alert-triangle"></i>Suspender</a></li>
-                                        {% endif %}
-                                        {% if object.tocata.estado in 'inicial' %}
-                                        <li><a href="{% url 'tocata:seleccionardireccion' object.tocata.slug %}"><i class="icon-home"></i>Seleccion Dirección</a></li>
-                                        {% endif %}
-                                        {% if object.tocata.estado in 'suspendido,completado,inicial' %}
-                                        <li><a href="" data-target="#modalboce{{object.tocata.id}}" data-toggle="modal"><i class="icon-x"></i>Borrar</a></li>
-                                        {% endif %}
-                                        {% if object.tocata.estado in 'publicado,confirmado,vendido' %}
-                                        <li>
-                                          <hr>
-                                        </li>
-                                        <li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8000/{{ object.tocata.get_absolute_url }}"><i class="icon-facebook"></i>Compartir</a></li>
-                                        <li><a href="#"><i class="icon-twitter"></i>Compartir</a></li>
-                                        {% endif %}
+                                        <li><a href="{% url 'cancelaciones:anulacion' object.tocata.slug %}"><i class="icon-alert-triangle"></i>Ver Entradas</a></li>
                                     </ul>
                                 </div>
                               </td>
@@ -86,7 +71,7 @@
                             <th>Costo</th>
                             <th>Asistencia</th>
                             <th>Motivo</th>
-                            <th>Estado</th>
+                            <th>Estado Reembolso</th>
                             <th>Acciones</th>
                           </tr>
                       </tfoot>
@@ -106,12 +91,8 @@
 
           <div class="row mb-3">
               <div class="col-lg-6">
-                  <h4>Mis Tocatas</h4>
-                  <p>Actualmente no tienes ninguna Tocata Intima registrada.</p>
-              </div>
-              <div class="col-lg-6 text-right">
-                  <a href="{% url 'tocata:creartocata' %}" class="btn btn-light"><i class="icon-plus"></i> Crear Tocata Cerrada</a>
-                  <div id="export_buttons" class="mt-2"></div>
+                  <h4>Tocatas Canceladas</h4>
+                  <p>Actualmente no hay ninguna Tocata Intima cancelada.</p>
               </div>
           </div>
       </div>

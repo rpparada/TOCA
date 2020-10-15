@@ -11,3 +11,10 @@ class TocatasCanceladasListView(LoginRequiredMixin, ListView):
     paginate_by = 10
     ordering = ['-fecha_crea']
     queryset = TocataCancelada.objects.all()
+
+class EntradasTocataCanceladaListView(LoginRequiredMixin, ListView):
+
+    template_name = 'anulaciones/listaentradastocatacancelada.html'
+    paginate_by = 20
+    ordering = ['-fecha_crea']
+    queryset = AnulacionEntrada.objects.all()

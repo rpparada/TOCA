@@ -58,6 +58,9 @@ class AnulacionEntradaQuerySet(models.query.QuerySet):
     def pendientes(self):
         return self.filter(estado='pendiente')
 
+    def by_tocata(self, tocata):
+        return self.filter(entradas_compradas__item__tocata=tocata)
+
 class AnulacionEntradaManager(models.Manager):
     def get_queryset(self):
         return AnulacionEntradaQuerySet(self.model, self._db)
@@ -75,6 +78,9 @@ class AnulacionEntradaManager(models.Manager):
             anulacion_obj = AnulacionEntrada.objects.create(entradas_compradas=entradas, cobro=cobro)
 
         return anulacion_obj, nuevo_obj
+
+    def by_tocata(self, tocata):
+        return self.get_queryset().by_tocata(tocata)
 
 # Para tarjeta de crédito pueden ser los siguientes tipos de pago (con las abreviaciones entre paréntesis):
 # - Venta Normal (VN): Pago en 1 cuota.
