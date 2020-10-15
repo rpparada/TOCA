@@ -1,9 +1,90 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
-{% block title %} | ANULACION ENTRADAS{% endblock %}
+{% block title %} | ANULACION {{ tocata.nombre }}{% endblock %}
 {% block content %}
-
 {% include 'partials/_alerts.html' %}
-<h1>TEST</h1>
+
+{% if object_list %}
+  <section id="page-content" class="no-sidebar">
+      <div class="container">
+
+          <div class="row mb-3">
+              <div class="col-lg-6">
+                  <h4>Anulacion de Entradas a Tocata: <a href="{{ tocata.get_absolute_url }}">{{ tocata.nombre }}</a></h4>
+                  <p>Lista de las entradas compradas que deben ser reembolsadas.</p>
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-lg-12">
+                  <table id="datatable" class="table table-bordered table-hover" style="width:100%">
+                      <thead>
+                          <tr>
+                              <th>Usuario</th>
+                              <th>Costo Unitario</th>
+                              <th>Número de Entradas</th>
+                              <th>Total</th>
+                              <th>Fecha</th>
+                              <th>Tipo</th>
+                              <th>Estado Reembolso</th>
+                              <th class="noExport">Acciones</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        {% for object in object_list %}
+                          <tr>
+                              <td>{{ object.entradas_compradas.facturacion_profile.email }}</td>
+                              <td>${{ object.entradas_compradas.item.tocata.costo|floatformat|intcomma }}</td>
+                              <td>{{ object.entradas_compradas.item.cantidad }}</td>
+                              <td>${{ object.entradas_compradas.item.total|floatformat|intcomma }}</td>
+                              <td>{{ object.cobro.transactionDate }}</td>
+                              <td>{{ object.cobro.paymentTypeCode }}</td>
+                              <td>{{ object.estado }}</td>
+                              <td>
+                                <div class="p-dropdown">
+                                    <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
+                                    <ul class="p-dropdown-content">
+                                        <li><a href=""><i class="icon-alert-triangle"></i>Ver Entradas</a></li>
+                                    </ul>
+                                </div>
+                              </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                      <tfoot>
+                          <tr>
+                            <th>Usuario</th>
+                            <th>Costo Unitario</th>
+                            <th>Número de Entradas</th>
+                            <th>Total</th>
+                            <th>Fecha</th>
+                            <th>Tipo</th>
+                            <th>Estado Reembolso</th>
+                            <th>Acciones</th>
+                          </tr>
+                      </tfoot>
+                  </table>
+              </div>
+          </div>
+          <!-- Pagination -->
+          {% include 'snippets/page.html' with instance=page_obj %}
+          <!-- end: Pagination -->
+
+      </div>
+  </section>
+
+{% else %}
+  <section id="page-content" class="no-sidebar">
+      <div class="container">
+        <div class="row mb-3">
+            <div class="col-lg-6">
+                <h4>Anulacion de Entradas a Tocata: <a href="{{ tocata.get_absolute_url }}">{{ tocata.nombre }}</a></h4>
+                <p>Esta tocata no tiene entradas compradas.</p>
+            </div>
+        </div>
+      </div>
+  </section>
+{% endif %}
+
 {% endblock %}
