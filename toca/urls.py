@@ -32,6 +32,7 @@ urlpatterns = [
     path('cuenta/', include(('cuentas.urls','cuentas'), namespace='cuenta')),
     path('busqueda/', include(('busqueda.urls','busqueda'), namespace='busqueda')),
     path('ordenes/', include(('orden.urls','ordenes'), namespace='ordenes')),
+    path('cancelaciones/', include(('anulaciones.urls','cancelaciones'), namespace='cancelaciones')),
     path('carro/', include(('carro.urls','carro'), namespace='carro')),
     path('marketing/', include(('marketing.urls','marketing'), namespace='marketing')),
     path('direccion/', include('direccion.urls')),

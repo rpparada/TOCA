@@ -11,7 +11,8 @@ from datetime import timedelta, datetime
 from artista.models import Artista, Estilo
 from lugar.models import Lugar, Region, Comuna
 from transaccional.models import EmailTemplate
-from orden.models import EntradasCompradas
+from orden.models import EntradasCompradas, Cobro
+from anulaciones.models import AnulacionEntrada, TocataCancelada
 
 from toca.utils  import unique_slug_generator
 
@@ -56,6 +57,9 @@ class TocataQuerySet(models.query.QuerySet):
     def quita_barradas(self):
         return self.exclude(estado='borrado')
 
+    def suspendidas(self):
+        return self.filter(estado='suspendido')
+
 class TocataManager(models.Manager):
     def get_queryset(self):
         return TocataQuerySet(self.model, using=self._db)
@@ -84,6 +88,9 @@ class TocataManager(models.Manager):
 
     def tocataartista_by_request(self, request):
         return self.get_queryset().tocataartista_by_request(request).quita_barradas()
+
+    def suspendidas(self):
+        return self.get_queryset().suspendidas()
 
 def upload_tocata_flayer_file_loc(instance, filename):
     slug =instance.slug
@@ -121,8 +128,8 @@ class Tocata(models.Model):
     asistentes_max      = models.IntegerField(null=True, blank=True)
     flayer_380_507      = ResizedImageField(size=[380, 507],upload_to=upload_tocata_flayer_file_loc, blank=True, crop=['middle', 'center'], default='fotos/defecto/imagen_380_507.jpg')
     estilos             = models.ManyToManyField(Estilo, blank=True)
-    estado              = models.CharField(max_length=20, choices=TOCATA_ESTADO_OPCIONES,default='inicial')
 
+    estado              = models.CharField(max_length=20, choices=TOCATA_ESTADO_OPCIONES, default='inicial')
     fecha_actu          = models.DateTimeField(auto_now=True)
     fecha_crea          = models.DateTimeField(auto_now_add=True)
 
@@ -153,22 +160,33 @@ class Tocata(models.Model):
             a_tiempo = True
         return a_tiempo
 
-    def suspender_tocata(self, request):
+    def suspender_tocata(self, request, motivo='artista'):
         fue_suspendido = False
         if self.estado in ['publicado','confirmado','vendido']:
-            #self.estado = 'suspendido'
+            self.estado = 'suspendido'
             self.save()
             fue_suspendido = True
 
+            # - Crear registro en TocataCancelada
+            tocata_cancelada, created = TocataCancelada.objects.new_or_get(self, motivo)
+
             # - Notificar asistentes con emial
-            # Extraer lista de emails
+            # Extraer lista de emails y crea registros de anulacion de entradas vendidas
             recipient_list = []
             entradas = EntradasCompradas.objects.by_tocata(self)
             if entradas.exists():
                 for entrada in entradas.iterator():
-                    recipient_list.append(entrada.facturacion_profile.email)
 
-            print(recipient_list)
+                    # Crea registros de anulacion de entradas vendidas
+                    orden = entrada.orden
+                    cobro = Cobro.objects.get(orden=orden)
+                    anulacion, created = AnulacionEntrada.objects.new_or_get(entradas=entrada, cobro=cobro)
+
+                    # Crea lista de usuarios a notificar de anulacion
+                    recipient_list.append(entrada.facturacion_profile.email)
+                    # Agrega email adicional en la compra si fue ingresado
+                    if entrada.orden.email_adicional:
+                        recipient_list.append(entrada.orden.email_adicional)
 
             # Enviar Email
             # EmailTemplate.send(
@@ -178,7 +196,7 @@ class Tocata(models.Model):
             #     sender = 'tocatasintimastest@gmail.com',
             #     emails = recipient_list
             # )
-            
+
             # - Devolver dinero
             # Por ahora las anulaciones se haran manualmente
 

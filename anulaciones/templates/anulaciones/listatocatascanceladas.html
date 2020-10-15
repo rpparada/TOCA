@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} | CANCELACIONES{% endblock %}
+{% block content %}
+{% include 'partials/_alerts.html' %}
+
+{% if object_list %}
+  {% for object in object_list %}
+  <!--Modal suspender -->
+  {% include 'tocata/snippets/modalsuspender.html' with instance=object %}
+  <!-- end: Modal -->
+  <!--Modal borrar -->
+  {% include 'tocata/snippets/modalborrar.html' with instance=object %}
+  <!-- end: Modal -->
+  {% endfor %}
+{% endif %}
+
+{% if object_list %}
+  <section id="page-content" class="no-sidebar">
+      <div class="container">
+
+          <div class="row mb-3">
+              <div class="col-lg-6">
+                  <h4>Tocatas Canceladas</h4>
+                  <p>Lista de las tocatas canceladas.</p>
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-lg-12">
+                  <table id="datatable" class="table table-bordered table-hover" style="width:100%">
+                      <thead>
+                          <tr>
+                              <th>Nombre</th>
+                              <th>Lugar</th>
+                              <th>Fecha y Hora</th>
+                              <th>Costo</th>
+                              <th>Asistencia</th>
+                              <th>Motivo</th>
+                              <th>Estado</th>
+                              <th class="noExport">Acciones</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        {% for object in object_list %}
+                          <tr>
+                              <td><a href="{{ object.get_absolute_url }}">{{ object.nombre }}</a></td>
+                              {% if object.lugar %}
+                              <td>{{ object.lugar.nombre_calle }} {{ object.lugar.numero }} <br> {{ object.lugar.region.nombre }}, {{ object.lugar.comuna.nombre }}</td>
+                              {% else %}
+                              <td>Aun sin dirección <a href="{% url 'tocata:seleccionardireccion' object.slug %}"><small>(Seleccion Dirección)</small></a></td>
+                              {% endif %}
+                              <td>{{ object.fecha }}, {{ object.hora}}</td>
+                              <td>${{ object.costo|floatformat|intcomma }}</td>
+                              <td>Vendidas: {{ object.asistentes_total }}
+                                  <br> Min: {{ object.asistentes_min }}
+                                  <br>Max: {{ object.asistentes_max }}
+                                  </td>
+                              <td>{{ object.get_motivo_display }}</td>
+                              {% if object.estado == 'inicial' %}
+                                <td><span class="badge badge-pill badge-warning">{{ object.get_estado_display }}</span></td>
+                              {% elif object.estado == 'publicado' %}
+                                <td><span class="badge badge-pill badge-warning">{{ object.get_estado_display }}</span></td>
+                              {% elif object.estado == 'suspendido' %}
+                                <td><span class="badge badge-pill badge-danger">{{ object.get_estado_display }}</span></td>
+                              {% elif object.estado == 'confirmado' %}
+                                <td><span class="badge badge-pill badge-info">{{ object.get_estado_display }}</span></td>
+                              {% elif object.estado == 'vendido' %}
+                                <td><span class="badge badge-pill badge-primary">{{ object.get_estado_display }}</span></td>
+                              {% elif object.estado == 'completado' %}
+                                <td><span class="badge badge-pill badge-success">{{ object.get_estado_display }}</span></td>
+                              {% endif %}
+                              <td>
+                                <div class="p-dropdown">
+                                    <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
+                                    <ul class="p-dropdown-content">
+                                        {% if object.estado in 'publicado,confirmado,vendido' %}
+                                        <li><a href="" data-target="#modalsuce{{object.id}}" data-toggle="modal"><i class="icon-alert-triangle"></i>Suspender</a></li>
+                                        {% endif %}
+                                        {% if object.estado in 'inicial' %}
+                                        <li><a href="{% url 'tocata:seleccionardireccion' object.slug %}"><i class="icon-home"></i>Seleccion Dirección</a></li>
+                                        {% endif %}
+                                        {% if object.estado in 'suspendido,completado,inicial' %}
+                                        <li><a href="" data-target="#modalboce{{object.id}}" data-toggle="modal"><i class="icon-x"></i>Borrar</a></li>
+                                        {% endif %}
+                                        {% if object.estado in 'publicado,confirmado,vendido' %}
+                                        <li>
+                                          <hr>
+                                        </li>
+                                        <li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8000/{{ object.get_absolute_url }}"><i class="icon-facebook"></i>Compartir</a></li>
+                                        <li><a href="#"><i class="icon-twitter"></i>Compartir</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                              </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                      <tfoot>
+                          <tr>
+                            <th>Nombre</th>
+                            <th>Lugar</th>
+                            <th>Fecha y Hora</th>
+                            <th>Costo</th>
+                            <th>Asistencia</th>
+                            <th>Motivo</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                          </tr>
+                      </tfoot>
+                  </table>
+              </div>
+          </div>
+          <!-- Pagination -->
+          {% include 'snippets/page.html' with instance=page_obj %}
+          <!-- end: Pagination -->
+
+      </div>
+  </section>
+
+{% else %}
+  <section id="page-content" class="no-sidebar">
+      <div class="container">
+
+          <div class="row mb-3">
+              <div class="col-lg-6">
+                  <h4>Mis Tocatas</h4>
+                  <p>Actualmente no tienes ninguna Tocata Intima registrada.</p>
+              </div>
+              <div class="col-lg-6 text-right">
+                  <a href="{% url 'tocata:creartocata' %}" class="btn btn-light"><i class="icon-plus"></i> Crear Tocata Cerrada</a>
+                  <div id="export_buttons" class="mt-2"></div>
+              </div>
+          </div>
+      </div>
+  </section>
+{% endif %}
+
+{% endblock %}

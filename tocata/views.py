@@ -113,7 +113,7 @@ class SuspenderTocataView(LoginRequiredMixin, View):
         form = self.form_class(request, request.POST or None)
         if form.is_valid():
             tocata = form.cleaned_data['tocata']
-            tocata.suspender_tocata(request)
+            tocata.suspender_tocata(request, 'artista')
 
         return redirect('tocata:mistocatas')
 
