@@ -96,7 +96,8 @@ class AnulacionEntradaManager(models.Manager):
 ANULACIONENTRADA_ESTADO_OPCIONES = (
     ('pendiente','Pendiente'),
     ('enviadatbk','Enviada a Transbank'),
-    ('reembolsado','Reembolsado'),
+    ('reembolsadotbk','Reembolsado Transbank'),
+    ('reembolsado','Reembolsado Manual'),
 )
 
 class AnulacionEntrada(models.Model):
