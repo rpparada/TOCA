@@ -68,9 +68,13 @@
                                   <div class="p-dropdown">
                                       <a class="btn btn-light btn-shadow btn-round"><i class="icon-menu"></i></a>
                                       <ul class="p-dropdown-content">
+                                          {% if object.cobro.paymentTypeCode in 'VN,S2,SI,NC,VC'  %}
                                           <li><a href="javascript:;" onclick="document.getElementById('enviadatbk{{object.id}}').submit();"><i class="icon-alert-triangle"></i>Marcar Enviada a Transbank</a></li>
-                                          <li><a href="javascript:;" onclick="document.getElementById('reembolsado{{object.id}}').submit();"><i class="icon-alert-triangle"></i>Marcar Reembolsado Manual</a></li>
                                           <li><a href="javascript:;" onclick="document.getElementById('reembolsadotbk{{object.id}}').submit();"><i class="icon-alert-triangle"></i>Marcar Reembolsado Transbank</a></li>
+                                          {% endif %}
+                                          {% if object.cobro.paymentTypeCode in 'VD,VP'  %}
+                                            <li><a href="javascript:;" onclick="document.getElementById('reembolsado{{object.id}}').submit();"><i class="icon-alert-triangle"></i>Marcar Reembolsado Manual</a></li>
+                                          {% endif %}
                                       </ul>
                                   </div>
                               </td>
