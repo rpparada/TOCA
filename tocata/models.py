@@ -188,6 +188,10 @@ class Tocata(models.Model):
                     if entrada.orden.email_adicional:
                         recipient_list.append(entrada.orden.email_adicional)
 
+
+            # Solo para pruebas
+            recipient_list = ['rpparada@gmail.com']
+
             # Enviar Email
             # EmailTemplate.send(
             #     'email_boleta_itickets',

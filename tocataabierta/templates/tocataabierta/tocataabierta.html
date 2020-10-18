@@ -28,9 +28,9 @@
                     <div class="product-description">
                         <div class="product-category"><a href="{{ object.artista.get_absolute_url }}">{{ object.artista.nombre }}</a></div>
                         <div class="product-title">
-                            <h3><a href="{{ object.get_absolute_url }}">{{ object.nombre }}</a>
+                            <h3><a>{{ object.nombre }}</a>
                             {% if object.estado == 'confirmado' %}
-                            <small><a href="{{ object.tocata.get_absolute_url }}">(Visita Tocata Íntima)</a></small>
+                            <small><a href="{{ object.tocata.get_absolute_url }}"> (Visita Tocata Íntima) </a></small>
                             {% endif %}
                             </h3>
                         </div>

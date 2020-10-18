@@ -122,7 +122,7 @@ class TocataAbierta(models.Model):
 
             # Agregar aqui los cambio necesarios para suspender tocata
             if self.tocata:
-                self.tocata.suspender_tocata()
+                self.tocata.suspender_tocata(self.request, 'anfitrion')
 
         return fue_suspendido
 

@@ -113,6 +113,7 @@ class LugaresTocata(models.Model):
         if self.estado in ['elegido',]:
             self.estado = 'cancelado'
             self.save()
+            
             fue_cancelado = True
 
         return fue_cancelado

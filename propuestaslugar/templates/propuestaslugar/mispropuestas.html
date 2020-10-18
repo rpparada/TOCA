@@ -48,7 +48,7 @@
                         <tr>
                             <td>{% if object.lugar.nombre %}{{ object.lugar.nombre }}, {% endif %}{{ object.lugar.nombre_calle }} {{ object.lugar.numero }}, {{ object.lugar.comuna }}</td>
                             <td><a href="{{ object.tocataabierta.artista.get_absolute_url }}">{{ object.tocataabierta.artista.nombre }}</a></td>
-                            <td><a href="{{ object.tocataabierta.get_absolute_url }}">{{ object.tocataabierta.nombre }}</a></td>
+                            <td><a href="{{ object.tocataabierta.tocata.get_absolute_url }}">{{ object.tocataabierta.tocata.nombre }}</a></td>
                             <td>{{ object.tocataabierta.fecha }}, {{ object.tocataabierta.hora }}</td>
 
                             {% if object.estado == 'elegido' %}
