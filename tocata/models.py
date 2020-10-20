@@ -163,7 +163,7 @@ class Tocata(models.Model):
     def suspender_tocata(self, request, motivo='artista'):
         fue_suspendido = False
         if self.estado in ['publicado','confirmado','vendido']:
-            self.estado = 'suspendido'
+            #self.estado = 'suspendido'
             self.save()
             fue_suspendido = True
 
@@ -190,16 +190,18 @@ class Tocata(models.Model):
 
 
             # Solo para pruebas
+            print(recipient_list)
             recipient_list = ['rpparada@gmail.com']
+            print(recipient_list)
 
             # Enviar Email
-            # EmailTemplate.send(
-            #     'email_boleta_itickets',
-            #     context = { 'object': self },
-            #     subject = 'Tocatas Íntimas - ITicket Orden {num_orden}'.format(num_orden=self.orden_id),
-            #     sender = 'tocatasintimastest@gmail.com',
-            #     emails = recipient_list
-            # )
+            EmailTemplate.send(
+                'tocata_cancelada',
+                context = { 'object': self },
+                subject = 'Cancelada: Tocata Íntima "{tocata_intima}"'.format(tocata_intima=self.nombre),
+                sender = 'tocatasintimastest@gmail.com',
+                emails = recipient_list
+            )
 
             # - Devolver dinero
             # Por ahora las anulaciones se haran manualmente
