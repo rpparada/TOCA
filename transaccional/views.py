@@ -18,3 +18,59 @@ class TocataCanceladaView(DetailView):
     def get_object(self, queryset=None):
         tocata = Tocata.objects.all().first()
         return tocata
+
+class TocataCanceladaArtistaView(DetailView):
+
+    template_name = 'transaccional/tocata_cancelada.html'
+
+    def get_object(self, queryset=None):
+        tocata = Tocata.objects.all().first()
+        return tocata
+
+class TocataCanceladaUsuarioView(DetailView):
+
+    template_name = 'transaccional/tocata_cancelada.html'
+
+    def get_object(self, queryset=None):
+        tocata = Tocata.objects.all().first()
+        return tocata
+
+class RecuperarPasswordView(DetailView):
+
+    template_name = 'transaccional/tocata_cancelada.html'
+
+    def get_object(self, queryset=None):
+        tocata = Tocata.objects.all().first()
+        return tocata
+
+class ValidacionEmailView(DetailView):
+
+    template_name = 'transaccional/tocata_cancelada.html'
+
+    def get_object(self, queryset=None):
+        tocata = Tocata.objects.all().first()
+        return tocata
+
+class FormularioNuevoArtistaView(DetailView):
+
+    template_name = 'transaccional/tocata_cancelada.html'
+
+    def get_object(self, queryset=None):
+        tocata = Tocata.objects.all().first()
+        return tocata
+
+class BienvenidoNuevoUsuarioView(DetailView):
+
+    template_name = 'transaccional/tocata_cancelada.html'
+
+    def get_object(self, queryset=None):
+        tocata = Tocata.objects.all().first()
+        return tocata
+
+class BienvenidoNuevoArtistaView(DetailView):
+
+    template_name = 'transaccional/tocata_cancelada.html'
+
+    def get_object(self, queryset=None):
+        tocata = Tocata.objects.all().first()
+        return tocata

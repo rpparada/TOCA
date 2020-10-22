@@ -115,6 +115,18 @@
                                             <li><a href="{{ cancelaciones_url }}">Cencelaciones</a></li>
                                         </ul>
                                     </li>
+                                    <li class="dropdown-submenu"><a href="#">Email Templates</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{% url 'transaccional:tocatacancelada' %}">tocatacancelada</a></li>
+                                            <li><a href="{% url 'transaccional:tocatacanceladaartista' %}">tocatacanceladaartista</a></li>
+                                            <li><a href="{% url 'transaccional:tocatacanceladausuario' %}">tocatacanceladausuario</a></li>
+                                            <li><a href="{% url 'transaccional:recuperarpassword' %}">recuperarpassword</a></li>
+                                            <li><a href="{% url 'transaccional:validacionemail' %}">validacionemail</a></li>
+                                            <li><a href="{% url 'transaccional:formularionuevoartista' %}">formularionuevoartista</a></li>
+                                            <li><a href="{% url 'transaccional:bienvenidonuevousuario' %}">bienvenidonuevousuario</a></li>
+                                            <li><a href="{% url 'transaccional:bienvenidonuevoartista' %}">bienvenidonuevoartista</a></li>
+                                        </ul>
+                                    </li>
                                     {% endif %}
                                     <li><a href="{{ salir_url }}">Salir</a></li>
                                   </ul>
