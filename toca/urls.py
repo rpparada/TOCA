@@ -35,6 +35,8 @@ urlpatterns = [
     path('cancelaciones/', include(('anulaciones.urls','cancelaciones'), namespace='cancelaciones')),
     path('carro/', include(('carro.urls','carro'), namespace='carro')),
     path('marketing/', include(('marketing.urls','marketing'), namespace='marketing')),
+    # Temporal mientras revisamos el formato del correo
+    path('transaccional/', include(('transaccional.urls','transaccional'), namespace='transaccional')),
     path('direccion/', include('direccion.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

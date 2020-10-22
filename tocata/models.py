@@ -10,7 +10,7 @@ from datetime import timedelta, datetime
 
 from artista.models import Artista, Estilo
 from lugar.models import Lugar, Region, Comuna
-#from transaccional.models import EmailTemplate
+from transaccional.models import EmailTemplate
 from orden.models import EntradasCompradas, Cobro
 from anulaciones.models import AnulacionEntrada, TocataCancelada
 
@@ -198,13 +198,21 @@ class Tocata(models.Model):
             print(recipient_list)
 
             # Enviar Email con celery
-            celery.current_app.send_task('email_anulacion_tocata',(
-                    'tocata_cancelada',
-                    self.id,
-                    'Cancelada: Tocata Íntima "{tocata_intima}"'.format(tocata_intima=self.nombre),
-                    'tocatasintimastest@gmail.com',
-                    recipient_list
-            ))
+            # celery.current_app.send_task('email_anulacion_tocata',(
+            #         'tocata_cancelada',
+            #         self.id,
+            #         'Cancelada: Tocata Íntima "{tocata_intima}"'.format(tocata_intima=self.nombre),
+            #         'tocatasintimastest@gmail.com',
+            #         recipient_list
+            # ))
+
+            EmailTemplate.send(
+                'tocata_cancelada',
+                context = { 'object': self },
+                subject = 'Cancelada: Tocata Íntima "{tocata_intima}"'.format(tocata_intima=self.nombre),
+                sender = 'tocatasintimastest@gmail.com',
+                emails = recipient_list
+            )
 
             # - Devolver dinero
             # Por ahora las anulaciones se haran manualmente

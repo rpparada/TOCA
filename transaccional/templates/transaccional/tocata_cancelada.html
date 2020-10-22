@@ -1,3 +1,5 @@
+{% load static %}
+{% url 'index' as index_url %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -82,7 +84,7 @@
       <tbody>
         <tr>
           <td class="o_bg-primary o_px-md o_py-md o_sans o_text" align="center" style="font-family: Helvetica, Arial, sans-serif;margin-top: 0px;margin-bottom: 0px;font-size: 16px;line-height: 24px;background-color: #126de5;padding-left: 24px;padding-right: 24px;padding-top: 24px;padding-bottom: 24px;">
-            <p style="margin-top: 0px;margin-bottom: 0px;"><a class="o_text-white" href="https://example.com/" style="text-decoration: none;outline: none;color: #ffffff;"><img src="images/logo_white.png" width="136" height="36" alt="SimpleApp" style="max-width: 136px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;"></a></p>
+            <p style="margin-top: 0px;margin-bottom: 0px;"><a class="o_text-white" href="{{ index_url }}" style="text-decoration: none;outline: none;color: #ffffff;"><img src="{% static 'images/iconos/logo_rojo_negro_indexblanco.png' %}" width="136" height="36" alt="TOCATAS ÍNTIMAS" style="max-width: 136px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;"></a></p>
           </td>
         </tr>
       </tbody>
@@ -97,17 +99,15 @@
               <table class="o_center" cellspacing="0" cellpadding="0" border="0" role="presentation" style="text-align: center;margin-left: auto;margin-right: auto;">
                 <tbody>
                   <tr>
-                    <td class="o_sans o_text o_text-secondary o_b-primary o_px o_py o_br-max" align="center" style="font-family: Helvetica, Arial, sans-serif;margin-top: 0px;margin-bottom: 0px;font-size: 16px;line-height: 24px;color: #424651;border: 2px solid #126de5;border-radius: 96px;padding-left: 16px;padding-right: 16px;padding-top: 16px;padding-bottom: 16px;">
-                      <img src="images/cancel-48-primary.png" width="48" height="48" alt="" style="max-width: 48px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;">
-                    </td>
+                    <a href="{{ object.get_absolute_url }}"><img src="{{ object.flayer_380_507.url }}" width="48" height="48" alt="" style="max-width: 48px;-ms-interpolation-mode: bicubic;vertical-align: middle;border: 0;line-height: 100%;height: auto;outline: none;text-decoration: none;"></a>
                   </tr>
                   <tr>
                     <td style="font-size: 24px; line-height: 24px; height: 24px;">&nbsp; </td>
                   </tr>
                 </tbody>
               </table>
-              <h2 class="o_heading o_text-dark o_mb-xxs" style="font-family: Helvetica, Arial, sans-serif;font-weight: bold;margin-top: 0px;margin-bottom: 4px;color: #242b3d;font-size: 30px;line-height: 39px;">Subscription Canceled</h2>
-              <p style="margin-top: 0px;margin-bottom: 0px;">Rooster penguin fraudulent taped much otter ouch excluding that resigned among that proved far rattlesnake fitted.</p>
+              <h2 class="o_heading o_text-dark o_mb-xxs" style="font-family: Helvetica, Arial, sans-serif;font-weight: bold;margin-top: 0px;margin-bottom: 4px;color: #242b3d;font-size: 30px;line-height: 39px;">Tocata Íntima "{{ object.nombre }}" Cancelada.</h2>
+              <p style="margin-top: 0px;margin-bottom: 0px;">{{ object.descripción|truncatechars:150 }}</p>
             </div>
             <!--[if mso]></td></tr></table><![endif]-->
           </td>
