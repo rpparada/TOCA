@@ -45,7 +45,7 @@ class RecuperarPasswordView(DetailView):
 
 class ValidacionEmailView(DetailView):
 
-    template_name = 'transaccional/tocata_cancelada.html'
+    template_name = 'transaccional/validacion_email.html'
 
     def get_object(self, queryset=None):
         tocata = Tocata.objects.all().first()

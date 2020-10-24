@@ -13,11 +13,17 @@ from django.db.models.signals import pre_save, post_save
 from django.utils import timezone
 from django.urls import reverse
 
+from transaccional.models import EmailTemplate
+
 from toca.utils import random_string_generator, unique_key_generator
+
+import celery
 
 DEFAULT_ACTIVATION_DAYS = getattr(settings, 'DEFAULT_ACTIVATION_DAYS', 7)
 
+DEBUG = getattr(settings, 'DEBUG', True)
 # Create your models here.
+
 #User
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, nombre=None, apellido=None, is_active=True, is_staff=False, is_admin=False, is_musico=False):
@@ -186,25 +192,30 @@ class EmailActivation(models.Model):
                 base_url = getattr(settings, 'BASE_URL', '127.0.0.1:8000')
                 key_path = reverse('cuenta:email-activate', kwargs={'key':self.key})
                 path = '{base}{path}'.format(base=base_url,path=key_path)
-                context = {
-                    'path': path,
-                    'email': self.email
-                }
-                txt_ = get_template('registration/emails/verify.txt').render(context)
-                html_ = get_template('registration/emails/verify.html').render(context)
-
-                subject = '1-Click Verificacion de Email'
                 recipient_list = [self.email]
-                from_email = 'rpparada@gmail.com'
-                sent_email = send_mail(
-                    subject,
-                    message = txt_,
-                    from_email = from_email,
-                    recipient_list = recipient_list,
-                    html_message = html_,
-                    fail_silently = False,
-                )
-                return sent_email
+
+                if DEBUG:
+                    recipient_list = ['rpparada@gmail.com']
+
+                # Enviar Email con celery
+                celery.current_app.send_task('validacion_email',(
+                        'validacion_email',
+                        path,
+                        self.email,
+                        '1-Click Verificacion de Email',
+                        'tocatasintimastest@gmail.com',
+                        recipient_list
+                ))
+
+                # EmailTemplate.send(
+                #     'validacion_email',
+                #     context = context,
+                #     subject = '1-Click Verificacion de Email',
+                #     sender = 'tocatasintimastest@gmail.com',
+                #     emails = recipient_list
+                # )
+
+                return True
         return False
 
 def pre_save_email_validation(sender, instance, *args, **kwargs):

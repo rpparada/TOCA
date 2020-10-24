@@ -162,7 +162,8 @@ class RegistrarUserForm(forms.ModelForm):
 
     email           = forms.EmailField(widget=forms.EmailInput(attrs={
                                                                 "class": "form-control",
-                                                                "placeholder": "Email"
+                                                                "placeholder": "Email",
+                                                                "autofocus": True
                                                             }), label='Email'
                                     )
     password1       = forms.CharField(widget=forms.PasswordInput(attrs={

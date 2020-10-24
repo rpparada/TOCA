@@ -20,6 +20,8 @@ import celery
 from toca.utils  import unique_slug_generator
 
 User = settings.AUTH_USER_MODEL
+
+DEBUG = getattr(settings, 'DEBUG', True)
 # Create your models here.
 
 # Tocatas
@@ -191,28 +193,25 @@ class Tocata(models.Model):
                     if entrada.orden.email_adicional:
                         recipient_list.append(entrada.orden.email_adicional)
 
-
-            # Solo para pruebas
-            print(recipient_list)
-            recipient_list = ['rpparada@gmail.com']
-            print(recipient_list)
+            if DEBUG:
+                recipient_list = ['rpparada@gmail.com']
 
             # Enviar Email con celery
-            # celery.current_app.send_task('email_anulacion_tocata',(
-            #         'tocata_cancelada',
-            #         self.id,
-            #         'Cancelada: Tocata Íntima "{tocata_intima}"'.format(tocata_intima=self.nombre),
-            #         'tocatasintimastest@gmail.com',
-            #         recipient_list
-            # ))
+            celery.current_app.send_task('email_anulacion_tocata',(
+                    'tocata_cancelada',
+                    self.id,
+                    'Cancelada: Tocata Íntima "{tocata_intima}"'.format(tocata_intima=self.nombre),
+                    'tocatasintimastest@gmail.com',
+                    recipient_list
+            ))
 
-            EmailTemplate.send(
-                'tocata_cancelada',
-                context = { 'object': self },
-                subject = 'Cancelada: Tocata Íntima "{tocata_intima}"'.format(tocata_intima=self.nombre),
-                sender = 'tocatasintimastest@gmail.com',
-                emails = recipient_list
-            )
+            # EmailTemplate.send(
+            #     'tocata_cancelada',
+            #     context = { 'object': self },
+            #     subject = 'Cancelada: Tocata Íntima "{tocata_intima}"'.format(tocata_intima=self.nombre),
+            #     sender = 'tocatasintimastest@gmail.com',
+            #     emails = recipient_list
+            # )
 
             # - Devolver dinero
             # Por ahora las anulaciones se haran manualmente

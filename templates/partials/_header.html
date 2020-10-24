@@ -117,14 +117,14 @@
                                     </li>
                                     <li class="dropdown-submenu"><a href="#">Email Templates</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="{% url 'transaccional:tocatacancelada' %}">tocatacancelada</a></li>
-                                            <li><a href="{% url 'transaccional:tocatacanceladaartista' %}">tocatacanceladaartista</a></li>
-                                            <li><a href="{% url 'transaccional:tocatacanceladausuario' %}">tocatacanceladausuario</a></li>
-                                            <li><a href="{% url 'transaccional:recuperarpassword' %}">recuperarpassword</a></li>
-                                            <li><a href="{% url 'transaccional:validacionemail' %}">validacionemail</a></li>
-                                            <li><a href="{% url 'transaccional:formularionuevoartista' %}">formularionuevoartista</a></li>
-                                            <li><a href="{% url 'transaccional:bienvenidonuevousuario' %}">bienvenidonuevousuario</a></li>
-                                            <li><a href="{% url 'transaccional:bienvenidonuevoartista' %}">bienvenidonuevoartista</a></li>
+                                            <li><a href="{% url 'transaccional:tocatacancelada' %}">tocata cancelada</a></li>
+                                            <li><a href="{% url 'transaccional:tocatacanceladaartista' %}">tocata cancelada artista</a></li>
+                                            <li><a href="{% url 'transaccional:tocatacanceladausuario' %}">tocata cancelada usuario</a></li>
+                                            <li><a href="{% url 'transaccional:recuperarpassword' %}">recuperar password</a></li>
+                                            <li><a href="{% url 'transaccional:validacionemail' %}">validacion email</a></li>
+                                            <li><a href="{% url 'transaccional:formularionuevoartista' %}">formulario nuevo artista</a></li>
+                                            <li><a href="{% url 'transaccional:bienvenidonuevousuario' %}">bienvenido nuevo usuario</a></li>
+                                            <li><a href="{% url 'transaccional:bienvenidonuevoartista' %}">bienvenido nuevo artista</a></li>
                                         </ul>
                                     </li>
                                     {% endif %}
@@ -135,7 +135,7 @@
                               <li class="dropdown"><a href="{{ ingresar_url }}?next={{request.path|urlencode}}">Cuenta</a>
                                   <ul class="dropdown-menu">
                                     <li><a href="{{ ingresar_url }}?next={{request.path|urlencode}}">Ingresa</a></li>
-                                    <li><a href="{{ cancelaciones_url }}">Registrate</a></li>
+                                    <li><a href="{{ registrar_url }}">Registrate</a></li>
                                   </ul>
                               </li>
                             {% endif %}
