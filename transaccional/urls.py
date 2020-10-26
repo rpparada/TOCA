@@ -5,7 +5,6 @@ urlpatterns = [
     # Vistas de los correos
     path('tocatacancelada', views.TocataCanceladaView.as_view(), name='tocatacancelada'),
     path('tocatacanceladaartista', views.TocataCanceladaArtistaView.as_view(), name='tocatacanceladaartista'),
-    path('tocatacanceladausuario', views.TocataCanceladaUsuarioView.as_view(), name='tocatacanceladausuario'),
     path('recuperarpassword', views.RecuperarPasswordView.as_view(), name='recuperarpassword'),
     path('validacionemail', views.ValidacionEmailView.as_view(), name='validacionemail'),
     path('formularionuevoartista', views.FormularioNuevoArtistaView.as_view(), name='formularionuevoartista'),
