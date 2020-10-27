@@ -8,6 +8,7 @@ from celery.decorators import task
 from transaccional.models import EmailTemplate
 
 from tocata.models import Tocata
+from anulaciones.models import TocataCancelada
 
 @task(name='email_anulacion_tocata')
 def email_anulacion_tocata(template_key, tocata_id, subject, sender, emails):
@@ -15,6 +16,25 @@ def email_anulacion_tocata(template_key, tocata_id, subject, sender, emails):
     tocata = Tocata.objects.get(id=tocata_id)
     context = {
         'object': tocata,
+    }
+
+    EmailTemplate.send(
+        template_key,
+        context = context,
+        subject = subject,
+        sender = sender,
+        emails = emails
+    )
+
+    return None
+
+@task(name='email_anulacion_tocata_artista')
+def email_anulacion_tocata_artista(template_key, tocata_cancelada_id, subject, sender, emails):
+
+    tocata_cancelada = TocataCancelada.objects.get(id=tocata_cancelada_id)
+
+    context = {
+        'object': tocata_cancelada,
     }
 
     EmailTemplate.send(

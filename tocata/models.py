@@ -178,6 +178,7 @@ class Tocata(models.Model):
             # - Notificar asistentes con emial
             # Extraer lista de emails y crea registros de anulacion de entradas vendidas
             recipient_list = []
+            recipient_list_artista = []
             entradas = EntradasCompradas.objects.by_tocata(self)
             if entradas.exists():
                 for entrada in entradas.iterator():
@@ -193,10 +194,13 @@ class Tocata(models.Model):
                     if entrada.orden.email_adicional:
                         recipient_list.append(entrada.orden.email_adicional)
 
+            recipient_list_artista.append(self.artista.usuario.email)
+
             if DEBUG:
                 recipient_list = ['rpparada@gmail.com']
+                recipient_list_artista = ['rpparada@gmail.com']
 
-            # Enviar Email con celery
+            # Enviar Email notificando anulacion a quienes compraron entrada con celery
             celery.current_app.send_task('email_anulacion_tocata',(
                     'tocata_cancelada',
                     self.id,
@@ -205,12 +209,29 @@ class Tocata(models.Model):
                     recipient_list
             ))
 
+            # Enviar Email notificando anulacion a artista con celery
+            celery.current_app.send_task('email_anulacion_tocata_artista',(
+                    'tocata_cancelada_artista',
+                    tocata_cancelada.id,
+                    'Cancelada: Tocata Íntima "{tocata_intima}"'.format(tocata_intima=self.nombre),
+                    'tocatasintimastest@gmail.com',
+                    recipient_list_artista
+            ))
+
             # EmailTemplate.send(
             #     'tocata_cancelada',
             #     context = { 'object': self },
             #     subject = 'Cancelada: Tocata Íntima "{tocata_intima}"'.format(tocata_intima=self.nombre),
             #     sender = 'tocatasintimastest@gmail.com',
             #     emails = recipient_list
+            # )
+
+            # EmailTemplate.send(
+            #     'tocata_cancelada_artista',
+            #     context = { 'object': tocata_cancelada },
+            #     subject = 'Cancelada: Tocata Íntima "{tocata_intima}"'.format(tocata_intima=self.nombre),
+            #     sender = 'tocatasintimastest@gmail.com',
+            #     emails = recipient_list_artista
             # )
 
             # - Devolver dinero
