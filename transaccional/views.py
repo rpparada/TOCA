@@ -39,7 +39,7 @@ class TocataCanceladaArtistaView(DetailView):
 
 class RecuperarPasswordView(DetailView):
 
-    template_name = 'transaccional/tocata_cancelada.html'
+    template_name = 'transaccional/password_reset_email.html'
 
     def get_object(self, queryset=None):
         tocata = Tocata.objects.all().first()
@@ -65,7 +65,6 @@ class ValidacionEmailView(DetailView):
         context['path'] = path
 
         return context
-
 
 class FormularioNuevoArtistaView(DetailView):
 
