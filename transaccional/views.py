@@ -103,7 +103,7 @@ class BienvenidoNuevoUsuarioView(DetailView):
 
 class BienvenidoNuevoArtistaView(DetailView):
 
-    template_name = 'transaccional/tocata_cancelada.html'
+    template_name = 'transaccional/bienvenido_nuevo_artista.html'
 
     def get_object(self, queryset=None):
         tocata = Tocata.objects.all().first()
