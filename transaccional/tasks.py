@@ -64,3 +64,25 @@ def validacion_email(template_key, path, email, subject, sender, emails):
     )
 
     return None
+
+@task(name='formulario_nuevo_artista')
+def formulario_nuevo_artista(template_key, domain, uid, token, subject, sender, emails):
+
+    context = {
+        'domain': domain,
+        'uid': uid,
+        'token': token
+    }
+
+    EmailTemplate.send(
+        template_key,
+        context = context,
+        subject = subject,
+        sender = sender,
+        emails = emails
+    )
+
+    return None
+
+
+formulario_nuevo_artista

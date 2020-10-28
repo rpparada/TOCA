@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.conf import settings
 from django.urls import reverse
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 
 from django.views.generic import (
                                 DetailView,
@@ -13,6 +16,9 @@ from django.views.generic import (
 from tocata.models import Tocata
 from cuentas.models import EmailActivation
 from anulaciones.models import TocataCancelada
+from artista.models import Artista
+
+from cuentas.tokens import account_activation_token, art_activation_token
 
 # Create your views here.
 
@@ -68,11 +74,24 @@ class ValidacionEmailView(DetailView):
 
 class FormularioNuevoArtistaView(DetailView):
 
-    template_name = 'transaccional/tocata_cancelada.html'
+    template_name = 'transaccional/invitacion_nuevo_artista.html'
 
     def get_object(self, queryset=None):
         tocata = Tocata.objects.all().first()
         return tocata
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(FormularioNuevoArtistaView, self).get_context_data(*args, **kwargs)
+
+        current_site = get_current_site(self.request)
+        context['domain'] = current_site.domain
+
+        artista = Artista.objects.all().first()
+        context['uid'] = urlsafe_base64_encode(force_bytes(artista.pk))
+
+        context['token'] = art_activation_token.make_token(artista)
+
+        return context
 
 class BienvenidoNuevoUsuarioView(DetailView):
 

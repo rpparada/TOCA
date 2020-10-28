@@ -6,6 +6,7 @@ from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, Set
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.contrib import messages, auth
+from django.conf import settings
 
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode, is_safe_url
 from django.contrib.sites.shortcuts import get_current_site
@@ -23,6 +24,10 @@ from carro.models import CarroCompra
 from .signals import user_logged_in
 
 from perfil.models import BANCOS_OPCIONES, TIPOS_CUENTAS_OPCIONES
+
+import celery
+
+DEBUG = getattr(settings, 'DEBUG', True)
 
 class ReactivateEmailForm(forms.Form):
     email           = forms.EmailField(widget=forms.EmailInput(attrs={
@@ -259,7 +264,6 @@ class EnviaEmailNuevoArtistaForm(forms.Form):
 
     artista         = forms.ModelChoiceField(
                         queryset=Artista.objects.filter(usuario__isnull=True),
-                        #empty_label=None
                         empty_label='Selecciona Artista'
                     )
 
@@ -274,18 +278,21 @@ class EnviaEmailNuevoArtistaForm(forms.Form):
 
         if artista.email:
             current_site = get_current_site(request)
-            mail_subject = 'Formulario de Ingreso de Artistas a Tocatas Intimas.'
-            message = render_to_string('cuentas/email_nuevo_artista_cuenta.html', {
-                'user': artista,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(artista.pk)),
-                'token': art_activation_token.make_token(artista),
-            })
-            to_email = artista.email
-            email = EmailMessage(
-                        mail_subject, message, to=[to_email]
-            )
-            email.send()
+            recipient_list = [artista.email]
+            if DEBUG:
+                recipient_list = ['rpparada@gmail.com']
+
+            # Enviar Email notificando anulacion a quienes compraron entrada con celery
+            celery.current_app.send_task('formulario_nuevo_artista',(
+                    'formulario_nuevo_artista',
+                    current_site.domain,
+                    urlsafe_base64_encode(force_bytes(artista.pk)),
+                    art_activation_token.make_token(artista),
+                    'Formulario de Ingreso de Artistas a Tocatas Intimas.',
+                    'tocatasintimastest@gmail.com',
+                    recipient_list
+            ))
+
             messages.success(request, 'Formulario Enviado')
         else:
             raise forms.ValidationError("Artista no tiene email registrado")
