@@ -50,6 +50,7 @@ class CuentaEmailActivacionView(FormMixin, View):
             if confirm_qs.count() == 1:
                 obj = confirm_qs.first()
                 obj.activate()
+                
                 messages.success(request,'Email confirmado. Ya puedes ingresar')
                 return redirect('cuenta:ingresar')
             else:

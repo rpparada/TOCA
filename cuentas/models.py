@@ -176,6 +176,20 @@ class EmailActivation(models.Model):
             user.save()
             self.activated = True
             self.save()
+
+            recipient_list = [self.email]
+            if DEBUG:
+                recipient_list = ['rpparada@gmail.com']
+
+            # Enviar Email con celery
+            celery.current_app.send_task('bienvenido_nuevo_usuario',(
+                    'bienvenido_nuevo_usuario',
+                    self.email,
+                    'Bienvenido a Tocatas Íntimas',
+                    'tocatasintimastest@gmail.com',
+                    recipient_list
+            ))
+
             return True
         return False
 
@@ -198,22 +212,27 @@ class EmailActivation(models.Model):
                     recipient_list = ['rpparada@gmail.com']
 
                 # Enviar Email con celery
-                celery.current_app.send_task('validacion_email',(
-                        'validacion_email',
-                        path,
-                        self.email,
-                        '1-Click Verificacion de Email',
-                        'tocatasintimastest@gmail.com',
-                        recipient_list
-                ))
+                # celery.current_app.send_task('validacion_email',(
+                #         'validacion_email',
+                #         path,
+                #         self.email,
+                #         '1-Click Verificacion de Email',
+                #         'tocatasintimastest@gmail.com',
+                #         recipient_list
+                # ))
 
-                # EmailTemplate.send(
-                #     'validacion_email',
-                #     context = context,
-                #     subject = '1-Click Verificacion de Email',
-                #     sender = 'tocatasintimastest@gmail.com',
-                #     emails = recipient_list
-                # )
+                context = {
+                    'path': path,
+                    'email': self.email
+                }
+
+                EmailTemplate.send(
+                    'validacion_email',
+                    context = context,
+                    subject = '1-Click Verificacion de Email',
+                    sender = 'tocatasintimastest@gmail.com',
+                    emails = recipient_list
+                )
 
                 return True
         return False

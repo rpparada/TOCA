@@ -29,7 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Email a la consola
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Email a la consola
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True

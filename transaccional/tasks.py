@@ -84,5 +84,19 @@ def formulario_nuevo_artista(template_key, domain, uid, token, subject, sender, 
 
     return None
 
+@task(name='bienvenido_nuevo_usuario')
+def bienvenido_nuevo_usuario(template_key, email, subject, sender, emails):
 
-formulario_nuevo_artista
+    context = {
+        'email': email
+    }
+
+    EmailTemplate.send(
+        template_key,
+        context = context,
+        subject = subject,
+        sender = sender,
+        emails = emails
+    )
+
+    return None

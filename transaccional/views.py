@@ -95,11 +95,18 @@ class FormularioNuevoArtistaView(DetailView):
 
 class BienvenidoNuevoUsuarioView(DetailView):
 
-    template_name = 'transaccional/tocata_cancelada.html'
+    template_name = 'transaccional/bienvenido_nuevo_usuario.html'
 
     def get_object(self, queryset=None):
         tocata = Tocata.objects.all().first()
         return tocata
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(BienvenidoNuevoUsuarioView, self).get_context_data(*args, **kwargs)
+
+        context['email'] = self.request.user.email
+
+        return context
 
 class BienvenidoNuevoArtistaView(DetailView):
 
@@ -108,3 +115,10 @@ class BienvenidoNuevoArtistaView(DetailView):
     def get_object(self, queryset=None):
         tocata = Tocata.objects.all().first()
         return tocata
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(BienvenidoNuevoArtistaView, self).get_context_data(*args, **kwargs)
+
+        context['artista'] = Artista.objects.all().first
+
+        return context
