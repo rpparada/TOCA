@@ -6,12 +6,12 @@ include/
 pip-selfcheck.json
 
 # Django related
-# toca/settings/local.py
+toca/settings/local.py
 # src/<yourproject>/settings/local.py
 # static-cdn/  # any collected static files
 /media
 /protected_media
-/static
+# /static
 
 
 # Byte-compiled / optimized / DLL files
