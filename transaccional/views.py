@@ -3,7 +3,8 @@ from django.conf import settings
 from django.urls import reverse
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode, is_safe_url
 
 from django.views.generic import (
                                 DetailView,
@@ -50,6 +51,14 @@ class RecuperarPasswordView(DetailView):
     def get_object(self, queryset=None):
         tocata = Tocata.objects.all().first()
         return tocata
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(RecuperarPasswordView, self).get_context_data(*args, **kwargs)
+
+        context['uid'] = force_text(urlsafe_base64_encode(force_bytes(self.request.user.pk)))
+        context['token'] = account_activation_token.make_token(self.request.user)
+
+        return context
 
 class ValidacionEmailView(DetailView):
 
