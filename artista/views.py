@@ -15,7 +15,8 @@ from toca.parametros import parToca, parTocatas
 # Create your views here.
 class ArtistasListView(ListView):
 
-    queryset = Artista.objects.disponible()
+    # queryset = Artista.objects.disponible()
+    queryset = Artista.objects.all()
     paginate_by = parToca['artistas_pag']
     template_name = 'artista/artistas.html'
 
