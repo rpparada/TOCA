@@ -19,15 +19,16 @@ class ArtistaManager(models.Manager):
     def get_queryset(self):
         return ArtistaQuerySet(self.model, using=self._db)
 
-    def disponible(self):
-        qs = self.get_queryset().disponible()
-        if qs:
-            return qs
-        return None
+    # def disponible(self):
+    #     qs = self.get_queryset().disponible()
+    #     if qs:
+    #         return qs
+    #     return None
 
     def get_artistas_destacados(self, num_muestra):
         # Por ahora el criterio de mejores tocatas solo contemplara la fecha de creacion
-        qs = self.get_queryset().disponible().order_by('-fecha_crea')[:num_muestra]
+        # qs = self.get_queryset().disponible().order_by('-fecha_crea')[:num_muestra]
+        qs = self.get_queryset().order_by('-fecha_crea')[:num_muestra]
         if qs:
             return qs
         return None
