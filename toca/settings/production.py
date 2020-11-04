@@ -27,7 +27,7 @@ SECRET_KEY = '26g+2^@nxt-%*67((0p40xrrse!z71ttn0vvc@2*%c-kg+!hmm'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['157.230.89.58']
 
 # Application definition
 
@@ -89,6 +89,14 @@ MAILCHIMP_EMAIL_LIST_ID = '1fe864c9ab'
 
 DEFAULT_FROM_EMAIL = ''
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'tocatasintimastest@gmail.com'
+EMAIL_HOST_PASSWORD = 'Nofumar1024'
+DEFAULT_FROM_EMAIL = 'tocatasintimastest@gmail.com'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -130,7 +138,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'tocadb',
-        'USER': 'postgres',
+        'USER': 'dbadmin',
         'PASSWORD': 'Nofumar1024',
         'HOST': 'localhost'
     }
