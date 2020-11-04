@@ -84,12 +84,12 @@ class TocataManager(models.Manager):
             return qs
         return self.none()
 
-    def get_mejores_tocatas(self, num_muestra):
-        # Por ahora el criterio de mejores tocatas solo contemplara la fecha de creacion
-        qs = self.get_queryset().disponible().order_by('-fecha_crea')[:num_muestra]
-        if qs:
-            return qs
-        return self.none()
+    # def get_mejores_tocatas(self, num_muestra):
+    #     # Por ahora el criterio de mejores tocatas solo contemplara la fecha de creacion
+    #     qs = self.get_queryset().disponible().order_by('-fecha_crea')[:num_muestra]
+    #     if qs:
+    #         return qs
+    #     return self.none()
 
     def tocataartista_by_request(self, request):
         return self.get_queryset().tocataartista_by_request(request).quita_barradas()
