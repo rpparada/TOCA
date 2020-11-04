@@ -8,8 +8,7 @@ from .models import Testimonio, DescripcionTocatasIntimas
 # Create your views here.
 class IndexListView(ListView):
 
-    # queryset = Tocata.objects.get_mejores_tocatas(10)
-    queryset = Tocata.objects.all()
+    queryset = Tocata.objects.get_mejores_tocatas(10)
     template_name = 'home/index.html'
 
     def get_context_data(self, *args, **kwargs):
