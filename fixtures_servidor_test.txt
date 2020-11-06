@@ -1,0 +1,6 @@
+python manage.py dumpdata artista.Estilo --format json --indent 4 > artista/fixtures/artista_estilo.json
+python manage.py dumpdata artista.Cualidad --format json --indent 4 > artista/fixtures/artista_cualidad.json
+python manage.py dumpdata home --format json --indent 4 > home/fixtures/home.json
+python manage.py dumpdata lugar.Region --format json --indent 4 > lugar/fixtures/lugar_region.json
+python manage.py dumpdata lugar.Provincia --format json --indent 4 > lugar/fixtures/lugar_provincia.json
+python manage.py dumpdata lugar.Comuna --format json --indent 4 > lugar/fixtures/lugar_comuna.json
