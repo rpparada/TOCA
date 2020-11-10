@@ -78,7 +78,7 @@ def formulario_nuevo_artista(template_key, domain, uid, token, subject, sender, 
         template_key,
         context = context,
         subject = subject,
-        sender = sender,
+        #sender = sender,
         emails = emails
     )
 
