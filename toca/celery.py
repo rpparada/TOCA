@@ -6,7 +6,7 @@ from celery.schedules import crontab
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'toca.settings')
 
-app = Celery('toca')
+app = Celery('toca', broker=settings.BROKER_URL)
 
 # Using a string here means the worker don't have to serialize
 # the configuration object to child processes.

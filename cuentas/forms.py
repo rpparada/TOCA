@@ -291,7 +291,6 @@ class EnviaEmailNuevoArtistaForm(forms.Form):
                     'Formulario de Ingreso de Artistas a Tocatas Intimas.',
                     recipient_list
             ))
-
             messages.success(request, 'Formulario Enviado')
         else:
             raise forms.ValidationError("Artista no tiene email registrado")
