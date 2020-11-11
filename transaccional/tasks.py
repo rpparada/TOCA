@@ -11,7 +11,7 @@ from tocata.models import Tocata
 from anulaciones.models import TocataCancelada
 
 @task(name='email_anulacion_tocata')
-def email_anulacion_tocata(template_key, tocata_id, subject, sender, emails):
+def email_anulacion_tocata(template_key, tocata_id, subject, emails):
 
     tocata = Tocata.objects.get(id=tocata_id)
     context = {
@@ -22,14 +22,13 @@ def email_anulacion_tocata(template_key, tocata_id, subject, sender, emails):
         template_key,
         context = context,
         subject = subject,
-        sender = sender,
         emails = emails
     )
 
     return None
 
 @task(name='email_anulacion_tocata_artista')
-def email_anulacion_tocata_artista(template_key, tocata_cancelada_id, subject, sender, emails):
+def email_anulacion_tocata_artista(template_key, tocata_cancelada_id, subject, emails):
 
     tocata_cancelada = TocataCancelada.objects.get(id=tocata_cancelada_id)
 
@@ -41,14 +40,13 @@ def email_anulacion_tocata_artista(template_key, tocata_cancelada_id, subject, s
         template_key,
         context = context,
         subject = subject,
-        sender = sender,
         emails = emails
     )
 
     return None
 
 @task(name='validacion_email')
-def validacion_email(template_key, path, email, subject, sender, emails):
+def validacion_email(template_key, path, email, subject, emails):
 
     context = {
         'path': path,
@@ -59,14 +57,13 @@ def validacion_email(template_key, path, email, subject, sender, emails):
         template_key,
         context = context,
         subject = subject,
-        sender = sender,
         emails = emails
     )
 
     return None
 
 @task(name='formulario_nuevo_artista')
-def formulario_nuevo_artista(template_key, domain, uid, token, subject, sender, emails):
+def formulario_nuevo_artista(template_key, domain, uid, token, subject, emails):
 
     context = {
         'domain': domain,
@@ -78,14 +75,13 @@ def formulario_nuevo_artista(template_key, domain, uid, token, subject, sender, 
         template_key,
         context = context,
         subject = subject,
-        #sender = sender,
         emails = emails
     )
 
     return None
 
 @task(name='bienvenido_nuevo_usuario')
-def bienvenido_nuevo_usuario(template_key, email, subject, sender, emails):
+def bienvenido_nuevo_usuario(template_key, email, subject, emails):
 
     context = {
         'email': email
@@ -95,7 +91,6 @@ def bienvenido_nuevo_usuario(template_key, email, subject, sender, emails):
         template_key,
         context = context,
         subject = subject,
-        sender = sender,
         emails = emails
     )
 

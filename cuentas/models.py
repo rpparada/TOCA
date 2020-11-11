@@ -186,7 +186,6 @@ class EmailActivation(models.Model):
                     'bienvenido_nuevo_usuario',
                     self.email,
                     'Bienvenido a Tocatas Íntimas',
-                    'tocatasintimastest@gmail.com',
                     recipient_list
             ))
 
@@ -217,22 +216,8 @@ class EmailActivation(models.Model):
                         path,
                         self.email,
                         '1-Click Verificacion de Email',
-                        'tocatasintimastest@gmail.com',
                         recipient_list
                 ))
-
-                # context = {
-                #     'path': path,
-                #     'email': self.email
-                # }
-                #
-                # EmailTemplate.send(
-                #     'validacion_email',
-                #     context = context,
-                #     subject = '1-Click Verificacion de Email',
-                #     sender = 'tocatasintimastest@gmail.com',
-                #     emails = recipient_list
-                # )
 
                 return True
         return False

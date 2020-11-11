@@ -289,7 +289,6 @@ class EnviaEmailNuevoArtistaForm(forms.Form):
                     urlsafe_base64_encode(force_bytes(artista.pk)),
                     art_activation_token.make_token(artista),
                     'Formulario de Ingreso de Artistas a Tocatas Intimas.',
-                    'tocatasintimastest@gmail.com',
                     recipient_list
             ))
 

@@ -14,7 +14,6 @@ from transaccional.models import EmailTemplate
 from orden.models import EntradasCompradas, Cobro
 from anulaciones.models import AnulacionEntrada, TocataCancelada
 
-#from .tasks import email_anulacion_tocata
 import celery
 
 from toca.utils  import unique_slug_generator
@@ -205,7 +204,6 @@ class Tocata(models.Model):
                     'tocata_cancelada',
                     self.id,
                     'Cancelada: Tocata Íntima "{tocata_intima}"'.format(tocata_intima=self.nombre),
-                    'tocatasintimastest@gmail.com',
                     recipient_list
             ))
 
@@ -214,7 +212,6 @@ class Tocata(models.Model):
                     'tocata_cancelada_artista',
                     tocata_cancelada.id,
                     'Cancelada: Tocata Íntima "{tocata_intima}"'.format(tocata_intima=self.nombre),
-                    'tocatasintimastest@gmail.com',
                     recipient_list_artista
             ))
 
