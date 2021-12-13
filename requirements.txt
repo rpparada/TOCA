@@ -23,7 +23,7 @@ html5lib==1.1
 idna==2.10
 isodate==0.6.0
 kombu==4.6.11
-lxml==4.5.2
+lxml==4.6.5
 Pillow==7.2.0
 pip-autoremove==0.9.1
 prompt-toolkit==3.0.8
